@@ -1,0 +1,34 @@
+<h1>Create an Account</h1>
+<div class='form'>
+  <fieldset>
+    <%=	 form_for @user, :url => { :action => "create"} do |f| %>
+
+        <% if flash[:notice] %>
+            <div id="flash_notice"><%=h flash[:notice] %></div>
+        <% end %>
+        <div>
+          <%= f.label :email %>  <br />
+          <%= f.text_field :email %>
+        </div>
+        <div>
+          <%= f.label :first_name %>  <br />
+          <%= f.text_field :first_name %>
+        </div>
+        <div>
+          <%= f.label :last_name %>  <br />
+          <%= f.text_field :last_name %>
+        </div>
+
+        <div>
+          Create a password <br />
+          <%= f.password_field :password %>
+        </div>
+        <div>
+          Retype password  <br />
+          <%= f.password_field :password_confirmation %>
+        </div>
+        <%= f.submit "Create" %> &nbsp;
+        <%= link_to "cancel", {:action => "index"}, :class => "cancel" %>
+    <% end %>
+  </fieldset>
+</div>

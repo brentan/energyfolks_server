@@ -6,4 +6,4 @@ EnergyfolksServer::Application.config.session_store :cookie_store, key: '_energy
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
 # EnergyfolksServer::Application.config.session_store :active_record_store
-Aes2::Application.config.session_store :active_record_store, :domain => SITE_SPECIFIC['site_settings']['domain']
+EnergyfolksServer::Application.config.session_store :active_record_store, :domain => SITE_SPECIFIC['site_settings']['domain']

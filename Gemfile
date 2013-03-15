@@ -8,6 +8,7 @@ gem 'nested_form'#, '0.2.3'
 gem 'historyjs-rails'
 gem 'strip_attributes'
 gem 'geokit'
+gem 'tinymce-rails'
 gem 'geokit-rails3'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
@@ -33,7 +34,7 @@ group :assets do
 end
 
 # For handling file uploads, particularly pictures
-gem "paperclip"
+gem 'paperclip'
 
 # Deploy with Capistrano
 gem 'capistrano'  #, '2.9.0'
@@ -44,7 +45,7 @@ gem 'capistrano'  #, '2.9.0'
 group :development, :test do
 
   # To debug
-  gem 'debugger'
+  #gem 'debugger'
 
   gem 'rspec-rails', "~> 2.4"
   gem 'factory_girl_rails'  #, 1.5.0
