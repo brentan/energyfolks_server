@@ -12,4 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require select2
 //= require_tree .
+//= require tinymce-jquery
+//= require jquery_nested_form

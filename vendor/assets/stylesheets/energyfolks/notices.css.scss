@@ -1,0 +1,34 @@
+div.EnergyFolks_notice_holder {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 99999;
+  .notice {
+    height: 40px;
+    border-bottom: 2px solid #aaaaaa;
+    text-align:center;
+    padding-top: 20px;
+    font-size: 20px;
+
+    &.yellow {
+      background-color: #ffffdd;
+      color: #444444;
+    }
+    &.red {
+      background-color: #aa0000;
+      color: white;
+    }
+    &.green {
+      background-color: #228800;
+      color: white;
+    }
+
+    div.close {
+      float: right;
+      margin-right: 20px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+  }
+}

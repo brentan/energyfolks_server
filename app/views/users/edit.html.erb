@@ -1,0 +1,26 @@
+<% if session[:userid] && (@user.id == session[:userid]) %>
+    <h1>Your Account</h1>
+    <div class='form'>
+      <%= raw(output_error(@user)) %>
+      <fieldset>
+        <%=	 form_for @user, :url => { :action => "update", :id => @user.id} do |f| %>
+            <%= render :partial => 'profile_items', :locals => { :f => f }%>
+            <div>
+              Current password (if changing passwords)<br />
+              <%= f.password_field :password_old %>
+            </div>
+            <div>
+              Create a new password <br />
+              <%= f.password_field :password %>
+            </div>
+            <div>
+              Retype new password  <br />
+              <%= f.password_field :password_confirmation %>
+            </div>
+            <%= f.submit "Update" %> &nbsp;
+        <% end %>
+      </fieldset>
+    </div>
+<% else %>
+    <h1>something isnt quite right...</h1>
+<% end %>
