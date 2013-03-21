@@ -1,0 +1,56 @@
+#energyfolks_popup {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 99;
+  margin: 0px;
+  padding: 0px;
+  #energyfolks_popup_wrapper {
+    width: 360px;
+    margin: 0px auto;
+    padding: 0px;
+    #energyfolks_popup_close {
+      margin: 0px;
+      padding: 0px;
+      height: 20px;
+      img {
+        float: right;
+        display: block;
+        border-width: 0px;
+        cursor: pointer;
+        padding: 0px;
+        margin: 12px -8px 0px 0px;
+      }
+    }
+    #energyfolks_popup_content {
+      background-color: white;
+      margin: 0px;
+      padding: 20px;
+    }
+    #energyfolks_popup_loading {
+      padding-top:70px;
+      padding-bottom:100px;
+      text-align: center;
+      img {
+        display: inline;
+        border-width: 0px;
+      }
+    }
+  }
+}
+#energyfolks_popup_greyout {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  background-color: #000000;
+  opacity: 0.3;
+  z-index: 80;
+  margin: 0px;
+  padding: 0px;
+}

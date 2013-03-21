@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>EnergyfolksServer</title>
+  <title>Energyfolks</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -9,8 +9,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<h1>APPLICATION LAYOUT</h1>
+
 <%= yield %>
+
+<script language="javascript">
+  EnergyFolks.$(function() {
+      EnergyFolks.parent_url = '<%= raw(@url) %>';
+      window.parent.location=EnergyFolks.parent_url+'#iframe_'+(EnergyFolks.$(document).height()+50);
+  });
+</script>
 
 </body>
 </html>

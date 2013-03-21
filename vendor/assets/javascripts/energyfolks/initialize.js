@@ -8,6 +8,8 @@ EnergyFolks.$ = jQuery.noConflict(true);
 EnergyFolks.server_url = 'http://dev.energyfolks.com:3000';
 EnergyFolks.id = 0;
 EnergyFolks.color = '444444';
+//Used by iframes to keep track of the parent URL
+EnergyFolks.parent_url = '';
 //Accounts constants:
 EnergyFolks.callbackURL='';
 EnergyFolks.forwardto='';

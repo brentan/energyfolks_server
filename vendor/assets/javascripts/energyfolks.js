@@ -9,3 +9,4 @@
 //= require energyfolks/hash_change
 //= require energyfolks/global
 //= require energyfolks/accounts
+//= require energyfolks/backwards_compatible

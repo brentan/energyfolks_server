@@ -34,25 +34,90 @@ EnergyFolks.ajax = function(command, parameters, callback) {
     head.appendChild(script);
 }
 
+/*
+ * Popup functions: Used to create modal popup dialogs used by energyfolks
+ */
+
 //Load popup that has internal iframe that loads external content (show 'loading' while content loads)
 EnergyFolks.iframe_popup = function(command, parameters) {
-    //TO WRITE: IFRAME popup, Use current code that utilizes 'EnFolksWaitForLoad()'.  Popup appears with 'loading' circle, this goes
-    //away once page has loaded thanks to a change in the URL hash which is passed forward to the server
+    EnergyFolks.direct_popup();
+    var url = EnergyFolks.server_url+"/"+command+"?"
+    if(EnergyFolks.$.type(parameters) === 'object')
+        url+=EnergyFolks.$.param(parameters);
+    else if(EnergyFolks.$.type(parameters) === 'string')
+        url+=parameters;
+    url+="&iframe=1&"+EnergyFolks.urlhash();
+    EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='display:none;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:300px;overflow:auto;'></iframe></div>");
 }
+EnergyFolks.$(function() {
+    // Attach listener to hash for handling response of iframe loads
+    EnergyFolks.$(window).on('hashchange',function() {
+        var hash = location.hash;
+        if(hash.substr(1,7) == 'iframe_') {
+            window.location.hash = '';
+            EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
+            EnergyFolks.$('#energyfolks_popup_iframe iframe').css('height',hash.replace("#iframe_","") + 'px');
+            EnergyFolks.$('#energyfolks_popup_loading').remove();
+            EnergyFolks.$('#energyfolks_popup_iframe').show();
+            EnergyFolks.vertically_center_popup();
+        }
+        // This will close the popup if 'hide_popup' is called within the iframe window, as it passes back this hash
+        if(hash.substr(1,10) == 'closepopup') {
+            window.location.hash = '';
+            EnergyFolks.hide_popup();
+        }
+    });
+});
 
 //Load popup that loads remote content via 'ajax'
 EnergyFolks.remote_popup = function(command, parameters) {
-    //TO WRITE: This utilizes the ajax function, but prior to that it must create a popup box and place loading HTML in it
+    EnergyFolks.direct_popup();
+    EnergyFolks.ajax(command, parameters, function(output) {
+        EnergyFolks.$('#energyfolks_popup_wrapper').css('width',output.width + 'px');
+        EnergyFolks.$('#energyfolks_popup_content').html(output.html);
+        EnergyFolks.globalCallback(EnergyFolks.$('#energyfolks_popup_content'));
+        EnergyFolks.vertically_center_popup();
+    });
 }
 
 //Load popup and directly insert html
 EnergyFolks.direct_popup = function(html) {
-    //TO WRITE: Show the popup and populate it
+    EnergyFolks.initialize_popup();
+    if(html != '')
+        EnergyFolks.$('#energyfolks_popup_content').html(html);
+    EnergyFolks.$('#energyfolks_popup').show();
+    EnergyFolks.vertically_center_popup();
+    EnergyFolks.$('#energyfolks_popup_greyout').show();
 }
 
 //Hide the popup
 EnergyFolks.hide_popup = function() {
-    //TO WRITE: Hide the popup
+    if(EnergyFolks.$('body').find('#energyfolks_popup').length == 0)
+        window.parent.location=EnergyFolks.parent_url+'#closepopup';
+    else {
+        EnergyFolks.$('#energyfolks_popup').remove();
+        EnergyFolks.$('#energyfolks_popup_greyout').remove();
+    }
+}
+
+/*
+ * Helper functions: Not meant to be called directly
+ */
+// Create the popup elements if they dont already exist, and add loading message.  hide to start
+EnergyFolks.initialize_popup = function() {
+    if(EnergyFolks.$('body').find('#energyfolks_popup').length == 0) {
+        EnergyFolks.$('body').append("<div id='energyfolks_popup_greyout' style='display:none;'></div>");
+        EnergyFolks.$('body').append("<div id='energyfolks_popup' style='display:none;'><div id='energyfolks_popup_wrapper'><div id='energyfolks_popup_close'><img src='"+EnergyFolks.server_url+"/assets/closegreycircle.png'></div><div id='energyfolks_popup_content'></div></div></div>");
+    }
+    EnergyFolks.$('#energyfolks_popup_content').html('<div id="energyfolks_popup_loading"><h1>Loading...</h1><br><img src="'+EnergyFolks.server_url+'/assets/loader.gif" border="0"></div>');
+}
+// Center the popup box vertically on the screen.  If too big for the screen, display 100px below the top of the viewport.
+EnergyFolks.vertically_center_popup = function() {
+    var el_height = EnergyFolks.$('#energyfolks_popup_wrapper').height();
+    var view_height = EnergyFolks.$(window).height();
+    var scroll_location = EnergyFolks.$(document).scrollTop();
+    var offset = Math.max(Math.round((view_height - el_height)/2)-70,100);
+    EnergyFolks.$('#energyfolks_popup_wrapper').css('padding-top',(scroll_location + offset) + 'px');
 }
 
 /*
@@ -66,20 +131,27 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.EnergyFolks_popup', function() {
         var self = EnergyFolks.$(this);
         if(self.attr('data-iframe') == 'true')
-            EnergyFolks.iframe_popup(self.attr('data-command'),params);
+            EnergyFolks.iframe_popup(self.attr('data-command'),self.attr('data-params'));
         else
-            EnergyFolks.remote_popup(self.attr('data-command'),params);
+            EnergyFolks.remote_popup(self.attr('data-command'),self.attr('data-params'));
         return false;
     });
+    EnergyFolks.$('body').on('click','#energyfolks_popup_close img', EnergyFolks.hide_popup);
+    EnergyFolks.$('body').on('click','#energyfolks_popup_wrapper', function(event) { event.stopPropagation(); } );
+    EnergyFolks.$('body').on('click','#energyfolks_popup', EnergyFolks.hide_popup);
 });
 
-// Returns a hash of the current url for use in a query string that requires the frame to talk with the parent through
-// hash tag changes
+/* Returns a hash of the current url for use in a query string that requires the frame to talk with the parent through
+ * hash tag changes
+ */
 EnergyFolks.urlhash = function() {
     var current_url=window.location.href;
     return "current_url="+current_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_");
 }
 
+/*
+ * Notices functions (red/green/yellow bars that appear at the top of the screen
+ */
 // Information notices: show a notice at the top of the page, then hide after a certain time.
 EnergyFolks.showNotice = function(notice, klass, timeout) {
     if(typeof timeout === 'undefined') timeout = 2500;
@@ -110,4 +182,11 @@ EnergyFolks.hideNotice = function(id) {
         $('#'+id).remove();
         if($('.EnergyFolks_notice_holder').find('.notice').length == 0) $('.EnergyFolks_notice_holder').remove();
     });
+}
+
+/*
+ * Global callback: called on an element (el) to do common tasks, like convert timestamps into local time
+ */
+EnergyFolks.globalCallback = function(el) {
+
 }
