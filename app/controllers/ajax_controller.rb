@@ -10,7 +10,7 @@ class AjaxController < ApplicationController
     else
       html = render_to_string :partial => "users/ajax/login"
     end
-    render_ajax( {html: html, id: params['id']}.to_json , params['callback'])
+    render_ajax( {html: html, id: params['id']} )
   end
 
   # Display links to login/create account.  If a user is already logged in, show link to profile/logout
@@ -20,15 +20,16 @@ class AjaxController < ApplicationController
     else
       html = render_to_string :partial => "users/ajax/login_links"
     end
-    render_ajax( {html: html, id: params['id']}.to_json , params['callback'])
+    render_ajax( {html: html, id: params['id']} )
   end
 
   private
-  def render_ajax(output = nil,callback = nil)
+  def render_ajax(output = nil)
     if output.blank?
       render :js => "//Completed"
     else
-      render :js => "EnergyFolks.callbacks[#{callback}](#{output});EnergyFolks.callbacks[#{callback}] = null;"
+      output[:width] ||= 900   # default popup window width, if needed
+      render :js => "EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
   end
 

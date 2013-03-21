@@ -179,11 +179,27 @@ EnergyFolks.$(function() {
 
     // Attach listener to all 'forgot pass' links
     EnergyFolks.$('body').on('click','.EnFolks_forgot_pass', function() {
+        EnergyFolks.iframe_popup('users/new',{step: 1});
     });
 
 
     // Attach listener to all 'create account' links
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
