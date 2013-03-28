@@ -1,0 +1,12 @@
+<%= @user.first_name %>,
+<BR><BR>
+This is a courtesy notice to let you know that your <%= 'energyfolks' #TODO: @affiliate.name
+%> account's email address has been changed.  If you did not change your email address or believe this
+message has been received in error, please contact us immediately at <a href="mailto:contact@energyfolks.com">contact@energyfolks.com</a>.<BR>
+OLD ADDRESS: <%= @user.email %><BR>
+NEW ADDRESS: <%= @user.email_to_verify %>
+<BR><BR>
+Sincerely,
+<BR>
+<%= 'energyfolks' #TODO: @affiliate.name
+%>

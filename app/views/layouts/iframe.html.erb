@@ -11,13 +11,15 @@
 <body>
 
 <%= yield %>
-
-<script language="javascript">
-  EnergyFolks.$(function() {
-      EnergyFolks.parent_url = '<%= raw(@url) %>';
-      window.parent.location=EnergyFolks.parent_url+'#iframe_'+(EnergyFolks.$(document).height()+50);
-  });
-</script>
+<% if params['iframe'].present? && (params['iframe'] == '1') %>
+    <script language="javascript">
+      EnergyFolks.$(function() {
+          EnergyFolks.parent_url = '<%= raw(@url) %>';
+          window.parent.location=EnergyFolks.parent_url+'#iframe_'+(EnergyFolks.$(document).height()+50);
+      });
+    </script>
+<% end %>
+<%= raw(notices(notice, alert)) %>
 
 </body>
 </html>

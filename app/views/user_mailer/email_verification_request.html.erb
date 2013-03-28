@@ -1,0 +1,19 @@
+<%= @user.first_name %>,
+<BR><BR>
+We have received a request to change the contact and login email for your <%= 'energyfolks' #TODO: @affiliate.name
+%> account.<BR>
+OLD ADDRESS: <%= @user.email %><BR>
+NEW ADDRESS: <%= @user.email_to_verify %>
+<BR><BR>
+To confirm the email address change, please use the link below:
+<BR><BR>
+<%= link_to('Click Here to Verify Change',"#{@host}/users/verify?token=#{@user.verification_token}") %>
+<BR><BR>
+Or copy and paste the below URL into your browser:
+<BR>
+<%= link_to("#{@host}/users/verify?token=#{@user.verification_token}","#{@host}/users/verify?token=#{@user.verification_token}") %>
+<BR><BR>
+Sincerely,
+<BR>
+<%= 'energyfolks' #TODO: @affiliate.name
+%>

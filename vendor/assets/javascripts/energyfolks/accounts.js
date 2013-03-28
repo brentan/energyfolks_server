@@ -139,7 +139,7 @@ EnergyFolks.$(function() {
             else
                 return val;
         }
-        var url=EnergyFolks.server_url + "/users/try_login?user=" + EscapeAll(self.find('.EnFolksUser').val()) +"&pass=" +EscapeAll(self.find('.EnFolksPass').val())+"&cook="+cook+"&"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
+        var url=EnergyFolks.server_url + "/users/try_login?iframe_next=1&user=" + EscapeAll(self.find('.EnFolksUser').val()) +"&pass=" +EscapeAll(self.find('.EnFolksPass').val())+"&cook="+cook+"&"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
         window.open (url, "EnergyFolks_Login_Window","location=0,status=0,scrollbars=0, width=100,height=100");
         self.find('button').hide();
         if(self.find('.login_loading').length == 0) {
@@ -156,7 +156,7 @@ EnergyFolks.$(function() {
         if(hash.substr(1,6) == 'login_') {
             window.location.hash = '';
             if(hash.substr(7,5) == 'error') {
-                EnergyFolks.showNotice("Invalid email address or password","red");
+                EnergyFolks.showNotice("Invalid email address or password, or account not activated","red");
                 EnergyFolks.$('.EnFolksExternalLoginForm button').show();
                 EnergyFolks.$('.EnFolksExternalLoginForm .login_loading').hide();
             } else if(hash.substr(7,8) == 'success_')
@@ -179,11 +179,24 @@ EnergyFolks.$(function() {
 
     // Attach listener to all 'forgot pass' links
     EnergyFolks.$('body').on('click','.EnFolks_forgot_pass', function() {
-        EnergyFolks.iframe_popup('users/new',{step: 1});
+        EnergyFolks.iframe_popup('users/reset_password',{step: 1});
+        return false;
     });
 
+    // Attach listener to all 'resend activation' links
+    EnergyFolks.$('body').on('click','.EnFolks_reactivate', function() {
+        EnergyFolks.iframe_popup('users/resend_activation',{step: 1});
+        return false;
+    });
 
     // Attach listener to all 'create account' links
+    var NewAccount = function() {
+        var url=EnergyFolks.server_url + "/users/new?iframe_next=1&aid="+EnergyFolks.id;
+        window.open (url, "EnergyFolks_NewAccount_Window","location=0,status=0,scrollbars=0, width=900,height=650");
+        return false;
+    };
+    EnergyFolks.$('body').on('click', '#EnFolksCreateAccount', NewAccount); //LEGACY
+    EnergyFolks.$('body').on('click', '.EnFolks_create_account', NewAccount);
 });
 
 

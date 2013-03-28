@@ -1,25 +1,122 @@
 <% if session[:userid] && (@user.id == session[:userid]) %>
-    <h1>Your Account</h1>
     <div class='form'>
-      <%= raw(output_error(@user)) %>
-      <fieldset>
-        <%=	 form_for @user, :url => { :action => "update", :id => @user.id} do |f| %>
-            <%= render :partial => 'profile_items', :locals => { :f => f }%>
-            <div>
-              Current password (if changing passwords)<br />
-              <%= f.password_field :password_old %>
+        <%=	 form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
+          <%= raw(iframe_form) %>
+        <h1>Basic Information</h1>
+          <div class='form_label'>First Name</div>
+          <div class='form_entry'><%= f.text_field :first_name %></div>
+
+          <div class='form_label'>Last Name</div>
+          <div class='form_entry'><%= f.text_field :last_name %></div>
+
+          <div class='form_label'>Picture</div>
+          <div class='form_entry'>
+            <%= image_tag @user.avatar.url(:thumb_big) if @user.avatar.present? %>
+            <%= f.file_field :avatar %>
+          </div>
+
+          <div class='form_label'>Location</div>
+          <div class='form_entry'><%= f.text_field :location %></div>
+          <%
+            #TODO: Lat/Lng from location, ip address stuff for first login/all from AES
+          %>
+
+          <div class='form_label'>Timezone</div>
+          <div class='form_entry'>
+            <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => ActiveSupport::TimeZone::MAPPING.invert[current_user.timezone]}, {class: 'list_all'} ) %>
+          </div>
+
+          <div class='form_label'>Email Address</div>
+          <div class='form_entry'>
+            <% if @user.email_to_verify.present? %>
+                <%= f.text_field :email_to_verify %>
+                <BR>
+                <b>This address has not yet been verified.  Until verification occurs, your old email address (<%= @user.email %>) will still be associated with this account.
+                  (<%= link_to('Resend verification email','/users/resend_email_change_verification', :class => 'resend_activation', :remote => true )%>)</b>
+            <% else %>
+                <div class='hide_me'><%= @user.email %> <a href="#" onclick="$(this).closest('.hide_me').hide();$(this).closest('.form_entry').find('.show_me').show();return false;">(Change)</a></div>
+                <div class='show_me' style='display:none;'><%= f.text_field :email_to_verify %></div>
+            <% end %>
+            <div class='explain'>
+              Your email is kept private and not shared with anyone. It is not shown on your profile page.
             </div>
-            <div>
-              Create a new password <br />
-              <%= f.password_field :password %>
+            <div class='explain'>
+              Any change to your email will require verification of ownership of the new address.
             </div>
-            <div>
-              Retype new password  <br />
-              <%= f.password_field :password_confirmation %>
+          </div>
+
+        <h1>Password</h1>
+          <div class='form_label'>Current Password</div>
+          <div class='form_entry'>
+            <%= f.password_field :password_old %>
+            <div class='explain'>
+              Include if changing your password, otherwise leave blank
             </div>
-            <%= f.submit "Update" %> &nbsp;
+          </div>
+          <div class='form_label'>New Password</div>
+          <div class='form_entry'>
+            <%= f.password_field :password %>
+            <div class='explain'>
+              If changing your password
+            </div>
+          </div>
+          <div class='form_label'>Confirm New Password</div>
+          <div class='form_entry'>
+            <%= f.password_field :password_confirmation %>
+          </div>
+
+        <h1>Profile</h1>
+          <div class='form_label'>Position/Title</div>
+          <div class='form_entry'><%= f.text_field :position %></div>
+
+          <div class='form_label'>Organization</div>
+          <div class='form_entry'><%= f.text_field :organization %></div>
+
+          <div class='form_label'>Your Bio</div>
+          <div class='form_entry'><%= f.text_area :bio, :class => 'tinymce' %></div>
+
+          <div class='form_label'>Interests</div>
+          <div class='form_entry'><%= f.text_area :interests, :class => 'tinymce' %></div>
+
+          <div class='form_label'>Expertise</div>
+          <div class='form_entry'><%= f.text_area :expertise, :class => 'tinymce' %></div>
+
+          <div class='form_label'>Resume</div>
+          <div class='form_entry'>
+            <%= link_to('Current Resume', @user.resume.url) if @user.resume.present? %>
+            <%= f.file_field :resume %>
+          </div>
+
+        <h1>Privacy</h1>
+          <div class='form_label'>Profile Visibility</div>
+          <div class='form_entry'>
+            <label><%= f.radio_button :visibility, 1 %> Public</label>
+            <label><%= f.radio_button :visibility, 2 %> Only to logged in members of any network</label>
+            <label><%= f.radio_button :visibility, 3 %> Only to logged in members in my networks:</label>
+            <%
+               #TODO: Add network list here
+            %>
+            <label><%= f.radio_button :visibility, 4 %> Private (administrators only)</label>
+
+          </div>
+          <div class='form_label'>Resume Visibility</div>
+          <div class='form_entry'>
+            <label><%= f.radio_button :resume_visibility, 1 %> Public</label>
+            <label><%= f.radio_button :resume_visibility, 2 %> Only to logged in members of any network</label>
+            <label><%= f.radio_button :resume_visibility, 3 %> Only to logged in members in my networks:</label>
+            <%
+               #TODO: Add network list here
+            %>
+            <label><%= f.radio_button :resume_visibility, 4 %> Private (administrators only)</label>
+
+          </div>
+
+          <h1>Delete</h1>
+            <%= link_to "Delete my account", "/users/delete", :confirm => 'Are you sure?  Deleted account can not be restored, and all associated information is purged.' %>
+          <BR>
+          <%= tinymce %>
+          <%= f.submit "Update" %> &nbsp;
         <% end %>
-      </fieldset>
     </div>
 <% else %>
     <h1>something isnt quite right...</h1>

@@ -11,7 +11,7 @@
   #energyfolks_popup_wrapper {
     width: 360px;
     margin: 0px auto;
-    padding: 0px;
+    padding: 0px 0px 50px 0px;
     #energyfolks_popup_close {
       margin: 0px;
       padding: 0px;
@@ -43,7 +43,7 @@
 }
 #energyfolks_popup_greyout {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   bottom: 0px;

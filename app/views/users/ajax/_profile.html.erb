@@ -1,3 +1,8 @@
 <h1>PROFILE</h1>
+<%= image_tag(current_user.avatar.url(:thumb_big), :align => 'right') if current_user.avatar.present? %>
+<b><%= current_user.first_name %> <%= current_user.last_name %></b>
+<%= content_tag(:div, current_user.position) if current_user.position.present? %>
+<%= content_tag(:div, current_user.organization) if current_user.organization.present? %>
+<a href="#" class='EnergyFolks_popup' data-iframe="true" data-command="users/profile">Profile</a>
 <BR>
 <a href="#" class='EnFolks_logout'>Logout</a>

@@ -1,20 +1,35 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :check_for_iframe
+  before_filter :find_aid
+  before_filter :analytics
   layout :choose_layout
 
   private
   def check_for_iframe
     if params['iframe'].present? && (params['iframe'] == '1')
-      @layout = "iframe"
+      @layout = 'iframe'
       @url = params[:current_url].gsub("#","").gsub(/_dot_/,".").gsub(/_slash_/,"/").gsub(/_colon_/,":").gsub(/_qmark_/,"?").gsub(/_amp_/,"&").gsub(/_equals_/,"=")
+    elsif params['iframe_next'].present?
+      @layout = 'iframe'
     else
-      @layout = "application"
+      @layout = 'application'
     end
+  end
+
+  def find_aid
+    # TODO: check for params['aid'] (Check!) OR subdomain and then set AID accordingly
+    @aid = 0
+    @host = "http://dev.energyfolks.com:3000"
   end
 
   def choose_layout
     @layout
+  end
+
+  def analytics
+    # TODO: current_url parameter may be passed and can be used for analytics
+    # TODO: aid (affiliate id) may be passed and can be used for analytics
   end
 
   def current_user

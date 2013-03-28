@@ -1,0 +1,18 @@
+<h1>Resend Activation Email</h1>
+<p>
+  Didn't receive the activation email?  Please be patient, the activation email can take up to 15 minutes to reach your inbox.  In addition, please check
+  spam folders for the email.  Please also be sure 'accounts@energyfolks.com' is allowed to send email to your account.
+</p>
+<p>
+  To resend the activation email, please enter the email address you registered with in the box below.  If you still have
+  trouble activation your account, email us at <a href="mailto:contact@energyfolks.com">contact@energyfolks.com</a>.
+</p>
+<div class='center'>
+    <%= form_tag('/users/resend_activation') do %>
+        <%= raw(iframe_form) %>
+        Email Address: <input type="text" name="email">
+        <input type="hidden" name="step" value='2'>
+        <BR>
+        <button type="submit">Resend Activation Email</button>
+    <% end %>
+</div>

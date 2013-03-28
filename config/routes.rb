@@ -1,19 +1,33 @@
 EnergyfolksServer::Application.routes.draw do
 
   # TODO: CLEAN UP THESE ROUTES AND MAKE THEM BETTER!
-  get "users/index"
   get "users/login"
+
   get "users/profile"
-  get "users/update"
+  put "users/update"
   get "users/new"
   post "users/create"
+  get "users/delete"
 
   get "users/try_login"
   get "users/try_cookie"
   get "users/logout"
+  get "users/activate"
+  get "users/from_hash"
+  get "users/verify"
+
+  get "users/reset_password"
+  post "users/reset_password"
+
+  get "users/resend_email_change_verification"
+  get "users/resend_activation"
+  post "users/resend_activation"
 
   # Make ajax routes visible
   match ':controller(/:action(/:id))(.:format)', controller: /ajax/
+
+  match 'privacy' => 'users#privacy'
+  match 'terms' => 'users#terms'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
