@@ -1,0 +1,25 @@
+div.form {
+  div.form_label {
+    font-weight: bold;
+    font-size: 1.3em;
+    width: 300px;
+    float: left;
+  }
+  div.form_entry {
+    margin-left: 320px;
+    margin-bottom: 10px;
+  }
+  div.explain {
+    font-style: italic;
+    font-size: .8em;
+  }
+  div.form_button {
+  }
+
+  div.field_with_errors {
+    background-color: #eeaaaa
+  }
+  span.validation-error {
+    font-weight: bold;
+  }
+}

@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
 
+  # STILL TO DO:
+  # tie-ins to networks
+  # geocoding locations to determine lat/lng (also do IP address stuff like AES)
+  # email subscriptions (tokens as well to edit from email footer)
+  # social media logins
+
   def try_login
     # TODO: aid (affiliate id) is passed and can be used for analytics
     # Get request submitted by javascript library
@@ -9,6 +15,8 @@ class UsersController < ApplicationController
 
     user = User.find_by_email_and_password(params[:user],params[:pass])
     if user
+      user.last_login = Time.now
+      user.save!(validate: false)
       session[:userid] = user.id
       cookies[:cookieID] = user.cookie if params[:cook]
       login_hash = UserLoginHash.create(user_id: user.id)
@@ -16,6 +24,36 @@ class UsersController < ApplicationController
     else
       render :action => 'ajax/error', :locals => { url: url }
     end
+  end
+
+  def from_hash
+    # TODO: check login hash and return user details to the requesting server
+  end
+
+  def activate
+    user = params['token'].present? ? User.find_by_activation_token(params['token']) : nil
+    if user.present?
+      user.verified= true
+      user.save!(validate:false)
+      session[:userid]=user.id
+      flash[:notice]="Your account has been activated"
+      redirect_to :action => "profile"
+    end
+  end
+
+  def verify
+    # Verify changes to email address
+    user = params['token'].present? ? User.find_by_verification_token(params['token']) : nil
+    if user.present?
+      UserMailer.delay.email_verification_request_2(user, @aid, @host)
+      user.email = user.email_to_verify
+      user.email_to_verify = nil
+      user.save!(validate:false)
+      flash[:notice]="Your email address has been changed"
+    else
+      flash[:alert]="Invalid email change URL"
+    end
+    redirect_to :action => :login
   end
 
   def try_cookie
@@ -42,23 +80,12 @@ class UsersController < ApplicationController
     render :js => "EnergyFolks.logout_callback();"
   end
 
-  def index
-    if session[:userid] && (session[:userid] > 0)
-      @user = User.find(session[:userid])
-      render :action => :profile
-    else
-      redirect_to :action => :login
-    end
-  end
-
   def login
     @user = User.new
   end
 
   def profile
-    if params[:id]
-      @user = User.find(params[:id])
-    elsif session[:userid]
+    if session[:userid]
       @user = User.find(session[:userid])
       render :action => :edit
     else
@@ -66,24 +93,23 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
-    @user = User.find(params[:id])
-    if(@user.do_update(params))
+    @user = User.find(session[:userid])
+    if (params[:user][:password_old].blank? && params[:user][:password].blank?) || (params[:user][:password_old].present? && @user.check_password(params[:user][:password_old]))
+      old_email = @user.email_to_verify
       if(@user.update_attributes(params[:user]))
+        UserMailer.delay.email_verification_request(@user, @aid, @host) if (old_email != @user.email_to_verify) && @user.email_to_verify.present?
+        UserMailer.delay.reset_password_2(@user, @aid, @host) if params[:user][:password_old].present? && params[:user][:password].present?
         flash[:notice]="Your account has been updated"
-        redirect_to :action => "index"
       else
-        render :action => :edit
+        flash[:alert]="There are errors in your profile.  Please correct and resubmit."
       end
     else
-      @user = User.find(params[:id])
+      @user.errors.add(:password_old,"Incorrect current password")
       @user.attributes=params[:user]
-      @user.errors.add(:base,"Incorrect current password")
-      render :action => :edit
+      flash[:alert]="There are errors in your profile.  Please correct and resubmit."
     end
+    render :action => :edit
   end
 
   def new
@@ -92,12 +118,76 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      session[:userid]=@user.id
-      flash[:notice]="Your account has been created and you are now logged in";
-      redirect_to :controller => "meetings"
-    else
+    if !@user.save
       render :action => "new"
+    else
+      UserMailer.delay.confirmation_request(@user, @aid, @host)
     end
+  end
+
+  def resend_activation
+    @step = params['step']
+    if @step == '2'
+      user = User.find_by_email(params['email'].downcase)
+      if user.present? && !user.verified?
+        UserMailer.delay.confirmation_request(user, @aid, @host)
+        flash[:notice]="The activation email has been resent.  Please check your inbox."
+      elsif user.present?
+        flash[:alert]="Account has already been activated."
+      else
+        flash[:alert]="Email address not found."
+      end
+    end
+  end
+
+  def resend_email_change_verification
+    UserMailer.delay.email_verification_request(current_user, @aid, @host)
+    render :nothing => true, :status => 200, :content_type => 'text/html'
+  end
+
+  def reset_password
+    @step = params['step']
+    if @step == '2'
+      user = User.find_by_email(params['email'].downcase)
+      if user.present? && user.verified?
+        UserMailer.delay.reset_password(user, @aid, @host)
+        flash[:notice]="Password reset instruction have been sent.  Please check your inbox."
+      elsif user.present?
+        flash[:alert]="Account has not yet been activated."
+      else
+        flash[:alert]="Email address not found."
+      end
+    elsif @step == '3'
+      @user = User.find_by_password_reset_token(params['token'])
+      @token = params['token']
+      if @user.blank?
+        @step = '2'
+        flash[:alert]="The password reset URL is invalid."
+      end
+    elsif @step == '4'
+      @user = User.find_by_password_reset_token(params['token'])
+      @token = params['token']
+      if @user.blank?
+        @step = '2'
+        flash[:alert]="The password reset URL is invalid."
+      else
+        params['password'] = 'ERR' if params['password'].blank?
+        @user.password = params['password']
+        @user.password_confirmation = params['password_confirmation']
+        begin
+          @user.save!
+          UserMailer.delay.reset_password_2(@user, @aid, @host)
+        rescue
+          @step = '3'
+          flash[:alert]=@user.errors.messages[:password].map{|e| "Password #{e}"}.join(", ")
+        end
+      end
+    end
+  end
+
+  def privacy
+  end
+
+  def terms
   end
 end

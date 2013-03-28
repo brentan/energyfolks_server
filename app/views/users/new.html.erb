@@ -1,34 +1,54 @@
-<h1>Create an Account</h1>
+<div class='center'>
+    <h1>GROUP NAME is an energyfolks network</h1>
+    <table align=center border=0 cellpadding=1 cellspacing=0>
+      <tr>
+        <td>
+          <img src='https://www.energyfolks.com/resourceimage/PartnerPic1.png' style='max-width:290px;border:1px solid black;'>
+        </td><td>
+          <%= image_tag('enfolksarrow.png') %>
+        </td>
+      </tr>
+    </table>
+    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
+      An energyfolks account gives you access with a single login to Stanford Energy Club as well as other networks on the
+      energyfolks platform.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
+</div>
+<hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
+
 <div class='form'>
-  <fieldset>
     <%=	 form_for @user, :url => { :action => "create"} do |f| %>
+      <%= raw(iframe_form) %>
+      <div class='form_label'>Email Address</div>
+      <div class='form_entry'>
+        <%= f.text_field :email %>
+        <div class='explain'>
+          Your email is kept private and not shared with anyone. It is not shown on your profile page.
+        </div>
+      </div>
 
-        <% if flash[:notice] %>
-            <div id="flash_notice"><%=h flash[:notice] %></div>
-        <% end %>
-        <div>
-          <%= f.label :email %>  <br />
-          <%= f.text_field :email %>
-        </div>
-        <div>
-          <%= f.label :first_name %>  <br />
-          <%= f.text_field :first_name %>
-        </div>
-        <div>
-          <%= f.label :last_name %>  <br />
-          <%= f.text_field :last_name %>
-        </div>
+      <div class='form_label'>Networks</div>
+      <div class='form_entry'>
+        <% #TODO- NETWORKS %>
+        ADD ME
+      </div>
 
-        <div>
-          Create a password <br />
-          <%= f.password_field :password %>
+      <div class='form_label'>First Name</div>
+      <div class='form_entry'><%= f.text_field :first_name %></div>
+
+      <div class='form_label'>Last Name</div>
+      <div class='form_entry'><%= f.text_field :last_name %></div>
+
+      <div class='form_label'>Password</div>
+      <div class='form_entry'><%= f.password_field :password %></div>
+
+      <div class='form_label'>Confirm Password</div>
+      <div class='form_entry'><%= f.password_field :password_confirmation %></div>
+
+      <div class='form_button center'>
+        <div class='explain'>
+          By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
         </div>
-        <div>
-          Retype password  <br />
-          <%= f.password_field :password_confirmation %>
-        </div>
-        <%= f.submit "Create" %> &nbsp;
-        <%= link_to "cancel", {:action => "index"}, :class => "cancel" %>
+        <%= f.submit "Register" %>
+      </div>
     <% end %>
-  </fieldset>
 </div>

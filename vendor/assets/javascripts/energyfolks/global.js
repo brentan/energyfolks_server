@@ -26,6 +26,7 @@ EnergyFolks.ajax = function(command, parameters, callback) {
         EnergyFolks.callbacks.push(callback);
         url+="&callback="+(EnergyFolks.callbacks.length-1)
     }
+    url+="&aid="+EnergyFolks.id;
     // Append to the head the javascript load request...upon addition the browser will load the external js file.
     var head= document.getElementsByTagName('head')[0];
     var script= document.createElement('script');
@@ -47,7 +48,9 @@ EnergyFolks.iframe_popup = function(command, parameters) {
     else if(EnergyFolks.$.type(parameters) === 'string')
         url+=parameters;
     url+="&iframe=1&"+EnergyFolks.urlhash();
-    EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='display:none;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:300px;overflow:auto;'></iframe></div>");
+    url+="&aid="+EnergyFolks.id;
+    EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
+    EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='visibility:hidden;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:30px;overflow:auto;'></iframe></div>");
 }
 EnergyFolks.$(function() {
     // Attach listener to hash for handling response of iframe loads
@@ -55,10 +58,9 @@ EnergyFolks.$(function() {
         var hash = location.hash;
         if(hash.substr(1,7) == 'iframe_') {
             window.location.hash = '';
-            EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
             EnergyFolks.$('#energyfolks_popup_iframe iframe').css('height',hash.replace("#iframe_","") + 'px');
             EnergyFolks.$('#energyfolks_popup_loading').remove();
-            EnergyFolks.$('#energyfolks_popup_iframe').show();
+            EnergyFolks.$('#energyfolks_popup_iframe').css('visibility','visible');
             EnergyFolks.vertically_center_popup();
         }
         // This will close the popup if 'hide_popup' is called within the iframe window, as it passes back this hash

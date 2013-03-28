@@ -1,16 +1,55 @@
 class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
 
-  attr_accessible :email, :first_name, :last_name, :region_id, :visibility, :timezone, :language, :avatar,
-                  :password, :password_confirmation, :password_old
-  attr_accessor :password
+  attr_accessible :email, :first_name, :last_name, :lat, :lng, :visibility, :timezone, :location, :avatar, :resume,
+                  :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
+                  :resume_visibility, :position, :organization
+  attr_accessor :password, :password_old
+
   validates_presence_of :first_name
-  validates_presence_of :email
-  validates_uniqueness_of :email, :case_sensitive => false
   validates_length_of :password, :within => 4..40, :if => :password_entered?
   validates_confirmation_of :password, :if => :password_entered?
 
+  validates_each :email do |record, attr, value|
+    if value.present?
+      record.errors.add(attr, 'Invalid email address') unless value.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,12}$/
+      user = User.find_by_email(value.downcase)
+      record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
+      user = User.find_by_email_to_verify(value.downcase)
+      record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
+    else
+      record.errors.add(attr, 'Please provide an email address')
+    end
+  end
+  validates_each :email_to_verify do |record, attr, value|
+    if value.present?
+      record.errors.add(attr, 'Invalid email address') unless value.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,12}$/
+      user = User.find_by_email(value.downcase)
+      record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
+      record.errors.add(attr, 'address is the same as current account address.  Leave blank to cancel address change.') if user.present? && (user.id == record.id)
+      user = User.find_by_email_to_verify(value.downcase)
+      record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
+    end
+  end
+
+
   before_save :set_password
+
+  has_attached_file :avatar, {
+      :styles => { :medium => "120x200>", :thumb_big => "90x90#", :thumb => "40x40#" },
+      :url => "/system/profile_avatar/:hash.:extension",
+      :hash_secret => "34fQfadfbdhbfladsbfadilsbfaldksfbt49javsdnva9sbdf7a909-"
+  }
+  has_attached_file :resume, {
+      :url => "/system/resume/:hash.:extension",
+      :hash_secret => "34fQfadfinasdna2-9jrq49f8acn748q3t49javsdnva9sbdf7a909-"
+  }
+  validates_attachment :avatar,
+                       :content_type => { :content_type => /^(image).*/ },
+                       :size => { :in => 0..2.megabytes }
+  validates_attachment :resume,
+                       :content_type => { :content_type => /^(text|application\/pdf|application\/x\-pdf|application\/ms|application\/vnd\.ms|application\/vnd\.openxmlformats|application\/x\-ms).*/ },
+                       :size => { :in => 0..20.megabytes }
 
   ITOA64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
@@ -27,8 +66,15 @@ class User < ActiveRecord::Base
   end
 
   def check_password(password)
-    hash = self.crypt_private(password, self.encrypted_password);
+    hash = self.crypt_private(password, self.encrypted_password)
     return hash == self.encrypted_password
+  end
+
+  def self.find_by_email_and_password(email, password)
+    user = User.find_by_email(email.downcase)
+    return nil if user.blank?
+    return nil unless user.check_password(password) && user.verified
+    return user
   end
 
   def cookie
@@ -36,17 +82,50 @@ class User < ActiveRecord::Base
     return Digest::MD5.hexdigest(hash + ITOA64)
   end
 
-  def self.find_by_email_and_password(email, password)
-    user = User.find_by_email(email.downcase)
-    return nil if user.blank?
-    return nil unless user.check_password(password)
-    return user
-  end
-
   def self.find_by_cookie(cookie)
     where_clause =  "CONCAT(encrypted_password,CONCAT(encrypted_cookie,id))"
     where_clause = "md5(CONCAT(#{where_clause}, '#{ITOA64}')) = '#{cookie}'"
     User.where(where_clause).first
+  end
+
+  def password_reset_token
+    hash = self.encrypted_password + Time.now.to_s + self.id.to_s
+    self.password_reset = Digest::MD5.hexdigest(hash + ITOA64)
+    self.save!(validate: false)
+    hash = self.encrypted_password + self.password_reset + self.id.to_s
+    return Digest::MD5.hexdigest(hash + ITOA64)
+  end
+
+  def self.find_by_password_reset_token(token)
+    where_clause =  "CONCAT(encrypted_password,CONCAT(password_reset,id))"
+    where_clause = "md5(CONCAT(#{where_clause}, '#{ITOA64}')) = '#{token}'"
+    User.where(where_clause).first
+  end
+
+  def activation_token
+    hash = self.encrypted_password + self.first_name + self.id.to_s
+    return Digest::MD5.hexdigest(hash + ITOA64)
+  end
+
+  def self.find_by_activation_token(token)
+    where_clause =  "CONCAT(encrypted_password,CONCAT(first_name,id))"
+    where_clause = "md5(CONCAT(#{where_clause}, '#{ITOA64}')) = '#{token}'"
+    user = User.where(where_clause).first
+    return nil unless user.present? && !user.verified?
+    return user
+  end
+
+  def verification_token
+    hash = self.email + self.email_to_verify + self.id.to_s
+    return Digest::MD5.hexdigest(hash + ITOA64)
+  end
+
+  def self.find_by_verification_token(token)
+    where_clause =  "CONCAT(email,CONCAT(email_to_verify,id))"
+    where_clause = "md5(CONCAT(#{where_clause}, '#{ITOA64}')) = '#{token}'"
+    user = User.where(where_clause).first
+    return nil unless user.present? && user.verified?
+    return user
   end
 
   protected

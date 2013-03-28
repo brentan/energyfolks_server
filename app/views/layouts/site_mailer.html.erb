@@ -1,0 +1,21 @@
+<%
+   #files = %w(creampaper.png logo_small.png logo_words_long.png)
+   #files.each do |file_name|
+   #  file = File.read("#{Rails.root}/app/assets/images/#{file_name}")
+   #  attachments.inline[file_name] = file
+   ## use with  attachments[file_name].url
+   #end
+%>
+<body>
+<h1>EMAIL LAYOUT</h1>
+<%= yield %>
+
+<BR><BR>
+<% if false # TODO: Email footer with link to change email settings %>
+    &#169; Energyfolks, <%= Time.now.year %>
+    <BR><BR>
+    <% if @user.present? && @user.instance_of?(User) %>
+        Don't want to receive emails like this?  <%= link_to('Change your Email Settings', edit_email_settings_token_url(@user.email_settings_tokens.create.token), style: "color:#585858;") %>.
+    <% end %>
+<% end %>
+</body>

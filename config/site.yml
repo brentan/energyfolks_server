@@ -51,7 +51,7 @@ email_recipients:
 # deliver_email of 'true' means it will send email as expect.
 # deliver_email of 'false' means it will send to the specified email list.
 mail_intercept:
-  deliver_email: false
+  deliver_email: true
   email_list: 'brentan@energysociety.org'
   white_list_domains: ['performantsoftware.com', 'energysociety.org']
 
