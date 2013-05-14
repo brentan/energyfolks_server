@@ -126,7 +126,7 @@ EnergyFolks.$(function() {
 
 
     // Attach listener to all login forms
-    EnergyFolks.$('body').on('submit','.EnFolksExternalLoginForm', function() {
+    var login_form_submit = function() {
         var self = EnergyFolks.$(this);
         if(self.find('.EnFolksCookie').prop('checked'))
             var cook=1;
@@ -148,7 +148,9 @@ EnergyFolks.$(function() {
         } else
             self.find('.login_loading').show();
         return false;
-    });
+    };
+    EnergyFolks.$('body').on('submit','.EnFolksExternalCustomLoginForm', login_form_submit);
+    EnergyFolks.$('body').on('submit','.EnFolksExternalLoginForm', login_form_submit);
 
     // Attach listener to hash for handling response of login form upon submit
     EnergyFolks.$(window).on('hashchange',function() {
@@ -219,80 +221,24 @@ EnergyFolks.$(function() {
 /*
  LEGACY LIBRARY: This is provided for backwards compatibility.  Functions below simply access EnergyFolks namepsace functions
  */
-function EnergyFolksLogin(callback)
-{
+function EnergyFolksLogin(callback) {
     EnergyFolks.callbackURL=callback;
 }
-/*
- Set an alternative URL to forward to upon successful login, otherwise current page will be refreshed (NOTE FOR SECOND SCENARIO:
- you must use sessions if you refresh the current page, otherwise you will enter an infinite loop!)
- */
 EnergyFolksLogin.prototype.ForwardTo = function(url) {
-    this.forwardto=url;
+    EnergyFolks.forwardto=url;
 }
-/*
- Set an affiliate ID.  When set, user who click the 'new account' button will be greeted to a 'create account' screen that is branded
- with your affiliate information and either automatically selects the user to become a member of your affiliate group (if you have an open
- group) or provides instructions to the user on registering with a valid email address to become and affiliate member.
- For more information on becoming an affiliate, visit https://www.energyfolks.com/developer
- To find your affiliate ID to use as an input for this function, visit the affiliate
- details page at energyfolks.com, and look in the location bar.  The URL will be of the form energyfolks.com/partner/detail/ID
- */
 EnergyFolksLogin.prototype.SetAffiliate = function(id) {
     EnergyFolks.id = id;
 }
-/*
- * Hide the top bar (suppress it from displaying)
- */
-EnergyFolksLogin.prototype.HideTopbar = function() {
-    document.write("<div id='efadminbar' style='display:none;position:relative;'></div>");
-}
-/*
- * unfix the top bar and make it dissapear when scrolling down
- */
-EnergyFolksLogin.prototype.UnFixTopbar = function() {
-    this.TopBarFixed=false;
-}
-/*
- Check Cookies: This should be run on all pages to check client cookie and auto-login if recognized
- */
-EnergyFolksLogin.prototype.CheckCookies = function() {
-
-}
-// BELOW IS TODO!!! MAKE SURE TO UPDATE THIS STUFF!
-/*
- LOGIN BOX: The below will create a login box with username/password and join us links etc
- */
+EnergyFolksLogin.prototype.CheckCookies = function() {}
 EnergyFolksLogin.prototype.DisplayLogin = function() {
-    document.write("<div id='EnFolksLoginDiv_"+this.LoginID+"' style='text-align:center;'><h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>");
-    this.loadLoginBox();
+    EnergyFolks.LoginBox();
 }
-
-/*
- * CUSTOM LOGIN BOX: Initialize the script.  Run this after you have added your custom form elements to page.
- */
-EnergyFolksLogin.prototype.CustomLogin = function() {
-    EnFolks_get_object('EnFolksExternalCustomLoginForm').onsubmit=function(obj) {return function() {obj.SubFormCustom();return false;};}(this);
-    if(EnFolks_get_object("EnFolksCreateAccount"))
-        EnFolks_get_object("EnFolksCreateAccount").onclick=function(obj) {return function() {EnFolksMessageSize("https://www.energyfolks.com/accounts/CreateAccountExternal/"+obj.affiliateid,900,600);EnFolksWaitForLoad();};}(this);
-    if(!EnFolks_get_object("EnFolksHiddenSubForm"))
-        document.write("<div style='display:none;'><form method='post' action='" + this.callbackURL + "' id='EnFolksHiddenSubForm'><input type='hidden' name='hash' id='EnFolksHash' value=''><input type='hidden' name='forwardto' id='EnfolksForwardTo' value=''></form></div>");
-}
-
-/*
- SIMPLE LINK BOX: Show a link to the login page and get account page
- */
+EnergyFolksLogin.prototype.CustomLogin = function() {}
 EnergyFolksLogin.prototype.DisplaySimpleLogin = function(ShowDetails) {
-    document.write("<div id='EnFolksLoginDiv_"+this.LoginID+"' style='text-align:center;'><h6>Loading...</h6></div>");
-    this.loadSimpleBox(ShowDetails);
+    EnergyFolks.LoginLinks();
 }
-
-
-/*
- ALIAS KEPT FOR BACKWARDS COMPATIBILITY
- */
 EnergyFolksLogin.prototype.DisplaySimpleLoginBig = function(ShowDetails) {
-    //Alias, provided for backwards compatibility
     this.DisplaySimpleLogin(ShowDetails);
 }
 EnergyFolksLogin.prototype.ShowUserDetails = function() {
@@ -305,282 +251,42 @@ EnergyFolksLogin.prototype.Login = function() {
 EnergyFolksLogin.prototype.LoginEmpty = function() {
     this.CheckCookies();
 }
-/*
- SERVER SIDE TYPE LOGIN FUNCTION:
- Initialize the script.  Will display a link that says 'logout'.  This will forward to the 'forwardto' address, or reload page
- when clicked, after logging out the current user.  Only call this function if you have verified the user is already logged in
- using session variables in PHP
- */
 EnergyFolksLogin.prototype.Logout = function(userclass,userstyle) {
-    document.write("<span id='EnFolksLogoutSpan3'><a href='javascript:;' id='EnFolksLogoutLink' class='"+userclass+"' style='"+userstyle+"'>Logout</a></span>");
-    if(!EnFolks_get_object("EnFolksHiddenSubForm")) document.write("<span style='display:none;'><form method='post' action='" + this.callbackURL + "' id='EnFolksHiddenSubForm'><input type='hidden' name='hash' id='EnFolksHash' value=''><input type='hidden' name='forwardto' id='EnfolksForwardTo' value=''></form></span>");
-    EnFolks_get_object("EnFolksLogoutLink").onclick=function(obj){return function() {obj.ExecuteLogout();return false;};}(this);
-}
-/*
- SERVER SIDE FUNCTION: Should be called on ALL pages to ensure the top display bar is shown (only run if logged in)
- */
-EnergyFolksLogin.prototype.DisplayTopbar = function() {
-    this.ShowUserDetails();
-    EnFolks_get_object('EnFolksDetsDiv').style.display='none';
+    document.write("<a href='#' class='EnFolks_logout'>Logout</a>");
 }
 
-//The following functions are internal functions and should not need to be called directly
 
-// Performs the full logout
-EnergyFolksLogin.prototype.ExecuteLogout = function() {
-    var tExpDate=new Date();
-    tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-    document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-    var url=this.forwardto
-    if(url == "")
-        url=location.href;
-    EnFolks_get_object('EnfolksForwardTo').value=url;
-    if((this.callbackURL != null) && (this.callbackURL != "")) {
-        var ajaxRequest;  // The variable that makes Ajax possible!
-        try{
-            // Opera 8.0+, Firefox, Safari
-            ajaxRequest = new XMLHttpRequest();
-        } catch (e){
-            // Internet Explorer Browsers
-            try{
-                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
-                try{
-                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e){
-                    // Something went wrong
-                    alert("Your browser does not seem to support AJAX calls.  You will not be able to login.");
-                    return false;
-                }
-            }
-        }
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function(obj){return function(){
-            if(ajaxRequest.readyState == 4) {
-                obj.FinalLogout();
-            }
-        };}(this);
-        ajaxRequest.open("GET",this.callbackURL, true);
-        ajaxRequest.send(null);
-    } else
-        this.FinalLogout();
-    EnFolks_get_object('EnFolksLoginDiv').innerHTML="<h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6>";
-}
-EnergyFolksLogin.prototype.FinalLogout = function() {
-    var tExpDate=new Date();
-    tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-    document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-    EnFolks_get_object('EnFolksHiddenSubForm').action="https://www.energyfolks.com/accounts/external_Logout";
-    EnFolks_get_object('EnFolksHiddenSubForm').submit();
-}
-EnergyFolksLogin.prototype.FinalLogout2 = function() {
-    var tExpDate=new Date();
-    tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-    document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-    EnFolks_get_object('EnFolksHiddenSubForm2').action="https://www.energyfolks.com/accounts/external_Logout";
-    EnFolks_get_object('EnFolksHiddenSubForm2').submit();
-}
-EnergyFolksLogin.prototype.ExecuteLogout2 = function() {
-    var tExpDate=new Date();
-    tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-    document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-    var url=this.forwardto;
-    if(url == "")
-        url=location.href;
-    EnFolks_get_object('EnfolksForwardTo2').value=url;
-    if(this.callbackURL != null) {
-        var ajaxRequest;  // The variable that makes Ajax possible!
-        try{
-            // Opera 8.0+, Firefox, Safari
-            ajaxRequest = new XMLHttpRequest();
-        } catch (e){
-            // Internet Explorer Browsers
-            try{
-                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
-                try{
-                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e){
-                    // Something went wrong
-                    alert("Your browser does not seem to support AJAX calls.  You will not be able to login.");
-                    return false;
-                }
-            }
-        }
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function(obj){return function(){
-            if(ajaxRequest.readyState == 4) {
-                obj.FinalLogout2();
-            }
-        };}(this);
-        ajaxRequest.open("GET",this.callbackURL, true);
-        ajaxRequest.send(null);
-    } else
-        this.FinalLogout2();
-    EnFolks_get_object('EnFolksDetsDiv').innerHTML="<h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6>";
-}
-var EnergyFolksLoginCallback=new Array();
-var EnergyFolksHashKey="";
-var EnFolksIsMobile=false;
-var AlertedEnFolksIsMobile=false;
-// Callback waiter...simply wait for server response and issue callback
-EnergyFolksLogin.prototype.callbackWaiter = function() {
-    //if(EnFolksIsMobile && !AlertedEnFolksIsMobile) {
-    //   AlertedEnFolksIsMobile=true;
-    //   if(confirm("Welcome!  Press 'OK' to view this page on our mobile-optimized site.")) {
-    //       var cur_url=window.location.href;
-    //       cur_url=cur_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_");
-    //       window.location="https://www.energyfolks.com/mobile/ExtForward/"+this.affiliateid+"/"+cur_url+"/"+window.location.hash.replace("#","");
-    //   }
-    //}
-    if(EnergyFolksLoginCallback[this.LoginID] == 1) {
-        var tExpDate=new Date();
-        tExpDate.setTime( tExpDate.getTime()+(60*1000) );
-        document.cookie= "EnFolksSuccessLogin=" +(Subdata)+";expires="+ tExpDate.toGMTString();
-        this.hash_key=EnergyFolksHashKey;
-        this.callback();
-    } else if(EnergyFolksLoginCallback[this.LoginID] == -1) {
-        if(EnFolks_get_object('EnFolksExternalLoginForm')) {
-            var nameEQ = "EnFolksSuccessLogin=";
-            var ca = document.cookie.split(';');
-            cook=0;
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) {cook= c.substring(nameEQ.length,c.length); break; }
-            }
-            if(cook != 0) {
+//The following functions were internal functions and are no longer used.  Provided simply for compatibility
+EnergyFolksLogin.prototype.DisplayTopbar = function() {};
+EnergyFolksLogin.prototype.ExecuteLogout = function() {};
+EnergyFolksLogin.prototype.FinalLogout = function() {};
+EnergyFolksLogin.prototype.FinalLogout2 = function() {};
+EnergyFolksLogin.prototype.ExecuteLogout2 = function() {};
+EnergyFolksLogin.prototype.callbackWaiter = function() {};
+EnergyFolksLogin.prototype.callbackWaiterTop = function() {};
+EnergyFolksLogin.prototype.callbackWaiterCustom = function() {};
+EnergyFolksLogin.prototype.getCookie = function(c_name) {};
+EnergyFolksLogin.prototype.testLogin = function(displayLogin) {};
+EnergyFolksLogin.prototype.testLoginScen1 = function(ShowDetails){};
+EnergyFolksLogin.prototype.testLoginScen2 = function(ShowDetails){};
+EnergyFolksLogin.prototype.testLoginScen3 = function(ShowDetails){};
+EnergyFolksLogin.prototype.ShowUserDetailBox = function(){};
+EnergyFolksLogin.prototype.AjaxRequest = function(url) {};
+EnergyFolksLogin.prototype.SubFormTop = function() {};
+EnergyFolksLogin.prototype.SubForm = function() {};
+function EnFolksSafariLogin(win,url) {}
+EnergyFolksLogin.prototype.SubFormCustom = function() {};
+EnergyFolksLogin.prototype.callback = function() {};
+EnergyFolksLogin.prototype.EscapeAll = function(str) {};
 
-                /* Below is part of a kludge to deal with browser that have disabled 3rd party cookies.  Flow is as follows:
-                 * - user logs in
-                 * - if login successful, this script stores credentials in cookie from client domain and reloads page
-                 * - if on page reload the server responds that user is not logged in, client knows login was successful, so issue must be rejected 3rd party cookie
-                 * - script will now forward to new window on server to log user in
-                 * - new window is at 3rd party, so it can set cookies.  it sets login cookie, then issues a 'history.back();' request to send browser back
-                 * - this code here checks that this occured, and does 1 final page refresh to force browser to again ask for user credentials from server...this time is should log user in
-                 */
-                var tExpDate=new Date();
-                tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-                document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-                cook=cook.split("ENFOLKSSEPERATION")
-                var subval="user="+cook[0]+"&pass="+cook[1]+"&cook="+cook[2];
-                var cur_url=window.location.href;
-                window.location.href="https://www.energyfolks.com/externallogin.php?ID=nocookie"+cur_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_")+"&"+subval;
-            }
-            EnFolks_get_object('EnFolksExternalLoginForm').onsubmit=function(obj) {return function() {obj.SubForm();return false;};}(this);
-        }
-        if(EnFolks_get_object("EnFolksCreateAccount"))
-            EnFolks_get_object("EnFolksCreateAccount").onclick=function(obj) {return function() {EnFolksMessageSize("https://www.energyfolks.com/accounts/CreateAccountExternal/"+obj.affiliateid,900,600);EnFolksWaitForLoad();};}(this);
-        if(EnFolks_get_object("EnFolksLogoutSpan")) {
-            if(!EnFolks_get_object("EnFolksHiddenSubForm"))
-                EnFolks_get_object("EnFolksLogoutSpan").innerHTML="<a href='javascript:;' id='EnFolksLogoutLink'>Logout</a><span style='display:none;'><form method='post' action='" + this.callbackURL + "' id='EnFolksHiddenSubForm'><input type='hidden' name='hash' id='EnFolksHash' value=''><input type='hidden' name='forwardto' id='EnfolksForwardTo' value=''></form></span>";
-            else
-                EnFolks_get_object("EnFolksLogoutSpan").innerHTML="<a href='javascript:;' id='EnFolksLogoutLink'>Logout</a>";
-            EnFolks_get_object("EnFolksLogoutLink").onclick=function(obj){return function() {obj.ExecuteLogout();return false;};}(this);
-        }
-        if(EnFolks_get_object("EnFolksLogoutSpan2")) {
-            if(!EnFolks_get_object("EnFolksHiddenSubForm2"))
-                EnFolks_get_object("EnFolksLogoutSpan2").innerHTML="<a href='javascript:;' id='EnFolksLogoutLink2'>Logout</a><span style='display:none;'><form method='post' action='" + this.callbackURL + "' id='EnFolksHiddenSubForm2'><input type='hidden' name='hash' id='EnFolksHash2' value=''><input type='hidden' name='forwardto' id='EnfolksForwardTo2' value=''></form></span>";
-            else
-                EnFolks_get_object("EnFolksLogoutSpan2").innerHTML="<a href='javascript:;' id='EnFolksLogoutLink2'>Logout</a>";
-            EnFolks_get_object("EnFolksLogoutLink2").onclick=function(obj){return function() {obj.ExecuteLogout();return false;};}(this);
-        }
-        this.CreateTopBar();
-    } else {
-        window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-    }
+
+//TODO: Topbar stuff below needs to be redone!
+
+EnergyFolksLogin.prototype.HideTopbar = function() {
+    document.write("<div id='efadminbar' style='display:none;position:relative;'></div>");
 }
-EnergyFolksLogin.prototype.callbackWaiterTop = function() {
-    if(EnergyFolksLoginCallback[234567] == 1) {
-        var tExpDate=new Date();
-        tExpDate.setTime( tExpDate.getTime()+(60*1000) );
-        document.cookie= "EnFolksSuccessLogin=" +(Subdata)+";expires="+ tExpDate.toGMTString();
-        this.hash_key=EnergyFolksHashKey;
-        this.callback();
-    } else if(EnergyFolksLoginCallback[234567] == -1) {
-        var nameEQ = "EnFolksSuccessLogin=";
-        var ca = document.cookie.split(';');
-        cook=0;
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) {cook= c.substring(nameEQ.length,c.length); break; }
-        }
-        if(cook != 0) {
-
-            /* Below is part of a kludge to deal with browser that have disabled 3rd party cookies.  Flow is as follows:
-             * - user logs in
-             * - if login successful, this script stores credentials in cookie from client domain and reloads page
-             * - if on page reload the server responds that user is not logged in, client knows login was successful, so issue must be rejected 3rd party cookie
-             * - script will now forward to new window on server to log user in
-             * - new window is at 3rd party, so it can set cookies.  it sets login cookie, then issues a 'history.back();' request to send browser back
-             * - this code here checks that this occured, and does 1 final page refresh to force browser to again ask for user credentials from server...this time is should log user in
-             */
-            var tExpDate=new Date();
-            tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-            document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-            cook=cook.split("ENFOLKSSEPERATION")
-            var subval="user="+cook[0]+"&pass="+cook[1]+"&cook="+cook[2];
-            var cur_url=window.location.href;
-            window.location.href="https://www.energyfolks.com/externallogin.php?ID=nocookie"+cur_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_")+"&"+subval;
-        }
-    } else {
-        window.setTimeout(function(obj){return function() {obj.callbackWaiterTop();}}(this),250);
-    }
-}
-EnergyFolksLogin.prototype.callbackWaiterCustom = function() {
-    //if(EnFolksIsMobile && !AlertedEnFolksIsMobile) {
-    //   AlertedEnFolksIsMobile=true;
-    //   if(confirm("Welcome!  Press 'OK' to view this page on our mobile-optimized site.")) {
-    //       var cur_url=window.location.href;
-    //       cur_url=cur_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_");
-    //       window.location="https://www.energyfolks.com/mobile/ExtForward/"+this.affiliateid+"/"+cur_url+"/"+window.location.hash.replace("#","");
-    //   }
-    //}
-    if(EnergyFolksLoginCallback[123456] == 1) {
-        var tExpDate=new Date();
-        tExpDate.setTime( tExpDate.getTime()+(60*1000) );
-        document.cookie= "EnFolksSuccessLogin=" +(Subdata)+";expires="+ tExpDate.toGMTString();
-        this.hash_key=EnergyFolksHashKey;
-        this.callback();
-    } else if(EnergyFolksLoginCallback[123456] == -1) {
-        EnFolks_get_object('login_loading').style.display='none';
-        if(EnFolks_get_object('EnFolksExternalLoginForm')) {
-            var nameEQ = "EnFolksSuccessLogin=";
-            var ca = document.cookie.split(';');
-            cook=0;
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) {cook= c.substring(nameEQ.length,c.length); break; }
-            }
-            if(cook != 0) {
-
-                /* Below is part of a kludge to deal with browser that have disabled 3rd party cookies.  Flow is as follows:
-                 * - user logs in
-                 * - if login successful, this script stores credentials in cookie from client domain and reloads page
-                 * - if on page reload the server responds that user is not logged in, client knows login was successful, so issue must be rejected 3rd party cookie
-                 * - script will now forward to new window on server to log user in
-                 * - new window is at 3rd party, so it can set cookies.  it sets login cookie, then issues a 'history.back();' request to send browser back
-                 * - this code here checks that this occured, and does 1 final page refresh to force browser to again ask for user credentials from server...this time is should log user in
-                 */
-                var tExpDate=new Date();
-                tExpDate.setTime( tExpDate.getTime()-(60*1000) );
-                document.cookie= "EnFolksSuccessLogin=" +escape(0)+";expires="+ tExpDate.toGMTString();
-                cook=cook.split("ENFOLKSSEPERATION")
-                var subval="user="+cook[0]+"&pass="+cook[1]+"&cook="+cook[2];
-                var cur_url=window.location.href;
-                window.location.href="https://www.energyfolks.com/externallogin.php?ID=nocookie"+cur_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_")+"&"+subval;
-            }
-
-            EnFolks_get_object('EnFolksExternalLoginForm').onsubmit=function(obj) {return function() {obj.SubFormCustom();return false;};}(this);
-        }
-        if(EnFolks_get_object("EnFolksCreateAccount"))
-            EnFolks_get_object("EnFolksCreateAccount").onclick=function(obj) {return function() {EnFolksMessageSize("https://www.energyfolks.com/accounts/CreateAccountExternal/"+obj.affiliateid,900,600);EnFolksWaitForLoad();};}(this);
-        this.CreateTopBar();
-    } else {
-        window.setTimeout(function(obj){return function() {obj.callbackWaiterCustom();}}(this),250);
-    }
+EnergyFolksLogin.prototype.UnFixTopbar = function() {
+    this.TopBarFixed=false;
 }
 // Add to custome menu at top
 EnergyFolksLogin.prototype.AddMenuItem = function(title,url) {
@@ -849,156 +555,4 @@ EnergyFolksLogin.prototype.CreateTopBar = function() {
         EnFolks_get_object('EnFolksExternalLoginFormTop').onsubmit=function(obj) {return function() {obj.SubFormTop();return false;};}(this);
         EnFolks_get_object("EnFolksCreateAccountTop").onclick=function(obj) {return function() {EnFolks_get_object("efadminbar_sub1").style.display="none";EnFolksMessageSize("https://www.energyfolks.com/accounts/CreateAccountExternal/"+obj.affiliateid,900,600);EnFolksWaitForLoad();};}(this);
     }
-}
-EnergyFolksLogin.prototype.getCookie = function(c_name)
-{
-    var i,x,y,ARRcookies=document.cookie.split(";");
-    for (i=0;i<ARRcookies.length;i++)
-    {
-        x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-        y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-        x=x.replace(/^\s+|\s+$/g,"");
-        if (x==c_name)
-        {
-            return unescape(y);
-        }
-    }
-}
-// Contacts energyfolks and tests for current login
-EnergyFolksLogin.prototype.testLogin = function(displayLogin){
-    this.AjaxRequest("https://www.energyfolks.com/accounts/externalcookie/"+this.LoginID+"/"+displayLogin+"/"+this.affiliateid);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-}
-
-// Contacts energyfolks and tests for current login
-EnergyFolksLogin.prototype.testLoginScen1 = function(ShowDetails){
-    this.AjaxRequest("https://www.energyfolks.com/accounts/externalcookie2/"+this.LoginID+"/"+ShowDetails+"/"+this.affiliateid);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-}
-// Contacts energyfolks and tests for current login
-EnergyFolksLogin.prototype.testLoginScen2 = function(ShowDetails){
-    this.AjaxRequest("https://www.energyfolks.com/accounts/externalcookie3/"+this.LoginID+"/"+ShowDetails+"/"+this.affiliateid);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-}
-// Contacts energyfolks and tests for current login
-EnergyFolksLogin.prototype.testLoginScen3 = function(ShowDetails){
-    this.AjaxRequest("https://www.energyfolks.com/accounts/externalcookie4/"+this.LoginID+"/"+ShowDetails+"/"+this.affiliateid);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-}
-// Contacts energyfolks and tests for current login
-EnergyFolksLogin.prototype.ShowUserDetailBox = function(){
-    this.AjaxRequest("https://www.energyfolks.com/accounts/externaldets/"+this.LoginID+"/"+this.affiliateid);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-}
-
-EnergyFolksLogin.prototype.AjaxRequest = function(url) {
-    var head= document.getElementsByTagName('head')[0];
-    var script= document.createElement('script');
-    script.type= 'text/javascript';
-    script.src= url;
-    head.appendChild(script);
-}
-var Subdata='';
-EnergyFolksLogin.prototype.SubFormTop = function() {
-    if(EnFolks_get_object('EnFolksCookieTop').checked)
-        var cook=1;
-    else
-        var cook=0;
-    EnFolks_get_object('EnFolks_top_login_loading').style.display='block';EnFolks_get_object('EnFolks_top_login_box').style.display='none';EnFolks_get_object('EnFolks_top_login_error').innerHTML='';
-    Subdata=this.EscapeAll(EnFolks_get_object('EnFolksUserTop').value) +"ENFOLKSSEPERATION" +this.EscapeAll(EnFolks_get_object('EnFolksPassTop').value)+"ENFOLKSSEPERATION"+cook;
-    var url="https://www.energyfolks.com/externallogin.php?ID=234567&user=" + this.EscapeAll(EnFolks_get_object('EnFolksUserTop').value) +"&pass=" +this.EscapeAll(EnFolks_get_object('EnFolksPassTop').value)+"&cook="+cook;
-    url2=url+"&safari=1";
-    var win=window.open (url2, "safari_bug_window","location=0,status=0,scrollbars=0, width=300,height=300");
-    window.setTimeout(function(win,url) { return function() {
-        EnFolksSafariLogin(win,url);
-    }}(win,url),100);
-    EnergyFolksLoginCallback[234567]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiterTop();}}(this),250);
-}
-EnergyFolksLogin.prototype.SubForm = function() {
-    if(EnFolks_get_object('EnFolksCookie').checked)
-        var cook=1;
-    else
-        var cook=0;
-    Subdata=this.EscapeAll(EnFolks_get_object('EnFolksUser').value) +"ENFOLKSSEPERATION" +this.EscapeAll(EnFolks_get_object('EnFolksPass').value)+"ENFOLKSSEPERATION"+cook;
-    var url="https://www.energyfolks.com/externallogin.php?ID="+this.LoginID+"&user=" + this.EscapeAll(EnFolks_get_object('EnFolksUser').value) +"&pass=" +this.EscapeAll(EnFolks_get_object('EnFolksPass').value)+"&cook="+cook;
-    url2=url+"&safari=1";
-    var win=window.open (url2, "safari_bug_window","location=0,status=0,scrollbars=0, width=300,height=300");
-    window.setTimeout(function(win,url) { return function() {
-        EnFolksSafariLogin(win,url);
-    }}(win,url),100);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiter();}}(this),250);
-    EnFolks_get_object('EnFolksLoginDiv').innerHTML="<h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6>";
-}
-function EnFolksSafariLogin(win,url) {
-    if (win && win.closed) {
-        var head= document.getElementsByTagName('head')[0];
-        var script= document.createElement('script');
-        script.type= 'text/javascript';
-        script.src= url;
-        head.appendChild(script);
-    } else {
-        window.setTimeout(function(win,url) { return function() {
-            EnFolksSafariLogin(win,url);
-        }}(win,url),1000);
-    }
-}
-EnergyFolksLogin.prototype.SubFormCustom = function() {
-    if(EnFolks_get_object('EnFolksCookie').checked)
-        var cook=1;
-    else
-        var cook=0;
-    Subdata=this.EscapeAll(EnFolks_get_object('EnFolksUser').value) +"ENFOLKSSEPERATION" +this.EscapeAll(EnFolks_get_object('EnFolksPass').value)+"ENFOLKSSEPERATION"+cook;
-    var url="https://www.energyfolks.com/externallogin.php?ID=123456&user=" + this.EscapeAll(EnFolks_get_object('EnFolksUser').value) +"&pass=" +this.EscapeAll(EnFolks_get_object('EnFolksPass').value)+"&cook="+cook;
-    url2=url+"&safari=1";
-    var win=window.open (url2, "safari_bug_window","location=0,status=0,scrollbars=0, width=300,height=300");
-    window.setTimeout(function(win,url) { return function() {
-        EnFolksSafariLogin(win,url);
-    }}(win,url),100);
-    EnergyFolksLoginCallback[this.LoginID]=0;
-    window.setTimeout(function(obj){return function() {obj.callbackWaiterCustom();}}(this),250);
-    EnFolks_get_object('login_loading').style.display='block';
-    EnFolks_get_object('login_loading').innerHTML="<h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6>";
-}
-EnergyFolksLogin.prototype.callback = function() {
-    if(this.callbackURL == null) {
-        var url=this.forwardto;
-        if(this.wordpress != false) {
-            if(url == "") url=location.href;
-            url=url.split("#");
-            url=url[0].split("?");
-            url=url[0]+"?enfolks_hash="+this.hash_key;
-            var head= document.getElementsByTagName('head')[0];
-            var script= document.createElement('script');
-            script.type= 'text/javascript';
-            script.src= url;
-            head.appendChild(script);
-            //document.write("<script language=javascript src='"+url+"'></script>");
-            return;
-        }
-        if(url == "")
-            location.reload(true);
-        else
-            location.href=url;
-    } else {
-        EnFolks_get_object('EnFolksHash').value=this.hash_key;
-        var url=this.forwardto;
-        if(url == "") url=location.href;
-        EnFolks_get_object('EnfolksForwardTo').value=url;
-        EnFolks_get_object('EnFolksHiddenSubForm').submit();
-    }
-}
-var EnergyFolksUserDetail={user_id:0};
-EnergyFolksLogin.prototype.EscapeAll = function(str) {
-    var val=encodeURIComponent(str.replace(/%/g,"ENFOLKSPERCENT").replace(/'/g,"ENFOLKSPERCENT27").replace(/\\/g,"ENFOLKSPERCENT5C"));
-    if(val == "")
-        return "BLANK";
-    else
-        return val;
 }
