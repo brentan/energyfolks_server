@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
 
-  attr_accessible :email, :first_name, :last_name, :lat, :lng, :visibility, :timezone, :location, :avatar, :resume,
+  attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
                   :resume_visibility, :position, :organization
   attr_accessor :password, :password_old
@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates_length_of :password, :within => 4..40, :if => :password_entered?
   validates_confirmation_of :password, :if => :password_entered?
+
+  geocoded_by :location
+  after_validation :geocode
 
   validates_each :email do |record, attr, value|
     if value.present?

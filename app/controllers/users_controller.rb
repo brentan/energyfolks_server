@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   # STILL TO DO:
   # tie-ins to networks
-  # geocoding locations to determine lat/lng (also do IP address stuff like AES)
   # email subscriptions (tokens as well to edit from email footer)
   # social media logins
 
@@ -27,7 +26,23 @@ class UsersController < ApplicationController
   end
 
   def from_hash
-    # TODO: check login hash and return user details to the requesting server
+    login = UserLoginHash.find_by_login_hash(params['hash'])
+    if login.present? && ((Time.now() - login.created_at) < 10)
+      render :json => {
+          user_id: login.user_id,
+          first_name: login.user.first_name,
+          last_name: login.user.last_name,
+          picture_url: "#{request.protocol}#{request.host_with_port}#{login.user.avatar.url}",
+          visibility: login.user.visibility,
+          affiliates: [], #TODO: update this
+          position: login.user.position,
+          company: login.user.organization,
+          has_posts: false # TODO: update this
+      }
+      login.destroy
+    else
+      render :json => {}
+    end
   end
 
   def activate

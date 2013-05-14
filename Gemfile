@@ -7,9 +7,8 @@ gem 'select2-rails', '~> 3.3.0', :git => 'git://github.com/argerim/select2-rails
 gem 'nested_form'#, '0.2.3'
 gem 'historyjs-rails'
 gem 'strip_attributes'
-gem 'geokit'
+gem 'geocoder'
 gem 'tinymce-rails'
-gem 'geokit-rails3'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'

@@ -14,6 +14,7 @@ EnergyfolksServer::Application.routes.draw do
   get "users/logout"
   get "users/activate"
   get "users/from_hash"
+  match 'accounts/external_Login_Verification/:hash' => 'users#from_hash' # Backwards compatibility
   get "users/verify"
 
   get "users/reset_password"
