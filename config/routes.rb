@@ -1,6 +1,6 @@
 EnergyfolksServer::Application.routes.draw do
 
-  # TODO: CLEAN UP THESE ROUTES AND MAKE THEM BETTER!
+  # USER ROUTES
   get "users/login"
 
   get "users/profile"
@@ -17,12 +17,34 @@ EnergyfolksServer::Application.routes.draw do
   match 'accounts/external_Login_Verification/:hash' => 'users#from_hash' # Backwards compatibility
   get "users/verify"
 
+  get "users/rights"
+  put "users/rights"
+  get "users/manual_verify"
+  get "users/freeze_account"
+  post "users/freeze_account"
+
   get "users/reset_password"
   post "users/reset_password"
 
   get "users/resend_email_change_verification"
   get "users/resend_activation"
   post "users/resend_activation"
+
+  # AFFILIATE ROUTES
+
+  get "affiliates/new"
+  match "affiliates/:id/edit" => 'affiliates#edit'
+  match "affiliates/:id/delete" => 'affiliates#delete'
+  put "affiliates/update"
+  post "affiliates/create"
+  get "affiliates/delete"
+  match "affiliates" => 'affiliates#index'
+  match "affiliates/:id/users" => 'affiliates#users'
+  get "affiliates/rights"
+  put "affiliates/rights"
+  get "affiliates/reject_or_remove"
+  put "affiliates/reject_or_remove"
+  get "affiliates/approve"
 
   # Make ajax routes visible
   match ':controller(/:action(/:id))(.:format)', controller: /ajax/

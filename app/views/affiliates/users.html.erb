@@ -1,0 +1,4 @@
+<script language="javascript">
+    <%= "EnergyFolks.id = #{@affiliate.id};" if @affiliate.present? %>
+    EnergyFolks.showPage({source: 'users', format: 'list'});
+</script>

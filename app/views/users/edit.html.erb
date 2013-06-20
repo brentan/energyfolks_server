@@ -17,9 +17,6 @@
 
           <div class='form_label'>Location</div>
           <div class='form_entry'><%= f.text_field :location %></div>
-          <%
-            #TODO: Lat/Lng from location, ip address stuff for first login/all from AES
-          %>
 
           <div class='form_label'>Timezone</div>
           <div class='form_entry'>
@@ -90,24 +87,24 @@
         <h1>Privacy</h1>
           <div class='form_label'>Profile Visibility</div>
           <div class='form_entry'>
-            <label><%= f.radio_button :visibility, 1 %> Public</label>
-            <label><%= f.radio_button :visibility, 2 %> Only to logged in members of any network</label>
-            <label><%= f.radio_button :visibility, 3 %> Only to logged in members in my networks:</label>
+            <label><%= f.radio_button :visibility, User::PUBLIC %> Public</label>
+            <label><%= f.radio_button :visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
+            <label><%= f.radio_button :visibility, User::NETWORKS %> Only to logged in members in my networks:</label>
             <%
                #TODO: Add network list here
             %>
-            <label><%= f.radio_button :visibility, 4 %> Private (administrators only)</label>
+            <label><%= f.radio_button :visibility, User::PRIVATE %> Private (administrators only)</label>
 
           </div>
           <div class='form_label'>Resume Visibility</div>
           <div class='form_entry'>
-            <label><%= f.radio_button :resume_visibility, 1 %> Public</label>
-            <label><%= f.radio_button :resume_visibility, 2 %> Only to logged in members of any network</label>
-            <label><%= f.radio_button :resume_visibility, 3 %> Only to logged in members in my networks:</label>
+            <label><%= f.radio_button :resume_visibility, User::PUBLIC %> Public</label>
+            <label><%= f.radio_button :resume_visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
+            <label><%= f.radio_button :resume_visibility, User::NETWORKS %> Only to logged in members in my networks:</label>
             <%
                #TODO: Add network list here
             %>
-            <label><%= f.radio_button :resume_visibility, 4 %> Private (administrators only)</label>
+            <label><%= f.radio_button :resume_visibility, User::PRIVATE %> Private (administrators only)</label>
 
           </div>
 

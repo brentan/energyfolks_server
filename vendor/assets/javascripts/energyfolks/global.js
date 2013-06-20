@@ -52,12 +52,16 @@ EnergyFolks.iframe_popup = function(command, parameters) {
     EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
     EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='visibility:hidden;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:30px;overflow:auto;'></iframe></div>");
 }
+EnergyFolks.create_iframe_popup = function(text, command, parameters) {
+    return "<a href='#' class='EnergyFolks_popup' data-command='"+command+"' data-iframe='true' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
+}
 EnergyFolks.$(function() {
     // Attach listener to hash for handling response of iframe loads
     EnergyFolks.$(window).on('hashchange',function() {
         var hash = location.hash;
         if(hash.substr(1,7) == 'iframe_') {
             window.location.hash = '';
+            EnergyFolks.$('#energyfolks_popup_content .energyfolks_loading').remove();
             EnergyFolks.$('#energyfolks_popup_iframe iframe').css('height',hash.replace("#iframe_","") + 'px');
             EnergyFolks.$('#energyfolks_popup_loading').remove();
             EnergyFolks.$('#energyfolks_popup_iframe').css('visibility','visible');
@@ -81,12 +85,17 @@ EnergyFolks.remote_popup = function(command, parameters) {
         EnergyFolks.vertically_center_popup();
     });
 }
+EnergyFolks.create_remote_popup = function(text, command, parameters) {
+    return "<a href='#' class='EnergyFolks_popup' data-command='"+command+"' data-iframe='false' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
+}
 
 //Load popup and directly insert html
 EnergyFolks.direct_popup = function(html) {
     EnergyFolks.initialize_popup();
-    if(html != '')
+    if(typeof html != 'undefined')
         EnergyFolks.$('#energyfolks_popup_content').html(html);
+    else
+        EnergyFolks.loading('#energyfolks_popup_content');
     EnergyFolks.$('#energyfolks_popup').show();
     EnergyFolks.vertically_center_popup();
     EnergyFolks.$('#energyfolks_popup_greyout').show();
@@ -105,13 +114,18 @@ EnergyFolks.hide_popup = function() {
 /*
  * Helper functions: Not meant to be called directly
  */
+// Add loading message to a div
+EnergyFolks.loading = function(divname) {
+    EnergyFolks.$(divname).html('<div align=center class="energyfolks_loading" style="text-align:center;"><h1>Loading...</h1><br><img src="'+EnergyFolks.server_url+'/assets/loader.gif" border="0"></div>');
+}
 // Create the popup elements if they dont already exist, and add loading message.  hide to start
 EnergyFolks.initialize_popup = function() {
     if(EnergyFolks.$('body').find('#energyfolks_popup').length == 0) {
         EnergyFolks.$('body').append("<div id='energyfolks_popup_greyout' style='display:none;'></div>");
         EnergyFolks.$('body').append("<div id='energyfolks_popup' style='display:none;'><div id='energyfolks_popup_wrapper'><div id='energyfolks_popup_close'><img src='"+EnergyFolks.server_url+"/assets/closegreycircle.png'></div><div id='energyfolks_popup_content'></div></div></div>");
     }
-    EnergyFolks.$('#energyfolks_popup_content').html('<div id="energyfolks_popup_loading"><h1>Loading...</h1><br><img src="'+EnergyFolks.server_url+'/assets/loader.gif" border="0"></div>');
+    EnergyFolks.$('#energyfolks_popup_content').html('<div id="energyfolks_popup_loading"></div>');
+    EnergyFolks.loading("energyfolks_popup_loading")
 }
 // Center the popup box vertically on the screen.  If too big for the screen, display 100px below the top of the viewport.
 EnergyFolks.vertically_center_popup = function() {
@@ -191,4 +205,16 @@ EnergyFolks.hideNotice = function(id) {
  */
 EnergyFolks.globalCallback = function(el) {
 
+}
+
+/*
+ * Test if the current user is the specified admin level for the current affiliate
+ */
+EnergyFolks.testAdmin = function(level) {
+    var admin = false;
+    EnergyFolks.$.each(EnergyFolks.current_user.affiliates, function(k,v) {
+        if((v.id == EnergyFolks.id) && (v.admin_level >= level))
+            admin = true;
+    });
+    return admin;
 }

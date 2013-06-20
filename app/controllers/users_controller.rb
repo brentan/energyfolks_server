@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   # tie-ins to networks
   # email subscriptions (tokens as well to edit from email footer)
   # social media logins
+  # account topbar (requires data objects to be created)
 
   def try_login
     # TODO: aid (affiliate id) is passed and can be used for analytics
@@ -34,7 +35,7 @@ class UsersController < ApplicationController
           last_name: login.user.last_name,
           picture_url: "#{request.protocol}#{request.host_with_port}#{login.user.avatar.url}",
           visibility: login.user.visibility,
-          affiliates: [], #TODO: update this
+          affiliates: login.user.memberships.approved.map{ |m| m.affiliate_id },
           position: login.user.position,
           company: login.user.organization,
           has_posts: false # TODO: update this
@@ -47,7 +48,7 @@ class UsersController < ApplicationController
 
   def activate
     user = params['token'].present? ? User.find_by_activation_token(params['token']) : nil
-    if user.present?
+    if user.present? && user.active?
       user.verified= true
       user.save!(validate:false)
       session[:userid]=user.id
@@ -79,6 +80,7 @@ class UsersController < ApplicationController
       if user.present?
         session[:userid] = user.id if user.present?
         login_hash = UserLoginHash.create(user_id: current_user.id)
+        #TODO: More information needs to be output here...how many user posts?  admin?  super admin?
         render :js => "EnergyFolks.login_callback('#{login_hash.login_hash}');"
         return
       end
@@ -108,7 +110,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete
+    @user = User.find(session[:userid])
+    @user.destroy
+    flash[:notice]="Your account has been completely removed."
+    redirect_to '/'
+  end
+
   def update
+    params[:user][:admin].delete if params[:user][:admin].present?
     @user = User.find(session[:userid])
     if (params[:user][:password_old].blank? && params[:user][:password].blank?) || (params[:user][:password_old].present? && @user.check_password(params[:user][:password_old]))
       old_email = @user.email_to_verify
@@ -132,6 +142,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    params[:user][:admin].delete if params[:user][:admin].present?
     @user = User.new(params[:user])
     if !@user.save
       render :action => "new"
@@ -144,9 +155,11 @@ class UsersController < ApplicationController
     @step = params['step']
     if @step == '2'
       user = User.find_by_email(params['email'].downcase)
-      if user.present? && !user.verified?
+      if user.present? && !user.verified? && user.active?
         UserMailer.delay.confirmation_request(user, @aid, @host)
         flash[:notice]="The activation email has been resent.  Please check your inbox."
+      elsif user.present? && !user.verified?
+        flash[:alert]="This account is frozen.  Please contact admins (contact@energyfolks.com) to re-enable account."
       elsif user.present?
         flash[:alert]="Account has already been activated."
       else
@@ -197,6 +210,39 @@ class UsersController < ApplicationController
           flash[:alert]=@user.errors.messages[:password].map{|e| "Password #{e}"}.join(", ")
         end
       end
+    end
+  end
+
+  def manual_verify
+    return redirect_to "/" unless current_user.admin?
+    user = User.find_by_id(params[:id])
+    if user.present?
+      user.verified = true
+      user.active = true
+      user.save!(validate:false)
+    end
+  end
+
+  def freeze_account
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    if @user.present? && params[:reason].present?
+      @user.verified = false
+      @user.active = false
+      @user.save!(validate:false)
+      UserMailer.delay.account_frozen(@user, params[:reason],@aid, @host)
+    end
+  end
+
+  def rights
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    if @user.present? && params[:iframe_next].present?
+      params[:user].keys.each do |key|
+        @user.send("#{key}=",params[:user][key])
+      end
+      @user.save!(:validate => false)
+      flash[:notice] = "Settings saved"
     end
   end
 

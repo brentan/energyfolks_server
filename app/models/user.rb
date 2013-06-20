@@ -1,17 +1,28 @@
 class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
+  has_many :affiliates, :through => :memberships
+  has_many :memberships
+  scope :verified, where(:verified => true)
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization
+                  :resume_visibility, :position, :organization, :radius
   attr_accessor :password, :password_old
 
   validates_presence_of :first_name
   validates_length_of :password, :within => 4..40, :if => :password_entered?
   validates_confirmation_of :password, :if => :password_entered?
 
+  accepts_nested_attributes_for :memberships, :allow_destroy => true
+
   geocoded_by :location
   after_validation :geocode
+
+  # Visibility codes
+  PUBLIC = 1
+  LOGGED_IN = 2
+  NETWORKS = 3
+  PRIVATE = 4
 
   validates_each :email do |record, attr, value|
     if value.present?
@@ -55,6 +66,17 @@ class User < ActiveRecord::Base
                        :size => { :in => 0..20.megabytes }
 
   ITOA64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
+  def self.find_all_visible(current_user, affiliate = nil, page=0, per_page=20)
+    visibility = User::PUBLIC
+    visibility = User::LOGGED_IN if current_user.present?
+    visibility = User::NETWORKS if current_user.present? && affiliate.present? && Membership.is_member?(current_user, affiliate)
+    visibility = User::PRIVATE if current_user.present? && affiliate.present? && Membership.is_admin?(current_user, affiliate, Membership::EDITOR)
+    visibility = User::PRIVATE if current_user.present? && current_user.admin?
+    users = User.verified.select([:verified, :active, 'users.id', :first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name').offset(page * per_page).limit(per_page)
+    users = users.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliate.id}) if affiliate.present?
+    users.all
+  end
 
   ## Password hashing and salting algorithm, also used to generate cookie string
   # Functions below used to set password (and also cookie)

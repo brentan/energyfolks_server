@@ -18,9 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def find_aid
-    # TODO: check for params['aid'] (Check!) OR subdomain and then set AID accordingly
+    # TODO: check for subdomain and then set AID accordingly
     @aid = 0
     @host = "http://dev.energyfolks.com:3000"
+    @aid = params[:aid] if params[:aid].present?
   end
 
   def choose_layout
@@ -41,5 +42,10 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
   helper_method :user_logged_in?
+
+  def current_affiliate
+    Affiliate.find_by_id(@aid)
+  end
+  helper_method :current_affiliate
 
 end

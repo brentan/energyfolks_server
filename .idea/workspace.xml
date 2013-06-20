@@ -2,74 +2,127 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130514180745_change_lat_lng_in_user_model.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/ajax/_login.html.erb" afterPath="$PROJECT_DIR$/app/views/users/ajax/_login.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130515155502_create_affiliates_and_members.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130523221932_add_active_to_users.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/_form.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/_rights.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/user_mailer/account_frozen.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/affiliate.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/user_mailer/affiliate_approved.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/user_mailer/affiliate_rejected.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/user_mailer/affiliate_removed.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/approve.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/edit.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/freeze_account.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/index.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/manual_verify.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/membership.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/new.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/old_energyfolks.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/reject_or_remove.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/rights.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/rights.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/affiliates/users.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/new.html.erb" afterPath="$PROJECT_DIR$/app/views/users/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/backwards_compatible.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/backwards_compatible.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_mailer/confirmation_request.html.erb" afterPath="$PROJECT_DIR$/app/views/user_mailer/confirmation_request.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/edit.html.erb" afterPath="$PROJECT_DIR$/app/views/users/edit.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb" afterPath="$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_mailer/reset_password.html.erb" afterPath="$PROJECT_DIR$/app/views/user_mailer/reset_password.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/reset_password.html.erb" afterPath="$PROJECT_DIR$/app/views/users/reset_password.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_mailer/reset_password_2.html.erb" afterPath="$PROJECT_DIR$/app/views/user_mailer/reset_password_2.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/mailers/user_mailer.rb" afterPath="$PROJECT_DIR$/app/mailers/user_mailer.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554859823" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347565519" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554567949" ignored="false" />
-    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364426899028" ignored="false" />
+    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369436341921" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/app/helpers/home_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
-    <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368555649915" ignored="false" />
-    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363892638994" ignored="false" />
-    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368556488239" ignored="false" />
-    <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368557348306" ignored="false" />
+    <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368558161975" ignored="false" />
+    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369437469238" ignored="false" />
+    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369438993196" ignored="false" />
+    <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371696443737" ignored="false" />
     <file path="/_success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363284977600" ignored="false" />
     <file path="/error.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285643390" ignored="false" />
     <file path="/success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285647105" ignored="false" />
     <file path="/user_login_hash.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296252591" ignored="false" />
-    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368555113412" ignored="false" />
+    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369438852596" ignored="false" />
     <file path="/clean_up.rake" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296917985" ignored="false" />
     <file path="/20130314184054_create_user_login_hash_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363286895114" ignored="false" />
     <file path="/hash_change.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363288819878" ignored="false" />
-    <file path="/initialize.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363290728408" ignored="false" />
+    <file path="/initialize.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369437180140" ignored="false" />
     <file path="/application.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363823180322" ignored="false" />
     <file path="/energyfolks.css" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289756745" ignored="false" />
     <file path="/notices.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289490328" ignored="false" />
     <file path="/loginform.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363291128515" ignored="false" />
-    <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363900290089" ignored="false" />
-    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363820917996" ignored="false" />
+    <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697455851" ignored="false" />
+    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369438698754" ignored="false" />
     <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
     <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
     <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
     <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427828654" ignored="false" />
     <file path="/session_store.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363297020693" ignored="false" />
     <file path="/popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363887850698" ignored="false" />
-    <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893120662" ignored="false" />
+    <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368558054604" ignored="false" />
     <file path="/iframe.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363888696510" ignored="false" />
-    <file path="/new.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368555011394" ignored="false" />
+    <file path="/new.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368638852717" ignored="false" />
     <file path="/application_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363888633341" ignored="false" />
     <file path="/forms.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363888316530" ignored="false" />
     <file path="/layout.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363887653086" ignored="false" />
-    <file path="/user_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427689412" ignored="false" />
+    <file path="/user_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697005699" ignored="false" />
     <file path="/site_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363890078275" ignored="false" />
     <file path="/user_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363892328934" ignored="false" />
     <file path="/create.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363891724906" ignored="false" />
     <file path="/activate.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363891547963" ignored="false" />
     <file path="/confirmation_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363900274420" ignored="false" />
     <file path="/resend_activation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363901001457" ignored="false" />
-    <file path="/reset_password.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363903186730" ignored="false" />
+    <file path="/reset_password.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697376229" ignored="false" />
     <file path="/reset_password_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363901990124" ignored="false" />
     <file path="/20130321215623_add_to_users_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363903128388" ignored="false" />
-    <file path="/edit.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428260965" ignored="false" />
+    <file path="/edit.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368639998084" ignored="false" />
     <file path="/20130327210802_change_user_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364423352741" ignored="false" />
     <file path="/email_verification_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427394648" ignored="false" />
     <file path="/email_verification_request_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428102701" ignored="false" />
     <file path="/profile.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428467518" ignored="false" />
     <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364583160272" ignored="false" />
     <file path="/20130514180745_change_lat_lng_in_user_model.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554925685" ignored="false" />
+    <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697170670" ignored="false" />
+    <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369436408958" ignored="false" />
+    <file path="/20130515155502_create_affiliates_and_members.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368634255218" ignored="false" />
+    <file path="/affiliates_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371696037066" ignored="false" />
+    <file path="/_form.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368640192236" ignored="false" />
+    <file path="/index.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371696149245" ignored="false" />
+    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369438903684" ignored="false" />
+    <file path="/users.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369435941452" ignored="false" />
+    <file path="/manual_verify.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347196074" ignored="false" />
+    <file path="/freeze_account.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349860341" ignored="false" />
+    <file path="/20130523221932_add_active_to_users.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349708094" ignored="false" />
+    <file path="/account_frozen.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347886813" ignored="false" />
+    <file path="/rights.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369437773415" ignored="false" />
+    <file path="/_rights.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369435452800" ignored="false" />
+    <file path="/reject_or_remove.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439130444" ignored="false" />
+    <file path="/approve.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439150218" ignored="false" />
+    <file path="/affiliate_approved.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439550875" ignored="false" />
+    <file path="/affiliate_rejected.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697123867" ignored="false" />
+    <file path="/affiliate_removed.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697202424" ignored="false" />
+    <file path="/index.html" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371695643553" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,10 +144,37 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="users_controller.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
+      <file leaf-file-name="affiliates_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="109" selection-start="1276" selection-end="1276" vertical-scroll-proportion="0.6950673">
+            <state line="21" column="40" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="25" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="confirmation_request.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/confirmation_request.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="20" selection-start="549" selection-end="549" vertical-scroll-proportion="-8.125">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="email_verification_request_2.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="79" selection-start="478" selection-end="478" vertical-scroll-proportion="0.3856041">
               <folding />
             </state>
           </provider>
@@ -103,94 +183,53 @@
       <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="63" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
+            <state line="103" column="4" selection-start="2809" selection-end="2836" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <file leaf-file-name="account_frozen.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/account_frozen.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="17" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.0">
+            <state line="10" column="20" selection-start="342" selection-end="342" vertical-scroll-proportion="-6.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
+      <file leaf-file-name="affiliate_approved.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_approved.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="0" selection-start="1612" selection-end="1612" vertical-scroll-proportion="-13.416667">
+            <state line="6" column="20" selection-start="169" selection-end="169" vertical-scroll-proportion="-3.75">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
+      <file leaf-file-name="affiliate_rejected.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_rejected.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="25" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0">
+            <state line="6" column="83" selection-start="266" selection-end="266" vertical-scroll-proportion="-3.75">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="accounts.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+      <file leaf-file-name="affiliate.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/affiliate.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="42" selection-start="8969" selection-end="8983" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1368556341000" expanded="true" signature="13390:13421" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28016:28072" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28160:28175" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28306:28324" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28364:28407" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28555:28605" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="28637:28709" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="29038:29088" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="29120:29192" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="29519:29569" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="29601:29673" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="29995:30045" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="30077:30149" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="30465:30477" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="30491:30533" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="30577:30616" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="30868:30930" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="31010:31022" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="31135:31151" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="31293:31306" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="32011:32044" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="32078:32112" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="32133:32172" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="32383:32422" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="32706:32764" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="33551:33595" placeholder="..." />
-                <marker date="1368556341000" expanded="true" signature="33730:33806" placeholder="..." />
-                <marker date="1368556341000" expanded="true" signature="33820:33838" placeholder="..." />
-                <marker date="1368556341000" expanded="true" signature="33915:33930" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="35088:35123" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="51023:51067" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="51202:51278" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="51292:51310" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="51387:51402" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="52207:52220" placeholder="..." />
-                <marker date="1368556341000" expanded="false" signature="56219:56232" placeholder="..." />
-              </folding>
+            <state line="65" column="110" selection-start="2840" selection-end="2840" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="global.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
+      <file leaf-file-name="affiliate_removed.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_removed.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="153" column="22" selection-start="7519" selection-end="7519" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1363892827000" expanded="false" signature="2463:2481" placeholder="..." />
-                <marker date="1363892827000" expanded="false" signature="5004:5017" placeholder="..." />
-                <marker date="1363892827000" expanded="false" signature="5102:5115" placeholder="..." />
-              </folding>
+            <state line="10" column="20" selection-start="312" selection-end="312" vertical-scroll-proportion="-6.25">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -216,22 +255,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/user_mailer/email_verification_request.html.erb" />
-        <option value="$PROJECT_DIR$/app/mailers/user_mailer.rb" />
-        <option value="$PROJECT_DIR$/config/site.yml" />
-        <option value="$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/edit.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/profile.js" />
-        <option value="$PROJECT_DIR$/app/views/users/ajax/_profile_links.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/ajax/_profile.html.erb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/app/views/users/ajax/_login.html.erb" />
-        <option value="$PROJECT_DIR$/db/migrate/20130514180745_change_lat_lng_in_user_model.rb" />
-        <option value="$PROJECT_DIR$/app/views/users/new.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
-        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/affiliates/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+        <option value="$PROJECT_DIR$/app/mailers/user_mailer.rb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/account_frozen.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/affiliate_approved.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/affiliate_rejected.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/affiliate.rb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/affiliate_removed.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/reset_password.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/reset_password_2.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/users/reset_password.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/confirmation_request.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb" />
       </list>
     </option>
   </component>
@@ -303,7 +342,231 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user_mailer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="affiliates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mailers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -326,6 +589,10 @@
     <property name="Ruby.ViewRefParam.DefaultExtension" value="html.erb" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/user_mailer" />
+      <recent name="$PROJECT_DIR$/app/views/affiliates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/views/user_mailer" />
       <recent name="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks" />
@@ -664,7 +931,11 @@
       <created>1364429377896</created>
       <updated>1364429377896</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Complete external hash login script, more JS cleanup to remove old code.">
+      <created>1368557452815</created>
+      <updated>1368557452815</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -691,8 +962,9 @@
     <frame x="0" y="22" width="1440" height="805" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32816902" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -705,7 +977,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -749,7 +1020,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="User functionality.  Complete profile page, take care of authenticating new email addresses and auto-notifications for email/password changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete external hash login script, more JS cleanup to remove old code." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -765,158 +1036,122 @@
     <MESSAGE value="Continued work on accounts...cookies now work and login/logout functionality is complete." />
     <MESSAGE value="Add in popup functionality and server callback hooks that enable them to work with remote/iframe content" />
     <MESSAGE value="User functionality.  Complete profile page, take care of authenticating new email addresses and auto-notifications for email/password changes." />
+    <MESSAGE value="Complete external hash login script, more JS cleanup to remove old code." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="40" />
+      <option name="time" value="52" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="65" selection-start="80" selection-end="80" vertical-scroll-proportion="0.017401392" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/ajax/_login_links.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="5" selection-start="62" selection-end="67" vertical-scroll-proportion="0.017899761" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="45" selection-start="752" selection-end="752" vertical-scroll-proportion="0.38283062">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/ajax/_profile.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="25" selection-start="297" selection-end="297" vertical-scroll-proportion="0.071599044">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="22" selection-start="7519" selection-end="7519" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1363892827000" expanded="false" signature="2463:2481" placeholder="..." />
-            <marker date="1363892827000" expanded="false" signature="5004:5017" placeholder="..." />
-            <marker date="1363892827000" expanded="false" signature="5102:5115" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/ajax/_login.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="133" selection-start="628" selection-end="628" vertical-scroll-proportion="0.35194173">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="0" selection-start="1612" selection-end="1612" vertical-scroll-proportion="-13.416667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20130514180745_change_lat_lng_in_user_model.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="52" selection-start="383" selection-end="383" vertical-scroll-proportion="0.3414264">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="25" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/ajax/_profile_links.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="48" selection-start="102" selection-end="148" vertical-scroll-proportion="0.022796353">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="42" selection-start="8969" selection-end="8983" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1368556341000" expanded="true" signature="13390:13421" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28016:28072" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28160:28175" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28306:28324" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28364:28407" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28555:28605" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="28637:28709" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="29038:29088" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="29120:29192" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="29519:29569" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="29601:29673" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="29995:30045" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="30077:30149" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="30465:30477" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="30491:30533" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="30577:30616" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="30868:30930" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="31010:31022" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="31135:31151" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="31293:31306" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="32011:32044" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="32078:32112" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="32133:32172" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="32383:32422" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="32706:32764" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="33551:33595" placeholder="..." />
-            <marker date="1368556341000" expanded="true" signature="33730:33806" placeholder="..." />
-            <marker date="1368556341000" expanded="true" signature="33820:33838" placeholder="..." />
-            <marker date="1368556341000" expanded="true" signature="33915:33930" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="35088:35123" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="51023:51067" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="51202:51278" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="51292:51310" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="51387:51402" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="52207:52220" placeholder="..." />
-            <marker date="1368556341000" expanded="false" signature="56219:56232" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="63" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="51" selection-start="924" selection-end="974" vertical-scroll-proportion="0.46187684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="17" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tasks/clean_up.rake">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/site_mailer.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="4" selection-start="2809" selection-end="2836" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/account_frozen.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="20" selection-start="342" selection-end="342" vertical-scroll-proportion="-6.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_approved.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="20" selection-start="169" selection-end="169" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_rejected.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="83" selection-start="266" selection-end="266" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/reset_password.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="19" selection-start="525" selection-end="525" vertical-scroll-proportion="0.46272492">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/reset_password_2.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="20" selection-start="383" selection-end="383" vertical-scroll-proportion="0.26992288">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/affiliate.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="110" selection-start="2840" selection-end="2840" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/users/reset_password.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="14" selection-start="947" selection-end="947" vertical-scroll-proportion="0.344473">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/mailers/user_mailer.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="125" selection-start="586" selection-end="586" vertical-scroll-proportion="-0.07263923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/affiliate_removed.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="20" selection-start="312" selection-end="312" vertical-scroll-proportion="-6.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="109" selection-start="1276" selection-end="1276" vertical-scroll-proportion="0.6950673">
+        <state line="175" column="19" selection-start="6273" selection-end="6286" vertical-scroll-proportion="0.33247423">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="40" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="25" selection-start="821" selection-end="821" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/confirmation_request.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="20" selection-start="549" selection-end="549" vertical-scroll-proportion="-8.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/user_mailer/email_verification_request_2.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="79" selection-start="478" selection-end="478" vertical-scroll-proportion="0.3856041">
           <folding />
         </state>
       </provider>

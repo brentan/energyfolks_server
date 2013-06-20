@@ -1,0 +1,11 @@
+<%= @user.first_name %>,
+<BR><BR>
+Your request to join <%= @affiliate.name %> has been rejected by the group administrators for the following reason:
+<BR><BR>
+<%= @reason %>
+<BR><BR>
+For more information, please email the group administrators at <%= @affiliate.email %>.
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.name %>
