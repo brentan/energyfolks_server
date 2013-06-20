@@ -1,0 +1,15 @@
+<h1>Rights for <%= f.object.affiliate.name %></h1>
+
+<div class='form_label'>Admin Level</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :admin_level, Membership::USER %> No rights / Normal User</label>
+  <label><%= f.radio_button :admin_level, Membership::CONTRIBUTOR %> Contributor / Not Moderated</label>
+  <label><%= f.radio_button :admin_level, Membership::AUTHOR %> Author / Not Moderated / Wordpress Posting Rights</label>
+  <label><%= f.radio_button :admin_level, Membership::EDITOR %> Editor / Can Moderate</label>
+  <label><%= f.radio_button :admin_level, Membership::ADMINISTRATOR %> Admin / Can Moderate / Can Make Others Admins</label>
+</div>
+<div class='form_label'>Moderation Emails</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :moderation_emails, true %> Receive emails</label>
+  <label><%= f.radio_button :moderation_emails, false %> Do not receive emails</label>
+</div>

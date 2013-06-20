@@ -1,0 +1,19 @@
+<%= nested_form_for @user, :url => '/users/rights' do |f| %>
+    <h1>Global Rights</h1>
+    <input type="hidden" name="id" value="<%= @user.id %>">
+    <input type="hidden" name="iframe_next" value="1">
+    <div class='form_label'>System Administration</div>
+    <div class='form_entry'>
+      <label><%= f.radio_button :admin, true %> System admin</label>
+      <label><%= f.radio_button :admin, false %> Normal user</label>
+    </div>
+    <div class='form_label'>Moderation Emails</div>
+    <div class='form_entry'>
+      <label><%= f.radio_button :admin_emails, true %> Receive emails</label>
+      <label><%= f.radio_button :admin_emails, false %> Do not receive emails</label>
+    </div>
+    <%= f.fields_for :memberships do |membership| %>
+        <%= render :partial => '/affiliates/rights', :locals => { f: membership } %>
+    <% end %>
+    <%= f.submit %>
+<% end %>

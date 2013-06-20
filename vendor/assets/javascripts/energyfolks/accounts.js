@@ -218,83 +218,25 @@ EnergyFolks.$(function() {
 
 
 
-/*
- LEGACY LIBRARY: This is provided for backwards compatibility.  Functions below simply access EnergyFolks namepsace functions
- */
-function EnergyFolksLogin(callback) {
-    EnergyFolks.callbackURL=callback;
-}
-EnergyFolksLogin.prototype.ForwardTo = function(url) {
-    EnergyFolks.forwardto=url;
-}
-EnergyFolksLogin.prototype.SetAffiliate = function(id) {
-    EnergyFolks.id = id;
-}
-EnergyFolksLogin.prototype.CheckCookies = function() {}
-EnergyFolksLogin.prototype.DisplayLogin = function() {
-    EnergyFolks.LoginBox();
-}
-EnergyFolksLogin.prototype.CustomLogin = function() {}
-EnergyFolksLogin.prototype.DisplaySimpleLogin = function(ShowDetails) {
-    EnergyFolks.LoginLinks();
-}
-EnergyFolksLogin.prototype.DisplaySimpleLoginBig = function(ShowDetails) {
-    this.DisplaySimpleLogin(ShowDetails);
-}
-EnergyFolksLogin.prototype.ShowUserDetails = function() {
-    //Alias, provided for backwards compatibility
-    this.DisplaySimpleLogin(true);
-}
-EnergyFolksLogin.prototype.Login = function() {
-    this.DisplayLogin();
-}
-EnergyFolksLogin.prototype.LoginEmpty = function() {
-    this.CheckCookies();
-}
-EnergyFolksLogin.prototype.Logout = function(userclass,userstyle) {
-    document.write("<a href='#' class='EnFolks_logout'>Logout</a>");
-}
 
-
-//The following functions were internal functions and are no longer used.  Provided simply for compatibility
-EnergyFolksLogin.prototype.DisplayTopbar = function() {};
-EnergyFolksLogin.prototype.ExecuteLogout = function() {};
-EnergyFolksLogin.prototype.FinalLogout = function() {};
-EnergyFolksLogin.prototype.FinalLogout2 = function() {};
-EnergyFolksLogin.prototype.ExecuteLogout2 = function() {};
-EnergyFolksLogin.prototype.callbackWaiter = function() {};
-EnergyFolksLogin.prototype.callbackWaiterTop = function() {};
-EnergyFolksLogin.prototype.callbackWaiterCustom = function() {};
-EnergyFolksLogin.prototype.getCookie = function(c_name) {};
-EnergyFolksLogin.prototype.testLogin = function(displayLogin) {};
-EnergyFolksLogin.prototype.testLoginScen1 = function(ShowDetails){};
-EnergyFolksLogin.prototype.testLoginScen2 = function(ShowDetails){};
-EnergyFolksLogin.prototype.testLoginScen3 = function(ShowDetails){};
-EnergyFolksLogin.prototype.ShowUserDetailBox = function(){};
-EnergyFolksLogin.prototype.AjaxRequest = function(url) {};
-EnergyFolksLogin.prototype.SubFormTop = function() {};
-EnergyFolksLogin.prototype.SubForm = function() {};
-function EnFolksSafariLogin(win,url) {}
-EnergyFolksLogin.prototype.SubFormCustom = function() {};
-EnergyFolksLogin.prototype.callback = function() {};
-EnergyFolksLogin.prototype.EscapeAll = function(str) {};
-
-
-//TODO: Topbar stuff below needs to be redone!
-
-EnergyFolksLogin.prototype.HideTopbar = function() {
+//Hide the top account bar (basically create the bar but with no display to prevent its appearance)
+EnergyFolks.HideTopbar = function() {
     document.write("<div id='efadminbar' style='display:none;position:relative;'></div>");
 }
-EnergyFolksLogin.prototype.UnFixTopbar = function() {
-    this.TopBarFixed=false;
+//'unfix' topbar so that it doesnt stick to the top of the window.
+EnergyFolks.UnFixTopbar = function() {
+    EnergyFolks.TopBarFixed = false;
 }
-// Add to custome menu at top
-EnergyFolksLogin.prototype.AddMenuItem = function(title,url) {
-    this.customMenuItems.push({title:title, url:url});
+// Add to custom menu at top
+EnergyFolks.AddMenuItem = function(title,url) {
+    EnergyFolks.customMenuItems.push({title:title, url:url});
 }
+
+
+//TODO: Topbar stuff below needs to be redone once we have created data objects!
 // Create the bar that appears at the top of the page when user is logged in
-EnergyFolksLogin.prototype.CreateTopBar = function() {
-    if(EnFolks_get_object("wpadminbar") && (EnergyFolksUserDetail.user_id > 0)) {
+EnergyFolks.CreateTopBar = function() {
+    if(EnergyFolks.$("#wpadminbar") && (EnergyFolksUserDetail.user_id > 0)) {
         var outtext='';
         if((EnergyFolksUserDetail.admin == EnFolksAffiliateId) && (EnFolksAffiliateId > 0)) {
             EnFolks_get_object("wp-admin-bar-energyfolks0").innerHTML='<a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Administrator Tools</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>";

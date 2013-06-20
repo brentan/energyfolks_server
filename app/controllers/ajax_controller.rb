@@ -23,14 +23,38 @@ class AjaxController < ApplicationController
     render_ajax( {html: html, id: params['id']} )
   end
 
+  # Return a list of visible users based on input criteria
+  def users
+    data = User.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    data = data.map { |i| user_hash(i) }
+    #TODO: moderation count!
+    render_ajax( {data: data} )
+  end
+
   private
   def render_ajax(output = nil)
     if output.blank?
       render :js => "//Completed"
     else
       output[:width] ||= 900   # default popup window width, if needed
-      render :js => "EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
+      render :js => "#{set_current_user}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
+  end
+
+  def user_hash(i)
+    {
+        :first_name => i.first_name,
+        :last_name => i.last_name,
+        :position => i.position,
+        :organization => i.organization,
+        :id => i.id,
+        :verified => i.verified?,
+        :super_admin => i.admin?,
+        :avatar => i.avatar,
+        :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
+        :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } }
+    }
   end
 
 end

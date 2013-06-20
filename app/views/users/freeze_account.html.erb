@@ -1,0 +1,11 @@
+<% if @user.active? %>
+    <%= form_tag('/users/freeze_account') do %>
+      <input type="hidden" value='<%= @user.id %>' name="id">
+      <input type="hidden" value='1' name="iframe_next">
+      <h1>Reason for freezing user account:</h1>
+      <textarea name="reason" rows=6 cols=50></textarea><BR>
+      <input type="submit">
+    <% end %>
+<% else %>
+    This user account is frozen.
+<% end %>

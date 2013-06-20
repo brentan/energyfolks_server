@@ -1,0 +1,8 @@
+<%= form_for @membership, :url => '/affiliates/rights' do |f| %>
+    <h1>Global Rights</h1>
+    <input type="hidden" name="id" value="<%= @user.id %>">
+    <input type="hidden" name="aid" value="<%= @affiliate.id %>">
+    <input type="hidden" name="iframe_next" value="1">
+    <%= render :partial => '/affiliates/rights', :locals => { f: f } %>
+    <%= f.submit %>
+<% end %>

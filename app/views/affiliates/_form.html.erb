@@ -1,0 +1,120 @@
+
+<h1>Basic Information</h1>
+<div class='form_label'>Group Name</div>
+<div class='form_entry'><%= f.text_field :name %></div>
+
+<div class='form_label'>Short Name / Abbreviation</div>
+<div class='form_entry'><%= f.text_field :short_name %></div>
+
+<div class='form_label'>Logo</div>
+<div class='form_entry'>
+  <%= image_tag @affiliate.logo.url(:thumb_big) if @affiliate.logo.present? %>
+  <%= f.file_field :logo %>
+</div>
+
+<div class='form_label'>Location</div>
+<div class='form_entry'><%= f.text_field :location %></div>
+
+<div class='form_label'>Distance Radius</div>
+<div class='form_entry'><%= f.text_field :radius %>
+  <div class='explain'>When showing events on your calendar, include events with above miles of group location</div>
+</div>
+
+<div class='form_label'>Contact Email Address</div>
+<div class='form_entry'><%= f.text_field :email %></div>
+
+
+
+<h1>Website Settings</h1>
+<div class='explain'>
+  Leave any options that you do not utilize blank.  Include the 'http://' portion of the url.
+</div>
+<div class='form_label'>Homepage URL:</div>
+<div class='form_entry'><%= f.text_field :url %></div>
+<div class='form_label'>Calendar URL:</div>
+<div class='form_entry'><%= f.text_field :url_calendar %></div>
+<div class='form_label'>Jobs URL:</div>
+<div class='form_entry'><%= f.text_field :url_jobs %></div>
+<div class='form_label'>Bulletins URL:</div>
+<div class='form_entry'><%= f.text_field :url_bulletins %></div>
+<div class='form_label'>Member Directory URL:</div>
+<div class='form_entry'><%= f.text_field :url_users %></div>
+<div class='form_label'>Blog URL:</div>
+<div class='form_entry'><%= f.text_field :url_blog %></div>
+
+<h1>Membership Settings</h1>
+<div class='form_label'>Group Visibility</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :visible, true %> Listed on energyfolks.com and other energyfolks networks</label>
+  <label><%= f.radio_button :visible, false %> Hidden and only found through your website</label>
+</div>
+<div class='form_label'>Group Type</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :open, Affiliate::OPEN %> Anyone can join the group</label>
+  <label><%= f.radio_button :open, Affiliate::MODERATED %> Anyone can request access to the group</label>
+  <label><%= f.radio_button :open, Affiliate::INVITE_ONLY %> Group members must be invited</label>
+</div>
+
+<h1>Moderation Settings</h1>
+<div class='form_label'>Events Moderation Settings:</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :moderate_calendar, Affiliate::NONE %> No moderation, anyone can post</label>
+  <label><%= f.radio_button :moderate_calendar, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
+  <label><%= f.radio_button :moderate_calendar, Affiliate::ALL %> moderate all posts</label>
+</div>
+<div class='form_label'>Jobs Moderation Settings:</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :moderate_jobs, Affiliate::NONE %> No moderation, anyone can post</label>
+  <label><%= f.radio_button :moderate_jobs, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
+  <label><%= f.radio_button :moderate_jobs, Affiliate::ALL %> moderate all posts</label>
+</div>
+<div class='form_label'>Bulletins Moderation Settings:</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :moderate_bulletins, Affiliate::NONE %> No moderation, anyone can post</label>
+  <label><%= f.radio_button :moderate_bulletins, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
+  <label><%= f.radio_button :moderate_bulletins, Affiliate::ALL %> moderate all posts</label>
+</div>
+
+<h1>Look and Feel</h1>
+
+<div class='form_label'>Color</div>
+<div class='form_entry'>#<%= f.text_field :color %></div>
+<% # TODO: Colorpicker
+%>
+
+<div class='form_label'>Email Header</div>
+<div class='form_entry'><%= f.text_area :email_header, :class => 'tinymce' %></div>
+
+<div class='form_label'>Webpage Header</div>
+<div class='form_entry'><%= f.text_area :web_header, :class => 'tinymce' %></div>
+
+<div class='form_label'>Digest</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :send_digest, true %> Send automated digest</label>
+  <label><%= f.radio_button :send_digest, false %> Do not send digest</label>
+  <div class='explain'>Send members automated energyfolks weekly digest?</div>
+</div>
+
+<h1>Integration Information</h1>
+
+<div class='form_label'>Wordpress Shared Secret</div>
+<div class='form_entry'><%= current_user.admin? ? (f.text_field :shared_secret) : @affiliate.shared_secret %></div>
+
+<div class='form_label'>CPanel username</div>
+<div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>
+
+<div class='form_label'>CPanel Password</div>
+<div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_password) : @affiliate.cpanel_password %></div>
+
+<% if current_user.admin? %>
+    <h1>Admin options</h1>
+    <div class='form_label'>Email Name</div>
+    <div class='form_entry'><%= f.text_field :email_name %></div>
+
+    <div class='form_label'>Live Group?</div>
+    <div class='form_entry'>
+      <label><%= f.radio_button :live, true %> Yes</label>
+      <label><%= f.radio_button :live, false %> No</label>
+    </div>
+
+<% end %>

@@ -1,7 +1,6 @@
 <%= @user.first_name %>,
 <BR><BR>
-Thank you for registering for an account with <%= 'energyfolks' #TODO: @affiliate.name
-%>.  To confirm your email address
+Thank you for registering for an account with <%= @affiliate.name %>.  To confirm your email address
 and claim your account, please use the link below:
 <BR><BR>
 <%= link_to('Click Here to Activate Your Account',"#{@host}/users/activate?token=#{@user.activation_token}") %>
@@ -12,5 +11,4 @@ Or copy and paste the below URL into your browser:
 <BR><BR>
 Sincerely,
 <BR>
-<%= 'energyfolks' #TODO: @affiliate.name
-%>
+<%= @affiliate.name %>
