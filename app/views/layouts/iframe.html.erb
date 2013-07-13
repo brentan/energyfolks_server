@@ -11,6 +11,9 @@
 <body>
 
 <%= yield %>
+<script language="javascript">
+    EnergyFolks.checkCookies = false;
+</script>
 <% if params['iframe'].present? && (params['iframe'] == '1') %>
     <script language="javascript">
       EnergyFolks.$(function() {

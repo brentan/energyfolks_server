@@ -80,12 +80,15 @@ class UsersController < ApplicationController
       if user.present?
         session[:userid] = user.id if user.present?
         login_hash = UserLoginHash.create(user_id: current_user.id)
-        #TODO: More information needs to be output here...how many user posts?  admin?  super admin?
         render :js => "EnergyFolks.login_callback('#{login_hash.login_hash}');"
         return
       end
     end
-    render :js => "//Completed"
+    if user_logged_in?
+      render :js => "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};EnergyFolks.CreateTopBar();"
+    else
+      render :js => "EnergyFolks.CreateTopBar();"
+    end
   end
 
   def logout

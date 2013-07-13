@@ -213,8 +213,37 @@ EnergyFolks.globalCallback = function(el) {
 EnergyFolks.testAdmin = function(level) {
     var admin = false;
     EnergyFolks.$.each(EnergyFolks.current_user.affiliates, function(k,v) {
-        if((v.id == EnergyFolks.id) && (v.admin_level >= level))
+        if((v.id == EnergyFolks.id) && (v.admin_level >= level) && (v.approved))
             admin = true;
     });
     return admin;
+}
+
+/*
+ * Cookie functions
+ */
+EnergyFolks.cookie = function(name, value, days) {
+    if(value) {
+        //Write cookie
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "; expires=" + date.toGMTString();
+        } else var expires = "";
+        document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+    } else {
+        //Read cookie
+        var nameEQ = escape(name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return unescape(c.substring(nameEQ.length, c.length));
+        }
+        return null;
+    }
+}
+
+EnergyFolks.removeCookie = function(name) {
+    EnergyFolks.cookie(name, "", -1);
 }

@@ -13,10 +13,11 @@ EnergyFolks.current_user = {id: 0, super_admin: false, admin: [], affiliates: []
 //Used by iframes to keep track of the parent URL
 EnergyFolks.parent_url = '';
 //Accounts constants:
-EnergyFolks.callbackURL='';
-EnergyFolks.forwardto='';
-EnergyFolks.customMenuItems=new Array();
-EnergyFolks.TopBarFixed=true;
+EnergyFolks.callbackURL = '';
+EnergyFolks.forwardto = '';
+EnergyFolks.customMenuItems = new Array();
+EnergyFolks.TopBarFixed = true;
+EnergyFolks.checkCookies = true;
 //data-display constants:
 EnergyFolks.source = 'events';
 EnergyFolks.format = 'list';

@@ -1,0 +1,267 @@
+/*
+Wordpress style for imported blog posts
+*/
+.EnFolksClass img.alignright {float:right; margin:0 0 1em 1em}
+.EnFolksClass img.alignleft {float:left; margin:0 1em 1em 0}
+.EnFolksClass img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+.EnFolksClass a img.alignright {float:right; margin:0 0 1em 1em}
+.EnFolksClass a img.alignleft {float:left; margin:0 1em 1em 0}
+.EnFolksClass a img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+
+/*
+General Styles:  most elements placed in the DOM by the energyfolks library are housed within a div
+with the classname EnFolksClass.  The styles below control the basic styling of elements within these divs
+*/
+.EnFolksClass {
+  padding:0px;
+  margin:0px;
+  border:0px solid black;
+}
+.EnFolksClass table {
+  padding:3px;
+  margin:0px;
+  border:0px solid black;
+}
+.EnFolksClass img {
+  padding:0px;
+  margin:0px;
+  border:0px solid black;
+}
+.EnFolksClass td {
+  vertical-align:top;
+  padding:0px;
+  border: 0px solid black;
+  background-image:none;
+}
+.EnFolksClass tr {
+  background-color:transparent;
+  border: 0px solid black;
+}
+.EnFolksLoginButton {
+  width:200px;
+}
+.EnFolks_Direct {
+  background-color:white;
+  padding:5px;
+}
+/*
+View Styles
+*/
+
+/* Main table background: Controls the background color of the main table housing content */
+table.EnFolksBackground, td.EnFolksBackground  {
+  background-color:white;
+}
+/* Background color for headings, including days of week on calendar views, etc */
+td.EnFolksHeadings {
+  background-color: #26313B;
+  color:#ffffff;
+}
+/* LIST VIEW STYLING */
+td.EnFolkslinkstop {
+  font-size:9px;
+  text-transform: uppercase;
+  text-align:right;
+}
+td.EnFolksListViewDatebar {
+  background-color:#e6e6e6;
+  font-size:16px;
+  padding:3px;
+}
+td.EnFolksTodayDatebar {
+  font-weight:bold;
+  background-color: #26313B;
+  color:#eeeeee;
+}
+div.EnFolksListItem {
+  background-color:transparent;
+}
+div.EnFolksListItemStarred {
+  background-color:#ffefbf;
+}
+td.EnFolksSepLine {
+  background-color:#f0f0f0;
+  border-style:solid;
+  border-color:#dddddd;
+  border-width:0px 0px 1px 0px;
+}
+div.EnFolksSepLine {
+  background-color:#dddddd;
+  border:0px solid black;
+  padding:0px;
+  margin:0px;
+  height:1px;
+}
+td.EnFolksadminbox {
+  background-color: #ffffcc;
+  border:0px solid #999999;
+  border-left-width: 1px;
+  text-align:right;
+  vertical-align:middle;
+  padding-right:3px;
+}
+/* MONTHLY+WEEKLY VIEW STYLING */
+td.EnFolksMonthDays {
+  border-style: solid;border-color: #484848;border-width: 0px 1px 1px 0px;
+  text-align:center;
+  margin:0px;
+  padding:0px;
+  height:25px;
+  font-size:13px;
+  font-weight:bold;
+}
+td.EnFolksDay, div.EnFolksDay {
+  border-style:solid;border-color:#282828;
+  height:60px;
+}
+td.EnFolksDayBack, div.EnFolksDayBack {
+  background-color:#ffffff;
+}
+td.EnFolksDayOther, div.EnFolksDayOther {
+  background-color:#eeeeee;
+}
+td.EnFolksDayToday, div.EnFolksDayToday {
+  background-color:#ffefbf;
+}
+/* Fades correspond to the above 'day' stylings.  By default it is an image that is 8px wide and fades from transparent on
+   the left of the image to the background color on the right.  Used on the right side of the content boxes shown on the
+   monthly views to have overflowing content fade into the page background */
+div.EnFolksDayBackFade {
+  background-image:url(https://images.energyfolks.com/images/calendar/fadewhite.png);
+}
+div.EnFolksDayOtherFade {
+  background-image:url(https://images.energyfolks.com/images/calendar/fadegrey.png);
+}
+div.EnFolksDayTodayFade {
+  background-image:url(https://images.energyfolks.com/images/calendar/fadetoday.png);
+}
+div.EnFolksWeeklyTimeOfDay {
+  border-color:#dddddd;
+  border-style:solid;
+  background-color:#eeeeee;
+  color:#888888;
+}
+div.WeeklyDaySeperatorColor {
+  border-color: #999999;
+}
+div.WeeklyHoursSeperatorColor {
+  border-color:#eeeeee;
+}
+div.EnFolksPopup {
+  border-color:#282828;
+  background-color:#ffffff;
+}
+div.EnFolksPopupStarred {
+  border-color:#282828;
+  background-color:#ffefbf;
+}
+
+/*
+Other Specific Styles:
+The styles below apply to specific elements on the page, as identified by their ID.
+*/
+/* Messagewrap is the div surrounding popup boxes and houses some pngs that create a shadowing effect */
+#EnFolks_messagewrap {
+  padding:0px;
+}
+/* EnFolksWarningBarLink appears at the top of pages where a user is viewing content but is not logged in.  A generic error message is shown in this space, and the default background is red */
+#EnFolksWarningBarLink {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  background-color: rgb(161, 0, 0);
+  text-decoration: underline;
+}
+/* The Moderation bar is only shown to administrators when posts need to be moderated.  Light yellow by default */
+#EnFolksModBar {
+  background-color:#ffff99;
+}
+/* The Search bar appears just above the linkbar, and has the searchbox to filter items on content pages */
+#EnFolksSBarNew {
+  background-color:#ffffff;
+}
+/* The linkbar is at the top of all content pages, and has the buttons that change views */
+#EnfolksResultDivlinkbar {
+  background-color:#26313B;
+}
+/* Part of the linkbar: on energyfolks.com this creates the fade to white at the bottom of the bar */
+#EnFolkslinkfadediv {
+  height:8px;
+  position:absolute;
+  bottom:0px;right:0px;left:0px;
+  background-position:bottom;
+  background-repeat:repeat-x;
+  background-image:url(https://images.energyfolks.com/images/calendar/fadewhiteROT.png);
+}
+
+.enfolks_share {
+  padding-top:6px;
+}
+.enfolks_share .share {
+  height: 16px; width: 36px;cursor: pointer; font-size: 11px; line-height: 17px; vertical-align: center; text-align: right; padding-right: 20px; font-weigth: bold; float: left;
+}
+.enfolks_share .facebook_share {
+  background: url(https://images.energyfolks.com/images/icons/facebook_share.gif) top left no-repeat;
+}
+.enfolks_share .twitter_share {
+  background: url(https://images.energyfolks.com/images/icons/twitter_share.gif) top left no-repeat;
+}
+.enfolks_share .linkedin_share {
+  background: url(https://images.energyfolks.com/images/icons/linkedin_share.gif) top left no-repeat;
+}
+.enfolks_share .google_plus {
+  position:relative;top:0px;
+}
+.enfolks_share .email_print {
+  position:relative;top:-4px;
+}
+.enfolks_share .print_image {
+  width: 18px;
+  height: 18px;
+  background-image: url(https://images.energyfolks.com/images/icons/print.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-width: 0px;
+}
+.enfolks_share .email_image {
+  width: 18px;
+  height: 18px;
+  background-image: url(https://images.energyfolks.com/images/icons/email.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  border-width: 0px;
+}
+.enfolks_days.other_day {
+  padding:0 5px;margin-left:-5px;background-color:#eeeeee;
+}
+.enfolks_days.today {
+  padding:0 5px;margin-left:-5px;background-color:#ffe9c6;
+}
+.ef_comment {
+  padding:0px;margin:0px;display:block;
+}
+.ef_comment .top_border {
+  padding:0px;border:0px solid #e0e5ea;border-top-width:1px;
+}
+.ef_comment .top_border_2 {
+  border:0px solid #e9e9e9;border-top-width:1px;margin-top:5px;
+}
+.ef_comment .content_box {
+  background-color:#e9f2f7;border-style: none;border-top:1px solid #ffffff;text-align:left;vertical-align:top;
+}
+.ef_comment .title_text {
+  font-weight:bold;color:#E64F32;
+}
+.ef_comment .light_text {
+  color:#837d94;
+}
+.ef_mouseover {
+  background-color: transparent;
+}
+.ef_mouseover:hover {
+  background-color: #eeeeee;
+}
+div.EnFolksStreamItem {
+  padding:9px 4px 9px 4px;
+  border-bottom:1px solid #cccccc;
+}

@@ -42,19 +42,4 @@ class AjaxController < ApplicationController
     end
   end
 
-  def user_hash(i)
-    {
-        :first_name => i.first_name,
-        :last_name => i.last_name,
-        :position => i.position,
-        :organization => i.organization,
-        :id => i.id,
-        :verified => i.verified?,
-        :super_admin => i.admin?,
-        :avatar => i.avatar,
-        :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
-        :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } }
-    }
-  end
-
 end
