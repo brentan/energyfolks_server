@@ -42,9 +42,13 @@
 /*
  Display a simple login box, or show current user details if already logged in:
  */
-EnergyFolks.LoginBox = function() {
+EnergyFolks.LoginBox = function(element_id) {
     var id = EnergyFolks.uniqueId();
-    document.write("<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>");
+    var intext = "<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>";
+    if(typeof element_id !== 'undefined')
+        EnergyFolks.$(element_id).html(intext);
+    else
+        document.write(intext);
     var callback = function(input) {
         EnergyFolks.$("#EnFolksLoginDiv_"+input.id).html(input.html);
     }
@@ -54,9 +58,13 @@ EnergyFolks.LoginBox = function() {
 /*
  Display a simple 'login/get an account' links, or user details if already logged in
  */
-EnergyFolks.LoginLinks = function() {
+EnergyFolks.LoginLinks = function(element_id) {
     var id = EnergyFolks.uniqueId();
-    document.write("<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>");
+    var intext = "<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>";
+    if(typeof element_id !== 'undefined')
+        EnergyFolks.$(element_id).html(intext);
+    else
+        document.write(intext);
     var callback = function(input) {
         EnergyFolks.$("#EnFolksLoginDiv_"+input.id).html(input.html);
     }
@@ -115,15 +123,15 @@ EnergyFolks.logout_callback = function() {
  Pageload tasks
  */
 EnergyFolks.$(function() {
-
-    // Check for cookies and reload page (if newly logged in)
-    var url=EnergyFolks.server_url + "/users/try_cookie?"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
-    var head= document.getElementsByTagName('head')[0];
-    var script= document.createElement('script');
-    script.type= 'text/javascript';
-    script.src= url;
-    head.appendChild(script);
-
+    if(EnergyFolks.checkCookies) {
+        // Check for cookies and reload page (if newly logged in)
+        var url=EnergyFolks.server_url + "/users/try_cookie?"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
+        var head= document.getElementsByTagName('head')[0];
+        var script= document.createElement('script');
+        script.type= 'text/javascript';
+        script.src= url;
+        head.appendChild(script);
+    }
 
     // Attach listener to all login forms
     var login_form_submit = function() {
@@ -203,22 +211,6 @@ EnergyFolks.$(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Hide the top account bar (basically create the bar but with no display to prevent its appearance)
 EnergyFolks.HideTopbar = function() {
     document.write("<div id='efadminbar' style='display:none;position:relative;'></div>");
@@ -232,210 +224,133 @@ EnergyFolks.AddMenuItem = function(title,url) {
     EnergyFolks.customMenuItems.push({title:title, url:url});
 }
 
-
-//TODO: Topbar stuff below needs to be redone once we have created data objects!
-// Create the bar that appears at the top of the page when user is logged in
 EnergyFolks.CreateTopBar = function() {
-    if(EnergyFolks.$("#wpadminbar") && (EnergyFolksUserDetail.user_id > 0)) {
+    if((EnergyFolks.$("#wpadminbar").length > 0) && (EnergyFolks.user_logged_in)) {
         var outtext='';
-        if((EnergyFolksUserDetail.admin == EnFolksAffiliateId) && (EnFolksAffiliateId > 0)) {
-            EnFolks_get_object("wp-admin-bar-energyfolks0").innerHTML='<a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Administrator Tools</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>";
-            outtext='<li><a class="ab-item" href="/wp-admin">Wordpress Admin Dashboard</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://docs.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://docs.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Documents</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://wiki.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://wiki.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Wiki</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://groups.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://groups.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Email Archives</a></li>';
-            EnFolks_get_object("wp-admin-bar-energyfolks0-default").innerHTML=outtext;
-        } else if(EnergyFolksUserDetail.super_admin == 1) {
-            EnFolks_get_object("wp-admin-bar-energyfolks0").innerHTML='<a class="ab-item" href="https://www.energyfolks.com/admin/">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>";
-            outtext='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Partner Control Screen</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://docs.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://docs.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Documents</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://wiki.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://wiki.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Wiki</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://groups.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://groups.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Email Archives</a></li>';
-            EnFolks_get_object("wp-admin-bar-energyfolks0-default").innerHTML=outtext;
+        if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) {
+            EnergyFolks.$("#wp-admin-bar-energyfolks0").html("<a href='#' class='ab-item'>Administrator Tools</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
+            outtext = '';
+            if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>EnergyFolks Dashboard</a></li>";
+            outtext += '<li><a class="ab-item" href="../wp-admin">Wordpress Dashboard</a></li>';
+            EnergyFolks.$("wp-admin-bar-energyfolks0-default").html(outtext);
+        } else if(EnergyFolks.current_user.super_admin) {
+            EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item" href="https://www.energyfolks.com/admin/">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
+            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/'+EnergyFolks.id+'/edit" data-iframe="true" data-params="">Partner Control Screen</a></li>');
         } else
-            EnFolks_get_object("wp-admin-bar-energyfolks0").style.display='none';
-        if((EnergyFolksUserDetail.moderate.announce != -1) ||(EnergyFolksUserDetail.moderate.calendar != -1) ||(EnergyFolksUserDetail.moderate.jobs != -1) ||(EnergyFolksUserDetail.moderate.users != -1)) {
-            var tot=Math.max(0,EnergyFolksUserDetail.moderate.announce)+Math.max(0,EnergyFolksUserDetail.moderate.calendar)+Math.max(0,EnergyFolksUserDetail.moderate.jobs)+Math.max(0,EnergyFolksUserDetail.moderate.users);
-            outtext='<a class="ab-item" href="javascript:;" ';
+            EnergyFolks.$("#wp-admin-bar-energyfolks0").css('display','none');
+        if(EnergyFolks.testAdmin(EnergyFolks.EDITOR) || EnergyFolks.current_user.super_admin) {
+            var tot=EnergyFolks.current_user.moderation_count.total;
+            outtext='<a class="ab-item" href="#" ';
             if(tot > 0)
                 outtext+='style="background-color:darkred;"'
             outtext+='>Moderation ('+tot+')</a>';
-            EnFolks_get_object("wp-admin-bar-energyfolks1").innerHTML=outtext+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks1-default'></ul></div>";
+            EnergyFolks.$("#wp-admin-bar-energyfolks1").html(outtext+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks1-default'></ul></div>");
             outtext='';
-            if(EnergyFolksUserDetail.moderate.calendar != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Events ('+EnergyFolksUserDetail.moderate.calendar+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.jobs != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Jobs ('+EnergyFolksUserDetail.moderate.jobs+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.announce != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Bulletins ('+EnergyFolksUserDetail.moderate.announce+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.users != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/users/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Users ('+EnergyFolksUserDetail.moderate.users+')</a></li>';
-            EnFolks_get_object("wp-admin-bar-energyfolks1-default").innerHTML=outtext;
+            EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+            });
+            EnergyFolks.$("#wp-admin-bar-energyfolks1-default").html(outtext);
         } else {
-            EnFolks_get_object("wp-admin-bar-energyfolks1").style.display='none';
+            EnergyFolks.$("#wp-admin-bar-energyfolks1").css('display','none');
         }
-        if((EnergyFolksUserDetail.content.announce != -1) ||(EnergyFolksUserDetail.content.calendar != -1) ||(EnergyFolksUserDetail.content.jobs != -1)) {
-            var tot=Math.max(0,EnergyFolksUserDetail.content.announce)+Math.max(0,EnergyFolksUserDetail.content.calendar)+Math.max(0,EnergyFolksUserDetail.content.jobs);
-            outtext='<a class="ab-item" href="javascript:;" ';
-            if(tot > 0)
-                outtext+='style="background-color:darkred;"'
-            outtext+='>EnergyFolks Queues ('+tot+')</a>';
-            EnFolks_get_object("wp-admin-bar-energyfolks2").innerHTML=outtext+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks2-default'></ul></div>";
+        EnergyFolks.$("#wp-admin-bar-energyfolks2").css('display','none'); //TODO: Remove this reference from wordpress plugin
+        if(EnergyFolks.current_user.user_posts.total > 0) {
             outtext='';
-            if(EnergyFolksUserDetail.content.calendar != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Events ('+EnergyFolksUserDetail.content.calendar+')</a></li>';
-            if(EnergyFolksUserDetail.content.jobs != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Jobs ('+EnergyFolksUserDetail.content.jobs+')</a></li>';
-            if(EnergyFolksUserDetail.content.announce != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Bulletins ('+EnergyFolksUserDetail.content.announce+')</a></li>';
-            EnFolks_get_object("wp-admin-bar-energyfolks2-default").innerHTML=outtext;
+            EnergyFolks.$("#wp-admin-bar-energyfolks3").html("<a class='ab-item' href='#'>Your Posts</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks3-default'></ul></div>");
+            EnergyFolks.$.each(EnergyFolks.current_user.user_posts.values, function(i, v) {
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/myposts" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+            });
+            EnergyFolks.$("#wp-admin-bar-energyfolks3-default").html(outtext);
         } else {
-            EnFolks_get_object("wp-admin-bar-energyfolks2").style.display='none';
+            EnergyFolks.$("#wp-admin-bar-energyfolks3").css('display','none');
         }
-        if(EnergyFolksUserDetail.has_posts) {
-            outtext='<a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/welcome/Manageiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Your Posts</a>';
-            EnFolks_get_object("wp-admin-bar-energyfolks3").innerHTML=outtext+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks3-default'></ul></div>";
-            outtext='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Event Posts ('+EnergyFolksUserDetail.posts.Event+')</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Job Posts ('+EnergyFolksUserDetail.posts.Jobs+')</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Bulletin Posts ('+EnergyFolksUserDetail.posts.Announcement+')</a></li>';
-            EnFolks_get_object("wp-admin-bar-energyfolks3-default").innerHTML=outtext;
-        } else {
-            EnFolks_get_object("wp-admin-bar-energyfolks3").style.display='none';
-        }
-        EnFolks_get_object("wp-admin-bar-energyfolks_welcome_sub1").onclick=function() { EnFolksMessageSize('https://www.energyfolks.com/accounts/ExtProfile/'+EnFolksAffiliateId,1035,650);EnFolksWaitForLoad(); };
-        EnFolks_get_object("wp-admin-bar-energyfolks_add_sub5").onclick=function() { EnFolksMessageSize('https://www.energyfolks.com/calendar/externalpost/'+EnFolksAffiliateId+'/-1',1035,650);EnFolksWaitForLoad(); };
-        EnFolks_get_object("wp-admin-bar-energyfolks_add_sub6").onclick=function() { EnFolksMessageSize('https://www.energyfolks.com/jobs/externalpost/'+EnFolksAffiliateId+'/-1',1035,650);EnFolksWaitForLoad(); };
-        EnFolks_get_object("wp-admin-bar-energyfolks_add_sub7").onclick=function() { EnFolksMessageSize('https://www.energyfolks.com/announce/externalpost/'+EnFolksAffiliateId+'/-1',1035,650);EnFolksWaitForLoad(); };
+        EnergyFolks.$("#wp-admin-bar-energyfolks_welcome_sub1").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="users/profiles" data-iframe="true">Update Profile</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub5").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub6").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub7").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="bulletins/new" data-iframe="true">Bulletin Post</a>');
         return;
     }
-    if(EnFolks_get_object("efadminbar")) return;
-    if(((EnFolksAffiliateId*1) == 12) || ((EnFolksAffiliateId*1) == 15)) return;
-    if(EnergyFolksUserDetail.user_id < 1) {
+    if(EnergyFolks.$("#efadminbar").length > 0) return;
+    if(!EnergyFolks.user_logged_in) {
         var outtext='<div class="quicklinks"><ul class="ab-top-menu">';
-        outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub1\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub1\').style.display=\'block\';"><a class="ab-item" href="javascript:;" >';
+        outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub1\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub1\').show();"><a class="ab-item" href="#" >';
         outtext+='Get an Account or Login</a>';
         outtext+='<div id="efadminbar_sub1" class="ab-sub-wrapper">';
         outtext+='<div id="eftoplogin">';
-        outtext+="<div id='EnFolks_top_login_loading' style='width:180px;height:300px;display:none;text-align:center;'><h1>Loading...</h1><img src='https://images.energyfolks.com/images/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>";
-        outtext+='<div id="EnFolks_top_login_box" style="text-align:center;"><div class="EnFolksClass"><div style="text-align:center;font-size:14px;color:red;" id="EnFolks_top_login_error"></div> <h3>Login or Sign up with<br>  <a href="javascript:;" onclick="EnFolks_ThirdPartyLogin(\'facebook\');" style="height:auto;display:inline;padding:0px;border:0px;"><img align="absmiddle" style="border:0px;padding-top:4px;height:18px;padding-right:4px;display:inline;" onmouseover="this.src=\'https://images.energyfolks.com/images/social/facebook.png\';" onmouseout="this.src=\'https://images.energyfolks.com/images/social/facebookbw.png\';" src="https://images.energyfolks.com/images/social/facebookbw.png"></a>     <a href="javascript:;" onclick="EnFolks_ThirdPartyLogin(\'linkedin\');" style="border:0px;height:auto;display:inline;padding:0px;"><img align="absmiddle" style="border:0px;padding-top:4px;height:18px;padding-right:4px;display:inline;" onmouseover="this.src=\'https://images.energyfolks.com/images/social/linkedin.png\';" onmouseout="this.src=\'https://images.energyfolks.com/images/social/linkedinbw.png\';" src="https://images.energyfolks.com/images/social/linkedinbw.png"></a>     <a href="javascript:;" onclick="EnFolks_ThirdPartyLogin(\'google\');" style="height:auto;display:inline;padding:0px;border:0px;"><img align="absmiddle" style="border:0px;padding-top:4px;height:18px;padding-right:4px;display:inline;" onmouseover="this.src=\'https://images.energyfolks.com/images/social/google.png\';" onmouseout="this.src=\'https://images.energyfolks.com/images/social/googlebw.png\';" src="https://images.energyfolks.com/images/social/googlebw.png"></a>     <a href="javascript:;" onclick="EnFolks_ThirdPartyLogin(\'twitter\');" style="height:auto;display:inline;padding:0px;border:0px;"><img align="absmiddle" style="border:0px;padding-top:4px;height:18px;padding-right:4px;display:inline;" onmouseover="this.src=\'https://images.energyfolks.com/images/social/twitter.png\';" onmouseout="this.src=\'https://images.energyfolks.com/images/social/twitterbw.png\';" src="https://images.energyfolks.com/images/social/twitterbw.png"></a></h3>';
-        outtext+='<hr width="95%" size="1" color="#999999" style="padding:0px;"><div style="text-align:center;padding:2px 2px 6px 2px;"><h3>Join us!</h3> Signup for an <a style="height:auto;display:inline;padding:0px;" href="https://www.energyfolks.com" target="_blank">energyfolks</a> account to gain access to this site.  An account is <b>free</b> and open to <b>anyone</b>.<br>  <button id="EnFolksCreateAccountTop" class="EnFolksLoginButton EnFolksOverride" style="text-align:center;padding:5px;font-size:15px;line-height:17px;">get an account</button> </div><hr width="95%" size="1" color="#999999" style="padding:0px;"> <form method="post" onsubmit="return false;" id="EnFolksExternalLoginFormTop">';
-        outtext+='<h3 style="padding-top:7px;">Sign in with your energyfolks account</h3> <div align="center">     <table border="0" cellpadding="1" cellspacing="0" align="center" style="align:center;">         <tbody><tr>             <td align="right">                 email:             </td>             <td>                 <input type="text" name="user" id="EnFolksUserTop" value="" size="13">             </td>         </tr>         <tr>             <td align="right">                 password:             </td>             <td>                 <input type="password" name="passw" id="EnFolksPassTop" size="13"></td>         </tr>         <tr>             <td colspan="2" align="center">                 <label><input type="checkbox" id="EnFolksCookieTop" name="remember" checked="" value="11"> remember me</label>             </td>         </tr>         <tr>             <td align="center" style="font-size:10px;text-align:center;" colspan="2">        <div style="text-align:center;line-height:1.6;">         <a style="height:auto;display:inline;padding:0px;" class="maplink" href=\'javascript:EnFolksMessageSize("https://www.energyfolks.com/accounts/forgotpassOUT/"+EnFolksAffiliateId,650,400);EnFolksWaitForLoad();\'>forgot password</a>          <BR>       <a style="height:auto;display:inline;padding:0px;" class="maplink" href=\'javascript:EnFolksMessageSize("https://www.energyfolks.com/accounts/ReSendActivationOUT/"+EnFolksAffiliateId,550,550);EnFolksWaitForLoad();\'>re-send activation</a></div>                 <button class="EnFolksLoginButton EnFolksOverride" type="submit" style="padding:5px 20px 5px 20px;font-size:15px;line-height:17px;">login</button>             </td>         </tr>     </tbody></table> </div>  </form> </div></div>';
-
         outtext+='</div></div></li>';
-        var tots=this.customMenuItems.length;
+        var tots=EnergyFolks.customMenuItems.length;
         for(var i=0;i<tots;i++)
-            outtext+='<li class="menupop"><a class="ab-item" href="'+this.customMenuItems[i].url+'">'+this.customMenuItems[i].title+"</a></li>";
-        outtext+='</li></ul><ul class="ab-top-menu ab-top-secondary">';
-        outtext+='<li onmouseout="EnFolks_get_object(\'efadminbar_subr\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_subr\').style.display=\'block\';" class="menupop"><a class="ab-item" href="https://www.energyfolks.com/" target="_blank"><i>an <img src="https://images.energyfolks.com/images/toplogoNEW2.png" border=0 style="position:relative;top:-1px;border-width:0px;" class="avatar" align="absmiddle"> affiliate</i></a>';
+            outtext+='<li class="menupop"><a class="ab-item" href="'+EnergyFolks.customMenuItems[i].url+'">'+EnergyFolks.customMenuItems[i].title+"</a></li>";
+        outtext+='</ul><ul class="ab-top-menu ab-top-secondary">';
+        outtext+='<li onmouseout="EnergyFolks.$(\'#efadminbar_subr\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_subr\').show();" class="menupop"><a class="ab-item" href="https://www.energyfolks.com/" target="_blank"><i>an <img src="https://images.energyfolks.com/images/toplogoNEW2.png" border=0 style="position:relative;top:-1px;border-width:0px;" class="avatar" align="absmiddle"> affiliate</i></a>';
         outtext+='<div id="efadminbar_subr" class="ab-sub-wrapper"><div style="padding:3px;text-align:left;color:#666666;text-shadow:none;line-height:1.15;"><div style="text-align:center;"><img src="https://www.energyfolks.com/resourceimage/PartnerPic.png" style="display:inline;"></div>We are an energyfolks affiliate organization.  Energyfolks is a not-for-profit network of networks dedicated to connecting energy students and professionals in their neighborhood and around the globe.</div><ul class="ab-submenu">';
         outtext+='<li><a class="ab-item" href="https://www.energyfolks.com/" target="_blank">Learn more...</a></li></ul>';
         outtext+='</div>';
-        outtext+='<li class="menupop"><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/welcome/feedback/'+EnFolksAffiliateId+'\',480,520);EnFolksWaitForLoad();">Feedback</a></li>';
-        outtext+='</li></ul></div>';
+        outtext+='<li class="menupop"><a class="ab-item EnergyFolks_popup" href="#" data-command="feedback/new" data-iframe="true">Feedback</a></li>';
+        outtext+='</ul></div>';
     } else {
         var outtext='<div class="quicklinks"><ul class="ab-top-menu">';
-        outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub1\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub1\').style.display=\'block\';"><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/accounts/ExtProfile/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">';
-        outtext+='<img class="avatar" style="border-width:0px;padding-right:5px;" align="absmiddle" src="'+EnergyFolksUserDetail.picture_url+'">';
-        outtext+='Welcome '+EnergyFolksUserDetail.first_name+'</a>';
+        outtext+='<li class="menupop EnergyFolks_popup" onmouseout="EnergyFolks.$(\'#efadminbar_sub1\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub1\').show();"><a class="ab-item EnergyFolks_popup" href="#" data-command="users/profile" data-iframe="true">';
+        outtext+='<img class="avatar" style="border-width:0px;padding-right:5px;" align="absmiddle" src="'+EnergyFolks.current_user.avatar_url+'">';
+        outtext+='Welcome '+EnergyFolks.current_user.first_name+'</a>';
         outtext+='<div id="efadminbar_sub1" class="ab-sub-wrapper"><ul class="ab-submenu">';
-        outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/accounts/ExtProfile/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Update your Profile</a></li>';
-        outtext+='<li><a class="ab-item" href="javascript:;" onclick="" id="efadminbar-logout">Logout</a></li>'
+        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="users/profile" data-iframe="true">Update your Profile</a></li>';
+        outtext+='<li><a class="ab-item EnFolks_logout" href="#">Logout</a></li>'
         outtext+='</ul></div></li>';
-        if((EnergyFolksUserDetail.admin == EnFolksAffiliateId) && (EnFolksAffiliateId > 0)) {
-            outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub4\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub4\').style.display=\'block\';">';
-            outtext+='<a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Administrator Tools</a>';
+        if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) {
+            outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub4\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub4\').show();">';
+            outtext+="<a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>Administrator Tools</a>";
             outtext+='<div id="efadminbar_sub4" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Administrator Control Screen</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://docs.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://docs.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Documents</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://wiki.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://wiki.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Wiki</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://groups.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://groups.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">Group Email Archives</a></li>';
+            outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>EnergyFolks Dashboard</a></li>";
             outtext+='</ul></div></li>';
-        } else if(EnergyFolksUserDetail.super_admin == 1) {
-            outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub4\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub4\').style.display=\'block\';">';
+        } else if(EnergyFolks.current_user.super_admin) {
+            outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub4\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub4\').show();">';
             outtext+='<a class="ab-item" href="https://www.energyfolks.com/admin" >EF Administrator Page</a>';
             outtext+='<div id="efadminbar_sub4" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/partner/detailExt/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Partner Control Screen</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://docs.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://docs.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Documents</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://wiki.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://wiki.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Wiki</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageDirect(\'<table border=\\\'0\\\' style=\\\'padding:10px 40px 10px 40px;width:500px;\\\'><tbody><tr><td><h1 style=\\\'font-size:26px;text-align:center;line-height:30px;\\\'>Are you signed in to a personal google or gmail account?</h1><div align=\\\'left\\\'><h4>Why yes!</h4><p>energyfolks will log you in to a google account associated with your club.  To avoid conflicts and odd behavior, we recommend you <span style=\\\'font-weight:bold;\\\'>logout of your google/gmail</span> before continuing.</p><h4>Not me...</h4><p>Wonderful!  Click the link below to continue on your way</p></div><h3 align=center><a href=\\\'http://groups.energyfolks.com/\\\' target=\\\'_blank\\\'>Continue on to http://groups.energyfolks.com</a></h3></td></tr></tbody></table>\',400,400);EnFolksWaitForLoad();">EF Email Archives</a></li>';
+            if(EnergyFolks.id > 0)
+                outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>Affiliate Dashboard</a></li>";
+            outtext += '<li><a class="ab-item" href="https://www.energyfolks.com/admin">EF Administrator Page</a></li>'
             outtext+='</ul></div></li>';
         }
-        if((EnergyFolksUserDetail.moderate.announce != -1) ||(EnergyFolksUserDetail.moderate.calendar != -1) ||(EnergyFolksUserDetail.moderate.jobs != -1) ||(EnergyFolksUserDetail.moderate.users != -1)) {
-            var tot=Math.max(0,EnergyFolksUserDetail.moderate.announce)+Math.max(0,EnergyFolksUserDetail.moderate.calendar)+Math.max(0,EnergyFolksUserDetail.moderate.jobs)+Math.max(0,EnergyFolksUserDetail.moderate.users);
-            outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_subm\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_subm\').style.display=\'block\';">';
-            outtext+='<a class="ab-item" href="javascript:;" ';
+        if(EnergyFolks.testAdmin(EnergyFolks.EDITOR) || EnergyFolks.current_user.super_admin) {
+            var tot=EnergyFolks.current_user.moderation_count.total;
+            outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_subm\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_subm\').show();">';
+            outtext+='<a class="ab-item" href="#" ';
             if(tot > 0)
                 outtext+='style="background-color:darkred;"'
             outtext+='>Moderation ('+tot+')</a>';
             outtext+='<div id="efadminbar_subm" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            if(EnergyFolksUserDetail.moderate.calendar != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Events ('+EnergyFolksUserDetail.moderate.calendar+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.jobs != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Jobs ('+EnergyFolksUserDetail.moderate.jobs+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.announce != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Bulletins ('+EnergyFolksUserDetail.moderate.announce+')</a></li>';
-            if(EnergyFolksUserDetail.moderate.users != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/users/moderationiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Users ('+EnergyFolksUserDetail.moderate.users+')</a></li>';
+            EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+            });
             outtext+='</ul></div></li>';
-            if(EnFolks_get_object("wp-admin-bar-energyfolks1"))
-                EnFolks_get_object("wp-admin-bar-energyfolks1").innerHTML=outtext2+"</ul></div>";
-        } else {
-            if(EnFolks_get_object("wp-admin-bar-energyfolks1"))
-                EnFolks_get_object("wp-admin-bar-energyfolks1").style.display='none';
         }
-        if((EnergyFolksUserDetail.content.announce != -1) ||(EnergyFolksUserDetail.content.calendar != -1) ||(EnergyFolksUserDetail.content.jobs != -1)) {
-            var tot=Math.max(0,EnergyFolksUserDetail.content.announce)+Math.max(0,EnergyFolksUserDetail.content.calendar)+Math.max(0,EnergyFolksUserDetail.content.jobs);
-            outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_subc\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_subc\').style.display=\'block\';">';
-            outtext+='<a class="ab-item" href="javascript:;" ';
-            if(tot > 0)
-                outtext+='style="background-color:darkred;"'
-            outtext+='>EnergyFolks Queues ('+tot+')</a>';
-            outtext+='<div id="efadminbar_subc" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            if(EnergyFolksUserDetail.content.calendar != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Events ('+EnergyFolksUserDetail.content.calendar+')</a></li>';
-            if(EnergyFolksUserDetail.content.jobs != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Jobs ('+EnergyFolksUserDetail.content.jobs+')</a></li>';
-            if(EnergyFolksUserDetail.content.announce != -1)
-                outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/contentcontroliframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Bulletins ('+EnergyFolksUserDetail.content.announce+')</a></li>';
-            outtext+='</ul></div></li>';
-            if(EnFolks_get_object("wp-admin-bar-energyfolks2"))
-                EnFolks_get_object("wp-admin-bar-energyfolks2").innerHTML=outtext2+"</ul></div>";
-        } else {
-            if(EnFolks_get_object("wp-admin-bar-energyfolks2"))
-                EnFolks_get_object("wp-admin-bar-energyfolks2").style.display='none';
-        }
-        if(EnergyFolksUserDetail.has_posts) {
+        if(EnergyFolks.current_user.user_posts.total > 0) {
             outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub2\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub2\').style.display=\'block\';">';
-            outtext+='<a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/welcome/Manageiframe/'+EnFolksAffiliateId+'\',1035,650);EnFolksWaitForLoad();">Your Posts</a>';
-            outtext+='<div id="efadminbar_sub2" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Event Posts ('+EnergyFolksUserDetail.posts.Event+')</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Job Posts ('+EnergyFolksUserDetail.posts.Jobs+')</a></li>';
-            outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/mineiframe/'+EnFolksAffiliateId+'#\',1035,650);EnFolksWaitForLoad();">Bulletin Posts ('+EnergyFolksUserDetail.posts.Announcement+')</a></li>';
-            outtext+='</ul></div></li>';
-            if(EnFolks_get_object("wp-admin-bar-energyfolks3"))
-                EnFolks_get_object("wp-admin-bar-energyfolks3").innerHTML=outtext2+"</ul></div>";
-        } else {
-            if(EnFolks_get_object("wp-admin-bar-energyfolks3"))
-                EnFolks_get_object("wp-admin-bar-energyfolks3").style.display='none';
+            outtext+="<a class='ab-item' href='#'>Your Posts</a><div class='ab-sub-wrapper'><ul class='ab-submenu'>";
+            EnergyFolks.$.each(EnergyFolks.current_user.user_posts.values, function(i, v) {
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/myposts" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+            });
+            outtext+='</ul></div></li>'
         }
-        outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub3\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub3\').style.display=\'block\';"><a class="ab-item" href="javascript:;">+ New</a>';
+        outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub3\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub3\').show();"><a class="ab-item" href="#">+ New</a>';
         outtext+='<div id="efadminbar_sub3" class="ab-sub-wrapper"><ul class="ab-submenu">';
-        outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/calendar/externalpost/'+EnFolksAffiliateId+'/-1\',1035,650);EnFolksWaitForLoad();">Event Post</a></li>';
-        outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/jobs/externalpost/'+EnFolksAffiliateId+'/-1\',1035,650);EnFolksWaitForLoad();">Job Post</a></li>';
-        outtext+='<li><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/announce/externalpost/'+EnFolksAffiliateId+'/-1\',1035,650);EnFolksWaitForLoad();">Bulletin Post</a></li>';
+        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a></li>';
+        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a></li>';
+        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="bulletins/new" data-iframe="true">Bulletin Post</a></li>';
         outtext+='</ul></div>';
-        var tots=this.customMenuItems.length;
+        var tots=EnergyFolks.customMenuItems.length;
         for(var i=0;i<tots;i++)
-            outtext+='<li class="menupop"><a class="ab-item" href="'+this.customMenuItems[i].url+'">'+this.customMenuItems[i].title+"</a></li>";
-        outtext+='</li></ul><ul class="ab-top-menu ab-top-secondary"><li onmouseout="EnFolks_get_object(\'efadminbar_subr\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_subr\').style.display=\'block\';" class="menupop"><a class="ab-item" href="https://www.energyfolks.com/" target="_blank"><i>an <img src="https://images.energyfolks.com/images/toplogoNEW2.png" border=0 style="position:relative;top:-1px;border-width:0px;" class="avatar" align="absmiddle"> affiliate</i></a>';
+            outtext+='<li class="menupop"><a class="ab-item" href="'+EnergyFolks.customMenuItems[i].url+'">'+EnergyFolks.customMenuItems[i].title+"</a></li>";
+        outtext+='</li></ul><ul class="ab-top-menu ab-top-secondary"><li onmouseout="EnergyFolks.$(\'#efadminbar_subr\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_subr\').show();" class="menupop"><a class="ab-item" href="https://www.energyfolks.com/" target="_blank"><i>an <img src="https://images.energyfolks.com/images/toplogoNEW2.png" border=0 style="position:relative;top:-1px;border-width:0px;" class="avatar" align="absmiddle"> affiliate</i></a>';
         outtext+='<div id="efadminbar_subr" class="ab-sub-wrapper"><div style="padding:3px;text-align:left;color:#666666;text-shadow:none;line-height:1.15;"><div style="text-align:center;"><img src="https://www.energyfolks.com/resourceimage/PartnerPic.png" style="display:inline;"></div>We are an energyfolks affiliate organization.  Energyfolks is a not-for-profit network of networks dedicated to connecting energy students and professionals in their neighborhood and around the globe.</div><ul class="ab-submenu">';
         outtext+='<li><a class="ab-item" href="https://www.energyfolks.com/" target="_blank">Learn more...</a></li></ul>';
         outtext+='</div>';
-        outtext+='<li class="menupop"><a class="ab-item" href="javascript:;" onclick="EnFolksMessageSize(\'https://www.energyfolks.com/welcome/feedback/'+EnFolksAffiliateId+'\',480,520);EnFolksWaitForLoad();">Feedback</a></li>';
-        outtext+='</li></ul></div>';
+        outtext+='<li class="menupop"><a class="ab-item EnergyFolks_popup" href="#" data-command="feedback/new" data-iframe="true">Feedback</a></li>';
+        outtext+='</ul></div>';
     }
-    if(EnFolks_get_object("customefadminbar")) {
-        EnFolks_get_object("customefadminbar").innerHTML=outtext+"<div id='efadminbar' style='display:none;'></div>";
+    if(EnergyFolks.$("#customefadminbar").length > 0) {
+        EnergyFolks.$("#customefadminbar").html(outtext+"<div id='efadminbar' style='display:none;'></div>");
         outtext='';
     } else {
         var div = document.createElement('div');
@@ -444,57 +359,46 @@ EnergyFolks.CreateTopBar = function() {
             document.body.insertBefore(div, document.body.firstChild);
         else
             document.body.appendChild(div);
-        if(this.TopBarFixed) {
+        if(EnergyFolks.TopBarFixed) {
             var div2 = document.createElement('div');
             div2.id = 'efadminbar_spacer';
             if (document.body.firstChild)
                 document.body.insertBefore(div2, document.body.firstChild);
             else
                 document.body.appendChild(div2);
-            EnFolks_get_object("efadminbar").style.position='fixed';
-            var animate=this.getCookie('EnFolksTopBarAnimated');
-            if((animate == null ) || (animate == "")) {
-                var exdate=new Date();
-                exdate.setDate(exdate.getDate() + 1);
-                var c_value=escape('1') + "; expires="+exdate.toUTCString();
-                document.cookie="EnFolksTopBarAnimated=" + c_value;
-                EnFolks_get_object("efadminbar").style.overflow='hidden';
-                EnFolks_get_object("efadminbar").style.height='0px';
-                EnFolks_get_object("efadminbar_spacer").style.height='0px';
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='4px';EnFolks_get_object("efadminbar_spacer").style.height='4px';},50);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='8px';EnFolks_get_object("efadminbar_spacer").style.height='8px';},100);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='12px';EnFolks_get_object("efadminbar_spacer").style.height='12px';},150);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='16px';EnFolks_get_object("efadminbar_spacer").style.height='16px';},200);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='20px';EnFolks_get_object("efadminbar_spacer").style.height='20px';},250);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='24px';EnFolks_get_object("efadminbar_spacer").style.height='24px';},300);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='28px';EnFolks_get_object("efadminbar_spacer").style.height='28px';EnFolks_get_object("efadminbar").style.overflow='visible';},350);
+            EnergyFolks.$("#efadminbar").css('position','fixed');
+            var animate=EnergyFolks.cookie('EnFolksTopBarAnimated');
+            if(typeof animate === 'Undefined' ) {
+                EnergyFolks.cookie('EnFolksTopBarAnimated', {path: '/'});
+                EnergyFolks.$("#efadminbar").css('overflow','hidden');
+                EnergyFolks.$("#efadminbar").css('height','0px');
+                EnergyFolks.$("#efadminbar_spacer").css('height','0px');
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','4px');EnergyFolks.$("#efadminbar_spacer").css('height','4px');},50);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','8px');EnergyFolks.$("#efadminbar_spacer").css('height','8px');},100);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','12px');EnergyFolks.$("#efadminbar_spacer").css('height','12px');},150);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','16px');EnergyFolks.$("#efadminbar_spacer").css('height','16px');},200);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','20px');EnergyFolks.$("#efadminbar_spacer").css('height','20px');},250);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','24px');EnergyFolks.$("#efadminbar_spacer").css('height','24px');},300);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','28px');EnergyFolks.$("#efadminbar_spacer").css('height','28px');EnergyFolks.$("#efadminbar").css('overflow','visible');},350);
             }
         } else {
-            EnFolks_get_object("efadminbar").style.position='relative';
-            var animate=this.getCookie('EnFolksTopBarAnimated');
-            if((animate == null ) || (animate == "")) {
-                var exdate=new Date();
-                exdate.setDate(exdate.getDate() + 1);
-                var c_value=escape('1') + "; expires="+exdate.toUTCString();
-                document.cookie="EnFolksTopBarAnimated=" + c_value;
-                EnFolks_get_object("efadminbar").style.overflow='hidden';
-                EnFolks_get_object("efadminbar").style.height='0px';
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='4px';},50);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='8px';},100);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='12px';},150);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='16px';},200);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='20px';},250);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='24px';},300);
-                window.setTimeout(function() { EnFolks_get_object("efadminbar").style.height='28px';EnFolks_get_object("efadminbar").style.overflow='visible';},350);
+            EnergyFolks.$("#efadminbar").css('position','relative');
+            var animate=EnergyFolks.cookie('EnFolksTopBarAnimated');
+            if(typeof animate === 'Undefined' ) {
+                EnergyFolks.cookie('EnFolksTopBarAnimated', {path: '/'});
+                EnergyFolks.$("#efadminbar").css('overflow','hidden');
+                EnergyFolks.$("#efadminbar").css('height','0px');
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','4px');},50);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','8px');},100);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','12px');},150);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','16px');},200);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','20px');},250);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','24px');},300);
+                window.setTimeout(function() { EnergyFolks.$("#efadminbar").css('height','28px');EnergyFolks.$("#efadminbar").css('overflow','visible');},350);
             }
         }
     }
-    if(!EnFolks_get_object("EnFolksHiddenSubForm")) outtext+="<span style='display:none;'><form method='post' action='" + this.callbackURL + "' id='EnFolksHiddenSubForm'><input type='hidden' name='hash' id='EnFolksHash' value=''><input type='hidden' name='forwardto' id='EnfolksForwardTo' value=''><input type=submit></form></span>";
-    EnFolks_get_object("efadminbar").innerHTML=outtext;
-    if(EnergyFolksUserDetail.user_id > 0)
-        EnFolks_get_object("efadminbar-logout").onclick=function(obj) { return function() { obj.ExecuteLogout(); }; }(this);
-    else {
-        EnFolks_get_object('EnFolksExternalLoginFormTop').onsubmit=function(obj) {return function() {obj.SubFormTop();return false;};}(this);
-        EnFolks_get_object("EnFolksCreateAccountTop").onclick=function(obj) {return function() {EnFolks_get_object("efadminbar_sub1").style.display="none";EnFolksMessageSize("https://www.energyfolks.com/accounts/CreateAccountExternal/"+obj.affiliateid,900,600);EnFolksWaitForLoad();};}(this);
-    }
+    EnergyFolks.$("#efadminbar").html(outtext);
+    if(!EnergyFolks.user_logged_in)
+        EnergyFolks.LoginBox('#eftoplogin');
 }

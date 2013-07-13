@@ -48,4 +48,21 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_affiliate
 
+  def user_hash(i)
+    {
+        :first_name => i.first_name,
+        :last_name => i.last_name,
+        :position => i.position,
+        :organization => i.organization,
+        :id => i.id,
+        :verified => i.verified?,
+        :super_admin => i.admin?,
+        :avatar => i.avatar,
+        :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
+        :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } },
+        :moderation_count => { total: 0, values: [{ title: 'Events', method: 'events', count: 0}] }, # TODO: Moderation count goes here
+        :user_posts => { total: 0, values: [{ title: 'Events', method: 'events', count: 0}] }, # TODO: User posts go here
+    }
+  end
+  helper_method :user_hash
 end

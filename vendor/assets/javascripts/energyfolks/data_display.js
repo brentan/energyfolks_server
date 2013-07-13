@@ -69,28 +69,29 @@ EnergyFolks.itemDetailHTML = function(item) {
         output += '<h1>'+item.first_name + ' ' + item.last_name+'</h1>';
         output += '<h3>' + item.position + '</h3>';
         output += item.organization;
-        output += '</div>';
+        output += '</div><div class="admin_links">';
         if(EnergyFolks.current_user.super_admin) {
             output += EnergyFolks.create_iframe_popup('Global Rights','users/rights',{id: item.id});
             if(item.verified)
-                output += "<br/>"+EnergyFolks.create_iframe_popup('Freeze Account','users/freeze_account',{id: item.id});
+                output += EnergyFolks.create_iframe_popup('Freeze Account','users/freeze_account',{id: item.id});
             else
-                output += "<br/>"+EnergyFolks.create_iframe_popup('Manually Verify','users/manual_verify',{id: item.id});
+                output += EnergyFolks.create_iframe_popup('Manually Verify','users/manual_verify',{id: item.id});
         }
         if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) {
-            output += "<br/>"+EnergyFolks.create_iframe_popup('Admin Rights','affiliates/rights',{id: item.id});
+            output += EnergyFolks.create_iframe_popup('Admin Rights','affiliates/rights',{id: item.id});
             var approved = false;
             EnergyFolks.$.each(item.affiliates, function(k,v) {
                 if((v.id == EnergyFolks.id) && v.approved)
                     approved = true;
             });
             if(approved)
-                output += "<br/>"+EnergyFolks.create_iframe_popup('Remove From Group','affiliates/reject_or_remove',{id: item.id});
+                output += EnergyFolks.create_iframe_popup('Remove From Group','affiliates/reject_or_remove',{id: item.id});
             else {
-                output += "<br/>"+EnergyFolks.create_iframe_popup('Approve Membership','affiliates/approve',{id: item.id});
-                output += "<br/>"+EnergyFolks.create_iframe_popup('Reject Membership','affiliates/reject_or_remove',{id: item.id});
+                output += EnergyFolks.create_iframe_popup('Approve Membership','affiliates/approve',{id: item.id});
+                output += EnergyFolks.create_iframe_popup('Reject Membership','affiliates/reject_or_remove',{id: item.id});
             }
         }
+        output += '</div>';
     }
     return output;
 };
