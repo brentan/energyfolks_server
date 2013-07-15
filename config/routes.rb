@@ -43,7 +43,7 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/rights"
   put "affiliates/rights"
   get "affiliates/reject_or_remove"
-  put "affiliates/reject_or_remove"
+  post "affiliates/reject_or_remove"
   get "affiliates/approve"
 
   # Make ajax routes visible

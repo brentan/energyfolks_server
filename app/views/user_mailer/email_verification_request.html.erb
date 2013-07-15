@@ -1,7 +1,6 @@
 <%= @user.first_name %>,
 <BR><BR>
-We have received a request to change the contact and login email for your <%= 'energyfolks' #TODO: @affiliate.name
-%> account.<BR>
+We have received a request to change the contact and login email for your <%= @affiliate.name %> account.<BR>
 OLD ADDRESS: <%= @user.email %><BR>
 NEW ADDRESS: <%= @user.email_to_verify %>
 <BR><BR>
@@ -15,5 +14,4 @@ Or copy and paste the below URL into your browser:
 <BR><BR>
 Sincerely,
 <BR>
-<%= 'energyfolks' #TODO: @affiliate.name
-%>
+<%= @affiliate.name %>

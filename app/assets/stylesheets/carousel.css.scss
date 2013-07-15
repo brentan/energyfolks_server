@@ -1,0 +1,45 @@
+#ef_carousel {
+  overflow:hidden;
+  height: 600px;
+  .viewport {
+    float: left;
+    position: relative;
+    height: 600px;
+    width: 884px;
+    overflow: hidden;
+  }
+  .overview {
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+    li.slide{
+      position: relative;
+      height: 546px;
+      width: 880px;
+      float: left;
+      margin: 0 20px 40px 0;
+      padding: 1px 0px 0px 0px;
+      overflow-y: auto;
+    }
+  }
+  .buttons {
+    .disable {
+      display: none;
+    }
+    position: fixed;
+    background-color:white;
+    top: 556px;
+    left: 5px;
+    right: 5px;
+    height: 40px;
+    .prev {
+      float: left;
+    }
+    .next, .submit {
+      float: right;
+    }
+  }
+}

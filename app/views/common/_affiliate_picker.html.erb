@@ -1,0 +1,29 @@
+<div id='EnergyFolksAffiliatePicker'>
+  <%= content_tag(:h1, "Current Networks") if current.length > 0 %>
+  <% count = 0 %>
+  <% current.each do |a| %>
+      <div class='affiliate selected' <%= "data-tid=#{a.id.present? ? a.id : 0} data-table=#{table} data-join-table=#{join_table} data-id=#{a.affiliate_id} data-jid=#{count} data-reason=#{false}"%> >
+        <%= a.affiliate.name %>
+        <%= raw(" <span class='descriptor'>#{a.approved? ? '' : "(Pending#{a.reason.present? ? ", #{a.reason}" : ''})"}</span>") %>
+      </div>
+      <% count += 1 %>
+  <% end %>
+  <% if (current.length - Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').length) < 0 %>
+      <%= content_tag(:h1, current.length > 0 ? "Add More Networks" : "Choose Networks")  %>
+      <% if table != 'user' %>
+          <a href='#' class='choose_all_affiliates'>Select All</a> |<a href='#' class='choose_no_affiliates'>Unselect All</a>
+      <%
+         end
+         completed = current.map{|c| c.affiliate_id }
+         Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').each do |a|
+            next if completed.include? a.id
+          %>
+          <div class='affiliate unselected' <%= "data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=#{a.id} data-jid=#{count} data-reason=#{table == 'user' ? (a.open > 1) : false}"%> >
+            <%= a.name %>
+            <span class='descriptor'></span>
+            <% count += 1 %>
+          </div>
+      <% end %>
+  <% end %>
+  <div id='form_elements' style='display:none;'></div>
+</div>

@@ -1,6 +1,6 @@
 <% if session[:userid] && (@user.id == session[:userid]) %>
     <div class='form'>
-        <%=	 form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
+        <%=	 nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
           <%= raw(iframe_form) %>
         <h1>Basic Information</h1>
           <div class='form_label'>First Name</div>
@@ -61,6 +61,9 @@
           <div class='form_entry'>
             <%= f.password_field :password_confirmation %>
           </div>
+        <h1>Networks</h1>
+              <%= render partial: '/common/affiliate_picker', locals: {current: @user.memberships, table: 'user', join_table: 'memberships'} %>
+
 
         <h1>Profile</h1>
           <div class='form_label'>Position/Title</div>

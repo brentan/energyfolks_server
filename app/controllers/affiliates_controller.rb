@@ -81,6 +81,7 @@ class AffiliatesController < ApplicationController
       end
       @membership.approved = false
       @membership.destroy
+      @membership = nil
     end
   end
 

@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jqueryui
+//= require jscolor
 //= require select2
 //= require_tree .
 //= require tinymce-jquery

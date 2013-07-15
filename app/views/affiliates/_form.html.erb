@@ -78,9 +78,7 @@
 <h1>Look and Feel</h1>
 
 <div class='form_label'>Color</div>
-<div class='form_entry'>#<%= f.text_field :color %></div>
-<% # TODO: Colorpicker
-%>
+<div class='form_entry'>#<%= f.text_field :color, :class => 'color' %></div>
 
 <div class='form_label'>Email Header</div>
 <div class='form_entry'><%= f.text_area :email_header, :class => 'tinymce' %></div>

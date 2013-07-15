@@ -10,6 +10,7 @@ gem 'historyjs-rails'
 gem 'strip_attributes'
 gem 'geocoder'
 gem 'tinymce-rails'
+gem 'jscolor-rails'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
