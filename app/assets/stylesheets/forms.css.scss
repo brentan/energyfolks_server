@@ -22,4 +22,13 @@ div.form {
   span.validation-error {
     font-weight: bold;
   }
+  div.error_explanation {
+    margin: 4px 0px;
+    padding: 5px;
+    background-color: #eeaaaa;
+    border: 1px solid #444444;
+    strong {
+      font-wieght: bold;
+    }
+  }
 }

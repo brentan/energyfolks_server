@@ -1,6 +1,6 @@
 class Affiliate < ActiveRecord::Base
   has_many :users, :through => :memberships
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_bulletins, :url_users, :url_blog,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
@@ -45,12 +45,14 @@ class Affiliate < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  def self.all_visible_affiliates(current_user)
+  def self.all_visible_affiliates(current_user, current_affiliate = nil, hide_invite_only = false)         # TODO: Iff visible is false but at their website, this should still appear!
     where_clause = "visible = TRUE AND live = TRUE"
+    where_clause += " AND open < 3" if hide_invite_only
     if current_user.present?
       affiliates = current_user.memberships.approved.map {|m| "id = #{m.affiliate_id}" }
       where_clause = "(#{where_clause}) OR #{affiliates.join(" OR ")}" if affiliates.present?
     end
+    where_clause = "(#{where_clause}) OR id = #{current_affiliate.id}" if(current_affiliate.present? && current_affiliate.id.present?)
     Affiliate.order(:name).where(where_clause).all
   end
 

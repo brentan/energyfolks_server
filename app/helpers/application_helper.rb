@@ -2,7 +2,9 @@ module ApplicationHelper
 
   # Place into forms that load in iframe: This ensures other page loads with same layout
   def iframe_form
-    @layout == 'iframe' ? '<input type="hidden" name="iframe_next" value="1"/>' : ''
+    output = current_affiliate.id.present? ? "<input type='hidden' name='aid' value='#{current_affiliate.id}'>" : ""
+    output += (@layout == 'iframe') ? '<input type="hidden" name="iframe_next" value="1"/>' : ''
+    return output
   end
 
   # show alert/notices in the notice bar
@@ -14,5 +16,25 @@ module ApplicationHelper
     html << '});'
     html << '</script>'
     return html.join("\n")
+  end
+
+  def prev_next_buttons
+    html = ''
+    html += link_to('Previous', '#', class: 'button prev')
+    html += link_to('Next', '#', class: 'button next')
+    html += link_to('Submit', '#', class: 'button submit disable')
+    return content_tag(:div, raw(html), class: 'buttons')
+  end
+
+  def show_errors(item)
+    html = ''
+    if item.errors.any?
+      html += "<div class='error_explanation'><strong>#{pluralize(item.errors.count, "error")} occurred during submission:</strong><ul>"
+      item.errors.full_messages.each do |msg|
+        html += content_tag(:li, msg)
+      end
+      html += "</ul><strong>Please update your submission and try again</strong></div>"
+    end
+    return html
   end
 end

@@ -1,12 +1,12 @@
 class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
   has_many :affiliates, :through => :memberships
-  has_many :memberships
+  has_many :memberships, :dependent => :destroy
   scope :verified, where(:verified => true)
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization, :radius
+                  :resume_visibility, :position, :organization, :radius, :memberships_attributes
   attr_accessor :password, :password_old
 
   validates_presence_of :first_name

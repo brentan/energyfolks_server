@@ -1,0 +1,16 @@
+#EnergyFolksAffiliatePicker {
+  div.affiliate {
+    border: 1px solid white;
+    cursor: pointer;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+  div.selected {
+    background-color: #f6f6f6;
+    border-color: #cccccc;
+    &:hover {
+      background-color:#dddddd
+    }
+  }
+}

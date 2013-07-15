@@ -1,59 +1,103 @@
-<div class='center'>
-    <h1>GROUP NAME is an energyfolks network</h1>
-    <table align=center border=0 cellpadding=1 cellspacing=0>
-      <tr>
-        <td>
-          <img src='https://www.energyfolks.com/resourceimage/PartnerPic1.png' style='max-width:290px;border:1px solid black;'>
-        </td><td>
-          <%= image_tag('enfolksarrow.png') %>
-        </td>
-      </tr>
-    </table>
-    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
-      An energyfolks account gives you access with a single login to Stanford Energy Club as well as other networks on the
-      energyfolks platform.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
-</div>
-<hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
+<% if current_affiliate.id.present? %>
+    <% @user.location = current_affiliate.location unless @user.location.present? %>
+<% end %>
+<% if current_affiliate.open == 3 %>
+    <h1><%= current_affiliate.name %> membership is by invitation only</h1>
+    Membership in this group is by invitation only.  If you would like to join, please contact the group
+    administrators at <%= mail_to current_affiliate.email %>.
+<% else %>
 
-<div class='form'>
-    <%=	 form_for @user, :url => { :action => "create"} do |f| %>
+  <div class='form'>
+    <%=	nested_form_for @user, :url => { :action => "create"} do |f| %>
       <%= raw(iframe_form) %>
-      <div class='form_label'>Email Address</div>
-      <div class='form_entry'>
-        <%= f.text_field :email %>
-        <div class='explain'>
-          Your email is kept private and not shared with anyone. It is not shown on your profile page.
+
+      <div id='ef_carousel'>
+        <div class="viewport">
+          <ul class="overview">
+            <li class='slide'>
+              <h1>Signup for an <%= current_affiliate.name %> account</h1>
+              <%= raw(show_errors(@user)) %>
+
+              <div class='form_label'>Email Address</div>
+              <div class='form_entry'>
+                <%= f.text_field :email %>
+                <div class='explain'>
+                  Your email is kept private and not shared with anyone. It is not shown on your profile page.
+                </div>
+              </div>
+              <div class='form_label'>First Name</div>
+              <div class='form_entry'><%= f.text_field :first_name %></div>
+
+              <div class='form_label'>Last Name</div>
+              <div class='form_entry'><%= f.text_field :last_name %></div>
+
+              <div class='form_label'>City and State/Country</div>
+              <div class='form_entry'><%= f.text_field :location %></div>
+
+              <div class='form_label'>Password</div>
+              <div class='form_entry'><%= f.password_field :password %></div>
+
+              <div class='form_label'>Confirm Password</div>
+              <div class='form_entry'><%= f.password_field :password_confirmation %></div>
+
+              <% if (current_affiliate.open == 2) && (@user.memberships.length == 0)%>
+                  <div class='form_label'>Reason for Joining</div>
+                  <div class='form_entry'>
+                    <input type='text' name='user[memberships_attributes][0][reason]' id='user_memberships_attributes_0_reason' size=30>
+                    <div class='explain'>
+                      <%= current_affiliate.name %> administrators manually approve all membership requests.  Please include a brief sentence clarifying your request for membership.
+                    </div>
+                  </div>
+              <% end %>
+              <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
+            </li>
+            <li class='slide'>
+              <% if current_affiliate.id.present? %>
+                  <div class='center'>
+                    <h1><%= current_affiliate.name %> is an energyfolks network</h1>
+                    <table align=center border=0 cellpadding=1 cellspacing=0>
+                      <tr>
+                        <td>
+                          <img src='<%= current_affiliate.logo.url %>' style='max-width:290px;border:1px solid black;'>
+                        </td><td>
+                        <%= image_tag('enfolksarrow.png') %>
+                      </td>
+                      </tr>
+                    </table>
+                    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
+                      An energyfolks account gives you access with a single login to <%= current_affiliate.name %> as well as other networks on the
+                      energyfolks platform.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
+                  </div>
+              <% else %>
+                  <div class='center'>
+                    <h1>Join an energyfolks network</h1>
+                    <table align=center border=0 cellpadding=1 cellspacing=0>
+                      <tr>
+                        <td>
+                          <%= image_tag('noimage.png') %>
+                        </td><td>
+                        <%= image_tag('enfolksarrow.png') %>
+                      </td>
+                      </tr>
+                    </table>
+                    <i>Energyfolks is a network of networks connecting energy interested students and professionals around the globe. Gain access to other networks on the energyfolks platform for more content.</i>
+                  </div>
+              <% end %>
+              <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
+              <%= render partial: '/common/affiliate_picker', locals: {current: @user.memberships, table: 'user', join_table: 'memberships'} %>
+            </li>
+            <li class='slide'>
+              <h1>The legal stuff</h1>
+              By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
+              <div style='border:1px solid #999999;height:300px;overflow-y:auto;'>
+                <%= render partial: 'users/terms' %>
+                <%= render partial: 'users/privacy' %>
+              </div>
+            </li>
+          </ul>
+          <%= prev_next_buttons %>
         </div>
-      </div>
-
-      <div class='form_label'>Networks</div>
-      <div class='form_entry'>
-        <% #TODO- NETWORKS %>
-        ADD ME
-      </div>
-
-      <div class='form_label'>First Name</div>
-      <div class='form_entry'><%= f.text_field :first_name %></div>
-
-      <div class='form_label'>Last Name</div>
-      <div class='form_entry'><%= f.text_field :last_name %></div>
-
-      <%= #TODO - DEFAULT THIS AND HIDE IF NETWORK IS PRESENT
-      %>
-      <div class='form_label'>City and State/Country</div>
-      <div class='form_entry'><%= f.text_field :location %></div>
-
-      <div class='form_label'>Password</div>
-      <div class='form_entry'><%= f.password_field :password %></div>
-
-      <div class='form_label'>Confirm Password</div>
-      <div class='form_entry'><%= f.password_field :password_confirmation %></div>
-
-      <div class='form_button center'>
-        <div class='explain'>
-          By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
-        </div>
-        <%= f.submit "Register" %>
       </div>
     <% end %>
-</div>
+  </div>
+<% end %>
