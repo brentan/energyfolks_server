@@ -34,13 +34,20 @@ class Membership < ActiveRecord::Base
   end
 
   def set_approval_flag
-    self.approved = true if self.affiliate.open == 1
+    if self.affiliate.open == 1
+      self.approved = true
+      self.broadcast = true
+    end
   end
 
   def notify_admins
     return if self.affiliate.open == 1
     # Find the list of admins for this group and ping them
     # TODO!
+  end
+
+  def entity_id
+    self.user_id
   end
 
 end

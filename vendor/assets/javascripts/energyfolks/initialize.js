@@ -26,6 +26,7 @@ EnergyFolks.data_end = 20; //exclusive
 EnergyFolks.per_page = 20;
 EnergyFolks.data_limits = 'order';
 EnergyFolks.data = [];
+EnergyFolks.get_moderated = false;
 
 //Initialize the Objects array
 EnergyFolks.objects = [];

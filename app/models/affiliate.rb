@@ -45,7 +45,7 @@ class Affiliate < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  def self.all_visible_affiliates(current_user, current_affiliate = nil, hide_invite_only = false)         # TODO: Iff visible is false but at their website, this should still appear!
+  def self.all_visible_affiliates(current_user, current_affiliate = nil, hide_invite_only = false)
     where_clause = "visible = TRUE AND live = TRUE"
     where_clause += " AND open < 3" if hide_invite_only
     if current_user.present?
@@ -64,10 +64,26 @@ class Affiliate < ActiveRecord::Base
     return affiliate
   end
 
+  def admins(type = Membership::ADMINISTRATOR, emails_only = false)
+    search = self.memberships.where("admin_level >= #{type}")
+    search = search.where("moderation_emails = 1") if emails_only
+    return search.all.map{|u| u.user }
+  end
+
   def email
     email = super
     email = 'contact@energyfolks.com' if email.blank?
     return email
+  end
+
+  def member?(user)
+    member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).first()
+    return member.present?
+  end
+
+  def admin?(user, level = Membership::ADMINISTRATOR)
+    member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).where("admin_level >= #{level}").first()
+    return member.present?
   end
 
 end

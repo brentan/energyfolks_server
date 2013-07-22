@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :affiliates, :through => :memberships
   has_many :memberships, :dependent => :destroy
   scope :verified, where(:verified => true)
+  include MixinEntity
+  default_scope order(:last_name, :first_name)
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
@@ -15,8 +17,8 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :memberships, :allow_destroy => true
 
-  geocoded_by :location
-  after_validation :geocode
+  acts_as_locatable
+  acts_as_moderatable
 
   # Visibility codes
   PUBLIC = 1
@@ -76,6 +78,68 @@ class User < ActiveRecord::Base
     users = User.verified.select([:verified, :active, 'users.id', :first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name').offset(page * per_page).limit(per_page)
     users = users.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliate.id}) if affiliate.present?
     users.all
+  end
+
+  def affiliate_join
+    self.memberships
+  end
+  def name
+    self.first_name + ' ' + self.last_name
+  end
+  def entity_type
+    "membership request"
+  end
+  def extra_info(join_item)
+    "The user has provided the following reason for seeking membership in your group:<BR>#{join_item.reason}"
+  end
+  def self.join_table
+    Membership
+  end
+  def is_visible?(user)
+    return true if self.visibility == PUBLIC
+    if user.present?
+      return true if self.visibility == LOGGED_IN
+      if self.visibility == NETWORKS
+        self.memberships.approved.each do |a|
+          return true if a.member?(user)
+        end
+      end
+      self.memberships.approved.each do |a|
+        return true if a.admin?(user, Membership::EDITOR)
+      end
+    end
+    return false
+  end
+
+  def moderation_count
+    total = 0
+    values = []
+    ApplicationController::ENTITIES.each do |e|
+      self.memberships.approved.each do |a|
+        tot = 0
+        tot = e.total_needing_moderation(a.affiliate).count if a.affiliate.admin?(self, Membership::EDITOR)
+        if tot > 0
+          total += tot
+          values << {title: "#{e.new().entity_type.capitalize.pluralize(tot)} - #{a.affiliate.short_name}", aid: a.affiliate_id, method: e.new().method_name, count: tot}
+        end
+      end
+    end
+    # TODO: Somehow super admin moderation count.
+    return { total: total, values: values }
+  end
+
+  def user_posts
+    total = 0
+    values = []
+    ApplicationController::ENTITIES.each do |e|
+      next if e == User
+      tot = e.where(author_id: self.id).count
+      if tot > 0
+        total += tot
+        values << {title: e.new().entity_type.capitalize.pluralize(tot), method: e.new().method_name, count: tot}
+      end
+    end
+    return { total: total, values: values }
   end
 
   ## Password hashing and salting algorithm, also used to generate cookie string

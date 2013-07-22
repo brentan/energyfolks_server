@@ -18,7 +18,7 @@ The showpage function is the master function to show energyfolks data.  Params i
 EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
-    document.write("<div id='EnFolksmainbodydiv'><div id='EnfolksResultDiv' ></div></div>");
+    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
     EnergyFolks.resetData();
 };
 
@@ -47,8 +47,20 @@ EnergyFolks.showData = function(data) {
 
 EnergyFolks.loadData = function() {
     EnergyFolks.loading('#EnfolksResultDiv');
-    EnergyFolks.ajax(EnergyFolks.source, {start: EnergyFolks.data_start, end: EnergyFolks.data_end, limits: EnergyFolks.data_limits}, EnergyFolks.showData);
+    EnergyFolks.ajax(EnergyFolks.source, {start: EnergyFolks.data_start, end: EnergyFolks.data_end, limits: EnergyFolks.data_limits, moderation: EnergyFolks.get_moderated}, EnergyFolks.showData);
 }
+
+/*
+ associations at startup
+ */
+EnergyFolks.$(function() {
+    EnergyFolks.$("body").on("click", ".get_moderation", function() {
+        var self = EnergyFolks.$(this);
+        self.closest(".moderation_box").hide();
+        EnergyFolks.get_moderated = true;
+        EnergyFolks.loadData();
+    });
+});
 
 //ListView
 EnergyFolks.showList = function() {
@@ -66,7 +78,7 @@ EnergyFolks.itemDetailHTML = function(item) {
         output += '<div>';
         if(item.avatar)
             output += '<img src="'+item.avatar_url+'" align=left>';
-        output += '<h1>'+item.first_name + ' ' + item.last_name+'</h1>';
+        output += EnergyFolks.create_remote_popup('<h1>'+item.first_name + ' ' + item.last_name+'</h1>', 'show', {id: item.id, model: 'User'});
         output += '<h3>' + item.position + '</h3>';
         output += item.organization;
         output += '</div><div class="admin_links">';

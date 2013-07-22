@@ -238,21 +238,19 @@ EnergyFolks.CreateTopBar = function() {
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/'+EnergyFolks.id+'/edit" data-iframe="true" data-params="">Partner Control Screen</a></li>');
         } else
             EnergyFolks.$("#wp-admin-bar-energyfolks0").css('display','none');
-        if(EnergyFolks.testAdmin(EnergyFolks.EDITOR) || EnergyFolks.current_user.super_admin) {
-            var tot=EnergyFolks.current_user.moderation_count.total;
-            outtext='<a class="ab-item" href="#" ';
-            if(tot > 0)
-                outtext+='style="background-color:darkred;"'
-            outtext+='>Moderation ('+tot+')</a>';
+        var tot=EnergyFolks.current_user.moderation_count.total;
+        if(tot > 0) {
+            outtext='<a class="ab-item" href="#" style="background-color:darkred;">Moderation ('+tot+')</a>';
             EnergyFolks.$("#wp-admin-bar-energyfolks1").html(outtext+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks1-default'></ul></div>");
             outtext='';
             EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
-                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="aid='+ v.aid+'">'+ v.title+' ('+ v.count+')</a></li>';
+                if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
+                    EnergyFolks.$("#moderation_box_" + v.method).html('<div class="moderation_box"><strong>'+ v.count + ' ' + v.title + (v.count == 1 ? '' : 's') + ' awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
             });
             EnergyFolks.$("#wp-admin-bar-energyfolks1-default").html(outtext);
-        } else {
+        } else
             EnergyFolks.$("#wp-admin-bar-energyfolks1").css('display','none');
-        }
         EnergyFolks.$("#wp-admin-bar-energyfolks2").css('display','none'); //TODO: Remove this reference from wordpress plugin
         if(EnergyFolks.current_user.user_posts.total > 0) {
             outtext='';
@@ -312,16 +310,15 @@ EnergyFolks.CreateTopBar = function() {
             outtext += '<li><a class="ab-item" href="https://www.energyfolks.com/admin">EF Administrator Page</a></li>'
             outtext+='</ul></div></li>';
         }
-        if(EnergyFolks.testAdmin(EnergyFolks.EDITOR) || EnergyFolks.current_user.super_admin) {
-            var tot=EnergyFolks.current_user.moderation_count.total;
+        var tot=EnergyFolks.current_user.moderation_count.total;
+        if(tot > 0) {
             outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_subm\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_subm\').show();">';
-            outtext+='<a class="ab-item" href="#" ';
-            if(tot > 0)
-                outtext+='style="background-color:darkred;"'
-            outtext+='>Moderation ('+tot+')</a>';
+            outtext+='<a class="ab-item" href="#" style="background-color:darkred;">Moderation ('+tot+')</a>';
             outtext+='<div id="efadminbar_subm" class="ab-sub-wrapper"><ul class="ab-submenu">';
             EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
-                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
+                outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="aid='+ v.aid+'">'+ v.title+' ('+ v.count+')</a></li>';
+                if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
+                    EnergyFolks.$("#moderation_box_" + v.method).html('<div class="moderation_box"><strong>'+ v.count + ' ' + v.title + (v.count == 1 ? '' : 's') + ' awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
             });
             outtext+='</ul></div></li>';
         }

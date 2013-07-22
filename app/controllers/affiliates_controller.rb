@@ -64,6 +64,7 @@ class AffiliatesController < ApplicationController
     @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
     if @membership.present?
       @membership.approved = true
+      @membership.broadcast = true
       @membership.save!
       UserMailer.delay.affiliate_approved(@user,@aid, @host)
     end
