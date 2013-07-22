@@ -5,7 +5,7 @@ class Affiliate < ActiveRecord::Base
   attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_bulletins, :url_users, :url_blog,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_bulletins, :moderate_jobs, :moderate_calendar, :shared_secret, :cpanel_user, :cpanel_password,
-                  :send_digest, :radius, :logo
+                  :send_digest, :radius, :logo, :weekly, :daily, :jobs, :events, :bulletins, :event_radius, :job_radius
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true

@@ -2,13 +2,15 @@ class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
   has_many :affiliates, :through => :memberships
   has_many :memberships, :dependent => :destroy
+  has_one :subscription, :dependent => :destroy
+
   scope :verified, where(:verified => true)
   include MixinEntity
   default_scope order(:last_name, :first_name)
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization, :radius, :memberships_attributes
+                  :resume_visibility, :position, :organization, :radius, :memberships_attributes, :subscription_attributes
   attr_accessor :password, :password_old
 
   validates_presence_of :first_name
@@ -16,9 +18,12 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_entered?
 
   accepts_nested_attributes_for :memberships, :allow_destroy => true
+  accepts_nested_attributes_for :subscription
 
   acts_as_locatable
   acts_as_moderatable
+
+  after_create :setup_subscriptions
 
   # Visibility codes
   PUBLIC = 1
@@ -269,7 +274,7 @@ class User < ActiveRecord::Base
     count_log2 = ITOA64.index(setting[3]);
     return $output if (count_log2 < 7) || (count_log2 > 30)
     count = 1 << count_log2
-    salt = setting[4, 8];
+    salt = setting[4, 8]
     return output if salt.length != 8
     hash = Digest::MD5.digest(salt + password)
     begin
@@ -279,5 +284,22 @@ class User < ActiveRecord::Base
     output = setting[0,12]
     output+= self.encode64(hash, 16)
     return output
+  end
+
+  # After create, setup default email subscriptons
+  def setup_subscriptions
+    subscription = Subscription.new(user_id: self.id)
+    first_affiliate = self.affiliates.first
+    if first_affiliate.present?
+      # TODO: Rewrite the below to just be in a loop and set all possible subscription attributes with affiliate equivalent
+      subscription.weekly = first_affiliate.weekly
+      subscription.daily = first_affiliate.daily
+      subscription.jobs = first_affiliate.jobs
+      subscription.events = first_affiliate.events
+      subscription.bulletins = first_affiliate.bulletins
+      subscription.job_radius = first_affiliate.job_radius
+      subscription.event_radius = first_affiliate.event_radius
+    end
+    subscription.save
   end
 end

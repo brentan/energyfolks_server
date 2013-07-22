@@ -55,6 +55,9 @@
   <label><%= f.radio_button :open, Affiliate::INVITE_ONLY %> Group members must be invited</label>
 </div>
 
+<h1>Default Email Subscriptions for new members:</h1>
+<%= render :partial => '/common/subscriptions', :locals => { f: f } %>
+
 <h1>Moderation Settings</h1>
 <div class='form_label'>Events Moderation Settings:</div>
 <div class='form_entry'>

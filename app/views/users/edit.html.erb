@@ -63,7 +63,10 @@
           </div>
         <h1>Networks</h1>
               <%= render partial: '/common/affiliate_picker', locals: {current: @user.memberships, table: 'user', join_table: 'memberships'} %>
-
+        <h1>Email Subscriptions</h1>
+          <%= f.fields_for :subscription do |s| %>
+            <%= render :partial => '/common/subscriptions', locals: {f: s} %>
+          <% end %>
 
         <h1>Profile</h1>
           <div class='form_label'>Position/Title</div>
@@ -92,10 +95,7 @@
           <div class='form_entry'>
             <label><%= f.radio_button :visibility, User::PUBLIC %> Public</label>
             <label><%= f.radio_button :visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
-            <label><%= f.radio_button :visibility, User::NETWORKS %> Only to logged in members in my networks:</label>
-            <%
-               #TODO: Add network list here
-            %>
+            <label><%= f.radio_button :visibility, User::NETWORKS %> Only to logged in members in my networks</label>
             <label><%= f.radio_button :visibility, User::PRIVATE %> Private (administrators only)</label>
 
           </div>
@@ -103,10 +103,7 @@
           <div class='form_entry'>
             <label><%= f.radio_button :resume_visibility, User::PUBLIC %> Public</label>
             <label><%= f.radio_button :resume_visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
-            <label><%= f.radio_button :resume_visibility, User::NETWORKS %> Only to logged in members in my networks:</label>
-            <%
-               #TODO: Add network list here
-            %>
+            <label><%= f.radio_button :resume_visibility, User::NETWORKS %> Only to logged in members in my networks</label>
             <label><%= f.radio_button :resume_visibility, User::PRIVATE %> Private (administrators only)</label>
 
           </div>

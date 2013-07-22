@@ -41,12 +41,14 @@
               <div class='form_entry'><%= f.password_field :password_confirmation %></div>
 
               <% if (current_affiliate.open == 2) && (@user.memberships.length == 0)%>
-                  <div class='form_label'>Reason for Joining</div>
-                  <div class='form_entry'>
-                    <input type='text' name='user[memberships_attributes][0][reason]' id='user_memberships_attributes_0_reason' size=30>
-                    <div class='explain'>
-                      <%= current_affiliate.name %> administrators manually approve all membership requests.  Please include a brief sentence clarifying your request for membership.
-                    </div>
+                  <div id='user_memberships_attributes_0_reason_div'>
+                      <div class='form_label'>Reason for Joining</div>
+                      <div class='form_entry'>
+                        <input type='text' name='user[memberships_attributes][0][reason]' id='user_memberships_attributes_0_reason' size=30>
+                        <div class='explain'>
+                          <%= current_affiliate.name %> administrators manually approve all membership requests.  Please include a brief sentence clarifying your request for membership.
+                        </div>
+                      </div>
                   </div>
               <% end %>
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
