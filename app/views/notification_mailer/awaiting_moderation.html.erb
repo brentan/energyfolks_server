@@ -1,0 +1,11 @@
+<%= @user.first_name %>,
+<BR><BR>
+A new <%= @item.entity_name %> (<%= @item.name %>) <%= @item.entity_type %> has been submitted and is awaiting moderation.
+<BR><BR>
+<%= raw(@item.extra_info(@join_item)) %>
+<BR><BR>
+You can approve at <%= link_to "#{@host}#{@item.path}", "#{@host}#{@item.path}" %>
+<BR><BR>
+Sincerely,
+<BR>
+energyfolks on behalf of <%= @affiliate.name %>

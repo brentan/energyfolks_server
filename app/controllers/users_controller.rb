@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
 
   # STILL TO DO:
-  # tie-ins to networks
   # email subscriptions (tokens as well to edit from email footer)
   # social media logins
-  # account topbar (requires data objects to be created)
 
   def try_login
     # TODO: aid (affiliate id) is passed and can be used for analytics
@@ -24,6 +22,11 @@ class UsersController < ApplicationController
     else
       render :action => 'ajax/error', :locals => { url: url }
     end
+  end
+
+
+  def show
+    @item = User.find_by_id(params[:id])
   end
 
   def from_hash
@@ -70,6 +73,11 @@ class UsersController < ApplicationController
       flash[:alert]="Invalid email change URL"
     end
     redirect_to :action => :login
+  end
+
+  def moderation
+    @code = "EnergyFolks.get_moderated = true;EnergyFolks.showPage({source: 'users', format: 'list'});"
+    render '/common/load_js'
   end
 
   def try_cookie

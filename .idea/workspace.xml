@@ -1,55 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="Accountbar is now active and working.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130714011426_add_defaults_to_memberships.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/common/_affiliate_picker.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/_privacy.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/_terms.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/affiliate_picker.css.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/affiliate_picker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/affiliate_specific.css.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/javascripts/carousel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/affiliates/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/affiliates/_form.html.erb" />
+    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130715225158_add_broadcast_to_memberships.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/notification_mailer/awaiting_moderation.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/common/load_js.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/mailers/notification_mailer.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/affiliate.rb" afterPath="$PROJECT_DIR$/app/models/affiliate.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/application.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/application.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/edit.html.erb" afterPath="$PROJECT_DIR$/app/views/users/edit.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_mailer/email_verification_request.html.erb" afterPath="$PROJECT_DIR$/app/views/user_mailer/email_verification_request.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/login.html.erb" afterPath="$PROJECT_DIR$/app/views/users/login.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/membership.rb" afterPath="$PROJECT_DIR$/app/models/membership.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/new.html.erb" afterPath="$PROJECT_DIR$/app/views/users/new.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/privacy.html.erb" afterPath="$PROJECT_DIR$/app/views/users/privacy.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/affiliates/reject_or_remove.html.erb" afterPath="$PROJECT_DIR$/app/views/affiliates/reject_or_remove.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/terms.html.erb" afterPath="$PROJECT_DIR$/app/views/users/terms.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373764459748" ignored="false" />
-    <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373745212737" ignored="false" />
-    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373759124082" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373928711844" ignored="false" />
+    <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374449875962" ignored="false" />
+    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/app/helpers/home_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
-    <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373755584273" ignored="false" />
-    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373754278018" ignored="false" />
-    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373759244871" ignored="false" />
-    <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371698351907" ignored="false" />
+    <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451946319" ignored="false" />
+    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451366144" ignored="false" />
+    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450790998" ignored="false" />
+    <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450908736" ignored="false" />
     <file path="/_success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363284977600" ignored="false" />
     <file path="/error.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285643390" ignored="false" />
     <file path="/success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285647105" ignored="false" />
     <file path="/user_login_hash.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296252591" ignored="false" />
-    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373912998361" ignored="false" />
+    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374452097518" ignored="false" />
     <file path="/clean_up.rake" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296917985" ignored="false" />
     <file path="/20130314184054_create_user_login_hash_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363286895114" ignored="false" />
     <file path="/hash_change.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363288819878" ignored="false" />
@@ -58,8 +52,8 @@
     <file path="/energyfolks.css" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289756745" ignored="false" />
     <file path="/notices.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289490328" ignored="false" />
     <file path="/loginform.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363291128515" ignored="false" />
-    <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373740768829" ignored="false" />
-    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373740569422" ignored="false" />
+    <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374299150166" ignored="false" />
+    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450534406" ignored="false" />
     <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
     <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
     <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
@@ -69,9 +63,9 @@
     <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368558054604" ignored="false" />
     <file path="/iframe.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373745532524" ignored="false" />
     <file path="/new.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373914632673" ignored="false" />
-    <file path="/application_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373913705547" ignored="false" />
+    <file path="/application_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373937054782" ignored="false" />
     <file path="/forms.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373912198575" ignored="false" />
-    <file path="/layout.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373906931382" ignored="false" />
+    <file path="/layout.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373937846832" ignored="false" />
     <file path="/user_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697005699" ignored="false" />
     <file path="/site_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363890078275" ignored="false" />
     <file path="/user_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363892328934" ignored="false" />
@@ -89,13 +83,13 @@
     <file path="/profile.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373914476350" ignored="false" />
     <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373758387484" ignored="false" />
     <file path="/20130514180745_change_lat_lng_in_user_model.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554925685" ignored="false" />
-    <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373820164729" ignored="false" />
-    <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373770009914" ignored="false" />
+    <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373936884622" ignored="false" />
+    <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374449663132" ignored="false" />
     <file path="/20130515155502_create_affiliates_and_members.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368634255218" ignored="false" />
-    <file path="/affiliates_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373759519988" ignored="false" />
+    <file path="/affiliates_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373936739551" ignored="false" />
     <file path="/_form.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373758340990" ignored="false" />
     <file path="/index.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371696149245" ignored="false" />
-    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697819676" ignored="false" />
+    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450616922" ignored="false" />
     <file path="/users.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369435941452" ignored="false" />
     <file path="/manual_verify.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347196074" ignored="false" />
     <file path="/freeze_account.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349860341" ignored="false" />
@@ -123,6 +117,14 @@
     <file path="/privacy.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907234646" ignored="false" />
     <file path="/_terms.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907405598" ignored="false" />
     <file path="/login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373913475629" ignored="false" />
+    <file path="/notification_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373933721111" ignored="false" />
+    <file path="/mixin_entity.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450438945" ignored="false" />
+    <file path="/20130715225158_add_broadcast_to_memberships.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373928756509" ignored="false" />
+    <file path="/awaiting_moderation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373933893249" ignored="false" />
+    <file path="/mixin_entity_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374450685459" ignored="false" />
+    <file path="/show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373937987996" ignored="false" />
+    <file path="/data_display.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374300634330" ignored="false" />
+    <file path="/load_js.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451565257" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,53 +149,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="data_display.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="35" selection-start="2018" selection-end="2018" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accounts.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="318" column="163" selection-start="21250" selection-end="21250" vertical-scroll-proportion="-10.96">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1374451973000" expanded="true" signature="11159:11190" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="13145:13170" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="17102:17146" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="17281:17357" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="17371:17389" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="17466:17481" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="18452:18487" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="20838:20863" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="23791:23835" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="23970:24046" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="24060:24078" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="24155:24170" placeholder="..." />
+                <marker date="1374451973000" expanded="true" signature="24890:24903" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="5" selection-start="613" selection-end="613" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/user.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="52" selection-start="158" selection-end="182" vertical-scroll-proportion="0.0">
+            <state line="125" column="116" selection-start="5525" selection-end="5525" vertical-scroll-proportion="2.9114907">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="affiliate.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/affiliate.rb">
+      <file leaf-file-name="mixin_entity.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="47" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
+            <state line="51" column="21" selection-start="881" selection-end="881" vertical-scroll-proportion="-17.88">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_affiliate_picker.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/common/_affiliate_picker.html.erb">
+      <file leaf-file-name="ajax_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="60" selection-start="1522" selection-end="1522" vertical-scroll-proportion="-16.25">
-              <folding>
-                <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="affiliate_picker.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/affiliate_picker.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="186" selection-start="1138" selection-end="1138" vertical-scroll-proportion="0.0">
+            <state line="27" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
+      <file leaf-file-name="users_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="84" selection-start="2276" selection-end="2276" vertical-scroll-proportion="0.55813956">
-              <folding>
-                <element signature="e#3084#3131#0" expanded="true" />
-                <element signature="e#4536#4620#0" expanded="true" />
-                <element signature="e#5064#5126#0" expanded="true" />
-              </folding>
+            <state line="78" column="38" selection-start="2734" selection-end="2734" vertical-scroll-proportion="-19.8">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -220,21 +249,21 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/affiliate_specific.css.scss" />
-        <option value="$PROJECT_DIR$/app/views/users/_privacy.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/terms.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/privacy.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/_terms.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/carousel.js" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" />
+        <option value="$PROJECT_DIR$/app/views/users/show.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+        <option value="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js" />
+        <option value="$PROJECT_DIR$/app/models/membership.rb" />
+        <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+        <option value="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
+        <option value="$PROJECT_DIR$/app/views/common/load_js.html.erb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/app/models/affiliate.rb" />
-        <option value="$PROJECT_DIR$/app/views/common/_affiliate_picker.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/login.html.erb" />
-        <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/profile.js" />
-        <option value="$PROJECT_DIR$/app/views/users/new.html.erb" />
       </list>
     </option>
   </component>
@@ -306,7 +335,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -320,11 +349,59 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="migrate" />
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -339,46 +416,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="users" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -411,6 +448,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mailers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -469,28 +524,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="stylesheets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -884,7 +917,11 @@
       <created>1373757679894</created>
       <updated>1373757679894</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="network chooser is now working and attached to new/edit user as well">
+      <created>1373914759940</created>
+      <updated>1373914759940</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -973,7 +1010,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Accountbar is now active and working." />
+    <option name="LAST_COMMIT_MESSAGE" value="network chooser is now working and attached to new/edit user as well" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -993,128 +1030,371 @@
     <MESSAGE value="Complete external hash login script, more JS cleanup to remove old code." />
     <MESSAGE value="Affiliate stuff looks more or less done for now...missing ability for user to join an affiliate network.  Users list still poorly displayed." />
     <MESSAGE value="Accountbar is now active and working." />
+    <MESSAGE value="network chooser is now working and attached to new/edit user as well" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="54" />
+      <option name="time" value="60" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/users/_terms.html.erb">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/old_energyfolks.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="2" selection-start="5001" selection-end="5001" vertical-scroll-proportion="0.7829582">
-          <folding />
+        <state line="162" column="35" selection-start="11566" selection-end="11566" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1368657209000" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="9" selection-start="169" selection-end="169" vertical-scroll-proportion="0.32991204">
+        <state line="31" column="32" selection-start="432" selection-end="490" vertical-scroll-proportion="0.70561457">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/carousel.js">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="47" selection-start="2794" selection-end="2794" vertical-scroll-proportion="1.7003106">
+        <state line="6" column="11" selection-start="107" selection-end="107" vertical-scroll-proportion="0.1319648">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="12" selection-start="297" selection-end="297" vertical-scroll-proportion="0.3739003">
+        <state line="28" column="34" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.6158358">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss">
+    <entry file="file://$PROJECT_DIR$/app/models/membership.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="25" selection-start="479" selection-end="479" vertical-scroll-proportion="0.5938417">
+        <state line="30" column="94" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.3841642">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/affiliate.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="47" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
+        <state line="31" column="16" selection-start="427" selection-end="427" vertical-scroll-proportion="0.6818182">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/activate.html.erb">
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="10" column="24" selection-start="212" selection-end="212" vertical-scroll-proportion="0.23659305">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/reset_password.html.erb">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="60" selection-start="208" selection-end="242" vertical-scroll-proportion="0.13953489">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/edit.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="143" selection-start="3131" selection-end="3275" vertical-scroll-proportion="1.4651163">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="28" selection-start="839" selection-end="839" vertical-scroll-proportion="0.46187684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="21" selection-start="50" selection-end="50" vertical-scroll-proportion="0.022796353">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/common/_affiliate_picker.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="60" selection-start="1522" selection-end="1522" vertical-scroll-proportion="-16.25">
+        <state line="215" column="22" selection-start="10180" selection-end="10180" vertical-scroll-proportion="0.4057971">
           <folding>
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <marker date="1374451676000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1374451676000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1374451676000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1374451676000" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/affiliate_picker.js">
+    <entry file="file://$PROJECT_DIR$/app/views/common/load_js.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="186" selection-start="1138" selection-end="1138" vertical-scroll-proportion="0.0">
+        <state line="3" column="41" selection-start="146" selection-end="146" vertical-scroll-proportion="0.070866145">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="38" selection-start="2734" selection-end="2734" vertical-scroll-proportion="-19.8">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="21" selection-start="881" selection-end="881" vertical-scroll-proportion="-17.88">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="5" selection-start="613" selection-end="613" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="35" selection-start="2018" selection-end="2018" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="318" column="163" selection-start="21250" selection-end="21250" vertical-scroll-proportion="-10.96">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1374451973000" expanded="true" signature="11159:11190" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="13145:13170" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="17102:17146" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="17281:17357" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="17371:17389" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="17466:17481" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="18452:18487" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="20838:20863" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="23791:23835" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="23970:24046" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="24060:24078" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="24155:24170" placeholder="..." />
+            <marker date="1374451973000" expanded="true" signature="24890:24903" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="52" selection-start="158" selection-end="182" vertical-scroll-proportion="0.0">
+        <state line="125" column="116" selection-start="5525" selection-end="5525" vertical-scroll-proportion="2.9114907">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="7" selection-start="149" selection-end="149" vertical-scroll-proportion="0.08797654">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="84" selection-start="2276" selection-end="2276" vertical-scroll-proportion="0.55813956">
-          <folding>
-            <element signature="e#3084#3131#0" expanded="true" />
-            <element signature="e#4536#4620#0" expanded="true" />
-            <element signature="e#5064#5126#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

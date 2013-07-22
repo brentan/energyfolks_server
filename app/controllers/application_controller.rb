@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_filter :analytics
   layout :choose_layout
 
+  ENTITIES = [ User ]
+
   private
   def check_for_iframe
     if params['iframe'].present? && (params['iframe'] == '1')
@@ -60,8 +62,8 @@ class ApplicationController < ActionController::Base
         :avatar => i.avatar,
         :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
         :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } },
-        :moderation_count => { total: 0, values: [{ title: 'Events', method: 'events', count: 0}] }, # TODO: Moderation count goes here
-        :user_posts => { total: 0, values: [{ title: 'Events', method: 'events', count: 0}] }, # TODO: User posts go here
+        :moderation_count => i.moderation_count,
+        :user_posts => i.user_posts,
     }
   end
   helper_method :user_hash

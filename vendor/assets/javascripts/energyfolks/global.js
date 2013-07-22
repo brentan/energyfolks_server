@@ -26,7 +26,8 @@ EnergyFolks.ajax = function(command, parameters, callback) {
         EnergyFolks.callbacks.push(callback);
         url+="&callback="+(EnergyFolks.callbacks.length-1)
     }
-    url+="&aid="+EnergyFolks.id;
+    if(url.indexOf("aid=") == -1)
+        url+="&aid="+EnergyFolks.id;
     // Append to the head the javascript load request...upon addition the browser will load the external js file.
     var head= document.getElementsByTagName('head')[0];
     var script= document.createElement('script');
@@ -48,7 +49,8 @@ EnergyFolks.iframe_popup = function(command, parameters) {
     else if(EnergyFolks.$.type(parameters) === 'string')
         url+=parameters;
     url+="&iframe=1&"+EnergyFolks.urlhash();
-    url+="&aid="+EnergyFolks.id;
+    if(url.indexOf("aid=") == -1)
+        url+="&aid="+EnergyFolks.id;
     EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
     EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='visibility:hidden;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:30px;overflow:auto;'></iframe></div>");
 }

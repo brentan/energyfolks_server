@@ -25,10 +25,19 @@ class AjaxController < ApplicationController
 
   # Return a list of visible users based on input criteria
   def users
-    data = User.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    if params[:moderation] == "true"
+      data = User.needing_moderation(current_user)
+    else
+      data = User.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    end
     data = data.map { |i| user_hash(i) }
-    #TODO: moderation count!
     render_ajax( {data: data} )
+  end
+
+  def show
+    @item = params[:model].constantize.find_by_id(params[:id])
+    output = render_to_string "users/show"
+    render_ajax( {html: output} )
   end
 
   private

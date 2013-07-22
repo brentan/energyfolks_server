@@ -8,6 +8,7 @@ EnergyfolksServer::Application.routes.draw do
   get "users/new"
   post "users/create"
   get "users/delete"
+  get "users/moderation"
 
   get "users/try_login"
   get "users/try_cookie"
@@ -45,6 +46,9 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/reject_or_remove"
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
+
+  # ENTITY ROUTES
+  resources :users, only: ['show']
 
   # Make ajax routes visible
   match ':controller(/:action(/:id))(.:format)', controller: /ajax/

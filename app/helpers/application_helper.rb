@@ -37,4 +37,8 @@ module ApplicationHelper
     end
     return html
   end
+
+  def popup(text, command, iframe, params = {})
+    link_to text, '#', class: 'EnergyFolks_popup', data: {command: command, iframe: iframe, params: params.to_query}
+  end
 end
