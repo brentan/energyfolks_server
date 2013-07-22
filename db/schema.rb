@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130715225158) do
+ActiveRecord::Schema.define(:version => 20130722002220) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                               :null => false
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20130715225158) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.boolean  "weekly",             :default => true
+    t.boolean  "daily",              :default => false
+    t.boolean  "events",             :default => false
+    t.boolean  "jobs",               :default => false
+    t.boolean  "bulletins",          :default => false
+    t.integer  "event_radius",       :default => 50
+    t.integer  "job_radius",         :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -86,6 +93,19 @@ ActiveRecord::Schema.define(:version => 20130715225158) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer "user_id"
+    t.boolean "weekly",       :default => true
+    t.boolean "daily",        :default => false
+    t.boolean "events",       :default => false
+    t.boolean "jobs",         :default => false
+    t.boolean "bulletins",    :default => false
+    t.integer "event_radius", :default => 50
+    t.integer "job_radius",   :default => 0
+  end
+
+  add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
 
   create_table "user_login_hashes", :force => true do |t|
     t.integer  "user_id"

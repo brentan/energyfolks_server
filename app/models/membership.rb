@@ -16,7 +16,6 @@ class Membership < ActiveRecord::Base
   ADMINISTRATOR = 4 # Full rights to assign other admins
 
   before_save :set_approval_flag
-  before_create :notify_admins
 
   def self.is_admin?(user, affiliate, level)
     member = self.find_by_user_id_and_affiliate_id(user.id, affiliate.id)
@@ -38,12 +37,6 @@ class Membership < ActiveRecord::Base
       self.approved = true
       self.broadcast = true
     end
-  end
-
-  def notify_admins
-    return if self.affiliate.open == 1
-    # Find the list of admins for this group and ping them
-    # TODO!
   end
 
   def entity_id

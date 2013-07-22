@@ -1,0 +1,14 @@
+
+<div class='form_label'>Digest Emails</div>
+<div class='form_entry'>
+  <label><%= f.check_box :weekly %> Weekly Digest (Monday morning)</label>
+  <label><%= f.check_box :daily %> Daily Digest</label>
+</div>
+<div class='form_label'>Notification Emails</div>
+<div class='form_entry'>
+  <label><%= f.check_box :events %> New Events</label>
+  - Limit to events within <%= f.text_field :event_radius, :size => 4 %> miles
+  <label><%= f.check_box :jobs %> New Jobs</label>
+  - Limit to jobs within <%= f.text_field :job_radius, :size => 4 %> miles (0 for no limit)
+  <label><%= f.check_box :bulletins %> New Discussions</label>
+</div>

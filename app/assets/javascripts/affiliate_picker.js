@@ -32,6 +32,7 @@ $(function() {
             fields.find('#' + table + '_' + join_table + '_attributes_' + jid + '__destroy').val('1');
         } else {
             fields.remove();
+            $("#" + table + '_' + join_table + '_attributes_' + jid + '_reason_div').remove();
         }
     };
     var ToggleItem = function(item) {
