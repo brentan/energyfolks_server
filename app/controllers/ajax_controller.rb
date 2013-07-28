@@ -36,7 +36,7 @@ class AjaxController < ApplicationController
 
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
-    output = render_to_string "users/show"
+    output = render_to_string :partial => "users/show"
     render_ajax( {html: output} )
   end
 
