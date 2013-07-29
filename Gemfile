@@ -15,7 +15,8 @@ gem 'jscolor-rails'
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
 gem 'delayed_job_active_record'
-gem 'whenever', require: false
+gem 'whenever'
+gem 'whenever-elasticbeanstalk'
 
 gem 'linkedin'   #used to do pull profile info from LinkedIn.com
 
@@ -36,9 +37,6 @@ end
 
 # For handling file uploads, particularly pictures
 gem 'paperclip'
-
-# Deploy with Capistrano
-gem 'capistrano'  #, '2.9.0'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
