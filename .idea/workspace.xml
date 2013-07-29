@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/exception_notification.rb" afterPath="$PROJECT_DIR$/config/initializers/exception_notification.rb" />
+    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="Setup EC2">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/99delayed_job.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072262060" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375075234365" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072588576" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -112,6 +112,7 @@
     <file path="/initialize.js.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072131456" ignored="false" />
     <file path="/optionsettings.energyfolksserver-env" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072252813" ignored="false" />
     <file path="/exception_notification.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375073122088" ignored="false" />
+    <file path="/99delayed_job.config" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375075299401" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,10 +155,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="site.yml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="site.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/site.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="79" selection-start="451" selection-end="511" vertical-scroll-proportion="0.0">
+            <state line="7" column="26" selection-start="303" selection-end="303" vertical-scroll-proportion="0.15933232">
               <folding />
             </state>
           </provider>
@@ -172,10 +173,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exception_notification.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="exception_notification.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/initializers/exception_notification.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="23" selection-start="527" selection-end="527" vertical-scroll-proportion="0.2276176">
+            <state line="10" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -234,7 +235,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
         <option value="$PROJECT_DIR$/app/views/users/_show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/users/show.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
@@ -250,6 +250,7 @@
         <option value="$PROJECT_DIR$/config/site.yml" />
         <option value="$PROJECT_DIR$/.elasticbeanstalk/optionsettings.energyfolksserver-env" />
         <option value="$PROJECT_DIR$/config/initializers/exception_notification.rb" />
+        <option value="$PROJECT_DIR$/.ebextensions/99delayed_job.config" />
       </list>
     </option>
   </component>
@@ -307,6 +308,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ebextensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -699,7 +714,11 @@
       <created>1375072267232</created>
       <updated>1375072267232</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Setup EC2">
+      <created>1375073134092</created>
+      <updated>1375073134092</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -819,13 +838,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/boot.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.elasticbeanstalk/config">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -896,23 +908,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/site.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="79" selection-start="451" selection-end="511" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="27" selection-start="526" selection-end="548" vertical-scroll-proportion="-12.2">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="3" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -926,7 +924,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/initializers/exception_notification.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="23" selection-start="527" selection-end="527" vertical-scroll-proportion="0.2276176">
+        <state line="10" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="3" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/99delayed_job.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="119" selection-start="486" selection-end="486" vertical-scroll-proportion="0.29590288">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/site.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="26" selection-start="303" selection-end="303" vertical-scroll-proportion="0.15933232">
           <folding />
         </state>
       </provider>
