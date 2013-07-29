@@ -10,6 +10,9 @@
 ##########################
 site_settings:
   domain: energyfolks.com
+urls:
+  local: http://dev.energyfolks.com:3000
+  production: http://energyfolksserver-env-n92n5ugimy.elasticbeanstalk.com
 
 ##########################
 ### Geocoder

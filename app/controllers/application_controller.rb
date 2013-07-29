@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def find_aid
     # TODO: check for subdomain and then set AID accordingly
     @aid = 0
-    @host = "http://dev.energyfolks.com:3000"
+    @host = SITE_HOST #"http://dev.energyfolks.com:3000"
     @aid = params[:aid] if params[:aid].present?
   end
 
