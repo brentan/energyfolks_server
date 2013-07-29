@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="Setup EC2">
+    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.yml" afterPath="$PROJECT_DIR$/config/database.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375076218249" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375076572351" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072588576" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -113,6 +114,7 @@
     <file path="/optionsettings.energyfolksserver-env" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072252813" ignored="false" />
     <file path="/exception_notification.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375073122088" ignored="false" />
     <file path="/99delayed_job.config" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375075299401" ignored="false" />
+    <file path="/database.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375076646638" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +178,7 @@
       <file leaf-file-name="database.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/database.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="23" selection-start="731" selection-end="731" vertical-scroll-proportion="0.6041056">
+            <state line="35" column="23" selection-start="834" selection-end="834" vertical-scroll-proportion="0.7580645">
               <folding />
             </state>
           </provider>
@@ -704,7 +706,11 @@
       <created>1375075315039</created>
       <updated>1375075315039</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Setup EC2">
+      <created>1375076576687</created>
+      <updated>1375076576687</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -931,7 +937,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/database.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="23" selection-start="731" selection-end="731" vertical-scroll-proportion="0.6041056">
+        <state line="35" column="23" selection-start="834" selection-end="834" vertical-scroll-proportion="0.7580645">
           <folding />
         </state>
       </provider>
