@@ -33,8 +33,8 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
-  database: ebdb
-  username: ebroot
-  password: energyfolks1
-  host: aa1qsbejs2panzv.cqkku2csufya.us-west-1.rds.amazonaws.com
-  port: 3306
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
