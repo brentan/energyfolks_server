@@ -52,4 +52,5 @@ after "deploy:restart", "delayed_job:restart"
 after "deploy:migrate", :setup_group
 task :setup_group do
   run "sudo chown -R :webapp #{deploy_to}/releases"#" && chmod -R g+s #{deploy_to}"
+  run "sudo /etc/init.d/passenger restart"
 end
