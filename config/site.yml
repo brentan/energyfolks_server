@@ -35,28 +35,39 @@ exception_notifier:
   email_prefix: "[AES:Dev] "
 
 # For setting up email - this example uses sendgrid
+#smtp_settings:
+#  address: "smtp.sendgrid.net"
+#  port: 587
+#  user_name: 'energysociety'
+#  domain: 'energysociety.org'
+#  password: 'BD0}L,L-O@>Fxk]'
+#  authentication: :plain
+#  return_path: "dev.energysociety.org:3000"
+#  enable_starttls_auto: true
+#  xsmtpapi: "AES staging"
+#  from: 'American Energy Society <notifications@outbound.energysociety.org>'
 smtp_settings:
-  address: "smtp.sendgrid.net"
+  address: "smtp.gmail.com"
   port: 587
-  user_name: 'energysociety'
-  domain: 'energysociety.org'
-  password: 'BD0}L,L-O@>Fxk]'
+  user_name: 'brentan.stanford@gmail.com'
+  domain: 'gmail.com'
+  password: 'ARml1234milehigh'
   authentication: :plain
-  return_path: "dev.energysociety.org:3000"
   enable_starttls_auto: true
   xsmtpapi: "AES staging"
-  from: 'American Energy Society <notifications@outbound.energysociety.org>'
+  from: 'Energyfolks <contact@energyfolks.com>'
+  return_path: "dev.energyfolks.com:3000"
 
 email_recipients:
-  sign_up: "brentan@energysociety.org"
+  sign_up: "brentan@energyfolks.com"
 
 # Intercepting email delivery - primarily for test purposes
 # deliver_email of 'true' means it will send email as expect.
 # deliver_email of 'false' means it will send to the specified email list.
 mail_intercept:
   deliver_email: true
-  email_list: 'brentan@energysociety.org'
-  white_list_domains: ['performantsoftware.com', 'energysociety.org']
+  email_list: 'brentan@energyfolks.com'
+  white_list_domains: ['energyfolks.com']
 
 ##########################
 ### Paperclip
