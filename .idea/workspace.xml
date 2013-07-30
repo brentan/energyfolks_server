@@ -3,12 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/deploy.rb" afterPath="$PROJECT_DIR$/config/deploy.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/site.yml" afterPath="$PROJECT_DIR$/config/site.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375161527801" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375163179774" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072588576" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -36,7 +36,7 @@
     <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
     <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
     <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
-    <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375156774353" ignored="false" />
+    <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375163487314" ignored="false" />
     <file path="/session_store.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363297020693" ignored="false" />
     <file path="/popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363887850698" ignored="false" />
     <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368558054604" ignored="false" />
@@ -107,7 +107,7 @@
     <file path="/subscription.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374453991593" ignored="false" />
     <file path="/20130722002220_create_subscriptions_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374452966221" ignored="false" />
     <file path="/_subscriptions.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374453352326" ignored="false" />
-    <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375162475540" ignored="false" />
+    <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375164139664" ignored="false" />
     <file path="/schedule.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375045177052" ignored="false" />
     <file path="/roles.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375071992526" ignored="false" />
     <file path="/initialize.js.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072131456" ignored="false" />
@@ -169,19 +169,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exception_notification.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/initializers/exception_notification.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="1" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="site.yml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="site.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/site.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="41" selection-start="1900" selection-end="1900" vertical-scroll-proportion="0.0">
+            <state line="14" column="74" selection-start="511" selection-end="511" vertical-scroll-proportion="-0.5022762">
               <folding />
             </state>
           </provider>
@@ -190,16 +181,25 @@
       <file leaf-file-name="deploy.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="40" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.0">
+            <state line="53" column="12" selection-start="1440" selection-end="1440" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="roles.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="64" selection-start="1710" selection-end="1710" vertical-scroll-proportion="1.0242792">
+            <state line="45" column="64" selection-start="1710" selection-end="1710" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -265,15 +265,15 @@
         <option value="$PROJECT_DIR$/.ebextensions/99delayed_job.config" />
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/config/site.yml" />
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" />
         <option value="$PROJECT_DIR$/config/initializers/exception_notification.rb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Capfile" />
-        <option value="$PROJECT_DIR$/config/deploy.rb" />
         <option value="$PROJECT_DIR$/config/environments/production.rb" />
+        <option value="$PROJECT_DIR$/config/deploy.rb" />
+        <option value="$PROJECT_DIR$/config/site.yml" />
       </list>
     </option>
   </component>
@@ -420,7 +420,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="environments" />
+              <option name="myItemId" value="initializers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -881,7 +881,11 @@
       <created>1375161530261</created>
       <updated>1375161530261</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Setup EC2">
+      <created>1375163182392</created>
+      <updated>1375163182392</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -906,7 +910,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="805" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1001,27 +1005,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/initializers/exception_notification.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="1" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="23" selection-start="544" selection-end="544" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="112" selection-start="440" selection-end="440" vertical-scroll-proportion="0.15933232">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log/incoming_mail.log">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1101,16 +1084,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="40" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.0">
+        <state line="45" column="64" selection-start="1710" selection-end="1710" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="64" selection-start="1710" selection-end="1710" vertical-scroll-proportion="1.0242792">
+        <state line="53" column="12" selection-start="1440" selection-end="1440" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/exception_notification.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="1" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/site.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="74" selection-start="511" selection-end="511" vertical-scroll-proportion="-0.5022762">
           <folding />
         </state>
       </provider>
