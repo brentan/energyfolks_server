@@ -16,13 +16,13 @@ default_run_options[:pty] = true  # Must be set for the password prompt from git
 set :repository, "git@github.com:brentan/energyfolks_server.git"
 set :scm, "git"
 set :deploy_via, :remote_cache
+set :domain, 'ec2-54-215-158-64.us-west-1.compute.amazonaws.com'
 
 
 role :web, domain # Your HTTP server, Apache/etc
 role :app, domain # This may be the same as your `Web` server
 role :db, domain, :primary => true # This is where Rails migrations will run
 
-set :domain, 'ec2-54-215-158-64.us-west-1.compute.amazonaws.com'
 
 set :application, "EnergyfolksServer"
 
