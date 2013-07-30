@@ -12,7 +12,7 @@ site_settings:
   domain: energyfolks.com
 urls:
   local: http://dev.energyfolks.com:3000
-  production: http://energyfolksserver-env-n92n5ugimy.elasticbeanstalk.com
+  production: http://energyfolksserver-env-s3pcbtvnja.elasticbeanstalk.com
 
 ##########################
 ### Geocoder
@@ -35,28 +35,17 @@ exception_notifier:
   email_prefix: "[AES:Dev] "
 
 # For setting up email - this example uses sendgrid
-#smtp_settings:
-#  address: "smtp.sendgrid.net"
-#  port: 587
-#  user_name: 'energysociety'
-#  domain: 'energysociety.org'
-#  password: 'BD0}L,L-O@>Fxk]'
-#  authentication: :plain
-#  return_path: "dev.energysociety.org:3000"
-#  enable_starttls_auto: true
-#  xsmtpapi: "AES staging"
-#  from: 'American Energy Society <notifications@outbound.energysociety.org>'
 smtp_settings:
-  address: "smtp.gmail.com"
+  address: "smtp.sendgrid.net"
   port: 587
-  user_name: 'brentan.stanford@gmail.com'
-  domain: 'gmail.com'
-  password: 'ARml1234milehigh'
+  user_name: 'energyfolks'
+  domain: 'energyfolks.com'
+  password: 'energyfolks1'
   authentication: :plain
+  return_path: "dev.energysociety.org:3000"
   enable_starttls_auto: true
-  xsmtpapi: "AES staging"
-  from: 'Energyfolks <contact@energyfolks.com>'
-  return_path: "dev.energyfolks.com:3000"
+  xsmtpapi: "energyfolks"
+  from: 'Energyfolks <contract@energyfolks.com>'
 
 email_recipients:
   sign_up: "brentan@energyfolks.com"
