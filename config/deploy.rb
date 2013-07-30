@@ -29,7 +29,7 @@ set :application, "EnergyfolksServer"
 set :deploy_to, "/var/app"
 
 set :user, "ec2-user"
-set :use_sudo, true
+set :use_sudo, false
 
 set :ssh_options, {:forward_agent => true, :keys => ['~/.ssh/brentan', '~/.ssh/id_rsa']}
 
@@ -45,6 +45,6 @@ set :branch, "ec2"
 
 after "deploy", "deploy:migrate"
 
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
+#after "deploy:stop",    "delayed_job:stop"
+#after "deploy:start",   "delayed_job:start"
+#after "deploy:restart", "delayed_job:restart"
