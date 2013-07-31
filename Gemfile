@@ -20,8 +20,6 @@ gem 'whenever-elasticbeanstalk'
 
 gem 'linkedin'   #used to do pull profile info from LinkedIn.com
 
-gem 'exception_notification'
-
 gem 'email_reply_parser'
 
 gem 'mysql2'
