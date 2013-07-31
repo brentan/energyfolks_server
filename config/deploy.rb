@@ -8,10 +8,10 @@
 # 1. Merge development branch into master, then type:
 # 2. $ cap production
 
+require 'capify-ec2/capistrano'
 require 'bundler/capistrano'
 require 'delayed/recipes'
 require 'whenever/capistrano'
-require 'capify-ec2/capistrano'
 
 default_run_options[:pty] = true  # Must be set for the password prompt from git to work
 set :repository, "git@github.com:brentan/energyfolks_server.git"
