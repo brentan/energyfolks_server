@@ -1,4 +1,4 @@
-# cap deploy will deploy to current ec2 instance.  Check before each deploy that you are deploying to ALL instances
+# cap deploy will deploy to current ec2 instances
 
 require 'bundler/capistrano'
 require 'delayed/recipes'
@@ -14,10 +14,13 @@ set :repository, "git@github.com:brentan/energyfolks_server.git"
 set :scm, "git"
 set :deploy_via, :remote_cache
 
+# SECTION AUTO DETERMINES EC2 INSTANCES TO DEPLOY TO BASED ON SECURITYGROUP.  SEE capistrano-ec2group GEM FOR MORE DETAILS
+set :aws_pvt_dns, false
 group :securitygroup, :web
 group :securitygroup, :app
 group :securitygroup, :db
 
+# BELOW IS MANUAL EC2 SERVER IDENTIFICATION.  IF USED, COMMENT OUT ABOVE 'AUTO EC2' SECTION
 #set :domain, 'xxx.compute.amazonaws.com'
 #role :web, domain # Your HTTP server, Apache/etc
 #role :app, domain # This may be the same as your `Web` server
