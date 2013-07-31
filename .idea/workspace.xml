@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/site.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/site.yml.template" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" afterPath="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230635974" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230755469" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072588576" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -36,7 +36,7 @@
     <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
     <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
     <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
-    <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230487240" ignored="false" />
+    <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230977782" ignored="false" />
     <file path="/session_store.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363297020693" ignored="false" />
     <file path="/popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363887850698" ignored="false" />
     <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368558054604" ignored="false" />
@@ -118,6 +118,7 @@
     <file path="/.gitignore" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230631840" ignored="false" />
     <file path="/seeds.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375160266324" ignored="false" />
     <file path="/production.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375163142277" ignored="false" />
+    <file path="/site.yml.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230999733" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,26 +142,7 @@
     <favorites_list name="energyfolks_server" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="roles.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="49" selection-start="200" selection-end="200" vertical-scroll-proportion="0.35190615">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -186,7 +168,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/app/mailers/notification_mailer.rb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" />
         <option value="$PROJECT_DIR$/.elasticbeanstalk/optionsettings.energyfolksserver-env" />
@@ -194,14 +175,15 @@
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" />
         <option value="$PROJECT_DIR$/config/initializers/exception_notification.rb" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/Capfile" />
         <option value="$PROJECT_DIR$/config/environments/production.rb" />
         <option value="$PROJECT_DIR$/config/deploy.rb" />
-        <option value="$PROJECT_DIR$/config/site.yml" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/config/site.yml" />
+        <option value="$PROJECT_DIR$/config/site.yml.template" />
+        <option value="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" />
       </list>
     </option>
   </component>
@@ -757,7 +739,11 @@
       <created>1375230638983</created>
       <updated>1375230638983</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Setup EC2">
+      <created>1375230757083</created>
+      <updated>1375230757083</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -782,7 +768,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="805" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -790,7 +776,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25035867" sideWeight="0.671831" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25035867" sideWeight="0.671831" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39885223" sideWeight="0.671831" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -877,13 +863,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="42" selection-start="503" selection-end="503" vertical-scroll-proportion="0.27314112">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="25" selection-start="558" selection-end="558" vertical-scroll-proportion="0.29590288">
@@ -963,16 +942,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="17" column="8" selection-start="209" selection-end="209" vertical-scroll-proportion="0.3739003">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/config/site.yml.template">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="49" selection-start="200" selection-end="200" vertical-scroll-proportion="0.35190615">
+        <state line="11" column="27" selection-start="391" selection-end="391" vertical-scroll-proportion="0.24193548">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="35" selection-start="229" selection-end="229" vertical-scroll-proportion="0.1319648">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/site.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="27" selection-start="391" selection-end="391" vertical-scroll-proportion="-0.6164818">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
