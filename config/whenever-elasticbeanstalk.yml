@@ -1,6 +1,0 @@
-staging:
-  access_key_id: 'AKIAIXD4LZH3I5RUTQLA'
-  secret_access_key: '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'
-production:
-  access_key_id: 'AKIAIXD4LZH3I5RUTQLA'
-  secret_access_key: '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'
