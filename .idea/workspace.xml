@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/site.yml" afterPath="$PROJECT_DIR$/config/site.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/site.yml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375165502430" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375230635974" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375072588576" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374451139351" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -142,15 +142,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="site.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/site.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="72" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="roles.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
           <provider selected="true" editor-type-id="text-editor">
@@ -160,19 +151,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="whenever-elasticbeanstalk.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="25" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="21" selection-start="222" selection-end="222" vertical-scroll-proportion="0.3739003">
+            <state line="16" column="49" selection-start="200" selection-end="200" vertical-scroll-proportion="0.35190615">
               <folding />
             </state>
           </provider>
@@ -771,7 +753,11 @@
       <created>1375165504998</created>
       <updated>1375165504998</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Setup EC2">
+      <created>1375230638983</created>
+      <updated>1375230638983</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -963,13 +949,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/database.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -984,23 +963,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/site.yml">
+    <entry file="file://$PROJECT_DIR$/config/initializers/roles.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="72" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/whenever-elasticbeanstalk.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="25" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="21" selection-start="222" selection-end="222" vertical-scroll-proportion="0.3739003">
+        <state line="16" column="49" selection-start="200" selection-end="200" vertical-scroll-proportion="0.35190615">
           <folding />
         </state>
       </provider>
