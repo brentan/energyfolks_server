@@ -1,14 +1,10 @@
-# ___THE COMMAND SYNTAX TO DEPLOY TO DIFFERENT ENVIRONMENTS___
-#
-# STAGING deployment (http://staging.energysociety.org):
-# 1. Commit any outstanding files, then type:
-# 2. $ cap staging
-#
-# PRODUCTION deployment (http://energysociety.org):
-# 1. Merge development branch into master, then type:
-# 2. $ cap production
+# cap deploy will deploy to current ec2 instance.  Check before each deploy that you are deploying to ALL instances
 
-require 'capify-ec2/capistrano'
+#require 'capify-ec2/capistrano'
+#ec2_roles :name=>"web", :options => {:default=>true}
+#ec2_roles :name=>"app", :options => {:default=>true}
+#ec2_roles :name=>"db", :options => {:default=>true}
+
 require 'bundler/capistrano'
 require 'delayed/recipes'
 require 'whenever/capistrano'
@@ -19,9 +15,6 @@ set :scm, "git"
 set :deploy_via, :remote_cache
 set :domain, 'ec2-54-215-158-64.us-west-1.compute.amazonaws.com'
 
-#ec2_roles :name=>"web", :options => {:default=>true}
-#ec2_roles :name=>"app", :options => {:default=>true}
-#ec2_roles :name=>"db", :options => {:default=>true}
 
 role :web, domain # Your HTTP server, Apache/etc
 role :app, domain # This may be the same as your `Web` server
@@ -43,7 +36,7 @@ set :rails_env, "production"
 
 set :whenever_command, "bundle exec whenever"
 
-set :branch, "ec2"
+set :branch, "master"
 
 
 
