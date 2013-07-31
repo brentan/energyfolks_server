@@ -7,6 +7,18 @@ class ApplicationController < ActionController::Base
 
   ENTITIES = [ User ]
 
+
+  #
+  # Intercept the generic error pages and handle them ourselves.
+  #
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: :render_500
+    rescue_from ActionController::RoutingError, with: :render_404
+    rescue_from ActionController::UnknownController, with: :render_404
+    rescue_from AbstractController::ActionNotFound, with: :render_404
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  end
+
   private
   def check_for_iframe
     if params['iframe'].present? && (params['iframe'] == '1')
@@ -67,4 +79,24 @@ class ApplicationController < ActionController::Base
     }
   end
   helper_method :user_hash
+
+
+
+  private
+  def render_404(exception)
+    @not_found_path = exception.message
+    respond_to do |format|
+      format.html { render template: 'errors/error_404', status: 404 }
+      format.all { render nothing: true, status: 404 }
+    end
+  end
+
+  def render_500(exception)
+    @error = exception
+    ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
+    respond_to do |format|
+      format.html { render template: 'errors/error_500', status: 500 }
+      format.all { render nothing: true, status: 500 }
+    end
+  end
 end
