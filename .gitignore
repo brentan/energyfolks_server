@@ -17,3 +17,4 @@ pickle-email-*.html
 *site.yml
 *elasticbeanstalk.yml
 *ec2.yml
+*deploy.rb
