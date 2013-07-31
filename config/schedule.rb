@@ -19,12 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "#{path}/log/cron.log"
-
-# Be sure there are no exceptions to the email delivery trap for the weekly emails.
-site_specific = YAML.load_file("#{path}/config/site.yml")
-
-
-#every 1.day, :at => '1:00 pm' do
-#  rake "clean_up:remove_old_email_tokens"
-#end
+every 1.minute do
+  command "cd /var/app/current && bundle exec ensure_one_cron_leader"
+end
