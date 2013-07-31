@@ -25,7 +25,7 @@ gem 'email_reply_parser'
 gem 'mysql2'
 
 gem 'capistrano'
-#gem 'capify-ec2'
+gem 'capistrano-ec2group'
 
 
 # Gems used only for assets and not required

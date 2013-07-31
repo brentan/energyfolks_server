@@ -1,13 +1,13 @@
 # cap deploy will deploy to current ec2 instance.  Check before each deploy that you are deploying to ALL instances
 
-#require 'capify-ec2/capistrano'
-#ec2_roles :name=>"web", :options => {:default=>true}
-#ec2_roles :name=>"app", :options => {:default=>true}
-#ec2_roles :name=>"db", :options => {:default=>true}
-
 require 'bundler/capistrano'
 require 'delayed/recipes'
 require 'whenever/capistrano'
+require 'capistrano/ec2group'
+
+set :aws_access_key_id, '???'
+set :aws_secret_access_key, '???'
+set :aws_params, :region => 'us-west-1'
 
 default_run_options[:pty] = true  # Must be set for the password prompt from git to work
 set :repository, "git@github.com:brentan/energyfolks_server.git"
@@ -15,10 +15,13 @@ set :scm, "git"
 set :deploy_via, :remote_cache
 set :domain, 'ec2-54-215-158-64.us-west-1.compute.amazonaws.com'
 
+group :securitygroup, :web
+group :securitygroup, :app
+group :securitygroup, :db
 
-role :web, domain # Your HTTP server, Apache/etc
-role :app, domain # This may be the same as your `Web` server
-role :db, domain, :primary => true # This is where Rails migrations will run
+#role :web, domain # Your HTTP server, Apache/etc
+#role :app, domain # This may be the same as your `Web` server
+#role :db, domain, :primary => true # This is where Rails migrations will run
 
 
 set :application, "EnergyfolksServer"
