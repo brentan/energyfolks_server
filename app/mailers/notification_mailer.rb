@@ -3,7 +3,7 @@ class NotificationMailer < ActionMailer::Base
 
   def awaiting_moderation(recipients, affiliate, item, join_item)
     @item = item
-    @host = "http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
+    @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
     @join_item = join_item
     @affiliate = affiliate
     recipients.each do |user|
