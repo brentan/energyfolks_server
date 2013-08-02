@@ -18,5 +18,5 @@ pickle-email-*.html
 *elasticbeanstalk.yml
 *ec2.yml
 /config/deploy.rb
-/.idea
-Gemfile.lock
+.idea/workspace.xml
+.idea/tasks.xml
