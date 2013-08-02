@@ -55,4 +55,7 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'letter_opener'
+
+  gem 'execjs'
+  gem 'therubyracer'
 end
