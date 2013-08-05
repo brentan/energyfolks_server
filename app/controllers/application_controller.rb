@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :analytics
   layout :choose_layout
 
-  ENTITIES = [ User ]
+  ENTITIES = [ User, Job ]
 
 
   #

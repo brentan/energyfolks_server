@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_many :user_login_hashes, :dependent => :destroy
   has_many :affiliates, :through => :memberships
   has_many :memberships, :dependent => :destroy
+  has_many :emails, :dependent => :destroy
+  has_many :jobs, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
 
   scope :verified, where(:verified => true)
@@ -30,6 +32,9 @@ class User < ActiveRecord::Base
   LOGGED_IN = 2
   NETWORKS = 3
   PRIVATE = 4
+
+  # We dont use version control
+  VERSION_CONTROLLED = []
 
   validates_each :email do |record, attr, value|
     if value.present?
@@ -115,6 +120,15 @@ class User < ActiveRecord::Base
     end
     return false
   end
+  def broadcast
+    return unless self.verified?
+    self.memberships.where(broadcast: false).each do |i|
+      recipients = i.affiliate.admins(Membership::EDITOR, true)
+      NotificationMailer.delay.awaiting_moderation(recipients, i.affiliate, self, i) if recipients.length > 0
+      i.broadcast = true
+      i.save(:validate => false)
+    end
+  end
 
   def moderation_count
     total = 0
@@ -138,7 +152,7 @@ class User < ActiveRecord::Base
     values = []
     ApplicationController::ENTITIES.each do |e|
       next if e == User
-      tot = e.where(author_id: self.id).count
+      tot = e.where(user_id: self.id).count
       if tot > 0
         total += tot
         values << {title: e.new().entity_type.capitalize.pluralize(tot), method: e.new().method_name, count: tot}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722002220) do
+ActiveRecord::Schema.define(:version => 20130803161045) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                               :null => false
@@ -56,6 +56,17 @@ ActiveRecord::Schema.define(:version => 20130722002220) do
     t.integer  "job_radius",         :default => 0
   end
 
+  create_table "affiliates_jobs", :force => true do |t|
+    t.integer "job_id"
+    t.integer "affiliate_id"
+    t.integer "approved_version", :default => 0
+    t.integer "admin_version",    :default => 0
+    t.boolean "broadcast",        :default => false
+    t.boolean "user_broadcast",   :default => false
+  end
+
+  add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
+
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -71,6 +82,60 @@ ActiveRecord::Schema.define(:version => 20130722002220) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "emails", :force => true do |t|
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.integer  "user_id"
+    t.boolean  "opened",      :default => false
+    t.datetime "open_date"
+  end
+
+  add_index "emails", ["entity_id"], :name => "index_emails_on_entity_id"
+  add_index "emails", ["entity_type"], :name => "index_emails_on_entity_type"
+  add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
+
+  create_table "jobs", :force => true do |t|
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.date     "expire"
+    t.string   "location"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "current_version",   :default => 0
+    t.string   "name"
+    t.string   "employer"
+    t.text     "html"
+    t.text     "how_to_apply"
+    t.integer  "job_type"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  create_table "jobs_versions", :force => true do |t|
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "entity_id"
+    t.integer  "version_number"
+    t.string   "name"
+    t.string   "employer"
+    t.text     "html"
+    t.text     "how_to_apply"
+    t.integer  "job_type"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
+  add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
 
   create_table "memberships", :force => true do |t|
     t.datetime "created_at",                           :null => false

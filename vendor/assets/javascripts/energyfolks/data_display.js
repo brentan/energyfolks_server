@@ -47,7 +47,7 @@ EnergyFolks.showData = function(data) {
 
 EnergyFolks.loadData = function() {
     EnergyFolks.loading('#EnfolksResultDiv');
-    EnergyFolks.ajax(EnergyFolks.source, {start: EnergyFolks.data_start, end: EnergyFolks.data_end, limits: EnergyFolks.data_limits, moderation: EnergyFolks.get_moderated}, EnergyFolks.showData);
+    EnergyFolks.ajax(EnergyFolks.source, {start: EnergyFolks.data_start, end: EnergyFolks.data_end, limits: EnergyFolks.data_limits, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
 /*
@@ -104,6 +104,12 @@ EnergyFolks.itemDetailHTML = function(item) {
             }
         }
         output += '</div>';
+    } else if(EnergyFolks.source == 'jobs') {
+        output += "<div>";
+        if(item.logo)
+            output += '<img src="'+item.logo_url+'" align=left>';
+        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Job'});
+        output += "</div>";
     }
     return output;
 };

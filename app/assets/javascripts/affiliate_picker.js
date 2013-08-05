@@ -58,14 +58,14 @@ $(function() {
     $("#EnergyFolksAffiliatePicker .choose_all_affiliates").on("click", function() {
         $("#EnergyFolksAffiliatePicker").find("div.unselected").each(function() {
             ToggleItem($(this));
-            return false;
         });
+        return false;
     });
     $("#EnergyFolksAffiliatePicker .choose_no_affiliates").on("click", function() {
         $("#EnergyFolksAffiliatePicker").find("div.selected").each(function() {
             ToggleItem($(this));
-            return false;
         });
+        return false;
     });
     // Attach to the elements created by the affiliate picker
     $("#EnergyFolksAffiliatePicker div.affiliate").on("click", function() {
