@@ -1,6 +1,10 @@
 class Affiliate < ActiveRecord::Base
   has_many :users, :through => :memberships
   has_many :memberships, :dependent => :destroy
+  has_many :affiliates_jobs, :dependent => :destroy
+  has_many :jobs, :through => :affiliates_jobs
+  has_many :affiliates_jobs, :dependent => :destroy
+  has_many :emails, as: :entity, :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_bulletins, :url_users, :url_blog,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,

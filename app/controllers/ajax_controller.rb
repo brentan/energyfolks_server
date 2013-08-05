@@ -26,11 +26,23 @@ class AjaxController < ApplicationController
   # Return a list of visible users based on input criteria
   def users
     if params[:moderation] == "true"
-      data = User.needing_moderation(current_user)
+      data = User.needing_moderation(current_user, current_affiliate)
     else
       data = User.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
     end
     data = data.map { |i| user_hash(i) }
+    render_ajax( {data: data} )
+  end
+
+  # Return a list of visible users based on input criteria
+  def jobs
+    if params[:moderation] == "true"
+      data = Job.needing_moderation(current_user, current_affiliate)
+    elsif params[:my_posts] == "true"
+      data = Job.get_mine(current_user)
+    else
+      data = Job.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    end
     render_ajax( {data: data} )
   end
 

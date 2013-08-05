@@ -323,8 +323,8 @@ EnergyFolks.CreateTopBar = function() {
             outtext+='</ul></div></li>';
         }
         if(EnergyFolks.current_user.user_posts.total > 0) {
-            outtext+='<li class="menupop" onmouseout="EnFolks_get_object(\'efadminbar_sub2\').style.display=\'none\';" onmouseover="EnFolks_get_object(\'efadminbar_sub2\').style.display=\'block\';">';
-            outtext+="<a class='ab-item' href='#'>Your Posts</a><div class='ab-sub-wrapper'><ul class='ab-submenu'>";
+            outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub2\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub2\').show();">';
+            outtext+="<a class='ab-item' href='#'>Your Posts</a><div id='efadminbar_sub2' class='ab-sub-wrapper'><ul class='ab-submenu'>";
             EnergyFolks.$.each(EnergyFolks.current_user.user_posts.values, function(i, v) {
                 outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/myposts" data-iframe="true" data-params="">'+ v.title+' ('+ v.count+')</a></li>';
             });

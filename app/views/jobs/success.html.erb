@@ -1,0 +1,9 @@
+Your job has been posted.  It is awaiting approval by the administrators of the groups you submitted the post to.  You
+will receive notice when your post is approved or rejected.
+<BR><BR>
+<% if !@item.geocoded? %>
+    <h2>Warning</h2>
+    <p>We were not able to translate the location you entered into a latitude and longitude.  This information is used
+    to deliver jobs to relevant users, based on geography.  Please update your post to include a location that can
+    be converted into latitude and longitude coordinates.</p>
+<% end %>

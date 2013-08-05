@@ -47,8 +47,32 @@ EnergyfolksServer::Application.routes.draw do
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
 
+  match "jobs" => "jobs#index"
   # ENTITY ROUTES
   resources :users, only: ['show']
+
+  begin
+    ApplicationController::ENTITIES.each { |type|
+      if type.new.entity_name != 'User'
+        resources type, only: ['show']
+        method = type.new.method_name
+        get "#{method}/new"
+        post "#{method}/create"
+        match "#{method}/:id/edit" => "#{method}#edit"
+        match "#{method}/:id/delete" => "#{method}#delete"
+        put "#{method}/update"
+        get "#{method}/reject_or_remove"
+        post "#{method}/reject_or_remove"
+        get "#{method}/approve"
+        get "#{method}/moderation"
+        get "#{method}/force_resend"
+        get "#{method}/email_open"
+        get "#{method}/myposts"
+      end
+    }
+  rescue
+  end
+
 
   # Make ajax routes visible
   match ':controller(/:action(/:id))(.:format)', controller: /ajax/
