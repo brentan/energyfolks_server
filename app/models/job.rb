@@ -3,6 +3,7 @@ class Job < ActiveRecord::Base
   has_many :affiliates_jobs, :dependent => :destroy
   belongs_to :user
   has_many :jobs_versions, :dependent => :destroy
+
   default_scope order('created_at DESC')
 
   FULL_TIME = 1
@@ -15,6 +16,7 @@ class Job < ActiveRecord::Base
 
   acts_as_locatable
   acts_as_moderatable
+  acts_as_taggable
 
   accepts_nested_attributes_for :affiliates_jobs, :allow_destroy => true
 

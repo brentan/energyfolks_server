@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   has_many :emails, :dependent => :destroy
   has_many :jobs, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
-
   scope :verified, where(:verified => true)
   include MixinEntity
   default_scope order(:last_name, :first_name)
@@ -23,7 +22,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :subscription
 
   acts_as_locatable
-  acts_as_moderatable
+  acts_as_taggable
+
+  after_save :broadcast
 
   after_create :setup_subscriptions
 

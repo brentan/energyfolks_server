@@ -134,6 +134,7 @@ class UsersController < ApplicationController
     if (params[:user][:password_old].blank? && params[:user][:password].blank?) || (params[:user][:password_old].present? && @user.check_password(params[:user][:password_old]))
       old_email = @user.email_to_verify
       if(@user.update_attributes(params[:user]))
+        Tag.update_tags(@user.raw_tags, @user)
         UserMailer.delay.email_verification_request(@user, @aid, @host) if (old_email != @user.email_to_verify) && @user.email_to_verify.present?
         UserMailer.delay.reset_password_2(@user, @aid, @host) if params[:user][:password_old].present? && params[:user][:password].present?
         flash[:notice]="Your account has been updated"
@@ -158,6 +159,7 @@ class UsersController < ApplicationController
     if !@user.save
       render :action => "new"
     else
+      Tag.update_tags(@user.raw_tags, @user)
       UserMailer.delay.confirmation_request(@user, @aid, @host)
     end
   end

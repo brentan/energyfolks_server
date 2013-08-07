@@ -26,6 +26,7 @@ module MixinEntityController
   end
 
   def update
+    #Tag.update_tags(@item.raw_tags, @item)
   end
 
   def new
@@ -39,6 +40,7 @@ module MixinEntityController
     if !@item.save
       render :action => "new"
     else
+      Tag.update_tags(@item.raw_tags, @item)
       render :action => "success"
     end
   end

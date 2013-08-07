@@ -75,6 +75,14 @@
           <div class='form_label'>Organization</div>
           <div class='form_entry'><%= f.text_field :organization %></div>
 
+          <div class='form_label'>Tags</div>
+          <div class='form_entry'>
+            <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
+            <div class='explain'>
+              Enter tags such as 'solar' or 'entrepreneurship' that describe your interests
+            </div>
+          </div>
+
           <div class='form_label'>Your Bio</div>
           <div class='form_entry'><%= f.text_area :bio, :class => 'tinymce' %></div>
 

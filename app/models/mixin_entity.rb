@@ -46,6 +46,12 @@ module MixinEntity
     def acts_as_moderatable
       after_save :broadcast
     end
+    def acts_as_taggable
+      has_many :tags_entities, as: :entity, :dependent => :destroy
+      has_many :tags, :through => :tags_entities
+      attr_accessible :raw_tags
+      attr_writer :raw_tags
+    end
 
     def total_needing_moderation(affiliate)
       self.join_table.waiting.where(affiliate_id: affiliate.id, broadcast: true)
@@ -102,6 +108,13 @@ module MixinEntity
   end
 
   # Common Methods
+
+  def raw_tags
+    rt = @raw_tags
+    rt = self.tags.map {|t| t.name.capitalize}.join(",") if rt.blank?
+    return rt
+  end
+
   def broadcast
     if self.increment_version?
       v = self.class.version_table.new

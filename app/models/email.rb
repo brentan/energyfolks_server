@@ -1,5 +1,5 @@
 class Email < ActiveRecord::Base
-  belongs_to :job, :polymorphic => true
+  belongs_to :entity, :polymorphic => true
 
   attr_accessible :user_id
 
