@@ -52,6 +52,11 @@ class AjaxController < ApplicationController
     render_ajax( {html: output} )
   end
 
+  def tags
+    tag = Tag.where("name LIKE ?", "%#{params[:q].downcase}%").all.map{ |r| {id: r.name.capitalize, text: r.name.capitalize } }
+    render :json => tag.to_json
+  end
+
   private
   def render_ajax(output = nil)
     if output.blank?

@@ -34,6 +34,14 @@
               <div class='form_label'>City and State/Country</div>
               <div class='form_entry'><%= f.text_field :location %></div>
 
+              <div class='form_label'>Tag Yourself</div>
+              <div class='form_entry'>
+                <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
+                <div class='explain'>
+                  Enter tags such as 'solar' or 'entrepreneurship' that describe your interests
+                </div>
+              </div>
+
               <div class='form_label'>Password</div>
               <div class='form_entry'><%= f.password_field :password %></div>
 
