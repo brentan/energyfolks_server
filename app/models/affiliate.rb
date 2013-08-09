@@ -2,7 +2,6 @@ class Affiliate < ActiveRecord::Base
   has_many :users, :through => :memberships
   has_many :memberships, :dependent => :destroy
   has_many :affiliates_jobs, :dependent => :destroy
-  has_many :jobs, :through => :affiliates_jobs
   has_many :affiliates_jobs, :dependent => :destroy
   has_many :emails, as: :entity, :dependent => :destroy
 
@@ -85,7 +84,8 @@ class Affiliate < ActiveRecord::Base
     return member.present?
   end
 
-  def admin?(user, level = Membership::ADMINISTRATOR)
+  def admin?(user, level = Membership::ADMINISTRATOR, entity = nil)
+    return true if entity.present? && (level == Membership::CONTRIBUTOR) && (self.send("moderate_#{entity}") == NONE)
     member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).where("admin_level >= #{level}").first()
     return member.present?
   end

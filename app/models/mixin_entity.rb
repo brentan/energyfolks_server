@@ -77,8 +77,8 @@ module MixinEntity
     def find_all_visible(user, affiliate = nil, page=0, per_page=20)
       affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
+      affiliates << 0 unless affiliate.present? && (affiliates.send("moderate_#{self.method_name}") == Affiliate::ALL)
       affiliates.compact!
-      affiliates << 0
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
       items = self.offset(page * per_page).limit(per_page).select(select)
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
@@ -118,7 +118,12 @@ module MixinEntity
     return rt
   end
 
+  def last_update
+    User.find_by_id(self.last_updated_by)
+  end
+
   def broadcast
+    # Version control: Decide if we need to increment versions or if we can just save
     if self.increment_version?
       v = self.class.version_table.new
       self.class::VERSION_CONTROLLED.each do |item|
@@ -141,11 +146,37 @@ module MixinEntity
       end
       v.save!
     end
+    # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
+    if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
+      all_current = self.affiliate_join.map{|a| a.affiliate_id}
+      Affiliate.where("moderate_#{self.method_name} == #{Affiliate::ALL}").each do |a|
+        self.affiliate_join.build({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
+      end
+    end
+    # Broadcast to admins for approval
+    call_user_broadcast = false
     self.affiliate_join.where(broadcast: false).each do |i|
-      if i.affiliate_id.present?
+      if i.affiliate_id > 0
+        # Check if this edit was made by an admin.  If so, mark as approved immediately
+        # Also check if this affiliate simply allows anyone to post, and if so, auto-approve
+        if i.affiliate.admin?(self.last_update, Membership::CONTRIBUTOR, self.method_name)
+          i.broadcast = true
+          i.approved_version = i.admin_version
+          i.save(:validate => false)
+          call_user_broadcast = true
+          next
+        end
         recipients = i.affiliate.admins(Membership::EDITOR, true)
         affiliate = Affiliate.find_by_id(i.affiliate_id)
       else
+        # Check if this edit was made by an admin.  If so, mark as approved immediately
+        if self.last_update.admin?
+          i.broadcast = true
+          i.approved_version = i.admin_version
+          i.save(:validate => false)
+          call_user_broadcast = true
+          next
+        end
         recipients = User.find_by_admin(true)
         affiliate = Affiliate.find_by_id(0)
       end
@@ -153,13 +184,16 @@ module MixinEntity
       i.broadcast = true
       i.save(:validate => false)
     end
+    self.user_broadcast.delay(:run_at => 15.minutes.from_now) if call_user_broadcast
   end
 
   def user_broadcast
+    return
     # TODO: This should be called by the 'approve' method
     # This method takes some time...it is meant to be called by a 'delay' action, not directly
     self.affiliate_join.where(user_broadcast: false).where("approved_version > 0").each do |i|
       if i.affiliate_id == 0
+        # TODO: below should be updated based on affiliate rules for EF posts (subtract out folks in groups in affiliate_join list)
         recipients = User.select(:id).find_by_verified(true).map { |r| r.id }
       else
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
@@ -194,7 +228,7 @@ module MixinEntity
     return self.current_version if user.present? && (self.user_id == user.id)
     affiliates = user.present? ? user.memberships.approved.map { |m| m.affiliate_id } : []
     affiliates << affiliate.id if affiliate.present?
-    affiliates << 0
+    affiliates << 0 unless affiliate.present? && (affiliates.send("moderate_#{self.method_name}") == Affiliate::ALL)
     v = self.affiliate_join.where("affiliate_id IN (#{affiliates.join(", ")})").order(:approved_version).last
     return v.present? ? v.approved_version : 0
   end
