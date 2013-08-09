@@ -3,31 +3,32 @@
      send_to_all = current.map { |a| a.affiliate_id }.include?(0)
   %>
   <% if table != 'user' %>
-      <div class='choose_all_affiliates'><input id='send_to_all_yes' type=radio name='send_to_all' value=1 <%= send_to_all ? 'checked' : '' %>> Send to All</div>
-      <div class='choose_no_affiliates'><input id='send_to_all_no' type=radio name='send_to_all' value=0 <%= !send_to_all ? 'checked' : '' %>> Choose Networks Individually</div>
+      <label><input id='send_to_all_yes' type=radio name='send_to_all' value=1 <%= send_to_all ? 'checked' : '' %>> Send to All</label><BR>
+      <label><input id='send_to_all_no' type=radio name='send_to_all' value=0 <%= !send_to_all ? 'checked' : '' %>> Choose Networks Individually</label>
   <% end %>
 
   <div id='choose_affiliates' <%= send_to_all ? 'style="display:none;"' : '' %>>
-      <%= content_tag(:h1, "Current Networks") if current.length > 0 %>
-      <% count = 0 %>
-      <% current.each do |a| %>
+      <%= content_tag(:h1, "Current Networks") if (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) %>
+      <% count = 0
+         completed = current.map{|c| c.affiliate_id }
+         current.each do |a| %>
           <% if a.affiliate_id == 0 %>
               <div class='affiliate_0' <%= "data-tid=#{a.id.present? ? a.id : 0} data-table=#{table} data-join-table=#{join_table} data-id=#{a.affiliate_id} data-jid=#{count} data-reason=#{false}"%> style='display:none;'></div>
           <% else %>
-              <div class='affiliate selected' <%= "data-tid=#{a.id.present? ? a.id : 0} data-table=#{table} data-join-table=#{join_table} data-id=#{a.affiliate_id} data-jid=#{count} data-reason=#{false}"%> >
+              <div class='affiliate selected' <%= "data-override-all=#{completed.include?(0)} data-tid=#{a.id.present? ? a.id : 0} data-table=#{table} data-join-table=#{join_table} data-id=#{a.affiliate_id} data-jid=#{count} data-reason=#{false}"%> >
                 <%= a.affiliate.name %>
                 <%= raw(" <span class='descriptor'>#{a.approved? ? '' : "(Pending#{a.reason.present? ? ", #{a.reason}" : ''})"}</span>") %>
               </div>
           <% end %>
           <% count += 1 %>
+      <% end
+         if !completed.include?(0) %>
+        <div class='affiliate_0' <%= "data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=0 data-jid=#{count} data-reason=#{false}"%> style='display:none;'></div>
       <% end %>
-      <% if (current.length - Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').length) < 0 %>
-          <%= content_tag(:h1, current.length > 0 ? "Add More Networks" : "Choose Networks")  %>
+      <% if (current.length - (completed.include?(0) ? 1 : 0) - Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').length) < 0 %>
+          <%= content_tag(:h1, (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) ? "Add More Networks" : "Choose Networks")  %>
           <%
              completed = current.map{|c| c.affiliate_id }
-             if !completed.include?(0) %>
-                <div class='affiliate_0' <%= "data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=0 data-jid=#{count} data-reason=#{false}"%> style='display:none;'></div>
-             <% end
              Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').each do |a|
                 next if completed.include? a.id %>
                 <div class='affiliate unselected' <%= "data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=#{a.id} data-jid=#{count} data-reason=#{table == 'user' ? (a.open > 1) : false}"%> >

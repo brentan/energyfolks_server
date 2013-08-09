@@ -54,15 +54,18 @@ $(function() {
             createField(table, join_table, jid, tid, id, reason, item);
         }
     };
+    var AllHidden = false;
     // Create the 'select all' and 'select none' links
-    $("#EnergyFolksAffiliatePicker .choose_all_affiliates").on("click", function() {
-        if($("#send_to_all_no").is(':checked')) {
+    var SelectAll = function() {
+        if(!AllHidden) {
+            AllHidden = true;
             $("#EnergyFolksAffiliatePicker").find("div.selected").each(function() {
-                ToggleItem($(this));
+                if($(this).attr('data-override-all') == 'false')
+                    ToggleItem($(this));
             });
             $("#choose_affiliates").hide();
-            $("#send_to_all_yes").prop("checked", true);
-            var item = $(".affiliate_0");
+            //$("#send_to_all_yes").prop("checked", true);
+            var item = $(".affiliate_0").first();
             var id = item.attr('data-id')*1;
             var table = item.attr('data-table');
             var join_table = item.attr('data-join-table');
@@ -71,13 +74,13 @@ $(function() {
             var reason = item.attr('data-reason');
             createField(table, join_table, jid, tid, id, reason, item);
         }
-        return false;
-    });
-    $("#EnergyFolksAffiliatePicker .choose_no_affiliates").on("click", function() {
-        if($("#send_to_all_yes").is(':checked')) {
+    };
+    var SelectNone = function() {
+        if(AllHidden) {
+            AllHidden = false;
             $("#choose_affiliates").show();
-            $("#send_to_all_no").prop("checked", true);
-            var item = $(".affiliate_0");
+            //$("#send_to_all_no").prop("checked", true);
+            var item = $(".affiliate_0").first();
             var id = item.attr('data-id')*1;
             var table = item.attr('data-table');
             var join_table = item.attr('data-join-table');
@@ -86,7 +89,12 @@ $(function() {
             var reason = item.attr('data-reason');
             removeField(table, join_table, jid, tid, id);
         }
-        return false;
+    };
+    $("#EnergyFolksAffiliatePicker #send_to_all_yes").on("click", function() {
+        SelectAll();
+    });
+    $("#EnergyFolksAffiliatePicker #send_to_all_no").on("click", function() {
+        SelectNone();
     });
     // Attach to the elements created by the affiliate picker
     $("#EnergyFolksAffiliatePicker div.affiliate").on("click", function() {
@@ -103,16 +111,8 @@ $(function() {
         var tid = item.attr('data-tid')*1;
         createField(table, join_table, jid, tid, id, 'false', item);
     });
-    //TODO: TEST ENERGYFOLKS ONLY STUFF!
-    if($("#send_to_all_yes").is(':checked')) {
-        var item = $(".affiliate_0");
-        var id = item.attr('data-id')*1;
-        var table = item.attr('data-table');
-        var join_table = item.attr('data-join-table');
-        var jid = item.attr('data-jid')*1;
-        var tid = item.attr('data-tid')*1;
-        var reason = item.attr('data-reason');
-        createField(table, join_table, jid, tid, id, reason, item);
+    if($("#send_to_all_yes").first().is(':checked')) {
+        SelectAll();
     }
 });
 
