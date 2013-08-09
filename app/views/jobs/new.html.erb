@@ -40,8 +40,16 @@
                   <div class='form_label'>Description</div>
                   <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
 
+                  <div class='form_label'>Add Tags</div>
+                  <div class='form_entry'>
+                    <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
+                    <div class='explain'>
+                      Enter tags such as 'solar' or 'entrepreneurship' that describe this post
+                    </div>
+                  </div>
+
                   <div class='form_label'>How to Apply</div>
-                  <div class='form_entry'><%= f.text_area :how_to_apply, :class => 'tinymce' %></div>
+                  <div class='form_entry'><%= f.text_area :how_to_apply %></div>
 
                   <%= tinymce %>
                 </li>

@@ -54,15 +54,18 @@ module MixinEntity
     end
 
     def total_needing_moderation(affiliate)
-      self.join_table.waiting.where(affiliate_id: affiliate.id, broadcast: true)
+      self.join_table.waiting.where(affiliate_id: affiliate.id.present? ? affiliate.id : 0, broadcast: true)
     end
 
     def needing_moderation(user, affiliate)
       moderation = []
-      user.memberships.approved.each do |a|
-        moderation += self.total_needing_moderation(a.affiliate).all if a.affiliate.admin?(user, Membership::EDITOR) && (a.affiliate_id == affiliate.id)
+      if affiliate.id.present?
+        user.memberships.approved.each do |a|
+          moderation += self.total_needing_moderation(a.affiliate).all if (a.affiliate_id == affiliate.id) && a.affiliate.admin?(user, Membership::EDITOR)
+        end
+      else
+        moderation += self.total_needing_moderation(affiliate).all if user.admin?
       end
-      # TODO: Somehow super admin moderation count.
       moderation = moderation.map { |m| m.entity_id }.compact
       return self.where(id: moderation).all
     end
@@ -75,7 +78,7 @@ module MixinEntity
       affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates.compact!
-      # TODO: Somehow energyfolks total visible items
+      affiliates << 0
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
       items = self.offset(page * per_page).limit(per_page).select(select)
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
@@ -139,19 +142,30 @@ module MixinEntity
       v.save!
     end
     self.affiliate_join.where(broadcast: false).each do |i|
-      recipients = i.affiliate.admins(Membership::EDITOR, true)
-      NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, i.affiliate, self, i) if recipients.length > 0
+      if i.affiliate_id.present?
+        recipients = i.affiliate.admins(Membership::EDITOR, true)
+        affiliate = Affiliate.find_by_id(i.affiliate_id)
+      else
+        recipients = User.find_by_admin(true)
+        affiliate = Affiliate.find_by_id(0)
+      end
+      NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, affiliate, self, i) if recipients.length > 0
       i.broadcast = true
       i.save(:validate => false)
     end
   end
+
   def user_broadcast
     # TODO: This should be called by the 'approve' method
     # This method takes some time...it is meant to be called by a 'delay' action, not directly
     self.affiliate_join.where(user_broadcast: false).where("approved_version > 0").each do |i|
-      recipients = i.affiliate.memberships.approved
-      recipients.each do |r|
-        u = User.find_by_id(r.user_id)
+      if i.affiliate_id == 0
+        recipients = User.select(:id).find_by_verified(true).map { |r| r.id }
+      else
+        recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
+      end
+      recipients.each do |user_id|
+        u = User.find_by_id_and_verified(user_id, true)
         next if u.blank?
         next unless u.subscription.send("#{self.method_name}?")
         if ((self.entity_name == 'Job') || (self.entity_name == 'Event')) && u.geocoded?
@@ -163,11 +177,11 @@ module MixinEntity
             next if u.subscription.send("#{self.class.name}_radius") > 0
           end
         end
-        next if Email.find_by_entity_type_and_entity_id_and_user_id(self.class.name, self.id, r.user_id).count > 0
-        e = Email.new(user_id: r.user_id)
+        next if Email.find_by_entity_type_and_entity_id_and_user_id(self.class.name, self.id, user_id).count > 0
+        e = Email.new(user_id: user_id)
         e.entity = self
         e.save!
-        NotificationMailer.entity(User.find_by_id(r.user_id)).deliver()    # TODO: Create the mailer
+        NotificationMailer.entity(User.find_by_id(user_id)).deliver()    # TODO: Create the mailer
       end
     end
   end
@@ -177,10 +191,10 @@ module MixinEntity
   end
 
   def version_id(affiliate, user)
-    # TODO: deal with affiliate = 0 (energyfolks!)
     return self.current_version if user.present? && (self.user_id == user.id)
     affiliates = user.present? ? user.memberships.approved.map { |m| m.affiliate_id } : []
     affiliates << affiliate.id if affiliate.present?
+    affiliates << 0
     v = self.affiliate_join.where("affiliate_id IN (#{affiliates.join(", ")})").order(:approved_version).last
     return v.present? ? v.approved_version : 0
   end
