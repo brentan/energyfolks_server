@@ -77,12 +77,12 @@ module MixinEntity
     def find_all_visible(user, affiliate = nil, page=0, per_page=20)
       affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
-      affiliates << 0 unless affiliate.present? && (affiliates.send("moderate_#{self.method_name}") == Affiliate::ALL)
+      affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
       items = self.offset(page * per_page).limit(per_page).select(select)
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
-      items = items.where("affiliates_#{self.name.downcase.pluralize}.id IN (#{affiliates.join(', ')})") if affiliates.present?
+      items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
       items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
       items = items.all
       return version_control(user, affiliate, items)
@@ -149,7 +149,7 @@ module MixinEntity
     # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
     if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
       all_current = self.affiliate_join.map{|a| a.affiliate_id}
-      Affiliate.where("moderate_#{self.method_name} == #{Affiliate::ALL}").each do |a|
+      Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
         self.affiliate_join.build({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
       end
     end
@@ -188,13 +188,14 @@ module MixinEntity
   end
 
   def user_broadcast
-    return
     # TODO: This should be called by the 'approve' method
     # This method takes some time...it is meant to be called by a 'delay' action, not directly
     self.affiliate_join.where(user_broadcast: false).where("approved_version > 0").each do |i|
       if i.affiliate_id == 0
-        # TODO: below should be updated based on affiliate rules for EF posts (subtract out folks in groups in affiliate_join list)
-        recipients = User.select(:id).find_by_verified(true).map { |r| r.id }
+        recipients = User.select(:id).where(verified: true).all.map { |r| r.id }
+        Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+          recipients = recipients - a.memberships.approved.map { |r| r.user_id }
+        end
       else
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
       end
@@ -215,8 +216,10 @@ module MixinEntity
         e = Email.new(user_id: user_id)
         e.entity = self
         e.save!
-        NotificationMailer.entity(User.find_by_id(user_id)).deliver()    # TODO: Create the mailer
+        NotificationMailer.entity(User.find_by_id(user_id), self).deliver()    # TODO: Create the mailer
       end
+      i.user_broadcast = true
+      i.save(:validate => false)
     end
   end
 
@@ -228,7 +231,7 @@ module MixinEntity
     return self.current_version if user.present? && (self.user_id == user.id)
     affiliates = user.present? ? user.memberships.approved.map { |m| m.affiliate_id } : []
     affiliates << affiliate.id if affiliate.present?
-    affiliates << 0 unless affiliate.present? && (affiliates.send("moderate_#{self.method_name}") == Affiliate::ALL)
+    affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.method_name}") == Affiliate::ALL)
     v = self.affiliate_join.where("affiliate_id IN (#{affiliates.join(", ")})").order(:approved_version).last
     return v.present? ? v.approved_version : 0
   end

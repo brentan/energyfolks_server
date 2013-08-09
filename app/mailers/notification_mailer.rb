@@ -12,4 +12,8 @@ class NotificationMailer < ActionMailer::Base
     end
   end
 
+  def entity(user, entity)
+    # TODO: WRITE ME!
+  end
+
 end
