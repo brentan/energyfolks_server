@@ -48,6 +48,7 @@ module MixinEntity
     end
     def acts_as_taggable
       has_many :tags_entities, as: :entity, :dependent => :destroy
+      has_many :highlights, as: :entity, :dependent => :destroy
       has_many :tags, :through => :tags_entities
       attr_accessible :raw_tags
       attr_writer :raw_tags
@@ -227,8 +228,22 @@ module MixinEntity
     return true if self.version_id(affiliate, user) > 0
   end
 
+  def is_editable?(user)
+    return false if user.blank?
+    return true if self.user_id == user.id
+    return true if user.admin?
+    self.affiliate_join.each do |a|
+      return true if a.admin?(user, Membership::EDITOR)
+    end
+    return false
+  end
+
+  def highlighted?(affiliate)
+    return self.highlights.where(:affiliate_id => affiliate.id).count > 0
+  end
+
   def version_id(affiliate, user)
-    return self.current_version if user.present? && (self.user_id == user.id)
+    return self.current_version if self.is_editable?(user)
     affiliates = user.present? ? user.memberships.approved.map { |m| m.affiliate_id } : []
     affiliates << affiliate.id if affiliate.present?
     affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.method_name}") == Affiliate::ALL)

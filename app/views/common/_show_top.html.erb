@@ -1,0 +1,50 @@
+
+<% if @item.is_editable?(current_user) %>
+    <div class='admin_controls'>
+      <%= content_tag(:h3, current_user.id == @item.user_id ? 'This is your post' : 'Content Management') %>
+      <%= popup 'Edit this post', "#{@item.method_name}/edit", true %>
+      <%= popup 'Delete this post', "#{@item.method_name}/delete", true %>
+    </div>
+<% end %>
+<!-- Administrator links etc -->
+<%
+@item.affiliate_join.each do |m|
+   affiliate = Affiliate.find_by_id(m.affiliate_id)
+   if affiliate.admin?(current_user, Membership::EDITOR) %>
+        <% if m.approved? %>
+            <div class='admin_controls'>
+              <h3>Post management for <%= affiliate.name %></h3>
+              Post is currently approved -
+              <%= popup 'Revoke Approval', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
+              <% if m.affiliate_id > 0 %>
+                  <BR>
+                  <%= @item.highlighted?(affiliate) ? 'Post is highlighted - ' : '' %>
+                  <%= popup "#{@item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", "#{@item.method_name}/toggle_highlight", true, {id: @item.id, aid: m.affiliate_id} %>
+              <% end %>
+            </div>
+        <% else %>
+            <div class='admin_controls urgent'>
+              <h3>Post approval pending for <%= affiliate.name %></h3>
+              <BR>
+              <%= popup('Approve Request and Highlight', "#{@item.method_name}/approve", true, {id: @item.id, highlight: true, aid: m.affiliate_id}) if m.affiliate_id > 0 %>
+              <%= popup 'Approve Request', "#{@item.method_name}/approve", true, {id: @item.id, highlight: false, aid: m.affiliate_id} %>
+              <%= popup 'Reject Request', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+<%
+   if @item.affiliate_join.map { |a| a.affiliate_id }.include?(0)
+     current_user.memberships.approved.each do |m|
+       if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) %>
+         <div class='admin_controls'>
+         <h3>Post management for <%= m.affiliate.name %></h3>
+                Post moderation is completed by energyfolks.  Change your group settings to moderate all posts, or <a href='mailto:contact@energyfolks.com'>contact energyfolks</a> with
+                a specific inquiry about this post (please include the post type and id: <%= @item.method_name %> <%= @item.id %><BR>
+                <%= @item.highlighted?(m.affiliate) ? 'Post is highlighted - ' : '' %>
+                <%= popup "#{@item.highlighted?(m.affiliate) ? 'Unhighlight' : 'Highlight'} Post", "#{@item.method_name}/toggle_highlight", true, {id: @item.id, aid: m.affiliate_id} %>
+            </div>
+     <% end
+     end
+   end
+%>
