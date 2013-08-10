@@ -1,0 +1,29 @@
+<% if @item.present? %>
+    <% if current_user.blank? && !current_affiliate.show_details %>
+        <h1>Please login to view</h1>
+        <b>Post details are restricted to registered members.  Please create an account and login in order to access detailed content.</b>
+    <% else %>
+        <%
+           # Visibility control:
+           visible = @item.is_visible?(current_affiliate, current_user)
+        %>
+        <!-- Beginning of Profile -->
+        <% if visible %>
+            <%= render :partial => '/common/show_top' if current_user.present? %>
+            <h1><%= @item.name %></h1>
+            <%= image_tag(@item.version(current_affiliate, current_user).logo.url(:thumb_big), :align => 'right') if @item.version(current_affiliate, current_user).logo.present? %>
+            <%= content_tag(:div, @item.get(:employer, current_affiliate, current_user)) %>
+            <%= content_tag(:div, @item.get(:location, current_affiliate, current_user)) %>
+            <%= raw(@item.get(:html, current_affiliate, current_user)) %>
+            <%
+               # TODO: Expand the job profile to show relevant information
+            %>
+        <% else %>
+            <h1>Oops!</h1>
+            <b>This job's details are restricted, or this job has not yet been approved.</b>
+        <% end %>
+    <% end %>
+<% else %>
+    <h1>Oops!</h1>
+    <b>This job no longer exists.  The author may have deleted it.</b>
+<% end %>

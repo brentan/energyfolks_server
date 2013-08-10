@@ -25,6 +25,10 @@ module MixinEntityController
   def edit
   end
 
+  def toggle_highlight
+
+  end
+
   def update
     #Tag.update_tags(@item.raw_tags, @item)
   end

@@ -43,16 +43,21 @@
 <div class='form_entry'><%= f.text_field :url_blog %></div>
 
 <h1>Membership Settings</h1>
-<div class='form_label'>Group Visibility</div>
+<div class='form_label'>Group Visibility:</div>
 <div class='form_entry'>
   <label><%= f.radio_button :visible, true %> Listed on energyfolks.com and other energyfolks networks</label>
   <label><%= f.radio_button :visible, false %> Hidden and only found through your website</label>
 </div>
-<div class='form_label'>Group Type</div>
+<div class='form_label'>Group Type:</div>
 <div class='form_entry'>
   <label><%= f.radio_button :open, Affiliate::OPEN %> Anyone can join the group</label>
   <label><%= f.radio_button :open, Affiliate::MODERATED %> Anyone can request access to the group</label>
   <label><%= f.radio_button :open, Affiliate::INVITE_ONLY %> Group members must be invited</label>
+</div>
+<div class='form_label'>Post Details:</div>
+<div class='form_entry'>
+  <label><%= f.radio_button :show_details, true %> Logged out users can still view post details</label>
+  <label><%= f.radio_button :show_details, false %> Require users to login to view post details</label>
 </div>
 
 <h1>Default Email Subscriptions for new members:</h1>

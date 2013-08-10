@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20130809204436) do
     t.boolean  "bulletins",          :default => false
     t.integer  "event_radius",       :default => 50
     t.integer  "job_radius",         :default => 0
+    t.boolean  "show_details",       :default => true
   end
 
   create_table "affiliates_jobs", :force => true do |t|
@@ -96,6 +97,16 @@ ActiveRecord::Schema.define(:version => 20130809204436) do
   add_index "emails", ["entity_id"], :name => "index_emails_on_entity_id"
   add_index "emails", ["entity_type"], :name => "index_emails_on_entity_type"
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
+
+  create_table "highlights", :force => true do |t|
+    t.string  "entity_type"
+    t.integer "entity_id"
+    t.integer "affiliate_id"
+  end
+
+  add_index "highlights", ["affiliate_id"], :name => "index_highlights_on_affiliate_id"
+  add_index "highlights", ["entity_id"], :name => "index_highlights_on_entity_id"
+  add_index "highlights", ["entity_type"], :name => "index_highlights_on_entity_type"
 
   create_table "jobs", :force => true do |t|
     t.datetime "created_at",                       :null => false

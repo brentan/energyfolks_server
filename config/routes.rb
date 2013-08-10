@@ -68,6 +68,7 @@ EnergyfolksServer::Application.routes.draw do
         get "#{method}/force_resend"
         get "#{method}/email_open"
         get "#{method}/myposts"
+        get "#{method}/toggle_highlight"
       end
     }
   rescue

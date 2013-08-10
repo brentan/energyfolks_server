@@ -4,11 +4,13 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliates_jobs, :dependent => :destroy
   has_many :affiliates_jobs, :dependent => :destroy
   has_many :emails, as: :entity, :dependent => :destroy
+  has_many :highlights, :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_bulletins, :url_users, :url_blog,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_bulletins, :moderate_jobs, :moderate_calendar, :shared_secret, :cpanel_user, :cpanel_password,
-                  :send_digest, :radius, :logo, :weekly, :daily, :jobs, :events, :bulletins, :event_radius, :job_radius
+                  :send_digest, :radius, :logo, :weekly, :daily, :jobs, :events, :bulletins, :event_radius, :job_radius,
+                  :show_details
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
@@ -62,7 +64,7 @@ class Affiliate < ActiveRecord::Base
   def self.find_by_id(id)
     affiliate = super(id)
     if affiliate.blank?
-      affiliate = Affiliate.new(:name => 'Energyfolks', :url => 'https://www.energyfolks.com/', :location => 'Oakland, CA', :short_name => 'energyfolks')
+      affiliate = Affiliate.new(:name => 'Energyfolks', :url => 'https://www.energyfolks.com/', :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true)
     end
     return affiliate
   end
@@ -86,6 +88,7 @@ class Affiliate < ActiveRecord::Base
 
   def admin?(user, level = Membership::ADMINISTRATOR, entity = nil)
     return true if entity.present? && (level == Membership::CONTRIBUTOR) && (self.send("moderate_#{entity}") == NONE)
+    return true if self.id.blank? && user.admin?
     member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).where("admin_level >= #{level}").first()
     return member.present?
   end
