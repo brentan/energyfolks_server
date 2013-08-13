@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_for_iframe
   before_filter :find_aid
   before_filter :analytics
+  before_filter :set_timezone
   layout :choose_layout
 
   ENTITIES = [ User, Job ]
@@ -36,6 +37,11 @@ class ApplicationController < ActionController::Base
     @aid = 0
     @host = SITE_HOST #"http://dev.energyfolks.com:3000"
     @aid = params[:aid] if params[:aid].present?
+  end
+
+  def set_timezone
+    Time.zone = current_user.timezone if current_user.present?
+    Time.zone = current_affiliate.timezone
   end
 
   def choose_layout
@@ -82,7 +88,6 @@ class ApplicationController < ActionController::Base
 
 
 
-  private
   def render_404(exception)
     @not_found_path = exception.message
     respond_to do |format|

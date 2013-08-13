@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809204436) do
+ActiveRecord::Schema.define(:version => 20130812220200) do
 
   create_table "affiliates", :force => true do |t|
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.string   "name"
     t.string   "short_name"
     t.string   "email_name"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130809204436) do
     t.integer  "event_radius",       :default => 50
     t.integer  "job_radius",         :default => 0
     t.boolean  "show_details",       :default => true
+    t.string   "timezone",           :default => "Pacific Time (US & Canada)"
   end
 
   create_table "affiliates_jobs", :force => true do |t|
