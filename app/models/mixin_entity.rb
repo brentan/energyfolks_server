@@ -151,7 +151,14 @@ module MixinEntity
     if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
       all_current = self.affiliate_join.map{|a| a.affiliate_id}
       Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-        self.affiliate_join.build({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
+        self.affiliate_join.create({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
+        all_current << a.id unless all_current.include?(a.id)
+      end
+      # If current user is posting to 'all' but from a group that does not moderate these posts, approve immediately for this group
+      # If current user is posting to 'all' but is posting from a group that they are an admin for, immediately approve for this group
+      if (self.affiliate_id > 0) && self.affiliate.admin?(self.last_update, Membership::CONTRIBUTOR, self.method_name)
+        # Add group to affiliate_join list, next sections will adjust broadcast and approved_version based on current user rights
+        self.affiliate_join.create({:affiliate_id => self.affiliate_id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(self.affiliate_id)
       end
     end
     # Broadcast to admins for approval
@@ -193,8 +200,10 @@ module MixinEntity
     # This method takes some time...it is meant to be called by a 'delay' action, not directly
     self.affiliate_join.where(user_broadcast: false).where("approved_version > 0").each do |i|
       if i.affiliate_id == 0
+        # Find all users, minus users in groups that do their own super moderation
         recipients = User.select(:id).where(verified: true).all.map { |r| r.id }
         Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+          # TODO: Base this on PRIMARY affiliation, not any affiliation
           recipients = recipients - a.memberships.approved.map { |r| r.user_id }
         end
       else
@@ -251,19 +260,28 @@ module MixinEntity
     return v.present? ? v.approved_version : 0
   end
 
-  def version(affiliate, user)
-    id = self.version_id(affiliate, user)
+  def version(affiliate, user, version = 0)
+    id = version > 0 ? version : self.version_id(affiliate, user)
     return nil if id == 0
     return self.class.version_table.find_by_entity_id_and_version_number(self.id, id)
   end
 
   # This method is used instead of normal getters because some methods are version controlled, this takes care of it
-  def get(method, affiliate, user)
+  def get(method, affiliate, user, version = 0)
     if self.class::VERSION_CONTROLLED.include?(method)
-      v = self.version(affiliate, user)
+      v = self.version(affiliate, user, version)
       return v.present? ? v.send(method) : nil
     else
       return self.send(method)
+    end
+  end
+
+  # Will replace current item methods with current version data (or version set in version input)
+  def version_control(user, affiliate, version = 0)
+    # Will transform data into current version based on current user
+    self.class.olumn_names.each do |cn|
+      next if %w(id created_at updated_at).include?(cn)
+      self.send("#{cn}=",self.get(cn, affiliate, user, version))
     end
   end
 

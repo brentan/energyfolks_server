@@ -20,9 +20,11 @@ module MixinEntityController
 
   def show
     @item = model.find_by_id(params[:id])
+    @item.version_control(current_user, current_affiliate)
   end
 
   def edit
+    @item = model.find_by_id(params[:id])
   end
 
   def toggle_highlight
@@ -30,6 +32,7 @@ module MixinEntityController
   end
 
   def update
+    #is_editable?()
     #Tag.update_tags(@item.raw_tags, @item)
   end
 
@@ -46,7 +49,7 @@ module MixinEntityController
       render :action => "new"
     else
       Tag.update_tags(@item.raw_tags, @item)
-      render :action => "success"
+      redirect_to :action => "edit", :id => @item.id, :notice => "Your post was successful.  It is now awaiting approval by any moderated groups you submitted the post to."
     end
   end
 

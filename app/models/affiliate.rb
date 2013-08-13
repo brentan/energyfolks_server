@@ -10,7 +10,7 @@ class Affiliate < ActiveRecord::Base
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_bulletins, :moderate_jobs, :moderate_calendar, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :radius, :logo, :weekly, :daily, :jobs, :events, :bulletins, :event_radius, :job_radius,
-                  :show_details
+                  :show_details, :timezone
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
@@ -64,7 +64,7 @@ class Affiliate < ActiveRecord::Base
   def self.find_by_id(id)
     affiliate = super(id)
     if affiliate.blank?
-      affiliate = Affiliate.new(:name => 'Energyfolks', :url => 'https://www.energyfolks.com/', :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true)
+      affiliate = Affiliate.new(:name => 'Energyfolks', :url => 'https://www.energyfolks.com/', :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true, :timezone => 'Pacific Time (US & Canada)')
     end
     return affiliate
   end

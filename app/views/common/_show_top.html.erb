@@ -2,9 +2,12 @@
 <% if @item.is_editable?(current_user) %>
     <div class='admin_controls'>
       <%= content_tag(:h3, current_user.id == @item.user_id ? 'This is your post' : 'Content Management') %>
-      <%= popup 'Edit this post', "#{@item.method_name}/edit", true %>
-      <%= popup 'Delete this post', "#{@item.method_name}/delete", true %>
+      This post was submitted on <%= @item.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= current_user.id == @item.user_id ? 'you' : "#{@item.user.first_name} #{@item.user.last_name}"%>.
+      <!-- TODO: Last updated by -->
+      <%= popup 'Edit this post', "#{@item.method_name}/edit", true, {id: @item.id} %><BR>
+      <%= popup 'Delete this post', "#{@item.method_name}/delete", true, {id: @item.id} %>
     </div>
+    <!-- TODO: Version control, listing all versions, allowing them to be viewed, allowing post to be reverted -->
 <% end %>
 <!-- Administrator links etc -->
 <%

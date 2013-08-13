@@ -11,10 +11,10 @@
         <% if visible %>
             <%= render :partial => '/common/show_top' if current_user.present? %>
             <h1><%= @item.name %></h1>
-            <%= image_tag(@item.version(current_affiliate, current_user).logo.url(:thumb_big), :align => 'right') if @item.version(current_affiliate, current_user).logo.present? %>
-            <%= content_tag(:div, @item.get(:employer, current_affiliate, current_user)) %>
-            <%= content_tag(:div, @item.get(:location, current_affiliate, current_user)) %>
-            <%= raw(@item.get(:html, current_affiliate, current_user)) %>
+            <%= image_tag(@item.logo.url(:thumb_big), :align => 'right') if @item.logo.present? %>
+            <%= content_tag(:div, @item.employer) %>
+            <%= content_tag(:div, @item.location) %>
+            <%= raw(@item.html) %>
             <%
                # TODO: Expand the job profile to show relevant information
             %>
