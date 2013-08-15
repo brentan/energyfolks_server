@@ -20,7 +20,18 @@ module MixinEntityController
 
   def show
     @item = model.find_by_id(params[:id])
-    @item.version_control(current_user, current_affiliate)
+    if params[:version].present? && current_user.present? && @item.is_editable?(current_user)
+      @item.version_control(current_user, current_affiliate, params[:version])
+    else
+      @item.version_control(current_user, current_affiliate)
+    end
+  end
+
+  def restore
+    # Restore a previous version...must check what user this is OK for
+    # Case 1: User is owner.  Restore all to previous version, if any are approved at that level, mark broadcast as true
+    # Case 2: superadmin: Restore only affiliateid=0
+    # Case 3: group admin.  Restore only for that group
   end
 
   def edit
