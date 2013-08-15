@@ -62,6 +62,7 @@ EnergyfolksServer::Application.routes.draw do
         match "#{method}/:id/delete" => "#{method}#delete"
         get "#{method}/edit"
         get "#{method}/delete"
+        get "#{method}/restore"
         post "#{method}/delete"
         put "#{method}/update"
         get "#{method}/reject_or_remove"

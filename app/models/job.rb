@@ -2,7 +2,7 @@ class Job < ActiveRecord::Base
   has_many :affiliates, :through => :affiliates_jobs
   has_many :affiliates_jobs, :dependent => :destroy
   belongs_to :user
-  has_many :jobs_versions, :dependent => :destroy
+  has_many :versions, :foreign_key => 'job_id', :class_name => 'JobsVersion',:dependent => :destroy
 
   default_scope order('created_at DESC')
 

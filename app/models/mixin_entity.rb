@@ -260,6 +260,14 @@ module MixinEntity
     return v.present? ? v.approved_version : 0
   end
 
+  def last_updated_at(affiliate, user, version = 0)
+    version(affiliate, user, version).updated_at
+  end
+  def last_updater
+    user = User.find_by_id(self.last_updated_by)
+    return user.present? ? user : User.new(first_name: 'Unknown', last_name: 'user')
+  end
+
   def version(affiliate, user, version = 0)
     id = version > 0 ? version : self.version_id(affiliate, user)
     return nil if id == 0

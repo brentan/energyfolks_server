@@ -3,11 +3,18 @@
     <div class='admin_controls'>
       <%= content_tag(:h3, current_user.id == @item.user_id ? 'This is your post' : 'Content Management') %>
       This post was submitted on <%= @item.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= current_user.id == @item.user_id ? 'you' : "#{@item.user.first_name} #{@item.user.last_name}"%>.
+      This post was last updated on <%= @item.last_updated_at(current_affiliate, current_user).strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= current_user.id == @item.last_updated_by ? 'you' : "#{@item.last_updater.first_name} #{@item.last_updater.last_name}"%>.
       <!-- TODO: Last updated by -->
       <%= popup 'Edit this post', "#{@item.method_name}/edit", true, {id: @item.id} %><BR>
       <%= popup 'Delete this post', "#{@item.method_name}/delete", true, {id: @item.id} %>
     </div>
-    <!-- TODO: Version control, listing all versions, allowing them to be viewed, allowing post to be reverted -->
+    <% if @item.versions.length > 1 %>
+      <h4>Previous Versions</h4>
+      <% @item.versions.each do |v| %>
+        <% next if v.version_number == @item.current_version %>
+        - V<%= v.version_number %>: created <%= v.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>. <a href='<%= SITE_HOST %>/<%= @item.method_name %>/show?id=<%= @item.id %>&version=<%= v.version_number %>&aid=<%= current_affiliate.present? ? current_affiliate.id : 0 %>' target='_blank'>View</a> | <%= popup 'Restore', "#{@item.method_name}/restore", true, {id: @item.id, version: v.version_number} %><BR>
+      <% end %>
+    <% end %>
 <% end %>
 <!-- Administrator links etc -->
 <%
