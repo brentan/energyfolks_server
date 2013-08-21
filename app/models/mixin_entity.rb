@@ -76,6 +76,10 @@ module MixinEntity
     end
 
     def find_all_visible(user, affiliate = nil, page=0, per_page=20)
+      # Date range options
+      # Search term option
+      # highlighted only option
+      # geographic option
       affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
@@ -97,7 +101,9 @@ module MixinEntity
           next if %w(id created_at updated_at).include?(cn)
           item.send("#{cn}=",item.get(cn, affiliate, user))
         end
-        new_list << item.attributes
+        all_attributes = item.attributes
+        all_attributes[:highlighted] = item.highlighted?(affiliate)
+        new_list << all_attributes
       end
       return new_list
     end
@@ -248,7 +254,7 @@ module MixinEntity
   end
 
   def highlighted?(affiliate)
-    return self.highlights.where(:affiliate_id => affiliate.id).count > 0
+    return self.highlights.where(:affiliate_id => affiliate.id.present? ? affiliate.id : 0).count > 0
   end
 
   def version_id(affiliate, user)
@@ -287,7 +293,7 @@ module MixinEntity
   # Will replace current item methods with current version data (or version set in version input)
   def version_control(user, affiliate, version = 0)
     # Will transform data into current version based on current user
-    self.class.olumn_names.each do |cn|
+    self.class.column_names.each do |cn|
       next if %w(id created_at updated_at).include?(cn)
       self.send("#{cn}=",self.get(cn, affiliate, user, version))
     end
@@ -299,5 +305,66 @@ module MixinEntity
     total_approved = self.affiliate_join.where(:approved_version => self.current_version).count
     return true if total_approved > 0
     return false
+  end
+
+  # highlighting, approving, rejecting workflow
+  def toggle_highlight(current_user, affiliate)
+    if affiliate.id.present?
+      if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
+        if self.highlighted?(affiliate)
+          self.highlights.where(affiliate_id: affiliate.id).destroy
+          return "Highlight Removed"
+        else
+          Highlight.create({affiliate_id: affiliate.id, entity: self})
+          return "Highlight Added"
+        end
+      end
+    else
+      if current_user.present? && current_user.admin?
+        if self.highlighted?(affiliate)
+          self.highlights.where(affiliate_id: 0).destroy
+          return "Highlight Removed"
+        else
+          Highlight.create({affiliate_id: 0, entity: self})
+          return "Highlight Added"
+        end
+      end
+    end
+    return "You are not authorized here"
+  end
+
+  def approve(current_user, affiliate, highlight = false)
+    if affiliate.id.present?
+      if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
+        join_item = self.affiliate_join.where(affiliate_id: affiliate.id).first
+        return "Something went wrong" if join_item.blank?
+        join_item.approved_version = self.current_version
+        join_item.admin_version = self.current_version
+        join_item.awaiting_edit = false
+        join_item.approved_versions += ",#{self.current_version}"
+        join_item.save!
+        NotificationMailer.delay.item_approved(self, affiliate)
+        Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !item.highlighted?(affiliate)
+        self.reload
+        self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        return "This item has been approved"
+      end
+    else
+      if current_user.present? && current_user.admin?
+        join_item = self.affiliate_join.where(affiliate_id: 0).first
+        return "Something went wrong" if join_item.blank?
+        join_item.approved_version = self.current_version
+        join_item.admin_version = self.current_version
+        join_item.awaiting_edit = false
+        join_item.approved_versions += ",#{self.current_version}"
+        join_item.save!
+        NotificationMailer.delay.item_approved(self, affiliate)
+        Highlight.create({affiliate_id: 0, entity: self}) if highlight && !item.highlighted?(affiliate)
+        self.reload
+        self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        return "This item has been approved"
+      end
+    end
+    return "You are not authorized here"
   end
 end

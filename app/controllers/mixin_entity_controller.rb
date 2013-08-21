@@ -28,23 +28,76 @@ module MixinEntityController
   end
 
   def restore
+    @item = model.find_by_id(params[:id])
+    notice = "Not Authorized"
     # Restore a previous version...must check what user this is OK for
-    # Case 1: User is owner.  Restore all to previous version, if any are approved at that level, mark broadcast as true
-    # Case 2: superadmin: Restore only affiliateid=0
-    # Case 3: group admin.  Restore only for that group
+    if current_user.present?
+      if current_user.id == @item.user_id
+        # Case 1: User is owner.  Restore all to previous version
+        @item.current_version = params[:version]
+        @item.versions.where("version_number > ?",params[:version]).all.destroy
+        @item.affiliate_join.each do |j|
+          j.admin_version = params[:version]
+          approved = j.approved_versions.split(',').delete_if{|i| i > params[:version]}
+          j.approved_version = approved.max
+          j.awaiting_edit = false
+          j.broadcast = false
+          j.approved_versions = approved.join(",")
+          j.save
+        end
+        @item.save!
+        notice = 'Version has been reverted'
+      elsif current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)
+        # Case 2: Revert just for one group
+        join_item = @item.affiliate_join.where(affiliate_id: current_affiliate.id).first
+        if join_item.present?
+          join_item.approved_version = params[:version]
+          join_item.broadcast = true
+          join_item.approved_versions = join_item.approved_versions.split(',').delete_if{|i| i > params[:version]}.join(',')
+          join_item.save
+          notice = 'Version has been reverted'
+        end
+      elsif current_user.admin?
+        # Case 3: Revert just for the main group
+        join_item = @item.affiliate_join.where(affiliate_id: 0).first
+        if join_item.present?
+          join_item.approved_version = params[:version]
+          join_item.broadcast = true
+          join_item.approved_versions = join_item.approved_versions.split(',').delete_if{|i| i > params[:version]}.join(',')
+          join_item.save
+          notice = 'Version has been reverted'
+        end
+      end
+    end
+    redirect_to :action => "edit", :id => @item.id, :notice => notice
   end
 
   def edit
     @item = model.find_by_id(params[:id])
   end
 
-  def toggle_highlight
-
-  end
-
   def update
-    #is_editable?()
-    #Tag.update_tags(@item.raw_tags, @item)
+    @item = model.find_by_id(params[:id])
+    if current_user.present? && @item.is_editable?(current_user)
+      if(@item.update_attributes(params[@item.entity_name.downcase]))
+        Tag.update_tags(@item.raw_tags, @item)
+        if current_user.id == @item.user_id
+          @item.affiliate_join.where(awaiting_edit: true).each do |r|
+            r.awaiting_edit = false
+            r.broadcast = false
+            r.save!
+          end
+          @item.reload
+          @item.broadcast
+        end
+        flash[:notice]="Changes have been saved"
+      else
+        flash[:alert]="There are errors in your update.  Please correct and resubmit."
+      end
+    else
+      flash[:alert]="You are not authorized to edit this item."
+    end
+    render :action => :edit
   end
 
   def new
@@ -64,13 +117,33 @@ module MixinEntityController
     end
   end
 
-  def delete
-  end
-
   def approve
+    @item = model.find_by_id(params[:id])
+    affiliate = Affiliate.find_by_id(params[:aid])
+    response = @item.approve(current_user, affiliate, params[:highlight] == "true")
+    redirect_to :action => "edit", :id => @item.id, :notice => response
   end
 
   def reject_or_remove
+    @affiliate = Affiliate.find(params[:aid])
+    @item = model.find_by_id(params[:id])
+    join_item = @item.affiliate_join.where(affiliate_id: @affiliate.id.present? ? @affiliate.id : 0).first
+    if join_item.present? && params[:reason].present?
+      if join_item.approved_version == self.current_version
+        NotificationMailer.delay.item_removed(@item, params[:reason], @affiliate)
+        join_item.approved_version = 0
+        join_item.approved_versions ='0'
+        notice = "Item removed"
+      else
+        NotificationMailer.delay.item_rejected(@item, params[:reason], @affiliate)
+        notice = "Item Rejected"
+      end
+      join_item.awaiting_edit = true
+      join_item.save
+    else
+      notice = "Not Authorized"
+    end
+    redirect_to :action => "edit", :id => @item.id, :notice => notice
   end
 
   def moderation
