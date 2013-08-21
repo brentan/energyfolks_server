@@ -112,6 +112,12 @@ EnergyFolks.hide_popup = function() {
         EnergyFolks.$('#energyfolks_popup_greyout').remove();
     }
 }
+/*
+ * Create ajax links
+ */
+EnergyFolks.ajax_link = function(text, command, parameters) {
+    return "<a href='#' class='EnergyFolks_ajax' data-command='" + command + "' data-params='" + EnergyFolks.$.param(parameters) + "'>" + text + "</a>"
+}
 
 /*
  * Helper functions: Not meant to be called directly
@@ -152,6 +158,16 @@ EnergyFolks.$(function() {
             EnergyFolks.iframe_popup(self.attr('data-command'),self.attr('data-params'));
         else
             EnergyFolks.remote_popup(self.attr('data-command'),self.attr('data-params'));
+        return false;
+    });
+    EnergyFolks.$('body').on('click','.EnergyFolks_popup_confirm', function() {
+        var self = EnergyFolks.$(this);
+        if(confirm(self.attr('data-message'))) {
+            if(self.attr('data-iframe') == 'true')
+                EnergyFolks.iframe_popup(self.attr('data-command'),self.attr('data-params'));
+            else
+                EnergyFolks.remote_popup(self.attr('data-command'),self.attr('data-params'));
+        }
         return false;
     });
     EnergyFolks.$('body').on('click','#energyfolks_popup_close img', EnergyFolks.hide_popup);

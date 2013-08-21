@@ -38,7 +38,15 @@ module ApplicationHelper
     return html
   end
 
-  def popup(text, command, iframe, params = {})
-    link_to text, '#', class: 'EnergyFolks_popup', data: {command: command, iframe: iframe, params: params.to_query}
+  def popup(text, command, iframe, params = {}, message = nil)
+    if message.nil?
+      link_to text, '#', class: 'EnergyFolks_popup', data: {command: command, iframe: iframe, params: params.to_query}
+    else
+      link_to text, '#', class: 'EnergyFolks_popup_confirm', data: {message: message, command: command, iframe: iframe, params: params.to_query}
+    end
+  end
+
+  def ajax_link(text, command, params, delete=false)
+    link_to text, '#', class: (delete ? 'EnergyFolks_delete' : 'EnergyFolks_ajax'), data: {command: command, params: params.to_query}
   end
 end

@@ -57,6 +57,30 @@ class AjaxController < ApplicationController
     render :json => tag.to_json
   end
 
+  def toggle_highlight
+    item = params[:model].constantize.find_by_id(params[:id])
+    affiliate = Affiliate.find_by_id(params[:aid])
+    response = item.toggle_highlight(current_user, affiliate)
+    render_ajax({notice: response, element_id: params[:element_id], remove_item:0, new_item: ajax_link("#{item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {id: item.id, aid: params[:aid]})})
+  end
+
+  def delete
+    item = params[:model].constantize.find_by_id(params[:id])
+    if current_user.present? && ((current_user.id == item.user_id) || current_user.admin?)
+      item.destroy
+      render_ajax({notice: 'Item has been deleted', element_id: params[:element_id], new_item: '', remove_item: params[:id]})
+    else
+      render_ajax({notice: 'Not authorized!', element_id: params[:element_id], new_item: 'ERROR', remove_item: 0})
+    end
+  end
+
+  def approve
+    item = params[:model].constantize.find_by_id(params[:id])
+    affiliate = Affiliate.find_by_id(params[:aid])
+    response = item.approve(current_user, affiliate, params[:highlight] == "true")
+    render_ajax({notice: response, element_id: params[:element_id], new_item: '', remove_item: item.id})
+  end
+
   private
   def render_ajax(output = nil)
     if output.blank?

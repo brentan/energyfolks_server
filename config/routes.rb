@@ -59,11 +59,8 @@ EnergyfolksServer::Application.routes.draw do
         get "#{method}/new"
         post "#{method}/create"
         match "#{method}/:id/edit" => "#{method}#edit"
-        match "#{method}/:id/delete" => "#{method}#delete"
         get "#{method}/edit"
-        get "#{method}/delete"
         get "#{method}/restore"
-        post "#{method}/delete"
         put "#{method}/update"
         get "#{method}/reject_or_remove"
         post "#{method}/reject_or_remove"
@@ -72,7 +69,6 @@ EnergyfolksServer::Application.routes.draw do
         get "#{method}/force_resend"
         get "#{method}/email_open"
         get "#{method}/myposts"
-        get "#{method}/toggle_highlight"
       end
     }
   rescue

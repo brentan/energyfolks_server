@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130812220200) do
+ActiveRecord::Schema.define(:version => 20130821210320) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                   :null => false
@@ -110,8 +110,8 @@ ActiveRecord::Schema.define(:version => 20130812220200) do
   add_index "highlights", ["entity_type"], :name => "index_highlights_on_entity_type"
 
   create_table "jobs", :force => true do |t|
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.date     "expire"
     t.string   "location"
     t.float    "latitude"
@@ -129,6 +129,8 @@ ActiveRecord::Schema.define(:version => 20130812220200) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "last_updated_by"
+    t.boolean  "awaiting_edit",     :default => true
+    t.string   "approved_versions", :default => "0"
   end
 
   create_table "jobs_versions", :force => true do |t|
