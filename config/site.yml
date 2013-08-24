@@ -1,0 +1,74 @@
+# This contains all the site specific information (outside of database.yml) that should not be checked into version control.
+# It is read in by environment.rb.
+
+#
+# It is utilized to control all config options outside of database.yml, and must contain the following fields:
+#
+
+##########################
+### SITE SPECIFIC
+##########################
+site_settings:
+  domain: 'energyfolks.com'
+urls:
+  production: 'http://server.energyfolks.com'
+  local: 'http://dev.energyfolks.com:3000'
+
+##########################
+### Geocoder
+##########################
+geocode:
+  google_key: 'xxxxxxx'
+  yahoo_key: 'REPLACE_WITH_YOUR_YAHOO_KEY'
+
+##########################
+### EMAIL
+##########################
+
+# For getting automatic emails when an error occurs
+# exception_recipients: List of all emails that should receive the notification
+# sender_address: Who the notification email will be from
+# email_prefix: What each email should be prefixed with
+exception_notifier:
+  exception_recipients: "brentan@energyfolks.com"
+  sender_address: '"Application Error" <brentan@energyfolks.com>'
+  email_prefix: "[energyfolks] "
+
+# For setting up email - this example uses sendgrid
+smtp_settings:
+  address: "smtp.sendgrid.net"
+  port: 587
+  user_name: 'xxxxxxx'
+  domain: 'energyfolks.com'
+  password: 'xxxxxxx'
+  authentication: :plain
+  return_path: "energyfolks.com"
+  enable_starttls_auto: true
+  xsmtpapi: "energyfolks"
+  from: 'Energyfolks <contact@energyfolks.com>'
+
+email_recipients:
+  sign_up: "brentan@energyfolks.com"
+
+# Intercepting email delivery - primarily for test purposes
+# deliver_email of 'true' means it will send email as expect.
+# deliver_email of 'false' means it will send to the specified email list.
+mail_intercept:
+  deliver_email: false
+  email_list: 'brentan@energyfolks.com'
+  white_list_domains: ['energyfolks.com']
+
+##########################
+### Paperclip
+##########################
+
+paperclip:
+  image_magic_path: '/usr/local/bin'
+
+##########################
+### Skin
+##########################
+
+skin:
+  title_prefix: 'DEV: '
+  edge: true
