@@ -26,6 +26,7 @@ gem 'mysql2'
 
 gem 'capistrano'
 gem 'capistrano-ec2group'
+gem 'nokogiri'
 
 
 # Gems used only for assets and not required
