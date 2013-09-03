@@ -10,7 +10,7 @@
         <!-- Beginning of Profile -->
         <% if visible %>
             <%= render :partial => '/common/show_top' if current_user.present? %>
-            <%= render :partial => 'inner_show' %>
+            <%= render :partial => '/jobs/inner_show' %>
         <% else %>
             <h1>Oops!</h1>
             <b>This job's details are restricted, or this job has not yet been approved.</b>
