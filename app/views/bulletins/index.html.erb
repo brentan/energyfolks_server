@@ -1,0 +1,8 @@
+<% if current_user.present? %>
+    <h1><%= link_to 'Create New Bulletin', '#', :class => 'EnergyFolks_popup', :data => {command: 'bulletins/new', iframe: 'true' } %></h1>
+<% end %>
+<h1>Energyfolks Bulletins</h1>
+<script language="javascript">
+    <%= "EnergyFolks.id = 3" %>
+    EnergyFolks.showPage({source: 'bulletins', format: 'list'});
+</script>

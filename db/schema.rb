@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903154745) do
+ActiveRecord::Schema.define(:version => 20130903183119) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                   :null => false
@@ -58,6 +58,32 @@ ActiveRecord::Schema.define(:version => 20130903154745) do
     t.string   "timezone",           :default => "Pacific Time (US & Canada)"
   end
 
+  create_table "affiliates_bulletins", :force => true do |t|
+    t.integer "bulletin_id"
+    t.integer "affiliate_id"
+    t.integer "approved_version",  :default => 0
+    t.integer "admin_version",     :default => 0
+    t.boolean "broadcast",         :default => false
+    t.boolean "user_broadcast",    :default => false
+    t.boolean "awaiting_edit",     :default => true
+    t.string  "approved_versions", :default => "0"
+  end
+
+  add_index "affiliates_bulletins", ["bulletin_id"], :name => "index_affiliates_bulletins_on_bulletin_id"
+
+  create_table "affiliates_events", :force => true do |t|
+    t.integer "event_id"
+    t.integer "affiliate_id"
+    t.integer "approved_version",  :default => 0
+    t.integer "admin_version",     :default => 0
+    t.boolean "broadcast",         :default => false
+    t.boolean "user_broadcast",    :default => false
+    t.boolean "awaiting_edit",     :default => true
+    t.string  "approved_versions", :default => "0"
+  end
+
+  add_index "affiliates_events", ["event_id"], :name => "index_affiliates_events_on_event_id"
+
   create_table "affiliates_jobs", :force => true do |t|
     t.integer "job_id"
     t.integer "affiliate_id"
@@ -70,6 +96,37 @@ ActiveRecord::Schema.define(:version => 20130903154745) do
   end
 
   add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
+
+  create_table "bulletins", :force => true do |t|
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "current_version",         :default => 0
+    t.string   "name"
+    t.integer  "last_updated_by"
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  create_table "bulletins_versions", :force => true do |t|
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "entity_id"
+    t.integer  "version_number"
+    t.string   "name"
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "bulletins_versions", ["entity_id"], :name => "index_bulletins_versions_on_entity_id"
+  add_index "bulletins_versions", ["version_number"], :name => "index_bulletins_versions_on_version_number"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -100,6 +157,51 @@ ActiveRecord::Schema.define(:version => 20130903154745) do
   add_index "emails", ["entity_id"], :name => "index_emails_on_entity_id"
   add_index "emails", ["entity_type"], :name => "index_emails_on_entity_type"
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
+
+  create_table "events", :force => true do |t|
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.datetime "start"
+    t.datetime "end"
+    t.string   "location"
+    t.string   "location2"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "current_version",   :default => 0
+    t.string   "name"
+    t.string   "host"
+    t.integer  "last_updated_by"
+    t.text     "html"
+    t.text     "synopsis"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  create_table "events_versions", :force => true do |t|
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "entity_id"
+    t.integer  "version_number"
+    t.string   "name"
+    t.string   "host"
+    t.datetime "start"
+    t.datetime "end"
+    t.text     "html"
+    t.text     "synopsis"
+    t.string   "location"
+    t.string   "location2"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  add_index "events_versions", ["entity_id"], :name => "index_events_versions_on_entity_id"
+  add_index "events_versions", ["version_number"], :name => "index_events_versions_on_version_number"
 
   create_table "highlights", :force => true do |t|
     t.string  "entity_type"

@@ -1,0 +1,101 @@
+<div class='form'>
+  <%= nested_form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
+      <%= raw(iframe_form) %>
+      <% @item.affiliate_join << @item.class.join_table.new({affiliate_id: current_affiliate.id, approved_version: 1, admin_version: 1}) if current_affiliate.id.present? && (@item.affiliate_join.length == 0) %>
+      <% if !new %>
+        <input type=hidden name='id' value=<%= @item.id %>>
+      <% end %>
+      <div id='ef_carousel'>
+        <div class="viewport">
+          <ul class="overview">
+            <li class='slide'>
+              <h1><%= new ? 'Post an Event' : 'Edit Event Post' %></h1>
+              <%= raw(show_errors(@item)) %>
+
+              <div class='form_label'>Event Title</div>
+              <div class='form_entry'><%= f.text_field :name %></div>
+
+              <div class='form_label'>Start</div>
+              <div class='form_entry'><%= f.text_field :start %></div>
+
+              <div class='form_label'>End</div>
+              <div class='form_entry'><%= f.text_field :end %></div>
+
+              <div class='form_label'>Event Host</div>
+              <div class='form_entry'><%= f.text_field :host %></div>
+
+              <div class='form_label'>Location Address</div>
+              <div class='form_entry'><%= f.text_field :location %>
+                <div class='explain'>Used to geolocate.  Please do not include room numbers or specific details.</div>
+              </div>
+
+              <div class='form_label'>Building and Room Number</div>
+              <div class='form_entry'><%= f.text_field :location2 %>
+                <div class='explain'>Include any other specific location information here.</div>
+              </div>
+
+              <div class='form_label'>Logo</div>
+              <div class='form_entry'>
+                <%= f.file_field :logo %>
+              </div>
+            </li>
+            <li class='slide'>
+              <div class='form_label'>Description</div>
+              <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
+
+              <div class='form_label'>Add Tags</div>
+              <div class='form_entry'>
+                <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
+                <div class='explain'>
+                  Enter tags such as 'solar' or 'entrepreneurship' that describe this post
+                </div>
+              </div>
+
+              <div class='form_label'>Synopsis</div>
+              <div class='form_entry'>
+                <%= f.text_area :synopsis %>
+                <div class='explain'>120 characters or less.  Used in our digest emails.</div>
+              </div>
+
+              <%= tinymce %>
+            </li>
+            <li class='slide'>
+              <% if current_affiliate.id.present? %>
+                  <div class='center'>
+                    <h1><%= current_affiliate.name %> is an energyfolks network</h1>
+                    <table align=center border=0 cellpadding=1 cellspacing=0>
+                      <tr>
+                        <td>
+                          <img src='<%= current_affiliate.logo.url %>' style='max-width:290px;border:1px solid black;'>
+                        </td><td>
+                        <%= image_tag('enfolksarrow.png') %>
+                      </td>
+                      </tr>
+                    </table>
+                    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
+                      Your login with <%= current_affiliate.name %> also allows you to incrase the reach of your post by sending your post to other affiliates.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
+                  </div>
+              <% else %>
+                  <div class='center'>
+                    <h1>Select energyfolks networks</h1>
+                    <table align=center border=0 cellpadding=1 cellspacing=0>
+                      <tr>
+                        <td>
+                          <%= image_tag('noimage.png') %>
+                        </td><td>
+                        <%= image_tag('enfolksarrow.png') %>
+                      </td>
+                      </tr>
+                    </table>
+                    <i>Energyfolks is a network of networks connecting energy interested students and professionals around the globe. Select the affiliates that you would like to receive this post.</i>
+                  </div>
+              <% end %>
+              <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
+              <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'event', join_table: 'affiliates_events'} %>
+            </li>
+          </ul>
+          <%= prev_next_buttons %>
+        </div>
+      </div>
+  <% end %>
+</div>

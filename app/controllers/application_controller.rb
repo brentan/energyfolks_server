@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_timezone
   layout :choose_layout
 
-  ENTITIES = [ User, Job ]
+  ENTITIES = [ User, Job, Event, Bulletin ]
 
 
   #
