@@ -46,6 +46,28 @@ class AjaxController < ApplicationController
     render_ajax( {data: data} )
   end
 
+  def events
+    if params[:moderation] == "true"
+      data = Event.needing_moderation(current_user, current_affiliate)
+    elsif params[:my_posts] == "true"
+      data = Event.get_mine(current_user)
+    else
+      data = Event.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    end
+    render_ajax( {data: data} )
+  end
+
+  def bulletins
+    if params[:moderation] == "true"
+      data = Bulletin.needing_moderation(current_user, current_affiliate)
+    elsif params[:my_posts] == "true"
+      data = Bulletin.get_mine(current_user)
+    else
+      data = Bulletin.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+    end
+    render_ajax( {data: data} )
+  end
+
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
     output = render_to_string :partial => "#{@item.method_name}/show"

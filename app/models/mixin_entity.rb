@@ -44,6 +44,7 @@ module MixinEntity
       after_validation :geocode
     end
     def acts_as_moderatable
+      belongs_to :affiliate
       after_save :broadcast
     end
     def acts_as_taggable
@@ -230,7 +231,7 @@ module MixinEntity
             next if u.subscription.send("#{self.class.name}_radius") > 0
           end
         end
-        next if Email.find_by_entity_type_and_entity_id_and_user_id(self.class.name, self.id, user_id).count > 0
+        next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
         e = Email.new(user_id: user_id)
         e.entity = self
         e.save!

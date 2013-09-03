@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :emails, :dependent => :destroy
   has_many :jobs, :dependent => :destroy
+  has_many :events, :dependent => :destroy
+  has_many :bulletins, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
   scope :verified, where(:verified => true)
   include MixinEntity

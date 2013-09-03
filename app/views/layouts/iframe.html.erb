@@ -19,7 +19,9 @@
     <script language="javascript">
       EnergyFolks.$(function() {
           EnergyFolks.parent_url = '<%= raw(@url) %>';
-          window.parent.location=EnergyFolks.parent_url+'#iframe_'+(EnergyFolks.$(document).height()+50);
+          var window_height = EnergyFolks.$(document).height()+50;
+          if(window_height < EnergyFolks.minheight) window_height = EnergyFolks.minheight;
+          window.parent.location=EnergyFolks.parent_url+'#iframe_'+window_height;
       });
     </script>
 <% end %>

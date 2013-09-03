@@ -1,0 +1,9 @@
+
+<h1><%= @item.name %></h1>
+<%= image_tag(@item.logo.url(:thumb_big), :align => 'right') if @item.logo.present? %>
+<%= content_tag(:div, @item.employer) %>
+<%= content_tag(:div, @item.location) %>
+<%= raw(@item.html) %>
+<%
+   # TODO: Expand the job profile to show relevant information
+%>

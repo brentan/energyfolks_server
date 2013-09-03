@@ -10,14 +10,7 @@
         <!-- Beginning of Profile -->
         <% if visible %>
             <%= render :partial => '/common/show_top' if current_user.present? %>
-            <h1><%= @item.name %></h1>
-            <%= image_tag(@item.logo.url(:thumb_big), :align => 'right') if @item.logo.present? %>
-            <%= content_tag(:div, @item.host) %>
-            <%= content_tag(:div, @item.location) %>
-            <%= raw(@item.html) %>
-            <%
-               # TODO: Expand the job profile to show relevant information
-            %>
+            <%= render :partial => 'inner_show' %>
         <% else %>
             <h1>Oops!</h1>
             <b>This event's details are restricted, or this event has not yet been approved.</b>

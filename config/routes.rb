@@ -48,6 +48,8 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/approve"
 
   match "jobs" => "jobs#index"
+  match "events" => "events#index"
+  match "bulletins" => "bulletins#index"
   # ENTITY ROUTES
   resources :users, only: ['show']
 
