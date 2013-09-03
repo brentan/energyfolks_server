@@ -82,11 +82,13 @@ class Affiliate < ActiveRecord::Base
   end
 
   def member?(user)
+    return false if user.id.blank?
     member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).first()
     return member.present?
   end
 
   def admin?(user, level = Membership::ADMINISTRATOR, entity = nil)
+    return false if user.id.blank?
     return true if entity.present? && (level == Membership::CONTRIBUTOR) && (self.send("moderate_#{entity}") == NONE)
     return true if self.id.blank? && user.admin?
     member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).where("admin_level >= #{level}").first()

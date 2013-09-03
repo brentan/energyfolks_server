@@ -7,6 +7,7 @@
 //= require energyfolks/jquery_1.9.1
 //= require energyfolks/initialize
 //= require energyfolks/hash_change
+//= require energyfolks/listeners
 //= require energyfolks/global
 //= require energyfolks/accounts
 //= require energyfolks/data_display

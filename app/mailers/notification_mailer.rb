@@ -30,6 +30,7 @@ class NotificationMailer < ActionMailer::Base
 
   def item_rejected(item, reason, affiliate)
     @item = item
+    @user = @item.user
     @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
     @reason = reason
     @affiliate = affiliate
@@ -38,6 +39,7 @@ class NotificationMailer < ActionMailer::Base
 
   def item_approved(item, affiliate)
     @item = item
+    @user = @item.user
     @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
     @affiliate = affiliate
     mail(to: @user.email, from: 'donotreply@energyfolks.com', subject: "Your #{item.entity_name} #{item.entity_type} has been approved")

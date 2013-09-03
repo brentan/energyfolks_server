@@ -25,6 +25,9 @@
         margin: 12px -8px 0px 0px;
       }
     }
+    #energyfolks_popup_back {
+      display:none;
+    }
     #energyfolks_popup_content {
       background-color: white;
       margin: 0px;
@@ -38,6 +41,25 @@
         display: inline;
         border-width: 0px;
       }
+    }
+  }
+}
+#energyfolks_popup.iframe {
+  #energyfolks_popup_wrapper {
+    width: 100%;
+    padding: 0px;
+    margin: 0px 0px;
+    #energyfolks_popup_close {
+      display:none;
+    }
+    #energyfolks_popup_back {
+      display:block;
+      text-align: center;
+      background-color: #ffffff;
+      border-bottom: 1px solid #aaaaaa;
+    }
+    #energyfolks_popup_content {
+      padding: 0px;
     }
   }
 }

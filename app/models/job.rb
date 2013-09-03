@@ -11,7 +11,7 @@ class Job < ActiveRecord::Base
   TEMPORARY = 3
   ONE_TIME = 4
 
-  VERSION_CONTROLLED = [:name, :employer, :html, :job_type, :logo_file_name, :logo_content_type, :logo_file_size, :logo_updated_at, :how_to_apply]
+  VERSION_CONTROLLED = %w(name employer html job_type logo_file_name logo_content_type logo_file_size logo_updated_at how_to_apply)
   include MixinEntity
 
   acts_as_locatable
@@ -31,5 +31,5 @@ class Job < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  attr_accessible :name, :employer, :location, :html, :how_to_apply, :job_type, :logo, :affiliates_jobs_attributes
+  attr_accessible :name, :employer, :location, :html, :how_to_apply, :job_type, :logo, :affiliates_jobs_attributes, :last_updated_by
 end
