@@ -2,34 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130903185742_rename_moderate_calendar_to_events.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/bulletins/_inner_show.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/events/_inner_show.html.erb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jobs/_inner_show.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/affiliates/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/affiliates/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/bulletins/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/bulletins/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/bulletins/_show.html.erb" afterPath="$PROJECT_DIR$/app/views/bulletins/_show.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/_show.html.erb" afterPath="$PROJECT_DIR$/app/views/events/_show.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jobs/_show.html.erb" afterPath="$PROJECT_DIR$/app/views/jobs/_show.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/common/_show_top.html.erb" afterPath="$PROJECT_DIR$/app/views/common/_show_top.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/affiliate.rb" afterPath="$PROJECT_DIR$/app/models/affiliate.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/bulletin.rb" afterPath="$PROJECT_DIR$/app/models/bulletin.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/notification_mailer/entity.html.erb" afterPath="$PROJECT_DIR$/app/views/notification_mailer/entity.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378234654892" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236609512" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378234662226" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378231859965" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -146,7 +128,7 @@
     <file path="/whenever-elasticbeanstalk.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377304851760" ignored="false" />
     <file path="/20130903154745_fix_jobs_columns.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378223300051" ignored="false" />
     <file path="/listeners.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378223968014" ignored="false" />
-    <file path="/_show_top.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232501369" ignored="false" />
+    <file path="/_show_top.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236765821" ignored="false" />
     <file path="/events_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232632709" ignored="false" />
     <file path="/bulletins_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232649855" ignored="false" />
     <file path="/bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233598130" ignored="false" />
@@ -156,7 +138,7 @@
     <file path="/affiliates_bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233042540" ignored="false" />
     <file path="/affiliates_event.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233047580" ignored="false" />
     <file path="/20130903183119_create_events_and_bulletins_tables.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233524062" ignored="false" />
-    <file path="/_show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236507678" ignored="false" />
+    <file path="/_show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236672778" ignored="false" />
     <file path="/20130903185742_rename_moderate_calendar_to_events.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235304056" ignored="false" />
     <file path="/entity.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236480858" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -212,12 +194,12 @@
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
         <option value="$PROJECT_DIR$/app/views/bulletins/_inner_show.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/bulletins/_show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/notification_mailer/entity.html.erb" />
         <option value="$PROJECT_DIR$/app/views/jobs/_inner_show.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/jobs/_show.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/events/_show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/events/_inner_show.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/events/_show.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/bulletins/_show.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/jobs/_show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/common/_show_top.html.erb" />
       </list>
     </option>
@@ -293,46 +275,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -814,7 +756,11 @@
       <created>1378234453983</created>
       <updated>1378234453983</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Finish adding Events and Bulletins">
+      <created>1378236613330</created>
+      <updated>1378236613330</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -903,7 +849,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create Events and Bulletins" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish adding Events and Bulletins" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -941,6 +887,7 @@
     <MESSAGE value="Fix jobs" />
     <MESSAGE value="Finish mixin entity stuff, should be working.  More testing needed to be sure." />
     <MESSAGE value="Create Events and Bulletins" />
+    <MESSAGE value="Finish adding Events and Bulletins" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1004,27 +951,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="50" selection-start="606" selection-end="606" vertical-scroll-proportion="0.28346458">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/bulletins/_show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="91" selection-start="555" selection-end="606" vertical-scroll-proportion="0.25075987">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/jobs/_show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="83" selection-start="555" selection-end="606" vertical-scroll-proportion="0.25075987">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/mailers/notification_mailer.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1053,9 +979,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/events/_show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="44" selection-start="600" selection-end="600" vertical-scroll-proportion="0.27906978">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/bulletins/_show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="47" selection-start="603" selection-end="603" vertical-scroll-proportion="0.27906978">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/_show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="42" selection-start="598" selection-end="598" vertical-scroll-proportion="0.27906978">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/common/_show_top.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="135" selection-start="5937" selection-end="5937" vertical-scroll-proportion="0.6744186">
+        <state line="70" column="74" selection-start="5687" selection-end="5687" vertical-scroll-proportion="0.6511628">
           <folding />
         </state>
       </provider>

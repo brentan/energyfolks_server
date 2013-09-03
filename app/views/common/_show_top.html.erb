@@ -68,7 +68,7 @@
            if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) %>
              <div class='admin_controls'>
              <h3>Post management for <%= m.affiliate.name %></h3>
-                    Post moderation is completed by energyfolks.  Change your group settings to moderate all posts, or <a href='mailto:contact@energyfolks.com'>contact energyfolks</a> with
+                    Post was sent to all energyfolks users, and therefore moderation is completed by energyfolks.  Change your group settings to moderate all posts, or <a href='mailto:contact@energyfolks.com'>contact energyfolks</a> with
                     a specific inquiry about this post (please include the post type [<%= @item.method_name %>] and id [<%= @item.id %>]) <BR>
                     <%= @item.highlighted?(m.affiliate) ? 'Post is highlighted - ' : '' %>
                     <%= ajax_link "#{@item.highlighted?(m.affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {model: @item.entity_name, id: @item.id, aid: m.affiliate_id} %>
