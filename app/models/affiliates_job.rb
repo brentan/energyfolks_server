@@ -1,7 +1,7 @@
 class AffiliatesJob < ActiveRecord::Base
   belongs_to :affiliate
   belongs_to :job
-  scope :waiting, where("admin_version > approved_version")
+  scope :waiting, where("(admin_version > approved_version) AND awaiting_edit = 0")
 
   attr_accessible :job_id, :affiliate_id, :approved_version, :admin_version, :broadcast, :user_broadcast
 

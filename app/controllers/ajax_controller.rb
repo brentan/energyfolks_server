@@ -61,7 +61,8 @@ class AjaxController < ApplicationController
     item = params[:model].constantize.find_by_id(params[:id])
     affiliate = Affiliate.find_by_id(params[:aid])
     response = item.toggle_highlight(current_user, affiliate)
-    render_ajax({notice: response, element_id: params[:element_id], remove_item:0, new_item: ajax_link("#{item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {id: item.id, aid: params[:aid]})})
+    output = render_to_string :partial => "common/ajax_link", :locals => {text: "#{item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", command: "toggle_highlight", params: {id: item.id, aid: params[:aid], model: params[:model]}, delete: false}
+    render_ajax({notice: response, element_id: params[:element_id], remove_item:0, new_item: output})
   end
 
   def delete

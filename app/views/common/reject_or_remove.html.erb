@@ -1,0 +1,8 @@
+<%= form_tag "/#{@item.method_name}/reject_or_remove", method: :post do %>
+    <h2><%= join_item.present? && (join_item.approved_version == @item.current_version) ? "Remove" : "Reject" %> <%= @item.name %></h2>
+    Please provide a message explaining this action:<BR>
+    <input type=hidden name='id' value=<%= @item.id %>>
+    <input type=hidden name='aid' value=<%= aid %>>
+    <textarea name='reason' rows=4 cols=50></textarea><BR>
+    <input type=submit>
+<% end %>

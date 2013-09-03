@@ -13,8 +13,9 @@
 <%= yield %>
 <script language="javascript">
     EnergyFolks.checkCookies = false;
+    EnergyFolks.iframe = true;
 </script>
-<% if params['iframe'].present? && (params['iframe'] == '1') %>
+<% if params['iframe'].present? && (params['iframe'] == '1') && @url.present? %>
     <script language="javascript">
       EnergyFolks.$(function() {
           EnergyFolks.parent_url = '<%= raw(@url) %>';
@@ -22,6 +23,7 @@
       });
     </script>
 <% end %>
+<%= raw(notices(params[:notice], params[:alert])) %>
 <%= raw(notices(notice, alert)) %>
 
 </body>

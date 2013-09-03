@@ -21,7 +21,7 @@ module MixinEntityController
   def show
     @item = model.find_by_id(params[:id])
     if params[:version].present? && current_user.present? && @item.is_editable?(current_user)
-      @item.version_control(current_user, current_affiliate, params[:version])
+      @item.version_control(current_user, current_affiliate, params[:version].to_i)
     else
       @item.version_control(current_user, current_affiliate)
     end
@@ -34,8 +34,9 @@ module MixinEntityController
     if current_user.present?
       if current_user.id == @item.user_id
         # Case 1: User is owner.  Restore all to previous version
-        @item.current_version = params[:version]
-        @item.versions.where("version_number > ?",params[:version]).all.destroy
+        @item.versions.where("version_number > ?",params[:version]).each do |i|
+          i.destroy
+        end
         @item.affiliate_join.each do |j|
           j.admin_version = params[:version]
           approved = j.approved_versions.split(',').delete_if{|i| i > params[:version]}
@@ -45,7 +46,11 @@ module MixinEntityController
           j.approved_versions = approved.join(",")
           j.save
         end
-        @item.save!
+        @item.update_column(:current_version, params[:version])
+        @item.class.column_names.each do |cn|
+          next if %w(id created_at updated_at).include?(cn)
+          @item.update_column(cn,@item.get(cn, current_affiliate, current_user, params[:version].to_i))
+        end
         notice = 'Version has been reverted'
       elsif current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)
         # Case 2: Revert just for one group
@@ -69,7 +74,7 @@ module MixinEntityController
         end
       end
     end
-    redirect_to :action => "edit", :id => @item.id, :notice => notice
+    redirect_to :action => 'show', :id => @item.id, :iframe => '1', :current_url => params[:current_url], :notice => notice
   end
 
   def edit
@@ -79,6 +84,7 @@ module MixinEntityController
   def update
     @item = model.find_by_id(params[:id])
     if current_user.present? && @item.is_editable?(current_user)
+      params[@item.entity_name.downcase][:last_updated_by] = current_user.id
       if(@item.update_attributes(params[@item.entity_name.downcase]))
         Tag.update_tags(@item.raw_tags, @item)
         if current_user.id == @item.user_id
@@ -88,16 +94,18 @@ module MixinEntityController
             r.save!
           end
           @item.reload
-          @item.broadcast
+          @item.broadcast(false)
         end
         flash[:notice]="Changes have been saved"
+        render :action => :show
       else
         flash[:alert]="There are errors in your update.  Please correct and resubmit."
+        render :action => :edit
       end
     else
       flash[:alert]="You are not authorized to edit this item."
+      render :action => :show
     end
-    render :action => :edit
   end
 
   def new
@@ -121,7 +129,7 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     affiliate = Affiliate.find_by_id(params[:aid])
     response = @item.approve(current_user, affiliate, params[:highlight] == "true")
-    redirect_to :action => "edit", :id => @item.id, :notice => response
+    redirect_to :action => 'show', :id => @item.id, :iframe => '1', :current_url => params[:current_url], :notice => response
   end
 
   def reject_or_remove
@@ -129,7 +137,7 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     join_item = @item.affiliate_join.where(affiliate_id: @affiliate.id.present? ? @affiliate.id : 0).first
     if join_item.present? && params[:reason].present?
-      if join_item.approved_version == self.current_version
+      if join_item.approved_version == @item.current_version
         NotificationMailer.delay.item_removed(@item, params[:reason], @affiliate)
         join_item.approved_version = 0
         join_item.approved_versions ='0'
@@ -140,10 +148,10 @@ module MixinEntityController
       end
       join_item.awaiting_edit = true
       join_item.save
+      redirect_to :action => 'show', :id => @item.id, :iframe_next => true, :notice => notice
     else
-      notice = "Not Authorized"
+      render 'common/reject_or_remove', locals: {join_item: join_item, aid: params[:aid]}
     end
-    redirect_to :action => "edit", :id => @item.id, :notice => notice
   end
 
   def moderation

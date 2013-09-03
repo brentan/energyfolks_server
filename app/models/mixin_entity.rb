@@ -125,33 +125,31 @@ module MixinEntity
     return rt
   end
 
-  def last_update
-    User.find_by_id(self.last_updated_by)
-  end
-
-  def broadcast
-    # Version control: Decide if we need to increment versions or if we can just save
-    if self.increment_version?
-      v = self.class.version_table.new
-      self.class::VERSION_CONTROLLED.each do |item|
-        v.send("#{item}=", self.send(item))
+  def broadcast(version_control =  true)
+    if version_control
+      # Version control: Decide if we need to increment versions or if we can just save
+      if self.increment_version?
+        v = self.class.version_table.new
+        self.class::VERSION_CONTROLLED.each do |item|
+          v.send("#{item}=", self.send(item))
+        end
+        version = self.current_version + 1
+        self.update_column(:current_version, version)
+        v.version_number = version
+        v.entity_id = self.id
+        v.save!
+        self.affiliate_join.each do |i|
+          i.broadcast = false if i.admin_version == i.approved_version
+          i.admin_version = version
+          i.save(:validate => false)
+        end
+      else
+        v = self.class.version_table.where(:entity_id => self.id, :version_number => self.current_version).first
+        self.class::VERSION_CONTROLLED.each do |item|
+          v.send("#{item}=", self.send(item))
+        end
+        v.save!
       end
-      version = self.current_version + 1
-      self.update_column(:current_version, version)
-      v.version_number = version
-      v.entity_id = self.id
-      v.save!
-      self.affiliate_join.each do |i|
-        i.broadcast = false if i.admin_version == i.approved_version
-        i.admin_version = version
-        i.save(:validate => false)
-      end
-    else
-      v = self.class.version_table.where(:element_id => self.id, :version_number => self.current_version).first
-      self.class::VERSION_CONTROLLED.each do |item|
-        v.send("#{item}=", self.send(item))
-      end
-      v.save!
     end
     # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
     if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
@@ -176,6 +174,8 @@ module MixinEntity
         if i.affiliate.admin?(self.last_update, Membership::CONTRIBUTOR, self.method_name)
           i.broadcast = true
           i.approved_version = i.admin_version
+          i.awaiting_edit = false
+          i.approved_versions += ",#{i.admin_version}"
           i.save(:validate => false)
           call_user_broadcast = true
           next
@@ -187,6 +187,8 @@ module MixinEntity
         if self.last_update.admin?
           i.broadcast = true
           i.approved_version = i.admin_version
+          i.awaiting_edit = false
+          i.approved_versions += ",#{i.admin_version}"
           i.save(:validate => false)
           call_user_broadcast = true
           next
@@ -260,17 +262,21 @@ module MixinEntity
   def version_id(affiliate, user)
     return self.current_version if self.is_editable?(user)
     affiliates = user.present? ? user.memberships.approved.map { |m| m.affiliate_id } : []
-    affiliates << affiliate.id if affiliate.present?
+    affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
     affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.method_name}") == Affiliate::ALL)
-    v = self.affiliate_join.where("affiliate_id IN (#{affiliates.join(", ")})").order(:approved_version).last
+    v = self.affiliate_join.where("affiliate_id IN (#{affiliates.compact.join(", ")})").order(:approved_version).last
     return v.present? ? v.approved_version : 0
   end
 
   def last_updated_at(affiliate, user, version = 0)
     version(affiliate, user, version).updated_at
   end
-  def last_updater
+  def last_update
     user = User.find_by_id(self.last_updated_by)
+    return user.present? ? user : User.new(first_name: 'Unknown', last_name: 'user')
+  end
+  def user
+    user = User.find_by_id(self.user_id)
     return user.present? ? user : User.new(first_name: 'Unknown', last_name: 'user')
   end
 
@@ -312,7 +318,7 @@ module MixinEntity
     if affiliate.id.present?
       if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
         if self.highlighted?(affiliate)
-          self.highlights.where(affiliate_id: affiliate.id).destroy
+          self.highlights.where(affiliate_id: affiliate.id).first.destroy
           return "Highlight Removed"
         else
           Highlight.create({affiliate_id: affiliate.id, entity: self})
@@ -322,7 +328,7 @@ module MixinEntity
     else
       if current_user.present? && current_user.admin?
         if self.highlighted?(affiliate)
-          self.highlights.where(affiliate_id: 0).destroy
+          self.highlights.where(affiliate_id: 0).first.destroy
           return "Highlight Removed"
         else
           Highlight.create({affiliate_id: 0, entity: self})
@@ -344,10 +350,10 @@ module MixinEntity
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
         NotificationMailer.delay.item_approved(self, affiliate)
-        Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !item.highlighted?(affiliate)
+        Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
-        return "This item has been approved"
+        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
       end
     else
       if current_user.present? && current_user.admin?
@@ -359,10 +365,10 @@ module MixinEntity
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
         NotificationMailer.delay.item_approved(self, affiliate)
-        Highlight.create({affiliate_id: 0, entity: self}) if highlight && !item.highlighted?(affiliate)
+        Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
-        return "This item has been approved"
+        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
       end
     end
     return "You are not authorized here"
