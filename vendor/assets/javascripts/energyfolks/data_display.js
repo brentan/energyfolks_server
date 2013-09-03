@@ -110,6 +110,16 @@ EnergyFolks.itemDetailHTML = function(item) {
             output += '<img src="'+item.logo_url+'" align=left>';
         output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Job'});
         output += "</div>";
+    } else if(EnergyFolks.source == 'events') {
+        output += "<div>";
+        if(item.logo)
+            output += '<img src="'+item.logo_url+'" align=left>';
+        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Event'});
+        output += "</div>";
+    } else if(EnergyFolks.source == 'bulletins') {
+        output += "<div>";
+        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Bulletin'});
+        output += "</div>";
     }
     return output;
 };

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903183119) do
+ActiveRecord::Schema.define(:version => 20130903185742) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                   :null => false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20130903183119) do
     t.float    "longitude"
     t.integer  "moderate_bulletins", :default => 2
     t.integer  "moderate_jobs",      :default => 2
-    t.integer  "moderate_calendar",  :default => 2
+    t.integer  "moderate_events",    :default => 2
     t.string   "shared_secret"
     t.string   "cpanel_user"
     t.string   "cpanel_password"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20130903183119) do
     t.integer "admin_version",     :default => 0
     t.boolean "broadcast",         :default => false
     t.boolean "user_broadcast",    :default => false
-    t.boolean "awaiting_edit",     :default => true
+    t.boolean "awaiting_edit",     :default => false
     t.string  "approved_versions", :default => "0"
   end
 
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20130903183119) do
     t.integer "admin_version",     :default => 0
     t.boolean "broadcast",         :default => false
     t.boolean "user_broadcast",    :default => false
-    t.boolean "awaiting_edit",     :default => true
+    t.boolean "awaiting_edit",     :default => false
     t.string  "approved_versions", :default => "0"
   end
 
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20130903183119) do
     t.integer "admin_version",     :default => 0
     t.boolean "broadcast",         :default => false
     t.boolean "user_broadcast",    :default => false
-    t.boolean "awaiting_edit",     :default => true
+    t.boolean "awaiting_edit",     :default => false
     t.string  "approved_versions", :default => "0"
   end
 

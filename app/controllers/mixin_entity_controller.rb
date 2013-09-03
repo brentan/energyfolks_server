@@ -121,7 +121,7 @@ module MixinEntityController
       render :action => "new"
     else
       Tag.update_tags(@item.raw_tags, @item)
-      redirect_to :action => "edit", :id => @item.id, :notice => "Your post was successful.  It is now awaiting approval by any moderated groups you submitted the post to."
+      redirect_to :action => "show", :iframe_next => true, :id => @item.id, :notice => "Your post was successful.  Moderation status is found below."
     end
   end
 
@@ -155,12 +155,12 @@ module MixinEntityController
   end
 
   def moderation
-    @code = "EnergyFolks.get_moderated = true;EnergyFolks.showPage({source: '#{model.new.method_name}', format: 'list'});"
+    @code = "EnergyFolks.minheight = 550;EnergyFolks.get_moderated = true;EnergyFolks.showPage({source: '#{model.new.method_name}', format: 'list'});"
     render '/common/load_js'
   end
 
   def myposts
-    @code = "EnergyFolks.get_my_posts = true;EnergyFolks.showPage({source: '#{model.new.method_name}', format: 'list'});"
+    @code = "EnergyFolks.minheight = 550;EnergyFolks.get_my_posts = true;EnergyFolks.showPage({source: '#{model.new.method_name}', format: 'list'});"
     render '/common/load_js'
   end
 

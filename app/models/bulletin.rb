@@ -6,7 +6,7 @@ class Bulletin < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-  VERSION_CONTROLLED = %w(name html attachment_type attachment_file_name attachment_content_type attachment_file_size attachment_updated_at)
+  VERSION_CONTROLLED = %w(name html attachment_file_name attachment_content_type attachment_file_size attachment_updated_at)
   include MixinEntity
 
   acts_as_moderatable

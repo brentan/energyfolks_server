@@ -72,9 +72,9 @@
 <h1>Moderation Settings</h1>
 <div class='form_label'>Events Moderation Settings:</div>
 <div class='form_entry'>
-  <label><%= f.radio_button :moderate_calendar, Affiliate::NONE %> No moderation, anyone can post</label>
-  <label><%= f.radio_button :moderate_calendar, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
-  <label><%= f.radio_button :moderate_calendar, Affiliate::ALL %> moderate all posts</label>
+  <label><%= f.radio_button :moderate_events, Affiliate::NONE %> No moderation, anyone can post</label>
+  <label><%= f.radio_button :moderate_events, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
+  <label><%= f.radio_button :moderate_events, Affiliate::ALL %> moderate all posts</label>
 </div>
 <div class='form_label'>Jobs Moderation Settings:</div>
 <div class='form_entry'>
