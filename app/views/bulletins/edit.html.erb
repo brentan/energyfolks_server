@@ -1,0 +1,9 @@
+<% if current_user.present? && @item.is_editable?(current_user) %>
+    <%= render :partial => 'form', :locals => {new: false} %>
+<% elsif current_user.present? %>
+    <h1>Access Denied</h1>
+    You do not have the necessary permissions to edit this post.
+<% else %>
+    <h1>Please login</h1>
+    In order to post a new bulletin, please login to your account, or create a new account.
+<% end %>
