@@ -62,7 +62,7 @@
             <%= f.password_field :password_confirmation %>
           </div>
         <h1>Networks</h1>
-              <%= render partial: '/common/affiliate_picker', locals: {current: @user.memberships, table: 'user', join_table: 'memberships'} %>
+              <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
         <h1>Email Subscriptions</h1>
           <%= f.fields_for :subscription do |s| %>
             <%= render :partial => '/common/subscriptions', locals: {f: s} %>

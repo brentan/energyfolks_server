@@ -7,13 +7,15 @@ class User < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :bulletins, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
+  belongs_to :affiliate
   scope :verified, where(:verified => true)
   include MixinEntity
   default_scope order(:last_name, :first_name)
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization, :radius, :memberships_attributes, :subscription_attributes
+                  :resume_visibility, :position, :organization, :radius, :memberships_attributes, :subscription_attributes,
+                  :affiliate_id
   attr_accessor :password, :password_old
 
   validates_presence_of :first_name

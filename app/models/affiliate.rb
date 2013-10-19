@@ -32,6 +32,8 @@ class Affiliate < ActiveRecord::Base
   geocoded_by :location
   after_validation :geocode
 
+  before_destroy :remove_all_primary_references
+
   # 'open' codes
   OPEN = 1
   MODERATED = 2
@@ -94,6 +96,14 @@ class Affiliate < ActiveRecord::Base
     return true if self.id.blank? && user.admin?
     member = Membership.where({user_id: user.id, affiliate_id: self.id, approved: true}).where("admin_level >= #{level}").first()
     return member.present?
+  end
+
+  def remove_all_primary_references
+    # TODO: Add email notice to user informing them that thier primary group has left EF
+    User.find_by_affiliate_id(self.id).all.each do |u|
+      u.affiliate_id = 0
+      u.save(:validate => false)
+    end
   end
 
 end
