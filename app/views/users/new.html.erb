@@ -94,7 +94,7 @@
                   </div>
               <% end %>
               <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
-              <%= render partial: '/common/affiliate_picker', locals: {current: @user.memberships, table: 'user', join_table: 'memberships'} %>
+              <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
             </li>
             <li class='slide'>
               <h1>The legal stuff</h1>

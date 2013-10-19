@@ -1,4 +1,5 @@
 $(function() {
+    var count = 0;
     var createField = function(table, join_table, jid, tid, id, reason, item) {
         if(reason != 'false') {
             var current_reason = item.find(".current_reason").html();
@@ -24,6 +25,7 @@ $(function() {
             if(reason != 'false')
                 fields.find('#' + table + '_' + join_table + '_attributes_' + jid + '_reason').val(current_reason);
         }
+        count+=1;
     };
     var removeField  = function(table, join_table, jid, tid, id) {
         if($("#ef_affiliate_"+jid).length == 0) return;
@@ -33,6 +35,29 @@ $(function() {
         } else {
             fields.remove();
             $("#" + table + '_' + join_table + '_attributes_' + jid + '_reason_div').remove();
+        }
+        count-=1;
+    };
+    var PrimaryPicker = function() {
+        if(count == 0) {
+            $('#primary_affiliate').html('');
+            $('#user_affiliate_id').val(0);
+        } else if(count == 1) {
+            $('#primary_affiliate').html('');
+            $("#EnergyFolksAffiliatePicker").find("div.selected").each(function() {
+                $('#user_affiliate_id').val($(this).attr('data-id')*1);
+            });
+        } else {
+            var current_id = $('#user_affiliate_id').val();
+            var html = '<h2>Primary Affiliation</h2>';
+            html += "<select name='primary' id='primary_id'>";
+            $("#EnergyFolksAffiliatePicker").find("div.selected").each(function() {
+                var id = $(this).attr('data-id')*1
+                html += "<option value=" + id + (current_id == id ? ' selected' : '') + ">" + $(this).attr('data-name') + "</option>";
+            });
+            html += "</select>";
+            $('#primary_affiliate').html(html);
+            $('#user_affiliate_id').val($('#primary_id').val());
         }
     };
     var ToggleItem = function(item) {
@@ -93,12 +118,16 @@ $(function() {
     $("#EnergyFolksAffiliatePicker #send_to_all_yes").on("click", function() {
         SelectAll();
     });
+    $("body").on('change', '#primary_id', function() {
+        $('#user_affiliate_id').val($('#primary_id').val());
+    });
     $("#EnergyFolksAffiliatePicker #send_to_all_no").on("click", function() {
         SelectNone();
     });
     // Attach to the elements created by the affiliate picker
     $("#EnergyFolksAffiliatePicker div.affiliate").on("click", function() {
         ToggleItem($(this));
+        PrimaryPicker();
         return false;
     });
     // Run at load to check off all items currently marked as 'current'
@@ -111,6 +140,7 @@ $(function() {
         var tid = item.attr('data-tid')*1;
         createField(table, join_table, jid, tid, id, 'false', item);
     });
+    PrimaryPicker();
     if($("#send_to_all_yes").first().is(':checked')) {
         SelectAll();
     }
