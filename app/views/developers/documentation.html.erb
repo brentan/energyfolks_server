@@ -1,0 +1,670 @@
+<h1 style='line-height:24px;color:white;background-color:darkred;text-align:center;padding:20px;'>THIS DOCUMENTATION IS OUT OF DATE AND NO LONGER VALID! IT IS FOR EF PLATFORM V1.0!</h1>
+
+<h2>energyfolks integration documentation</h2>
+<p>Please also remember to check out the <a href='examples.php'>integration examples</a>.  All examples include fully commented code, and
+most are less than 3 lines of total code to implement.</p>
+<h4>WordPress Plugin</h4>
+<p>Looking for the energyfolks wordpress plugin?  <a href='wordpress.php'>Find the documentation here</a>.  The wordpress plugin integrates energyfolks and eliminates the need to directly call the javascript functions on this page (advanced users can still directly utilize the javascript functions found here).</p>
+
+<h4>contents</h4>
+    <ul>
+        <li><a href='#onload'>Handling Body OnLoad Events</a>
+        <li><a href='#css'>Styling the EnergyFolks Library</a>
+        <li><a href='#library'>The EnergyFolks Javascript Library</a>
+        <ul>
+            <li><a href='#object'>The EnergyFolks Object</a>
+            <li><a href='#objectvars'>Public Properties</a>
+            <li><a href='#objectmethod'>Public Methods</a>
+        </ul>
+        <li><a href='#widgets'>The EnergyFolksWidgets Javascript Library</a>
+        <ul>
+            <li><a href='#widgetsvars'>Public Properties</a>
+            <li><a href='#widgetsmethod'>Public Methods</a>
+        </ul>
+        <li><a href='#comment'>The EnergyFolksComments Javascript Library</a>
+        <ul>
+            <li><a href='#commentmethod'>Functions</a>
+        </ul>
+        <li><a href='#login'>External Logins to energyfolks</a>
+        <ul>
+            <li><a href='#loginjs'>The EnFolksLogin Javascript Library</a>
+            <ul>
+                <li><a href='#loginjsobject'>The EnFolksLogin Object</a>
+                <li><a href='#loginjsvars'>Public Properties</a>
+                <li><a href='#loginjsmethod'>Public Methods</a>
+            </ul>
+            <li><a href='#loginphp'>The EnergyFolks PHP Library</a>
+            <ul>
+                <li><a href='#loginphpobject'>The EnergyFolks Class</a>
+                <li><a href='#loginphpmethod'>Public Methods</a>
+            </ul>
+        </ul>
+    </ul>
+
+
+
+
+      <h2><a name="onload"></a>Handling Body OnLoad Events</h2>
+        <p>The EnergyFolks library uses various onload events to create objects and elements needed by the library throughout the page.  If you use any body onload events on your page, these may overwrite the onload functions set by the EnergyFolks library.  Custom functions can be appended to the onload event tag using the function below:</p>
+    <table summary="class Map - Constructor" width="90%">
+          <tbody>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnFolks_Add_Onload( input_function:function )</code></td>
+                <td>Appends the function <code>input_function</code> to the end of the onload event.  This function should be set within a script tag, not using 'onload=function();' in the body tag (this willl overwrite all onload functions previously set).  <code>input_function</code> is an anonymous function.<BR><BR>example: <BR><code>EnFolks_Add_Onload(function() { alert('hello world'); });</code></td>
+            </tr>
+          </tbody>
+      </table>
+
+
+      <h2><a name="css"></a>Styling the EnergyFolks library</h2>
+        <p><b><i>Important: You are highly encouraged to include a CSS stylesheet on your pages to correctly style energyfolks content.  A default sheet can be loaded directly in your <Code>head</Code> section from <a href='https://scripts.energyfolks.com/FolksStyle.css'>https://scripts.energyfolks.com/FolksStyle.css</a></i></b></p>
+        <p>The EnergyFolks library uses inline-styles throughout its many displays to obtain a desired look (by setting element positioning, padding, and other options).  Colors, font choices, and other styles are usually not set inline, and flow from a set of CSS styles.  All of your pages that show any energyfolks content need to load a css stlysheet for proper display, and we recommend our default stylesheet hosted at <a href='https://scripts.energyfolks.com/FolksStyle.css'>https://scripts.energyfolks.com/FolksStyle.css</a>.  Custom stylesheets can be loaded instead as well (and there is a method in the EnergyFolks library to ensure the library does not overwrite your custom styles), and the default stylesheet can be used as a template for your custom CSS file.  If you use a custom sheet, it is still recommended that you load the FolksStyle.css file from our servers in your head section <i>before</i> loading your custom file.  This will ensure that any future styles added to the platform reach your users, and any customizations you have in your files will take precedence over the default styles if you load your custom file after the default file on your page.</p>
+
+      <h2><a name="library"></a>
+      The EnergyFolks Javascript Library</h2>
+        <p>The EnergyFolks library is available for download or inclusion into your site at: <a href='https://scripts.energyfolks.com/javascript/EnergyFolks.js'>https://scripts.energyfolks.com/javascript/EnergyFolks.js</a>.  We recommend loading the library directly from energyfolks servers (instead of storing a copy locally on your server) as any bug fixes or updates will then automatically flow to your userbase.  For proper display, be sure to include either the default energyfolks css file (<a href='#css'>described above</a>) or your own custom file.</a></p>
+        <h3><a name="object"></a>Constructor</h3>
+        <table summary="class Map - Constructor" width="90%">
+          <tbody>
+            <tr>
+              <th>Constructor</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnergyFolks( data_type:string)</code></td>
+                <td>Creates a new EnergyFolks object for data type <code>data_type</code>.  <code>data_type</code> is a string with the following possible values:
+                    <ul>
+                            <li><code>calendar-agenda</code>: Events Calendar in agenda view
+                            <li><code>calendar-weekly</code>: Events Calendar in weekly view
+                            <li><code>calendar-monthly</code>: Events Calendar in monthly view
+                            <li><code>calendar</code>: Events Calendar in the last selected user view (stored via cookies).
+                                Defaults to monthly
+                            <li><code>jobs</code>: The jobs database
+                            <li><code>users</code>: the membership database
+                            <li><code>blog</code>: the blog database (other group submitted blogs)
+                            <li><code>bulletins</code>: the bulletins database (default: forum view)
+                            <li><code>bulletins-stream</code>: the bulletins database using a 'stream' format (similar in nature to a facebook feed)
+                            <li><code>bulletins-forum</code>: the bulletins database using a traditional 'forum' style view
+                            <li><code>bulletins-long</code>: the bulletins database (long format view, similar to a blog)
+                    </ul>
+                    Note that only one EnergyFolks object should be created per page (with the exception of widget objects explained below) as only a single data_view can exist on a particular page.
+</td>
+              </tr>
+          </tbody>
+        </table>
+
+        <h3><a name="objectvars"></a>Properties</h3>
+        <table summary="class Map - Properties" width="90%">
+          <tbody>
+            <tr>
+              <th>Properties</th>
+                  <th>Type</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>default_color</code></td>
+                <td><code>string</code></td>
+                <td>A hexadecimal color code representing the color scheme to be used.  Defaults to <code>26313B</code> (dark bluish-grey).  If an affiliateID is set, this will be set to the affiliate color set in the energyfolks database.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>type</code></td>
+                <td><code>string</code></td>
+                <td>String representing the data-type to be displayed</td>
+              </tr>
+              <tr class="odd">
+                <td><code>data_loaded</code></td>
+                <td><code>boolean</code></td>
+                <td>Flag representing whether data from server has been loaded yet via AJAX.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>logged</code></td>
+                <td><code>boolean</code></td>
+                <td>Flag representing whether the current user is logged in to energyfolks.  Note that this is set when the data is received from the server, so any function monitoring this value should wait for <code>data_loaded</code> to be <code>true</code>.  If more immediate determination of user state is needed, consider using the EnergyFolksLogin.js library described in detail further down this page.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>full_name</code></td>
+                <td><code>string</code></td>
+                <td>Full name of logged in user, if user is currently logged in</td>
+              </tr>
+              <tr class="odd">
+                <td><code>userid</code></td>
+                <td><code>number</code></td>
+                <td>ID value associated with the current user, if logged</td>
+              </tr>
+              <tr class="odd">
+                <td><code>affiliateid</code></td>
+                <td><code>string</code></td>
+                <td>The ID of the affiliate organization to use.  If your affiliate account has partial or full content moderation enabled, this parameter will ensure that only posts approved for display on your site are delivered.  The ID is also used for header and footer content on the 'new post' pages (defaults to using energyfolks headers and footers).</td>
+              </tr>
+              <tr class="odd">
+                <td><code>LocalLoginURL</code></td>
+                <td><code>string</code></td>
+                <td>The local URL for a login page that utilizes the energyfolkslogin library.  When set, all links provided for unlogged users to 'login' will forward to this URL, otherwise they will forward to a login page on energyfolks.com (https://www.energyfolks.com/accounts/Login).</td>
+              </tr>
+          </tbody>
+        </table>
+        <h3><a name="objectmethod"></a>Methods</h3>
+        <table summary="class Map - Methods" width="90%">
+          <tbody>
+            <tr>
+              <th>Methods</th>
+                  <th>Return&nbsp;Value</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>ShowSearchBar()</code></td>
+                <td><code>none</code></td>
+                <td>If you wish to show the search-bar on a site, run this function at the location on the site that you wish to have the searchbar appear.</td>
+              </tr><tr class="odd">
+                <td><code>Initialize( div_name:string)</code></td>
+                <td><code>none</code></td>
+                <td>Creates code necessary to display views and calls AJAX functions to retrieve data.  Input is a <code>string</code> representing the id of the container element holding the main view of your page.  When 'detail' views are shown, this div is used to determine page width, so it often also includes the searchbar (if there is one shown).  This function MUST be called within the container element, as it outputs the 'results' div for you and adds it to the DOM.</td>
+              </tr><tr class="odd">
+                <td><code>DisableFixedSearchBar()</code></td>
+                <td><code>none</code></td>
+                <td>By default, the searchbar (if shown) will become fixed to the screen when the user scrolls the page.  Run this function during pageload to disable this behavior.</td>
+              </tr><tr class="odd">
+                <td><code>RegisterCustomCSS()</code></td>
+                <td><code>none</code></td>
+                <td>Informs the library that you are using a custom CSS file to style your pages (instead of the default CSS file at <a href='https://www.energyfolks.com/FolksStyle.css'>https://www.energyfolks.com/FolksStyle.css</a>).  This will stop the library from overwriting some of your custom styles.</td>
+              </tr><tr class="odd">
+                <td><code>SetRegion( region_id:number)</code></td>
+                <td><code>none</code></td>
+                <td>Changes the region to display data from.  Default is the viewing user's region (user is prompted if no region is set), but this function overrides this behavior.  Input is a <code>number</code> representing the region id, which can be found at <a href='https://www.energyfolks.com/welcome/ShowRegions'>https://www.energyfolks.com/welcome/ShowRegions</a>  </td>
+              </tr><tr class="odd">
+                <td><code>RestrictToAffiliate( [affiliate_id:number])</code></td>
+                <td><code>none</code></td>
+                <td>Valid for all data_type, this function will restrict the data display to users who are affiliated with this affiliate network or posts originating from this affiliate group.  Optional input is a <code>number</code> representing the ID for the desired affililate.  Affiliate IDs can be found by visiting the affiliate detail page on energyfolks.com and looking in the URL, which will be of the form energyfolks.com/partner/detail/[ID].  If not set, the affiliateID set using <code>setAffiliate</code> will be used.<BR><BR>Note that for views of <Code>data_type</code> 'users', this function will do nothing if the affiliate chosen is a closed, hidden group.  </td>
+              </tr><tr class="odd">
+                <td><code>RestrictToHighlighted( [affiliate_id:number])</code></td>
+                <td><code>none</code></td>
+                <td>Valid for all data_type except 'users', this function will restrict the data display to posts originating 'highlighted' by the affiliate groups admins.  Optional input is a <code>number</code> representing the ID for the desired affililate.  Affiliate IDs can be found by visiting the affiliate detail page on energyfolks.com and looking in the URL, which will be of the form energyfolks.com/partner/detail/[ID].  If not set, the affiliateID set using <code>setAffiliate</code> will be used.</td>
+              </tr><tr class="odd">
+                <td><code>SetAffiliate( id:number)</code></td>
+                <td><code>none</code></td>
+                <td>Sets the affiliate group ID.  If your affiliate account has partial or full external content controls enabled, setting this parameter will ensure that only posts that you have approved for display on your site are delivered.  The ID is also used to draw the header and footer on the 'add new post' pages.  If not used, then the energyfolks headers will be used on these pages.  Input is a <code>number</code> representing the ID for the desired affiliate.  Affiliate IDs can be found by visiting the affiliate detail page on energyfolks.com and looking in the URL, which will be of the form energyfolks.com/partner/detail/[ID].</td>
+              </tr><tr class="odd">
+                <td><code>HideWarning()</code></td>
+                <td><code>none</code></td>
+                <td>By default, energyfolks views will show a small warning message at the top of the view if the user is logged out, warning them that content restricted to logged in users is hidden from view.  If an affiliate ID is set, the warning will also warn that posts specific to the affiliate are hidden if the user is not logged in as a member of that affiliate group.  Execute this method before <code>initialize</code> in order to hide these warnings.</td>
+              </tr><tr class="odd">
+                <td><code>SetColor( color:string)</code></td>
+                <td><code>none</code></td>
+                <td>Will set the color to use as the base of the display color scheme.  Input is a <code>string</code> representing a hexadecimal color code representing the default color scheme to be used.  This color is often used on the page as a background color with white text overlay, so a dark color should be used.  If the <code>SetAffiliate()</code> function is used, <code>SetColor()</code> will be run and the color set to the affiliate color chosen in the affiliate control panel.</td>
+              </tr><tr class="odd">
+              <td><code>RestrictToThread( id:number)</code></td>
+                <td><code>none</code></td>
+                <td>Valid for data_type "bulletin" and "jobs", this will restrict the view to posts in the chosen thread or region.  To find the id, visit the jobs page or bulletins page (in forum view) and click on the thread of choice.  In the URL, the hash should be update with the thread ID.</td>
+              </tr><tr class="odd">
+                <td><code>AnnounceOnly()</code></td>
+                <td><code>none</code></td>
+                <td>Shortcut for RestrictToThread.  Valid for data_type "bulletin", this will restrict the view to post in the 'announcements' thread.</td>
+              </tr><tr class="odd">
+                <td><code>FeaturedOnly()</code></td>
+                <td><code>none</code></td>
+                <td>Shortcut for RestrictToThread.  Valid for data_type "bulletin", this will restrict the view to post in the 'Featured Posts' thread.</td>
+              </tr><tr class="odd">
+                <td><code>GetRSS()</code></td>
+                <td><code>none</code></td>
+                <td>Will open a separate window with the RSS feed for the current data_type.</td>
+
+              </tr><tr class="odd">
+                <td><code>AddDataString( data:array)</code></td>
+                <td><code>none</code></td>
+                <td>This function can be used before initialization to load data directly into the object, so that it does not need to be retrieved via AJAX.  This is used on the energyfolks site itself.  Input is an <code>array</code> of json encoded object representing a single data row.  The fields required for the data differ by each data type and are not detailed in this documentation.</td>
+              </tr>
+              </tr><tr class="odd">
+                <td><code>HidePopup()</code></td>
+                <td><code>none</code></td>
+                <td>This function will hide the detail popup that appears on the 'monthly' or 'calendar' views for all data_types.</td>
+              </tr>
+              </tr><tr class="odd">
+                <td><code>ShowDetails( data_id:number)</code></td>
+                <td><code>none</code></td>
+                <td>This function will open the detail view for the item specified.  Input is a <code>number</code> representing the ID number of the data-row you wish to display.  This function is called from within the data-view functions and will likely not be used directly.</td>
+              </tr>
+              </tr><tr class="odd">
+                <td><code>BackToResults()</code></td>
+                <td><code>none</code></td>
+                <td>Will return to the data view when in a detail view.  Links that call this function are provided automatically in the detail view, and so calling this directly is likely not necessary.</td>
+              </tr>
+              </tr><tr class="odd">
+                <td><code>SetLoginURL( url:string)</code></td>
+                <td><code>none</code></td>
+                <td>Sets the local login URL for this script.  When set, all 'login' links that are generated will point to this URL instead of energyfolks.com.</td>
+              </tr>
+          </tbody>
+        </table>
+
+      <h2><a name="widgets"></a>
+      The EnergyFolksWidgets Javascript Library</h2>
+        <p>The EnergyFolksWidgets library is available for download or inclusion into your site at: <a href='https://scripts.energyfolks.com/javascript/EnergyFolksWidgets.js'>https://scripts.energyfolks.com/javascript/EnergyFolksWidgets.js</a>.</p>
+        <p>This library extends the EnergyFolks.js library, and requires it to operate.  It builds on the EnergyFolks object by adding extra methods to the class, and therefore should be loaded second.  The EnergyFolks constructor is used to create this class as well.</p>
+        <h3>Constructor</h3>
+        <table summary="class Map - Constructor" width="90%">
+          <tbody>
+            <tr>
+              <th>Constructor</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnergyFolks( data_type:string)</code></td>
+                <td>Creates a new EnergyFolks object for data type <code>data_type</code>.  <code>data_type</code> is a string with the following possible values:
+                    <ul>
+                            <li><code>calendar</code>: Events Calendar
+                            <li><code>jobs</code>: The jobs database
+                            <li><code>bulletins</code>: the bulletins database
+                            <li><code>blog</code>: the blog database (other group submitted blogs)
+                    </ul>
+                    The number of widgets that can be loaded on any given page is not limited, however a unique instance of EnergyFolks must be created for each one.<BR><BR>
+                    Utilize functions from the main library (such as <code>RestrictToAffiliate</code> and <code>AnnounceOnly</code>) to restrict the data shown in the display.
+</td>
+              </tr>
+          </tbody>
+        </table>
+
+        <h3><a name="widgetsvars"></a>Properties</h3>
+        <table summary="class Map - Properties" width="90%">
+          <tbody>
+            <tr>
+              <th>Properties</th>
+                  <th>Type</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>widgetid</code></td>
+                <td><code>number</code></td>
+                <td>A random <code>number</code> representing this particular instance.  Used to create DIVs with unique IDs so that multiple widgets can be used on one page.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>widget_width</code></td>
+                <td><code>number</code></td>
+                <td>The width of the widget view, in pixels</td>
+              </tr>
+              <tr class="odd">
+                <td><code>widget_height</code></td>
+                <td><code>number</code></td>
+                <td>The height of the widget view, in pixels (not valid for 'NextFive' widget)</td>
+              </tr>
+              <tr class="odd">
+                <td><code>LocalURL</code></td>
+                <td><code>string</code></td>
+                <td>The URL to forward all click requests to on the server.  Default is the energyfolks server.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>ShowPersonalOptions</code></td>
+                <td><code>boolean</code></td>
+                <td>When false, widgets will not show the 'add to personal calendar' or 'pin to personal board' links in the 'RecentPosts[Vertical]' widgets.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>fadeURL</code></td>
+                <td><code>string</code></td>
+                <td>The URL of an image that is used at the bottom of RecentPost displays to 'fade' the post into the background if the post is too long.  Defaults to an image provided by energyfolks that works for white backgrounds.  If another image is needed, set it here (image should be 1 pixel in width by 8 pixels in height, and should fade from transparent at the top to your background color at the bottom).</td>
+              </tr>
+              <tr class="odd">
+                <td><code>hovering</code></td>
+                <td><code>boolean</code></td>
+                <td>Flag representing whether the mouse is hovering over this widget (valid only for 'RecentPosts' widget)</td>
+              </tr>
+              <tr class="odd">
+                <td><code>scrolling</code></td>
+                <td><code>boolean</code></td>
+                <td>Flag representing whether the current widget view is being scrolled (valid only for 'RecentPosts' widget)</td>
+              </tr>
+          </tbody>
+        </table>
+        <h3><a name="widgetsmethod"></a>Methods</h3>
+        <table summary="class Map - Methods" width="90%">
+          <tbody>
+            <tr>
+              <th>Methods</th>
+                  <th>Return&nbsp;Value</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>NextFive( width:number, title:string, [URL:string])</code></td>
+                <td><code>none</code></td>
+                <td>This will create a widget showing the next 5 days (for "calendar" type) or the previous 5 days (for all other types) of posts.  First input is a <code>number</code> representing the desired width of the widget, in pixels.  The second input is a <code>string</code> which will be used as a title displayed at the top of the widget.  The third input is a <code>string</code> representing the local URL for the page showing the full view for this data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.</td>
+              </tr><tr class="odd">
+                <td><code>RecentPosts( width:number, height:number, number_of_items:number, auto_scroll:boolean, title:string, [URL:string])</code></td>
+                <td><code>none</code></td>
+                <td>Creates a 'recent posts' widget which will show recent posts (or upcoming events for type 'calendar') in a horizontal list.  The list will have multiple 'panes' of results, scrollable by clickable arrow buttons on either side of the widget data view.  The first input is a <code>number</code> representing the width of the widget, in pixels.  The second input is a <code>number</code> representing the height of the widget, in pixels.  The third input is a <code>number</code> representing the number of items to show in a single view.  The fourth input is a <code>boolean</code> representing whether the widget should auto-scroll between panes every 6 seconds.  The fifth input is a <code>string</code> which will be used as a title displayed at the top of the widget (use "" to leave blank and use the simplified 'mini' widget).  The sixth input is a <code>string</code> representing the local URL for the page showing the full view for this data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.</td>
+              </tr><tr class="odd">
+                <td><code>RecentPostsVertical( width:number, height:number, number_of_items:number, auto_scroll:boolean, [title:string], [URL:string])</code></td>
+                <td><code>none</code></td>
+                <td>Creates a 'recent posts' widget (similar in nature to that created by <code>RecentPosts</code>) which will show recent posts (or upcoming events for type 'calendar') in a vertical list.  The list will have multiple 'panes' of results, scrollable by clickable arrow buttons on the top and bottom of the widget data view.  The first input is a <code>number</code> representing the width of the widget, in pixels.  Use <code>0</code> to fill the width of the parent element.  The second input is a <code>number</code> representing the height of the widget, in pixels.  The third input is a <code>number</code> representing the number of items to show in a single view.  The fourth input is a <code>boolean</code> representing whether the widget should auto-scroll between panes every 6 seconds (note that for bulletin widgets, the system will 'add' posts and comments to make it appear as if things are being added in real time.  Set to false to turn off this behavior).  The fifth input is an optional <code>string</code> which will be used as a title displayed at the top of the widget.  When set, a bounding box and title box will be included in the widget, otherwise no bounding box is drawn.  The sixth input is a <code>string</code> representing the local URL for the page showing the full view for this data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.</td>
+              </tr><tr class="odd">
+                <td><code>FeaturedUser( [URL:string])</code></td>
+                <td><code>none</code></td>
+                <td>Creates a 'Featured User' widget which will show information about 1 random user.  If an affiliateID has been set, then the user will be from the affiliate group, otherwise the user may be any energyfolks user.  The only input is a <code>string</code> representing the local URL for the page showing the full view for the <Code>users</code> data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.  Widget is only valid for type <code>users</code></td>
+              </tr><tr class="odd">
+                <td><code>MoveLeft()</code></td>
+                <td><code>none</code></td>
+                <td>For 'RecentPosts' widget, this will scroll the view one pane to the left.</td>
+              </tr><tr class="odd">
+                <td><code>MoveRight()</code></td>
+                <td><code>none</code></td>
+                <td>For 'RecentPosts' widget, this will scroll the view one pane to the right.</td>
+              </tr><tr class="odd">
+                <td><code>MoveUp()</code></td>
+                <td><code>none</code></td>
+                <td>For 'RecentPostsVertical' widget, this will scroll the view one pane up.</td>
+              </tr><tr class="odd">
+                <td><code>MoveDown()</code></td>
+                <td><code>none</code></td>
+                <td>For 'RecentPostsVertical' widget, this will scroll the view one pane down.</td>
+              </tr><tr class="odd">
+                <td><code>setFade( URL:string)</code></td>
+                <td><code>none</code></td>
+                <td>Sets the location of the image that is used at the bottom of RecentPost displays to 'fade' the post into the background if the post is too long.  Defaults to an image provided by energyfolks that works for white backgrounds.  If another image is needed, set it here (image should be 1 pixel in width by 8 pixels in height, and should fade from transparent at the top to your background color at the bottom).</td>
+              </tr><tr class="odd">
+                <td><code>HidePersonalLinks()</code></td>
+                <td><code>none</code></td>
+                <td>When run, this will disable the 'save to personal calendar' and 'pin to personal board' links that appear next to post in the 'RecentPosts' and 'RecentPostsVertical' widget types.  This is necessary if a widget is shown on the same page as the main display for particular data_type.</td>
+              </tr>
+          </tbody>
+        </table>
+
+      <h2><a name="comment"></a>
+      The EnergyFolksComments Javascript Library</h2>
+        <p>The EnergyFolksComments library is available for download or inclusion into your site at: <a href='https://scripts.energyfolks.com/javascript/EnergyFolksComments.js'>https://scripts.energyfolks.com/javascript/EnergyFolksComments.js</a>.</p>
+        <p>This library utilizes the EnergyFolks.js library, and requires it to operate.  It is not a class, and instead contains a single function, and is used to add an energyfolks comment stream to a page.  This is useful for blog entries or any other page where you want to enable user comments: by using this library, users will be able to comment using their energyfolks account and subscribe to comments and replies to the thread.</p>
+        <h3><a name="commentmethod"></a>Methods</h3>
+        <table summary="class Map - Methods" width="90%">
+          <tbody>
+            <tr>
+              <th>Functions</th>
+                  <th>Return&nbsp;Value</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnergyFolksComments( affiliate_id:number, [unique_code:string])</code></td><td><code>none</code></td>
+                <td>Creates a new EnergyFolksComments box.  <code>affiliate_id</code> is the ID number of the affiliate group that this script is being used for (If not an affiliate, use 0).  The second input <code>unique_code</code> is an optional input.  Each comment box must have a unique ID associated with it so that the server knows which comments to return and display.  You can set the ID here (note that the ID is affiliate specific, so 2 different affiliates can use the same unique ID).  If left blank, the script will generate a uniqueID based on the page URL.  If you plan to use the comment box on a page with a static URL, you can omit this input.  If you need to use the box on a page that has multiple possible urls, or if you want to use the same comment box on multiple pages or sites, you must provide a uniqueID to the function.  Note that only one comment box can be placed on a single page.
+                </td>
+              </tr>
+          </tbody>
+        </table>
+   <h1><a name='login'></a>External Logins to energyfolks</h1>
+<p>
+<b>Two Login scenarios are allowed:</b><ul>
+<li>Basic Client-Side: The external site never knows any information about the state of visiting user.  All interactions
+    are taken care of by the energyfolks servers, and as a result the external site does not know whether the visitor is
+    logged in, a member, etc.  energyfolks delivered content on the site, however, will be displayed with visitor information in mind</li>
+<li>Server Side: the external site server communicates with the energyfolks server directly, allowing the
+  external site to learn the logged state of the visitor.  This allows the site to taylor displays to the user, show
+  specific information based on status, etc.  This requires server side scripting functionality, and a PHP library is
+  available to provide this functionality.  If you use this scenario, then the PHP library provides functions that output
+  the necessary javascript to utilize the EnFolksLogin javascript library.  You are free to use your own server code and to
+  call the appropriate javascript functions directly, or you can use the PHP library to take care of all it this for you.
+  Please refer to the <a href='#loginphp'>PHP library</a> for usage instructions.</li>
+ </ul>
+</p>
+<p>
+<b>Client Side login works as follows:</b><ol>
+<li>Login checks for a current login.  If one is found, then the requested view is displayed (either nothing, or a box
+  showing basic user information
+<li>Display login screen (if user not logged) for user (inline, not iframe)
+<li>Upon submittal with AJAX, return error if unsuccessful, or refresh page if successful (or forward to forwardURL)
+</ol>
+</p>
+<p>
+<b>Server Side login works as follows:</b><ol>
+<li>Login checks energyfolks for current login.  If one is found, a hash key is returned and we continue at step 4
+<li>Display login screen for user (inline, not in iframe)
+<li>Upon submittal with ajax, return error if unsuccessful, or hash key if successful
+<li>Launch the callback URL defined by the client in the constructor.
+     This URL is a server side page on your site which takes the hash key, asks energyfolks what user is associated
+     with the hash, and then receives the response from the energyfolks server.  The response is a JSON array whose
+     details are described below in EnergyFolksLogin contstructor description.
+     You must store this information in a server session to avoid pinging energyfolks for login information on each
+     pageload of your site (this will drastically improve usability of your site).  Use of the energyfolks PHP library
+     will do this session handling for you.
+<li>Your callback script can then load content or forward to the correct page based on user status.  Your site maintains
+     user session internally and should not re-load this library.
+     NOTE: repeated logins from an external site in a small matter of time using this script will result in a freeze
+     on the specific account.  Use local sessions on your server to store user information and avoid freezing out
+     your users.
+<li>You should then call the <code>DisplayTopbar</code> method near the footer of every page so that the user details bar is displayed at the top of the page when a user is logged in.
+</ol></p>
+  <h2><a name="loginjs"></a>
+      The EnFolksLogin Javascript Library</h2>
+        <p>The EnFolksLogin Javascript library is available for download or inclusion into your site at: <a href='https://scripts.energyfolks.com/javascript/EnFolksLogin.js'>https://scripts.energyfolks.com/javascript/EnFolksLogin.js</a>.</p>
+        <p>In addition to handling login/logouts with energyfolks and displaying appropriate account related information, the EnFolksLogin library is responsible for the display of the 'account bar' that appears at the top of energyfolks powered sites.  The library contains functions to change the behavior of this bar, or hide it entirely.  Conversely, you can place an element with id <code>customefadminbar</code> on your page, and the admin bar will be loaded into this element.  The bar items are loaded as simple un-ordered lists, and you can use the default styling in the FolksStyle.css file as a guide to produce a custom styling for your page.</p>
+        <p>This library requires the EnergyFolks.js library to operate.</p>
+        <h3><a name="loginjsobject"></a>Constructor</h3>
+        <table summary="class Map - Constructor" width="90%">
+          <tbody>
+            <tr>
+              <th>Constructor</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnergyFolksLogin( callback_URL:string)</code></td>
+                <td>Creates a new EnergyFolksLogin object.  <code>callback_URL</code> can be one of two values:<ul><li>null: use this for client side logins</li><li>A URL on your server that will attempt to login or logout (depending upon user state) the user.  For logging in, this URL must be a server side script that accepts an energyfolks generated hash key in a post variable called 'hash', and then contacts https://www.energyfolks.com/accounts/external_Login_Verification/[HASH] to log the user in.  The energyfolks server will respond directly to the script with a JSON encoded array with the following properties:
+                <ul>
+                    <li><code>user_id:number</code>: The numerical ID number on energyfolks associated with this user.  This ID is unique and permanent to the user.</li>
+                    <li><code>first_name:string</code>: The first name of the logged in user</li>
+                    <li><code>last_name:string</code>: The last name of the logged in user</li>
+                    <li><code>picture_url:string</code>: A full URL to a png image of the user, or a default image if one has not been provided</li>
+                    <li><code>visibility:number</code>: A number corresponding to the visibility of the user's profile.  The number keys are:
+                        <ul><li>4: Profile is totally hidden</li><li>3: Profile is only available to members of affiliate groups that this user is a member of</li><li>2: Profile is only available to energyfolks members</li><li>1: Profile is publicly visible</li></ul>
+                    <li><code>affiliates:array(number)</code>: An array of numerical ID numbers associated with the affiliate groups that this user is a member of.  This can be used to verify the member is a part of your affiliate organization.</li>
+                    <li><code>position:string</code>: A user provided description of their current position</li>
+                    <li><code>company:string</code>: A user provided description of their current company</li>
+                    <li><code>has_posts:boolean</code>: true if the user has submitted posts to the database</li>
+                </ul></li></ul>
+                    For logging out, the script must destroy the local session and exit.
+</td>
+              </tr>
+          </tbody>
+        </table>
+
+        <h3><a name="loginjsvars"></a>Properties</h3>
+        <table summary="class Map - Properties" width="90%">
+          <tbody>
+            <tr>
+              <th>Properties</th>
+                  <th>Type</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>callbackURL</code></td>
+                <td><code>string</code></td>
+                <td>The URL set as an input to the constructor, or null.  See constructor for details.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>LoginID</code></td>
+                <td><code>number</code></td>
+                <td>A random number corresponding to this particular object.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>forwardto</code></td>
+                <td><code>string</code></td>
+                <td>A URL to forward the user to upon successful login.  This defaults to the current page (page refresh).</td>
+              </tr>
+              <tr class="odd">
+                <td><code>hash_key</code></td>
+                <td><code>string</code></td>
+                <td>The value of the alphanumeric hash returned by energyfolks during a login attempt.  This hash is then used by your server function to login the user to your server.  Note that hash is time-sensitive and expires after a short period.</td>
+              </tr>
+              <tr class="odd">
+                <td><code>affiliateid</code></td>
+                <td><code>number</code></td>
+                <td>The ID number of the affiliate group that this script is being used for (optional).  When set, if a user clicks the 'new account' button, the popup will be branded with the affiliate name and logo, and specific instructions will be provided for joining the affiliate group, if applicable.</td>
+              </tr>
+          </tbody>
+        </table>
+        <h3><a name="loginjsmethod"></a>Methods</h3>
+        <table summary="class Map - Methods" width="90%">
+          <tbody>
+            <tr>
+              <th>Methods</th>
+                  <th>Return&nbsp;Value</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>ForwardTo( url:string)</code></td>
+                <td><code>none</code></td>
+                <td>Sets the page to forward to upon a successful login.  Optional.</td>
+              </tr><tr class="odd">
+                <td><code>SetAffiliate( id:number)</code></td>
+                <td><code>none</code></td>
+                <td>Sets the affiliate group ID that should be used for new user account registrations.  Input is a <code>number</code> representing the ID for the desired affiliate.  Affiliate IDs can be found by visiting the affiliate detail page on energyfolks.com and looking in the URL, which will be of the form energyfolks.com/partner/detail/[ID].</td>
+              </tr><tr class="odd">
+                  <td><code>AddMenuItem( title:string, url:string)</code></td>
+                  <td><code>none</code></td>
+                  <td>Use to add custom links to the topbar that will appear on your pages.  First input is the text to display, the second input is the url to forward to.</td>
+              </tr><tr class='odd'>
+                  <td><code>HideTopbar()</code></td>
+                  <td><code>none</code></td>
+                  <td>Run this method to hide the topbar that appears on all pages (this will not have any effect on wordpress administrator bars)</td>
+              </tr><tr class='odd'>
+                  <td><code>UnFixTopbar()</code></td>
+                  <td><code>none</code></td>
+                  <td>Run this method to change the topbar behavior.  When run, the topbar will appear at the top of the page but will not stay there when the user scrolls.</td>
+              </tr><tr class='odd'>
+                <td><code>DisplayLogin( Show_Details_If_Logged:boolean)</code></td>
+                <td><code>none</code></td>
+                <td>Will determine if the user is logged in.  If so, a small user detail screen will be displayed if <code>Show_Details_If_Logged</code> is true, otherwise nothing is displayed.  If the user is not logged in, the Login page will be shown.<BR><BR>Used only for client side logins.</td>
+              </tr><tr class="odd">
+                <td><code>DisplaySimpleLogin( Show_Details_If_Logged:boolean, Local_Login_URL:string)</code></td>
+                <td><code>none</code></td>
+                <td>Will determine if the user is logged in.  If so, a small user detail screen will be displayed if <code>Show_Details_If_Logged</code> is true, otherwise nothing is displayed.  If the user is not logged in, a link to the login page (url is the second input) is shown, as well as a link to get an account.<BR><BR>Used only for client side logins.</td>
+              </tr><tr class="odd">
+                <td><code>DisplaySimpleLoginBig( Show_Details_If_Logged:boolean, Local_Login_URL:string)</code></td>
+                <td><code>none</code></td>
+                <td>The same as <Code>DisplaySimpleLogin</Code> but with larger text for the 'login' and 'get an account' links.</td>
+              </tr><tr class="odd">
+                <td><code>ShowUserDetails()</code></td>
+                <td><code>none</code></td>
+                <td>If a user is logged in, a small user detail screen will be displayed.  If the user is not logged in, nothing is displayed.  This function can only be called once per page.<BR><BR>Used only for client side logins.</td>
+              </tr><tr class="odd">
+                <td><code>Login()</code></td>
+                <td><code>none</code></td>
+                <td>This function will attempt to contact energyfolks to log in the user via cookies.  If this is successful, the function forwards the returned hash key to the callback URL.  If unsuccessful, the login page is shown.<BR><BR>Used only for Server Side Logins.<BR><BR>PLEASE NOTE: This function can ONLY be used with server-side logins, and the server should only call this function if the user is not logged in locally.  When a user is recognized and logged in, the server should remember this with a session to avoid a continual page refresh from calling this function upon each page view.</td>
+              </tr><tr class='odd'>
+                  <td><code>LoginEmpty()</code></td>
+                  <td><code>none</code></td>
+                  <td>Function will silently try to log user in.  If successful, callbackURL is called, if not, nothing happens.<BR><BR>Used only for Server Side Logins.<BR><BR>PLEASE NOTE: This function can ONLY be used with server-side logins, and the server should only call this function if the user is not logged in locally.  When a user is recognized and logged in, the server should remember this with a session to avoid a continual page refresh from calling this function upon each page view.</td>
+              </tr><tr class='odd'>
+                  <td><code>DisplayTopbar()</code></td>
+                  <td><code>none</code></td>
+                  <td>Only for use by 'server' type logins.  Should be run near the end of the body and will display the top administration bar.</td>
+              </tr><tr class='odd'>
+                  <td><code>CustomLogin()</code></td>
+                  <td><code>none</code></td>
+                  <td>This function will utilize a custom login page of your own with the energyfolks system.  To work, your login page should have the following features:<ul>
+                          <li>Email textbox with id of <code>EnFolksUser</code>
+                          <li>Password box with id of <code>EnFolksPass</code>
+                          <li>A checkbox to 'remember me' with id of <code>EnFolksCookie</code> and value of 1 when checked
+                          <li>An element with id <code>login_loading</code> that will appear when user submits form and have a 'loading' icon in it
+                          <li>An element with id <code>login_error</code> that will be populated with an error message if login fails
+                          <li>A form enclosing all of the above with id of <code>EnFolksExternalCustomLoginForm</code>
+                          <li>A button (or other element) to create a new account with id <code>EnFolksCreateAccount</code> (optional)
+                          <li>A link to the password reset page () and resent authorization page ()
+                      </ul>
+                  </td>
+              </tr><tr class="odd">
+                <td><code>Logout( [class:string], [style:string])</code></td>
+                <td><code>none</code></td>
+                <td>This function display a 'logout' link, which when clicked will attempt to contact energyfolks to log out the current user.  The page will be forwarded to the URL stored in <code>forwardto</code>, if provided, or the page will refresh.<BR><BR>This functions does not check whether a user is already logged in, and should therefore only be used by a server that knows a user is logged in from a session.  First input is the classname for the link to use, and the second input is inline style parameters to use.  Both inputs are optional.<BR><BR>Used only for Server Side Logins</td>
+              </tr>
+          </tbody>
+        </table>
+  <h2><a name="loginphp"></a>
+      The EnergyFolks PHP Library</h2>
+        <p>The EnergyFolks PHP library is available for download at: <a href='/phplibs/EnergyFolks.inc'>https://www.energyfolks.com/phplibs/EnergyFolks.inc</a>.</p>
+        <p>The library requires sessions to be available in your PHP installation, and also requires the cURL library.  Most versions above PHP 4.2 should work with this library.</p>
+        <h3><a name="loginphpobject"></a>Constructor</h3>
+        <table summary="class Map - Constructor" width="90%">
+          <tbody>
+            <tr>
+              <th>Constructor</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>EnergyFolks()</code></td>
+                <td>Creates a new EnergyFolks object.</td>
+              </tr>
+          </tbody>
+        </table>
+        <h3><a name="loginphpmethod"></a>Methods</h3>
+        <table summary="class Map - Methods" width="90%">
+          <tbody>
+            <tr>
+              <th>Methods</th>
+                  <th>Return&nbsp;Value</th>
+              <th>Description</th>
+            </tr>
+              <tr class="odd">
+                <td><code>check_Login( postdata:string, [certificate_location:string])</code></td>
+                <td><code>none</code></td>
+                <td>This function is meant to be called by the callbackURL server script.  It will die if the login attempt is invalid with an error message.  <br><BR>check_Login requires a single input, a hash tag as returned by the energyfolks.com login servers.  This hash tag is automatically retrieved by the EnFolksLogin.js javascript library and forwarded to the callbackURL as a post variable named <code>hash</code>.<BR><BR>A second optional input parameter is available that allows you to tell the script the location (server file location, not url) of the energyfolks certificate file (available for download and inclusion into your site at <a href='https://www.energyfolks.com/developer/cacert.pem'>https://www.energyfolks.com/developer/cacert.pem</a>.  For some servers, they will not recognize the energyfolks certificate authority, and the cURL functions will then fail.  Providing this link to the cacert.pem file will add the energyfolks certificate authority to the trusted list for this session only, allowing the server to contact energyfolks.  This error manifests itself by producing 'invalid login' errors continuously when you try to login using this library). </td>
+              </tr><tr class="odd">
+                <td><code>is_Logged()</code></td>
+                <td><code>boolean</code></td>
+                <td>Checks if the user is currently logged in, and return true or false.</td>
+              </tr><tr class="odd">
+                <td><code>AutoLogin( callbackURL:string, [forwardURL:string])</code></td>
+                <td><code>none</code></td>
+                <td>This function will utilize the EnFolksLogin.js library (which must be manually included on the page) to attempt to auto-log in the user via cookies.  No output is shown on the page.<BR><BR>Inputs to this function are:<ul>
+                    <li>The callbackURL, which is the full qualified URL on your server for the server script that will accept the hash key and validate the user (using check_Login method).</li>
+                    <li>Optional: URL to forward the user to upon successful login.  Otherwise page is simply refreshed.</li>
+                </ul>Note that this function should only be called if a user is not logged in (is_Logged() == false)</td>
+              </tr><tr class="odd">
+                <td><code>LogOut()</code></td>
+                <td><code>none</code></td>
+                <td>This function will forcibly log out the user locally and remove all session data related to the user.  This function has nothing to do with the energyfolks servers and will not log out a user on energyfolks.  It is meant to be used in conjunction with the Logout button provided by the javascript libraries.</td>
+              </tr><tr class="odd">
+                <td><code>ShowTopBar( [affiliate_id:number], [callbackURL:string])</code></td>
+                <td><code>none</code></td>
+                <td>This function Should be run on all your pages near the footer.  It will add the information bar to the top of all your screens.</td>
+              </tr><tr class="odd">
+                <td><code>produceLoginPage( callbackURL:string, [forwardURL:string], [affiliate_id:number])</code></td>
+                <td><code>none</code></td>
+                <td>This function will utilize the EnFolksLogin.js library (which must be manually included on the page) to create the login page for the user (or login via cookies).<BR><BR>Inputs to this function are:<ul>
+                    <li>The callbackURL, which is the full qualified URL on your server for the server script that will accept the hash key and validate the user (using check_Login method).</li>
+                    <li>Optional: URL to forward the user to upon successful login.  Otherwise page is simply refreshed.</li>
+                    <li>Optional: An affiliate ID number to use.  If a user clicks the 'new user' button on the login page, the popup will be branded with the affiliate logo and information.</li>
+                </ul>Note that this function should only be called if a user is not logged in (is_Logged() == false)</td>
+              </tr><tr class="odd">
+                <td><code>createProfileBox( callbackURL:string, [forwardURL:string], [affiliateID:number])</code></td>
+                <td><code>none</code></td>
+                <td>This function will create a small box with information for the current logged in user, including their full name, picture, link to edit their profile, and link to logout.  Inputs are provided:<ul>
+                    <li>The callback URL on your server to call to destroy your server's session and log out the user.</li>
+                    <li>A URL to forward the user to if they click the 'logout' button (optional).  If not provided, the page will simply be refreshed.</li>
+                    <li>Optional: An affiliate ID number to use.  If a user clicks the 'edit profile' link, the popup will be branded with the affiliate logo and information.</li>
+                </ul>Note that this function should only be called if a user is logged in (is_Logged() == true).</td>
+              </tr><tr class="odd">
+                <td><code>IsAffiliateMember( affiliate_id:number)</code></td>
+                <td><code>boolean</code></td>
+                <td>This function will test whether the current logged in user is a member of the affiliate group corresponding to the ID provided in the input <code>affiliate_id</code>.  Output is true or false. </td>
+              </tr><tr class="odd">
+                <td><code>Visibility()</code></td>
+                <td><code>number</code></td>
+                <td>This function will return the visibility level of the current user, with the output <code>number</code> corresponding to:<ul>
+                    <li>4: Profile is totally hidden</li><li>3: Profile is only available to members of affiliate groups that this user is a member of</li><li>2: Profile is only available to energyfolks members</li><li>1: Profile is publicly visible</li><li>0: There is no logged in user</li>
+                </ul></td>
+              </tr><tr class="odd">
+                <td><code>RetrieveRawData()</code></td>
+                <td><code>array</code></td>
+                <td>Will return an array with all the user details supplied by the energyfolks servers (or an empty array if no user is logged in).  Array will have data in the following keys:
+                <ul>
+                    <li><code>user_id</code>: The numerical ID number on energyfolks associated with this user.  This ID is unique and permanent to the user.</li>
+                    <li><code>first_name</code>: The first name of the logged in user</li>
+                    <li><code>last_name</code>: The last name of the logged in user</li>
+                    <li><code>picture_url</code>: A full URL to a png image of the user, or a default image if one has not been provided</li>
+                    <li><code>visibility</code>: A number corresponding to the visibility of the user's profile.  The number keys are:
+                        <ul><li>4: Profile is totally hidden</li><li>3: Profile is only available to members of affiliate groups that this user is a member of</li><li>2: Profile is only available to energyfolks members</li><li>1: Profile is publicly visible</li></ul>
+                    <li><code>affiliates</code>: An array of numerical ID numbers associated with the affiliate groups that this user is a member of.  This can be used to verify the member is a part of your affiliate organization.</li>
+                    <li><code>position</code>: A user provided description of their current position</li>
+                    <li><code>company</code>: A user provided description of their current company</li>
+                    <li><code>has_posts:boolean</code>: true if the user has submitted posts to the database</li>
+                </ul></td>
+              </tr>
+          </tbody>
+        </table>

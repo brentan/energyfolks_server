@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html style='background-color:#e6e6e6;'>
+<head>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "energyfolks" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class='developer' align=left>
+<div class='HomeTop' style='text-align:center;padding-top:5px;'><span class='pagetitle'>energyfolks platform</span><BR><a href='/' style='color:#dddddd;'><i><u>Return to energyfolks.com</u></i></a></div>
+<div class='HomeTopSeperator'></div>
+
+<div class='dropshadow' style='background-color:#ffffff;border-width:0px;'>
+</div>
+<div align=center style='text-align:center;'>
+  <table border=0 cellpadding=0 cellspacing=0 style='margin:0px;padding:0px;border-width:0px;' width='100%'>
+    <tr>
+      <td class='bodyback' align=center style='padding:0px;border-width:0px;text-align:center;'>
+        <div align=center>
+
+
+          <table border=0 cellpadding=0 cellspacing=0 style='margin:0px;padding:0px;border-width:0px;text-align:center;' align=center>
+            <tr>
+              <td class='bodyleft' style='padding:0px;margin:0px;border-width:0px;text-align:left' valign=top>
+                <%= image_tag 'developer/fade_left_topfore.png', {width: 20, height: 578, border:0, align: 'left'} %>
+              </td>
+              <td align=left valign=top style='border-style:none;width:180px;border-style:none;padding:5px;margin:0px;background-color:white;'>
+                <ul>
+                  <li><a href='/developers'>Platform&nbsp;Home</a></li>
+                  <li><a href='/developers/affiliate'>Affiliates</a></li>
+                  <li><a href='/developers/documentation'>Documentation</a></li>
+                  <li><a href='/developers/wordpress'>Wordpress Plugin</a></li>
+                  <li><a href='/developers/examples'>Integration&nbsp;Examples</a></li>
+                  <li><a href='/'>energyfolks.com&nbsp;Home</a></li>
+                </ul>
+
+              </td>
+              <td align=left valign=top style='border-style:none;width:700px;border-style:none;padding:5px;margin:0px;background-color:white;''>
+              <%= yield %>
+
+</td>
+<td class='bodyright' style='padding:0px;border-width:0px;text-align:right' valign=top>
+  <%= image_tag 'developer/fade_right_topfore.png', {width: 20, height: 578, border:0, align: 'right'} %>
+</td>
+</tr>
+<tr>
+  <td class='bodybotleft' style='padding:0px;border-width:0px;'>
+  </td>
+  <td class='bodybot' style='padding:0px;border-width:0px;'>
+  </td>
+  <td class='bodybot' style='padding:0px;border-width:0px;'>
+  </td>
+  <td class='bodybotright' style='padding:0px;border-width:0px;'>
+  </td>
+</tr>
+</table>
+</div>
+</td></tr></table>
+<BR><BR>
+
+</div>
+<div align=center style="align:center;padding:0px;margin:0px;">
+  <div style='width:950px;text-align:center;position:relative;align:center'>
+    <a href='/developers'>Platform Home</a> |
+    <a href='/developers/affiliate'>Affiliates</a> |
+    <a href='/developers/documentation'>Documentation</a> |
+    <a href='/developers/examples'>Examples</a> |
+    <a href='/'>energyfolks Home</a><BR>
+    <a href='/contact'>About and Contact Us</a> |
+    <a href='/welcome/privacy'>Privacy Policy</a> |
+    <a href='/welcome/terms'>Terms of Use</a> <BR>
+    <i>&copy; Copyright <%= Time.now().strftime('%Y') %> Energyfolks<sup>TM</sup>.  All Rights Reserved.</i>
+  </div>
+</div>
+</body>
+</html>

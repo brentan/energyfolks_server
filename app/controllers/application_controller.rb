@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
       @url = params[:current_url].gsub("#","").gsub(/_dot_/,".").gsub(/_slash_/,"/").gsub(/_colon_/,":").gsub(/_qmark_/,"?").gsub(/_amp_/,"&").gsub(/_equals_/,"=")
     elsif params['iframe_next'].present?
       @layout = 'iframe'
+    elsif request.fullpath.include?('developer')
+      @layout = 'developer'
     else
       @layout = 'application'
     end
@@ -77,6 +79,7 @@ class ApplicationController < ActionController::Base
         :id => i.id,
         :verified => i.verified?,
         :super_admin => i.admin?,
+        :affiliate_id => i.affiliate_id,
         :avatar => i.avatar,
         :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
         :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } },
