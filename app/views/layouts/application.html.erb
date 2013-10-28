@@ -1,16 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html style='background-color:#1D272F;'>
 <head>
-  <title>EnergyfolksServer</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "energyfolks" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-<h1>APPLICATION LAYOUT</h1>
-<%= yield %>
+<body class='energyfolks'>
+   <div class='HomeTop' align=center style="align:center;padding:0px;margin:0px;">
+      <div style='z-index:69;width:950px;height:85px;border-style:solid;border-color:#F16522;border-width:0px 0px 5px 0px;text-align:left;position:relative;color:white;align:center'>
+
+       <div class='pagetitle' style='position:absolute;bottom:10px;left:0px;padding:0px;'>
+          <a href='/' border=0><%= image_tag 'ef_logo.png', {height: 60, width: 245, alt: 'energyfolks', border: 0} %></a>
+       </div>
+       <%
+           page_members = request.fullpath.include?("affiliate")
+           page_events = request.fullpath.include?("events")
+           page_jobs = request.fullpath.include?("jobs")
+           page_bulletins = request.fullpath.include?("bulletins")
+           page_home = !page_members && !page_events && !page_jobs && !page_bulletins
+       %>
+       <div style='position:absolute;bottom:10px;right:0px;'>
+          <ul style='list-style:none;padding:0px;margin:0px;float:right;'>
+            <li class='topbarli'>
+              <a href='/' class='toplink<%= ' selected' if page_home %>'>Home</a>
+            </li>
+            <li class='topbarli'>
+              <a href='/events' class='toplink<%= ' selected' if page_events %>'>Events</a>
+            </li>
+            <li class='topbarli'>
+              <a href='/jobs' class='toplink<%= ' selected' if page_jobs %>'>Jobs</a>
+            </li>
+            <li class='topbarli'>
+              <a href='/bulletins' class='toplink<%= ' selected' if page_bulletins %>'>Bulletins</a>
+            </li>
+            <li class='topbarli'>
+              <a href='/users' class='toplink<%= ' selected' if page_members %>'>Members</a>
+            </li>
+          </ul>
+       </div>
+    </div>
+    <div id='mainbody' style='width:950px;padding:0px;margin:0px;background-color:white;'>
+      <% if page_home %>
+          <table border=0 cellpadding=0 cellspacing=0 width=950 style='padding:0px;margin:0px;'>
+            <tr>
+              <td style='width:940px;text-align:left;padding:5px;' valign=top>
+                <%= yield %>
+              </td>
+            </tr>
+          </table>
+      <% else %>
+          <table border=0 cellpadding=0 cellspacing=0 width=950 style='padding:0px;margin:0px;'>
+            <tr>
+              <td style='width:190px;padding:5px;text-align:left;' class='sidebar' valign=top>
+                <script language=javascript>
+                    EnergyFolks.Sidebar();
+                </script>
+              </td>
+              <td style='width:750px;text-align:left' valign=top>
+                <%= yield %>
+              </td>
+            </tr>
+          </table>
+      <% end %>
+    </div>
+    <div style='width:950px;text-align:center;align:center;' class='sidebar footer'>
+        <table border=0 width=950 cellpadding=0 cellspacing=0>
+            <tr>
+                <td style='padding:30px;padding-bottom:0px;vertical-align:top;text-align:left;'>
+                    <h4 style='border-bottom:1px solid #F16522;width:277px;text-align:left;color:white'>your account</h4>
+                    <script language=javascript>
+                          EnergyFolks.SmallLoginBox();
+                    </script>
+                </td>
+                <td style='padding:30px 0px 0px 0px;vertical-align:top;text-align:left;'>
+                    <h4 style='border-bottom:1px solid #F16522;width:276px;text-align:left;color:white'>useful links</h4>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/'>Home</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/events'>Calendar</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/jobs'>Job Board</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/users'>Members</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/bulletins'>Bulletins</a> <BR>
+                </td>
+                <td style='padding:30px;padding-bottom:0px;vertical-align:top;text-align:left;'>
+                    <h4 style='border-bottom:1px solid #F16522;width:277px;text-align:left;color:white'>explore</h4>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/contact'>About Us and Contact</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/developers'>Developer Portal</a><BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='#' class='EnergyFolks_popup' data-command='privacy' data-iframe='false' data-params=''>Privacy Policy</a><BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='#' class='EnergyFolks_popup' data-command='terms' data-iframe='false' data-params=''>Terms of Use</a>
+                </td>
+            </tr>
+        <tr><td colspan=3 style='padding:0px 30px 5px 30px;text-align:right;'>
+            <hr style='border:0px solid #F16522;background-color:#F16522;height:1px;padding:0px;margin:0px 0px 4px 0px;'/>
+        <i>&copy; <%= Time.now().strftime('%Y') %> Energyfolks<sup>TM</sup></i>
+        </table>
+    </div>
+</div>
+<BR><BR><BR>
+
 
 <%= raw(notices(notice, alert)) %>
 </body>

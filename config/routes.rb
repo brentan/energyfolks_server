@@ -47,9 +47,6 @@ EnergyfolksServer::Application.routes.draw do
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
 
-  match "jobs" => "jobs#index"
-  match "events" => "events#index"
-  match "bulletins" => "bulletins#index"
   # ENTITY ROUTES
   resources :users, only: ['show']
 
@@ -83,6 +80,17 @@ EnergyfolksServer::Application.routes.draw do
 
   match 'privacy' => 'users#privacy'
   match 'terms' => 'users#terms'
+
+  # EF Specific (non-platform) page routes:
+  root :to => 'energyfolks#index'
+  match "jobs" => "jobs#index"
+  match "events" => "events#index"
+  match "calendar" => "events#index"    #backwards compatible
+  match "bulletins" => "bulletins#index"
+  match "announce" => "bulletins#index" #backwards compatible
+  match "welcome/privacy" => "energyfolks#privacy"
+  match "welcome/terms" => "energyfolks#terms"
+  match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

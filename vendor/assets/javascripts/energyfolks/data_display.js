@@ -21,6 +21,12 @@ EnergyFolks.showPage = function(params) {
     document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
     EnergyFolks.resetData();
 };
+/*
+Show energyfolks filter bar and sidebar options in the location this is called.  Otherwise, these options are shown at top of data display
+ */
+EnergyFolks.Sidebar = function() {
+    document.write("<div id='EnFolksSidebarDiv'><div id='ef_sidebar'></div></div>");
+}
 
 
 /*
@@ -72,54 +78,100 @@ EnergyFolks.showList = function() {
 }
 
 EnergyFolks.itemDetailHTML = function(item) {
-    //TODO: more sources
-    var output = '';
+    var output = ''
+    var info = EnergyFolks.getItemInfo(item);
+    if(info.logo != '')
+        output += '<img src="' + EnergyFolks.server_url + info.logo + '" class="enfolks_logo">';
+    output += EnergyFolks.create_remote_popup('<h1>'+info.name+'</h1>', 'show', info.params);
+    output += '<h3>' + info.line_one + '</h3>';
+    output += info.line_two;
+    if(info.admin_links != '')
+        output += '<div class="admin_links">'+info.admin_links+'</div>';
+    return output;
+}
+EnergyFolks.getItemInfo = function(item) {
+    var output = {};
     if(EnergyFolks.source == 'users') {
-        output += '<div>';
-        if(item.avatar)
-            output += '<img src="'+item.avatar_url+'" align=left>';
-        output += EnergyFolks.create_remote_popup('<h1>'+item.first_name + ' ' + item.last_name+'</h1>', 'show', {id: item.id, model: 'User'});
-        output += '<h3>' + item.position + '</h3>';
-        output += item.organization;
-        output += '</div><div class="admin_links">';
+        output.affiliate_id = item.affiliate_id;
+        output.logo = item.avatar ? item.avatar_url : '';
+        output.params = {id: item.id, model: 'User'};
+        output.title = item.first_name + ' ' + item.last_name;
+        output.line_one = item.position;
+        output.line_two = item.organization;
+        var admin_links = '';
         if(EnergyFolks.current_user.super_admin) {
-            output += EnergyFolks.create_iframe_popup('Global Rights','users/rights',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Global Rights','users/rights',{id: item.id});
             if(item.verified)
-                output += EnergyFolks.create_iframe_popup('Freeze Account','users/freeze_account',{id: item.id});
+                admin_links += EnergyFolks.create_iframe_popup('Freeze Account','users/freeze_account',{id: item.id});
             else
-                output += EnergyFolks.create_iframe_popup('Manually Verify','users/manual_verify',{id: item.id});
+                admin_links += EnergyFolks.create_iframe_popup('Manually Verify','users/manual_verify',{id: item.id});
         }
         if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) {
-            output += EnergyFolks.create_iframe_popup('Admin Rights','affiliates/rights',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Admin Rights','affiliates/rights',{id: item.id});
             var approved = false;
             EnergyFolks.$.each(item.affiliates, function(k,v) {
                 if((v.id == EnergyFolks.id) && v.approved)
                     approved = true;
             });
             if(approved)
-                output += EnergyFolks.create_iframe_popup('Remove From Group','affiliates/reject_or_remove',{id: item.id});
+                admin_links += EnergyFolks.create_iframe_popup('Remove From Group','affiliates/reject_or_remove',{id: item.id});
             else {
-                output += EnergyFolks.create_iframe_popup('Approve Membership','affiliates/approve',{id: item.id});
-                output += EnergyFolks.create_iframe_popup('Reject Membership','affiliates/reject_or_remove',{id: item.id});
+                admin_links += EnergyFolks.create_iframe_popup('Approve Membership','affiliates/approve',{id: item.id});
+                admin_links += EnergyFolks.create_iframe_popup('Reject Membership','affiliates/reject_or_remove',{id: item.id});
             }
         }
-        output += '</div>';
+        output.admin_links = admin_links;
     } else if(EnergyFolks.source == 'jobs') {
-        output += "<div>";
-        if(item.logo)
-            output += '<img src="'+item.logo_url+'" align=left>';
-        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Job'});
-        output += "</div>";
+        output.affiliate_id = item.affiliate_id;
+        output.logo = item.logo ? item.logo_url : '';
+        output.title = item.name;
+        output.params = {id: item.id, model: 'Job'};
+        output.line_one = item.employer;
+        output.line_two = item.location;
+        var admin_links = '';
+        if(EnergyFolks.get_moderated) {
+            //TODO: Links for moderation queue
+            admin_links = 'MODERATION LINKS'
+        } else if(EnergyFolks.current_user.super_admin) {
+            admin_links += EnergyFolks.create_iframe_popup('Manage Post','jobs/edit',{id: item.id});
+        } else if(EnergyFolks.current_user.id == item.user_id) {
+            admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','jobs/edit',{id: item.id});
+        }
+        output.admin_links = admin_links;
     } else if(EnergyFolks.source == 'events') {
-        output += "<div>";
-        if(item.logo)
-            output += '<img src="'+item.logo_url+'" align=left>';
-        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Event'});
-        output += "</div>";
+        output.affiliate_id = item.affiliate_id;
+        output.logo = item.logo ? item.logo_url : '';
+        output.title = item.name;
+        output.params = {id: item.id, model: 'Event'};
+        output.line_one = item.host;        //TODO: Change to date/time information
+        output.line_two = item.location;
+        var admin_links = '';
+        if(EnergyFolks.get_moderated) {
+            //TODO: Links for moderation queue
+            admin_links = 'MODERATION LINKS'
+        } else if(EnergyFolks.current_user.super_admin) {
+            admin_links += EnergyFolks.create_iframe_popup('Manage Post','events/edit',{id: item.id});
+        } else if(EnergyFolks.current_user.id == item.user_id) {
+            admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','events/edit',{id: item.id});
+        }
+        output.admin_links = admin_links;
     } else if(EnergyFolks.source == 'bulletins') {
-        output += "<div>";
-        output += EnergyFolks.create_remote_popup('<h1>'+item.name+'</h1>', 'show', {id: item.id, model: 'Bulletin'});
-        output += "</div>";
+        output.affiliate_id = item.affiliate_id;
+        output.logo = '';
+        output.title = item.name;
+        output.params = {id: item.id, model: 'Bulletin'};
+        output.line_one = '';
+        output.line_two = '';
+        var admin_links = '';
+        if(EnergyFolks.get_moderated) {
+            //TODO: Links for moderation queue
+            admin_links = 'MODERATION LINKS'
+        } else if(EnergyFolks.current_user.super_admin) {
+            admin_links += EnergyFolks.create_iframe_popup('Manage Post','bulletins/edit',{id: item.id});
+        } else if(EnergyFolks.current_user.id == item.user_id) {
+            admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','bulletins/edit',{id: item.id});
+        }
+        output.admin_links = admin_links;
     }
     return output;
 };

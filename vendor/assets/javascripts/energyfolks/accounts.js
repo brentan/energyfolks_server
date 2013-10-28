@@ -40,7 +40,7 @@
  */
 
 /*
- Display a simple login box, or show current user details if already logged in:
+ Display a login box, or show current user details if already logged in:
  */
 EnergyFolks.LoginBox = function(element_id) {
     var id = EnergyFolks.uniqueId();
@@ -53,6 +53,22 @@ EnergyFolks.LoginBox = function(element_id) {
         EnergyFolks.$("#EnFolksLoginDiv_"+input.id).html(input.html);
     }
     EnergyFolks.ajax('loginBox', {id: id}, callback);
+};
+
+/*
+ Display a simpler login box, or show current user details if already logged in:
+ */
+EnergyFolks.SmallLoginBox = function(element_id) {
+    var id = EnergyFolks.uniqueId();
+    var intext = "<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>";
+    if(typeof element_id !== 'undefined')
+        EnergyFolks.$(element_id).html(intext);
+    else
+        document.write(intext);
+    var callback = function(input) {
+        EnergyFolks.$("#EnFolksLoginDiv_"+input.id).html(input.html);
+    }
+    EnergyFolks.ajax('smallLoginBox', {id: id}, callback);
 };
 
 /*

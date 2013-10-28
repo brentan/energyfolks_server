@@ -13,6 +13,16 @@ class AjaxController < ApplicationController
     render_ajax( {html: html, id: params['id']} )
   end
 
+  # Display a small login box to allow a user to login.  If a user is already logged in, show a profile box instead
+  def smallLoginBox
+    if user_logged_in?
+      html = render_to_string :partial => "users/ajax/profile"
+    else
+      html = render_to_string :partial => "users/ajax/login_small"
+    end
+    render_ajax( {html: html, id: params['id']} )
+  end
+
   # Display links to login/create account.  If a user is already logged in, show link to profile/logout
   def loginLinks
     if user_logged_in?
@@ -21,6 +31,17 @@ class AjaxController < ApplicationController
       html = render_to_string :partial => "users/ajax/login_links"
     end
     render_ajax( {html: html, id: params['id']} )
+  end
+
+  # Privacy policy
+  def privacy
+    html = render_to_string :partial => "users/privacy"
+    render_ajax( {html: html})
+  end
+  # Terms of use
+  def terms
+    html = render_to_string :partial => "users/terms"
+    render_ajax( {html: html} )
   end
 
   # Return a list of visible users based on input criteria

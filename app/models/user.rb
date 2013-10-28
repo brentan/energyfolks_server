@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
     visibility = User::NETWORKS if current_user.present? && affiliate.present? && Membership.is_member?(current_user, affiliate)
     visibility = User::PRIVATE if current_user.present? && affiliate.present? && Membership.is_admin?(current_user, affiliate, Membership::EDITOR)
     visibility = User::PRIVATE if current_user.present? && current_user.admin?
-    users = User.verified.select([:verified, :active, 'users.id', :first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name').offset(page * per_page).limit(per_page)
+    users = User.verified.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name').offset(page * per_page).limit(per_page)
     users = users.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliate.id}) if affiliate.present?
     users.all
   end
