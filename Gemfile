@@ -39,6 +39,7 @@ end
 
 # For handling file uploads, particularly pictures
 gem 'paperclip'
+gem 'aws-sdk'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

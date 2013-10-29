@@ -64,4 +64,15 @@ EnergyfolksServer::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+
+  ec2info = YAML.load_file("#{Rails.root}/config/ec2.yml")
+  config.paperclip_defaults = {
+      :url => ':s3_domain_url',
+      :s3_protocal => 'https',
+      :storage => :s3,
+      :bucket => ec2info[:s3_bucket],
+      :s3_credentials => {:access_key_id => ec2info[:aws_access_key_id], :secret_access_key => ec2info[:aws_secret_access_key]},
+      :s3_permissions => 'public-read'
+  }
 end

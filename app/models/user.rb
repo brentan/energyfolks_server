@@ -68,11 +68,11 @@ class User < ActiveRecord::Base
 
   has_attached_file :avatar, {
       :styles => { :medium => "120x200>", :thumb_big => "90x90#", :thumb => "40x40#" },
-      :url => "/system/profile_avatar/:hash.:extension",
-      :hash_secret => "34fQfadfbdhbfladsbfadilsbfaldksfbt49javsdnva9sbdf7a909-"
+      :hash_secret => "34fQfadfbdhbfladsbfadilsbfaldksfbt49javsdnva9sbdf7a909-",
+      :path => "/system/profile_avatar/:hash.:extension"
   }
   has_attached_file :resume, {
-      :url => "/system/resume/:hash.:extension",
+      :path => "/system/resume/:hash.:extension",
       :hash_secret => "34fQfadfinasdna2-9jrq49f8acn748q3t49javsdnva9sbdf7a909-"
   }
   validates_attachment :avatar,

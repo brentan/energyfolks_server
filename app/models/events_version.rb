@@ -4,7 +4,7 @@ class EventsVersion < ActiveRecord::Base
 
   has_attached_file :logo, {
       :styles => { :medium => "120x200>", :thumb_big => "90x90#", :thumb => "40x40#" },
-      :url => "/system/logos/:hash.:extension",
+      :path => "/system/logos_events_v/:hash.:extension",
       :hash_secret => "asfAdsfmasdfaSDFj23enujdskfsdjkfn23unjasdkfnakjsdfnnff-"
   }
 
