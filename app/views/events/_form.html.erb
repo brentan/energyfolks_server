@@ -36,6 +36,7 @@
 
               <div class='form_label'>Logo</div>
               <div class='form_entry'>
+                <%= image_tag @item.logo.url(:thumb_big) if @item.logo.present? %>
                 <%= f.file_field :logo %>
               </div>
             </li>

@@ -71,8 +71,10 @@ EnergyFolks.$(function() {
 //ListView
 EnergyFolks.showList = function() {
     var output = '';
+    var first = true;
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
-        output += "<div class='enfolks_list_item' data-id='"+v.id+"'>"+EnergyFolks.itemDetailHTML(v)+"</div>";
+        output += "<div class='enfolks_item enfolks_list_item " + (first ? 'ef_first_item ' : '') + "ef_"+EnergyFolks.source+"' data-id='"+v.id+"'>"+EnergyFolks.itemDetailHTML(v)+"</div>";
+        first = false;
     });
     EnergyFolks.$('#EnfolksResultDiv').html(output);
 }
@@ -80,15 +82,24 @@ EnergyFolks.showList = function() {
 EnergyFolks.itemDetailHTML = function(item) {
     var output = ''
     var info = EnergyFolks.getItemInfo(item);
-    if(info.logo != '')
-        output += '<img src="' + EnergyFolks.server_url + info.logo + '" class="enfolks_logo">';
-    output += EnergyFolks.create_remote_popup('<h1>'+info.name+'</h1>', 'show', info.params);
-    output += '<h3>' + info.line_one + '</h3>';
-    output += info.line_two;
+    output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + output.affiliate_id + '" class="affiliate_logo">';
     if(info.admin_links != '')
         output += '<div class="admin_links">'+info.admin_links+'</div>';
+    if(info.logo != '')
+        output += '<img src="' + EnergyFolks.server_url + info.logo + '" class="enfolks_logo">';
+    else output += "LOGO:"+info.logo;
+    output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
+    output += '<h3 class="line1">' + info.line_one + '</h3>';
+    output += '<span class="line2">' + info.line_two + '</span>';
     return output;
 }
+// Listener for clicks on entries
+EnergyFolks.$(function() {
+    EnergyFolks.$('body').on('click','.enfolks_item', function() {
+        var params = EnergyFolks.$(this).find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
+        EnergyFolks.remote_popup('show', params);
+    });
+});
 EnergyFolks.getItemInfo = function(item) {
     var output = {};
     if(EnergyFolks.source == 'users') {
@@ -133,7 +144,7 @@ EnergyFolks.getItemInfo = function(item) {
             //TODO: Links for moderation queue
             admin_links = 'MODERATION LINKS'
         } else if(EnergyFolks.current_user.super_admin) {
-            admin_links += EnergyFolks.create_iframe_popup('Manage Post','jobs/edit',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Edit Post','jobs/edit',{id: item.id});
         } else if(EnergyFolks.current_user.id == item.user_id) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','jobs/edit',{id: item.id});
         }
@@ -150,7 +161,7 @@ EnergyFolks.getItemInfo = function(item) {
             //TODO: Links for moderation queue
             admin_links = 'MODERATION LINKS'
         } else if(EnergyFolks.current_user.super_admin) {
-            admin_links += EnergyFolks.create_iframe_popup('Manage Post','events/edit',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Edit Post','events/edit',{id: item.id});
         } else if(EnergyFolks.current_user.id == item.user_id) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','events/edit',{id: item.id});
         }
@@ -167,7 +178,7 @@ EnergyFolks.getItemInfo = function(item) {
             //TODO: Links for moderation queue
             admin_links = 'MODERATION LINKS'
         } else if(EnergyFolks.current_user.super_admin) {
-            admin_links += EnergyFolks.create_iframe_popup('Manage Post','bulletins/edit',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Edit Post','bulletins/edit',{id: item.id});
         } else if(EnergyFolks.current_user.id == item.user_id) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','bulletins/edit',{id: item.id});
         }
