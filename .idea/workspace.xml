@@ -2,26 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/assets/stylesheets/iframe_popup.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/bulletins/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/bulletins/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/events/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jobs/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/jobs/_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/affiliate_specific.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/affiliate_specific.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/backwards_compatible.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/backwards_compatible.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/index.html.erb" afterPath="$PROJECT_DIR$/app/views/events/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jobs/index.html.erb" afterPath="$PROJECT_DIR$/app/views/jobs/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382927034483" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383011795984" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382919342611" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382212490710" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -929,7 +914,11 @@
       <created>1382927038589</created>
       <updated>1382927038589</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Start to style data displays">
+      <created>1383011806250</created>
+      <updated>1383011806250</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1018,7 +1007,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Base EF and developer layouts created" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start to style data displays" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1032,7 +1021,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="User functionality.  Complete profile page, take care of authenticating new email addresses and auto-notifications for email/password changes." />
     <MESSAGE value="Complete external hash login script, more JS cleanup to remove old code." />
     <MESSAGE value="Affiliate stuff looks more or less done for now...missing ability for user to join an affiliate network.  Users list still poorly displayed." />
     <MESSAGE value="Accountbar is now active and working." />
@@ -1057,6 +1045,7 @@
     <MESSAGE value="Finish adding Events and Bulletins" />
     <MESSAGE value="Add primary network to user profile" />
     <MESSAGE value="Base EF and developer layouts created" />
+    <MESSAGE value="Start to style data displays" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
