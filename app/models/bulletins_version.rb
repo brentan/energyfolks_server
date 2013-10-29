@@ -3,7 +3,7 @@ class BulletinsVersion < ActiveRecord::Base
   default_scope order('version_number DESC')
 
   has_attached_file :attachment, {
-      :url => "/system/attachments/:hash.:extension",
+      :path => "/system/attachments_v/:hash.:extension",
       :hash_secret => "asfAdsfmasdfaSDFj23enujdskfsdjkfn23unjasdkfnakjsdfnnff-"
   }
 

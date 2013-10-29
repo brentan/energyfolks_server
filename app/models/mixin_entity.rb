@@ -104,8 +104,8 @@ module MixinEntity
           item.send("#{cn}=",item.get(cn, affiliate, user))
         end
         all_attributes = item.attributes
-        all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present? && !item.instance_of?(Bulletin)
-        all_attributes[:logo_url] = item.logo.url(:thumb) if item.respond_to?(:logo) && item.logo.present? && !item.instance_of?(Bulletin)
+        all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present?
+        all_attributes[:logo_url] = item.logo.url(:thumb) if item.respond_to?(:logo) && item.logo.present?
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end

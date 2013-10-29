@@ -216,6 +216,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   capistrano
   capistrano-ec2group
   capybara

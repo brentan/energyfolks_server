@@ -42,4 +42,6 @@ EnergyfolksServer::Application.configure do
   config.sitemailer_hostname = 'dev.energyfolks.org'
   config.sitemailer_port = '3000'
   config.sitemailer_protocol = 'http://'
+
+
 end
