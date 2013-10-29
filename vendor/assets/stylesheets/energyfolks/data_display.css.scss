@@ -6,5 +6,75 @@
   }
 }
 .enfolks_list_item {
+  margin: 0px;
+  padding: 2px 4px;
+  border: 0px solid #cccccc;
+  border-bottom-width: 1px;
+  cursor: pointer;
+  &.ef_first_item {
+    border-top-width: 1px;
+  }
+  &:hover {
+    background-color: #efefef;
+  }
+
+  img.enfolks_logo {
+    width: 40px;
+    height: 40px;
+    float: right;
+    border: 1px solid #cccccc;
+    margin: 0px 4px;
+  }
+  img.affiliate_logo {
+    width:40px;
+    height: 40px;
+    float: left;
+    border: 1px solid #cccccc;
+  }
+  h1.title {
+    margin:0px;
+    padding:0px 0px 3px 0px;
+    font-size: 15px;
+    margin-left: 46px;
+  }
+  h3.line1 {
+    color: #333333;
+    font-size: 12px;
+    margin:0px;
+    padding:0px 0px 2px 0px;
+    margin-left: 46px;
+  }
+  span.line2 {
+    margin:0px;
+    padding: 0px;
+    display: block;
+    color: #666666;
+    margin-left: 46px;
+  }
+  div.admin_links {
+    float: right;
+    width: 200px;
+    padding: 2px;
+    margin: -2px -4px 0px 0px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #ffffcc;
+    a {
+      display: block;
+    }
+  }
+
+  &.ef_jobs {
+
+  }
+  &.ef_users {
+
+  }
+  &.ef_bulletins {
+
+  }
+  &.ef_events {
+
+  }
 
 }

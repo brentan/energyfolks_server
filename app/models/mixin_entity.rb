@@ -81,6 +81,7 @@ module MixinEntity
       # Search term option
       # highlighted only option
       # geographic option
+      # TODO: IF AFFILIATE IS NIL, ALSO NEED TO DO THINGS USER IS ABLE TO SEE! Should be there, isnt working...
       affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
@@ -103,6 +104,8 @@ module MixinEntity
           item.send("#{cn}=",item.get(cn, affiliate, user))
         end
         all_attributes = item.attributes
+        all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present? && !item.instance_of?(Bulletin)
+        all_attributes[:logo_url] = item.logo.url(:thumb) if item.respond_to?(:logo) && item.logo.present? && !item.instance_of?(Bulletin)
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end

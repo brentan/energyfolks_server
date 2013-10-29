@@ -1,0 +1,75 @@
+body.iframe_popup {
+  margin: 0px;
+  padding: 0px;
+
+  font: normal normal normal 12px/18px 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;
+  color: #515151;
+  text-align: left;
+
+
+  a:hover {
+    color: #333333;
+  }
+  /* TYPOGRAPHY */
+  h1, h2, h3, h4, h5, h6 {margin:0px 0px 6px 0px;}
+  h1 {font-size: 150%;text-transform: lowercase;}
+  h2 {font-size: 140%;text-transform: lowercase;}
+  h3 {font-size: 130%;}
+  h4 {font-size: 120%}
+  h6 {font-size: 110%}
+  h5 {font-size: 105%}
+  b {
+    color: #444444;
+    font-weight: 500;
+    font-size:15px;
+  }
+  div.footer b {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  ul{
+    margin: 3px;
+    padding-left:14px;
+  }
+  td img {display: block;}
+  img.inline {display:inline;}
+  td.sepline {
+    height:1px;
+    background-color:#dddddd;
+    margin:0px;
+    padding:0px;
+    border-width:0px;
+  }
+  hr.sepline {
+    align:center;
+    height:1px;
+    background-color:#c7c7c7;
+    margin:5px;
+    padding:0px;
+    border-width:0px;
+  }
+  input[type=text]{
+    border: 1px solid #bbbbbb;
+  }
+  input[type=password]{
+    border: 1px solid #bbbbbb;
+  }
+  textarea{
+    border: 1px solid #bbbbbb;
+  }
+  .smallfont {
+    line-height: 120%;
+    font-size: 12px;
+  }
+  .normal {
+    font-size: 13px;
+  }
+  .supersmallfont {
+    line-height: 110%;
+    font-size: 10px;
+  }
+  .grey{
+    background-color:#ccc;
+  }
+
+}

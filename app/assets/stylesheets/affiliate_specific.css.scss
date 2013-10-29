@@ -1,15 +1,21 @@
 /*
   All styles below are meant to be overwritten in the header on a per-affiliate basis
 */
+body, body.iframe_popup {
+  .button, a.button {
+    background-color: #F16522;
+    color: white;
+  }
+  .button:hover, a.button:hover {
+    background-color: #cccccc;
+    color: #F16522;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #26313B;
+  }
 
-.button {
-  background-color: #F16522;
-  color: white;
-}
-.button:hover {
-  background-color: #cccccc;
-  color: #F16522;
-}
-h1, h2, h3, h4, h5, h6 {
-  color: #F16522;
+  a:link, a:visited {
+    color: #F16522;
+    text-decoration: none;
+  }
 }

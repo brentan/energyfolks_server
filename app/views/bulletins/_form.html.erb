@@ -29,6 +29,7 @@
 
               <div class='form_label'>Attachment</div>
               <div class='form_entry'>
+                <%= link_to @item.logo.url if @item.logo.present? %>
                 <%= f.file_field :logo %>
                 <div class='explain'>Images and Documents, 10MB Maximum</div>
               </div>

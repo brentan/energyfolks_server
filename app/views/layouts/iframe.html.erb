@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Energyfolks</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "energyfolks" %>
   <%= csrf_meta_tags %>
+  <% if current_affiliate.id.present? %>
+      <style>
+          body.iframe_popup h1, body.iframe_popup h2, body.iframe_popup h3, body.iframe_popup h4, body.iframe_popup h5, body.iframe_popup h6 {
+            color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup a:link, body.iframe_popup a:visited {
+            color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup .button, body.iframe_popup a.button  {
+              background-color: #<%= current_affiliate.color %>;
+              color: white;
+          }
+          body.iframe_popup .button:hover, body.iframe_popup a.button:hover {
+              color: #<%= current_affiliate.color %>;
+          }
+      </style>
+  <% end %>
 </head>
-<body>
+<body class='iframe_popup'>
 
 <%= yield %>
 <script language="javascript">

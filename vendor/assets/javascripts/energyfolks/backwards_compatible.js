@@ -10,7 +10,6 @@ function EnFolksMessageSize(url, width, height) {
    // https://www.energyfolks.com/accounts/ReSendActivationOUT --> resend_activation
    // EnFolksMessageSize('https://www.energyfolks.com/accounts/CreateAccountExternal/18',900,600);EnFolksWaitForLoad(); NEEDS TO REDIRECT CORRECTLY TO users/new?aid=
 }
-function ShowSearchBar
 
 function EnFolksWaitForLoad() {
 }

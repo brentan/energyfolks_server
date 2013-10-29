@@ -14,6 +14,15 @@ class AffiliatesController < ApplicationController
     @affiliate = Affiliate.find_by_id(params[:id])
   end
 
+  def logo
+    affiliate = Affiliate.find_by_id(params[:id])
+    if affiliate.blank?
+      #TODO: Render the EF logo
+    else
+      #TODO: Render the image directly for this affiliate here
+    end
+  end
+
   def new
     return redirect_to '/' unless current_user.admin?
     @affiliate = Affiliate.new

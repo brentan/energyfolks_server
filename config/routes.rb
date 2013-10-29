@@ -46,6 +46,7 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/reject_or_remove"
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
+  get "affiliates/logo"
 
   # ENTITY ROUTES
   resources :users, only: ['show']
