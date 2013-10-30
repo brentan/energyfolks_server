@@ -6,12 +6,16 @@ class Event < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-  VERSION_CONTROLLED = %w(name host start end html synopsis location location2 logo_file_name logo_content_type logo_file_size logo_updated_at)
+  VERSION_CONTROLLED = %w(name host start end timezone html synopsis location location2 logo_file_name logo_content_type logo_file_size logo_updated_at)
   include MixinEntity
 
   acts_as_locatable
   acts_as_moderatable
   acts_as_taggable
+
+  before_save :update_start_end_time
+
+  attr_writer :start_dv, :end_dv
 
   accepts_nested_attributes_for :affiliates_events, :allow_destroy => true
 
@@ -27,5 +31,47 @@ class Event < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  attr_accessible :name, :host, :location, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by
+  attr_accessible :name, :host, :location, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv
+
+  def start_d
+    self.start.present? ? strftime(self.start, "%Y-%m-%d") : strftime(Time.now, "%Y-%m-%d")
+  end
+  def start_d=(val)
+    @start_d = val
+  end
+  def end_d
+    self.end.present? ? strftime(self.end, "%Y-%m-%d") : strftime(Time.now, "%Y-%m-%d")
+  end
+  def end_d=(val)
+    @end_d = val
+  end
+  def start_t
+    self.start.present? ? strftime(self.start, "%l:%M %p") : '12:00 PM'
+  end
+  def start_t=(val)
+    @start_t = val
+  end
+  def end_t
+    self.end.present? ? strftime(self.end, "%l:%M %p") : '1:00 PM'
+  end
+  def end_t=(val)
+    @end_t = val
+  end
+  def start_dv
+    self.start.present? ? strftime(self.start, "%m/%d/%Y") : strftime(Time.now, "%m/%d/%Y")
+  end
+  def end_dv
+    self.end.present? ? strftime(self.end, "%m/%d/%Y") : strftime(Time.now, "%m/%d/%Y")
+  end
+
+  private
+  def update_start_end_time
+    Time.use_zone(self.timezone) do
+      self.start = Time.zone.parse("#{@start_d} #{@start_t}") if @start_d.present?
+      self.end = Time.zone.parse("#{@end_d} #{@end_t}") if @end_d.present?
+    end
+  end
+  def strftime(datetime, format)
+    datetime.in_time_zone(self.timezone).strftime(format)
+  end
 end

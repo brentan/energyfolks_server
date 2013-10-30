@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131019192318) do
+ActiveRecord::Schema.define(:version => 20131030015250) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                   :null => false
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20131019192318) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "timezone"
   end
 
   create_table "events_versions", :force => true do |t|
@@ -198,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20131019192318) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "timezone"
   end
 
   add_index "events_versions", ["entity_id"], :name => "index_events_versions_on_entity_id"

@@ -20,7 +20,7 @@
 
           <div class='form_label'>Timezone</div>
           <div class='form_entry'>
-            <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => ActiveSupport::TimeZone::MAPPING.invert[current_user.timezone]}, {class: 'list_all'} ) %>
+            <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => current_user.timezone}, {class: 'list_all'} ) %>
           </div>
 
           <div class='form_label'>Email Address</div>

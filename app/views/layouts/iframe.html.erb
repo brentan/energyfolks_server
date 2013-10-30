@@ -16,13 +16,17 @@
           }
           body.iframe_popup .button, body.iframe_popup a.button  {
               background-color: #<%= current_affiliate.color %>;
-              color: white;
           }
           body.iframe_popup .button:hover, body.iframe_popup a.button:hover {
               color: #<%= current_affiliate.color %>;
           }
       </style>
   <% end %>
+  <style>
+      body.iframe_popup .button, body.iframe_popup a.button  {
+          color: white;
+      }
+  </style>
 </head>
 <body class='iframe_popup'>
 
