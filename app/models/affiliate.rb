@@ -46,7 +46,7 @@ class Affiliate < ActiveRecord::Base
 
   has_attached_file :logo, {
       :styles => { :medium => "120x200>", :thumb_big => "90x90#", :thumb => "40x40#" },
-      :path => "/system/affiliate_logo/:hash.:extension",
+      :path => "#{Rails.root}/public/system/affiliate_logo/:hash.:extension",
       :hash_secret => "34fQfadfbdhbfladsbfadilsbfaldksfbt49javsdnaaasdfasdfva9sbdf7a909-"
   }
   validates_attachment :logo,
