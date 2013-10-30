@@ -17,7 +17,7 @@ class Bulletin < ActiveRecord::Base
   validates_presence_of :name, :html
 
   has_attached_file :attachment, {
-      :path => "#{Rails.root}/public/system/attachments/:hash.:extension",
+      :path => Rails.env != 'production' ? Paperclip::Attachment.default_options[:path] : "//attachments/:hash.:extension",
       :hash_secret => "asfAdsfmasdfaSDFj23enujdskfsdjkfn23unjasdkfnakjsdfnnff-"
   }
   validates_attachment :attachment,
