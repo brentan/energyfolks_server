@@ -16,19 +16,52 @@
               <div class='form_entry'><%= f.text_field :name %></div>
 
               <div class='form_label'>Start</div>
-              <div class='form_entry'><%= f.text_field :start %></div>
+              <div class='form_entry'><%= f.text_field :start_dv %><%= f.text_field :start_t %></div>
 
               <div class='form_label'>End</div>
-              <div class='form_entry'><%= f.text_field :end %></div>
+              <div class='form_entry'><%= f.text_field :end_dv %><%= f.text_field :end_t %></div>
 
+              <%= f.hidden_field :start_d %><%= f.hidden_field :end_d %>
               <script>
                   $(function() {
-                      $( "#event_start" ).datepicker({
-                          numberOfMonths: 3,
-                          showButtonPanel: true
+
+                      $( "#event_start_dv" ).datepicker({
+                          numberOfMonths: 2,
+                          changeMonth: true,
+                          altField: "#event_start_d",
+                          altFormat: "yy-m-d",
+                          showButtonPanel: true,
+                          minDate: 0,
+                          onClose: function( selectedDate ) {
+                              $( "#event_end_dv" ).datepicker( "option", "minDate", selectedDate );
+                          }
                       });
+                      $( "#event_end_dv" ).datepicker({
+                          numberOfMonths: 2,
+                          changeMonth: true,
+                          minDate: 0,
+                          altField: "#event_end_d",
+                          altFormat: "yy-m-d",
+                          showButtonPanel: true,
+                          onClose: function( selectedDate ) {
+                              $( "#event_start_dv" ).datepicker( "option", "maxDate", selectedDate );
+                          }
+                      });
+                      $("#event_start_t").timePicker({
+                                  show24Hours: false,
+                                  step: 15}
+                      );
+                      $("#event_end_t").timePicker({
+                                  show24Hours: false,
+                                  step: 15}
+                      );
                   });
               </script>
+
+              <div class='form_label'>Timezone</div>
+              <div class='form_entry'>
+                <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => current_user.timezone}, {class: 'list_all'} ) %>
+              </div>
 
               <div class='form_label'>Event Host</div>
               <div class='form_entry'><%= f.text_field :host %></div>

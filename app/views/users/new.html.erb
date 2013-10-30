@@ -34,6 +34,13 @@
               <div class='form_label'>City and State/Country</div>
               <div class='form_entry'><%= f.text_field :location %></div>
 
+              <% if current_affiliate.id.present? %>
+                  <%= f.hidden_field :timezone, current_affiliate.timezone %>
+              <% else %>
+                  <div class='form_label'>Timezone</div>
+                  <div class='form_entry'><%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => "Pacific Time (US & Canada)"}, {class: 'list_all'} ) %></div>
+              <% end %>
+
               <div class='form_label'>Tag Yourself</div>
               <div class='form_entry'>
                 <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
