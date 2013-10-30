@@ -21,6 +21,15 @@
               <div class='form_label'>End</div>
               <div class='form_entry'><%= f.text_field :end %></div>
 
+              <script>
+                  $(function() {
+                      $( "#event_start" ).datepicker({
+                          numberOfMonths: 3,
+                          showButtonPanel: true
+                      });
+                  });
+              </script>
+
               <div class='form_label'>Event Host</div>
               <div class='form_entry'><%= f.text_field :host %></div>
 
