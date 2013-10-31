@@ -89,7 +89,7 @@ EnergyFolks.showList = function() {
 EnergyFolks.itemDetailHTML = function(item) {
     var output = ''
     var info = EnergyFolks.getItemInfo(item);
-    output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + output.affiliate_id + '" class="affiliate_logo">';
+    output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + info.affiliate_id + '" class="affiliate_logo">';
     if(info.admin_links != '')
         output += '<div class="admin_links">'+info.admin_links+'</div>';
     if(info.logo != '')

@@ -54,6 +54,7 @@ EnergyFolks.iframe_popup = function(command, parameters) {
     if(EnergyFolks.iframe) {
         location.href=url;
     } else {
+        EnergyFolks.justSet = false;
         EnergyFolks.direct_popup();
         EnergyFolks.$('#energyfolks_popup_wrapper').css('width',940 + 'px');
         EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='visibility:hidden;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:30px;overflow:auto;'></iframe></div>");

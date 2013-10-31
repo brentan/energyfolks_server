@@ -1,6 +1,6 @@
 class AffiliatesController < ApplicationController
 
-  before_filter :check_for_admin_rights, :except => [:index, :users]
+  before_filter :check_for_admin_rights, :except => [:index, :users, :logo]
 
   def index
     if current_user.present? && current_user.admin?
@@ -16,11 +16,16 @@ class AffiliatesController < ApplicationController
 
   def logo
     affiliate = Affiliate.find_by_id(params[:id])
-    if affiliate.blank?
-      #TODO: Render the EF logo
+    if affiliate.blank? || (affiliate.present? && affiliate.id.blank?) || (affiliate.present? && affiliate.id.present? && affiliate.logo.blank?)
+      image_url = "#{Rails.root}/app/assets/images/logo_small.png" # Render the EF logo
     else
-      #TODO: Render the image directly for this affiliate here
+      image_url = affiliate.logo.url(:thumb) # Render the image directly for this affiliate here
+      image_url = affiliate.logo.path(:thumb) if image_url[0..0] == '/' # Non-s3 is local
     end
+    response.headers['Cache-Control'] = "public, max-age=#{96.hours.to_i}"
+    response.headers['Content-Type'] = 'image/jpeg'
+    response.headers['Content-Disposition'] = 'inline'
+    render :text => open(image_url, 'rb').read
   end
 
   def new
