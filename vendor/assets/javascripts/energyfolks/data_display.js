@@ -19,7 +19,14 @@ EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
     document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
-    EnergyFolks.resetData();
+    var command = EnergyFolks.$.bbq.getState( "command" );
+    var parameters = EnergyFolks.$.bbq.getState( "parameters" );
+    if(typeof command != "undefined") {
+        EnergyFolks.ajax(command, parameters, function(output) {
+            EnergyFolks.$('#EnfolksResultDiv').html("<div style='padding:3px;'>" + output.html + "</div>");
+        });
+    } else
+        EnergyFolks.resetData();
 };
 /*
 Show energyfolks filter bar and sidebar options in the location this is called.  Otherwise, these options are shown at top of data display
@@ -86,8 +93,7 @@ EnergyFolks.itemDetailHTML = function(item) {
     if(info.admin_links != '')
         output += '<div class="admin_links">'+info.admin_links+'</div>';
     if(info.logo != '')
-        output += '<img src="' + EnergyFolks.server_url + info.logo + '" class="enfolks_logo">';
-    else output += "LOGO:"+info.logo;
+        output += '<img src="' + info.logo + '" class="enfolks_logo">';
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
     output += '<h3 class="line1">' + info.line_one + '</h3>';
     output += '<span class="line2">' + info.line_two + '</span>';

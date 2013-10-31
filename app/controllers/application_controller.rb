@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
         :super_admin => i.admin?,
         :affiliate_id => i.affiliate_id,
         :avatar => i.avatar,
-        :avatar_url => "#{request.protocol}#{request.host_with_port}#{i.avatar.url(:thumb)}",
+        :avatar_url => i.avatar.url(:thumb),
         :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } },
         :moderation_count => i.moderation_count,
         :user_posts => i.user_posts,
