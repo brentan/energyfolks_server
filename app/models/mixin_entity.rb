@@ -81,13 +81,12 @@ module MixinEntity
       # Search term option
       # highlighted only option
       # geographic option
-      # TODO: IF AFFILIATE IS NIL, ALSO NEED TO DO THINGS USER IS ABLE TO SEE! Should be there, isnt working...
-      affiliates = user.present? ? user.memberships.approved.map { |a| a.id } : []
+      affiliates = user.present? ? user.memberships.approved.map { |a| a.affiliate_id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
-      items = self.offset(page * per_page).limit(per_page).select(select)
+      items = self.offset(page * per_page).limit(per_page).select("DISTINCT #{select.join(', ')}")
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
       items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
       items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
@@ -254,7 +253,7 @@ module MixinEntity
     return true if self.user_id == user.id
     return true if user.admin?
     self.affiliate_join.each do |a|
-      return true if a.admin?(user, Membership::EDITOR)
+      return true if a.affiliate.admin?(user, Membership::EDITOR)
     end
     return false
   end
