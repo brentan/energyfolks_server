@@ -253,6 +253,7 @@ module MixinEntity
     return true if self.user_id == user.id
     return true if user.admin?
     self.affiliate_join.each do |a|
+      next if (a.affiliate_id == 0) || a.affiliate.blank?
       return true if a.affiliate.admin?(user, Membership::EDITOR)
     end
     return false
