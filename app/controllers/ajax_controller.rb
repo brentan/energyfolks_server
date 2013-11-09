@@ -62,7 +62,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Job.get_mine(current_user)
     else
-      data = Job.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+      data = Job.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
     end
     render_ajax( {data: data} )
   end
@@ -73,7 +73,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Event.get_mine(current_user)
     else
-      data = Event.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+      data = Event.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
     end
     render_ajax( {data: data} )
   end
@@ -84,7 +84,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Bulletin.get_mine(current_user)
     else
-      data = Bulletin.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+      data = Bulletin.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
     end
     render_ajax( {data: data} )
   end
@@ -132,7 +132,8 @@ class AjaxController < ApplicationController
     else
       output[:width] ||= 900   # default popup window width, if needed
       set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
-      render :js => "#{set_current_user}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};" : ''
+      render :js => "#{set_current_user}#{set_affiliate}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
   end
 

@@ -5,6 +5,18 @@
     display: block;
   }
 }
+.enfolks_date_item {
+  margin: 0px;
+  padding: 2px 4px;
+  border: 0px solid #cccccc;
+  background-color: #cccccc;
+  font-size: 14px;
+  text-align:left;
+  &.enfolks_today {
+    font-weight: bold;
+    color: white;
+  }
+}
 .enfolks_list_item {
   margin: 0px;
   padding: 2px 4px;
@@ -17,6 +29,7 @@
   &:hover {
     background-color: #efefef;
   }
+  &
 
   img.enfolks_logo {
     width: 40px;
@@ -77,4 +90,125 @@
 
   }
 
+}
+table.enfolks_calendar {
+  padding: 0px;
+  margin: 2px;
+  tr {
+    margin: 0px;
+    padding: 0px;
+  }
+  td {
+    margin: 0px;
+    border: 0px solid #444444;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    padding: 2px;
+  }
+  td.enfolks_first {
+    border-left-width: 1px;
+  }
+  td.enfolks_prev, td.enfolks_next {
+    text-align:center;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+  }
+  td.enfolks_calendar_title {
+    text-align:center;
+    font-weight: bold;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+  }
+  td.enfolks_day_header {
+    color: white;
+    text-align: center;
+    border-top-width: 1px;
+  }
+  td.enfolks_day {
+    height: 80px;
+  }
+  td.enfolks_current_month {
+    background-color: white;
+  }
+  td.enfolks_other_month {
+    background-color: #eeeeee;
+  }
+  td.enfolks_today_month {
+    background-color: #ffffdd;
+  }
+  div.enfolks_calendar_item {
+    margin: 1px;
+    cursor: pointer;
+    position: relative;
+    height: 17px;
+    .enfolks_calendar_item_content {
+      font-size: 13px;
+      padding: 2px;
+      padding-top:0px;
+      overflow:hidden;
+      text-wrap: none;
+      position:absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom: 0px;
+      background-color: #dddddd;
+      border: 1px solid #999999;
+      &.highlight {
+        color: white;
+        border: 1px solid black;
+      }
+    }
+    .enfolks_detail_popup_white {
+      z-index: 97;
+      font-size: 13px;
+      border: 1px solid black;
+      overflow:hidden;
+      padding: 2px;
+      padding-top:0px;
+      text-wrap: none;
+      color: black;
+      background-color: white;
+      position:absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom: 0px;
+      display: none;
+    }
+    .enfolks_detail_popup_white_2 {
+      background-color: white;
+      width: 2px;
+      z-index: 99;
+      position:absolute;
+      top: 1px;
+      bottom: 1px;
+      display: none;
+      &.left {
+        left: -1px;
+      }
+      &.right {
+        right: -1px;
+      }
+    }
+    .enfolks_detail_popup {
+      z-index: 98;
+      padding: 2px;
+      border: 1px solid black;
+      background-color: white;
+      position:absolute;
+      text-align: left;
+      display: none;
+      top: 0px;
+      width: 300px;
+      &.left {
+        left:-306px;
+      }
+      &.right {
+        right: -306px;
+      }
+    }
+  }
 }

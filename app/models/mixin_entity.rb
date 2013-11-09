@@ -35,6 +35,10 @@ module MixinEntity
     "#{entity_name} post"
   end
 
+  def mmddyyyy
+    self.created_at.strftime("%m%d%Y")
+  end
+
   # Class Methods
 
   module ClassMethods
@@ -53,6 +57,10 @@ module MixinEntity
       has_many :tags, :through => :tags_entities
       attr_accessible :raw_tags
       attr_writer :raw_tags
+    end
+
+    def date_column
+      'created_at'
     end
 
     def total_needing_moderation(affiliate)
@@ -76,7 +84,7 @@ module MixinEntity
       self.where(user_id: user.id).all
     end
 
-    def find_all_visible(user, affiliate = nil, page=0, per_page=20)
+    def find_all_visible(user, affiliate = nil, page=0, per_page=20, limits='none')
       # Date range options
       # Search term option
       # highlighted only option
@@ -86,10 +94,50 @@ module MixinEntity
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
-      items = self.offset(page * per_page).limit(per_page).select("DISTINCT #{select.join(', ')}")
+      items = self.select("DISTINCT #{select.join(', ')}")
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
       items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
       items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
+      items = items.offset(page * per_page).limit(per_page) if limits == 'order'
+      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
+      if (limits == 'month') || (limits == 'month-shift')
+        year = DateTime.now.year
+        month = DateTime.now.month
+        month += page
+        while month > 12
+          year += 1
+          month -= 12
+        end
+        while month < 1
+          year -= 1
+          month += 12
+        end
+        pm = month - 1
+        py = year
+        pd = 22
+        if pm == 0
+          pm = 12
+          py -= 1
+        end
+        nm = month + 1
+        ny = year
+        nd = 8
+        if nm == 13
+          nm = 1
+          ny += 1
+        end
+        if limits == 'month-shift'
+          if (self.name.downcase.pluralize == 'events') && (DateTime.now.day > 15)
+            pd=28
+            nd=28
+          end
+          if (self.name.downcase.pluralize != 'events') && (DateTime.now.day < 15)
+            pd=1
+            nd=1
+          end
+        end
+        items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
+      end
       items = items.all
       return version_control(user, affiliate, items)
     end
@@ -105,6 +153,14 @@ module MixinEntity
         all_attributes = item.attributes
         all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present?
         all_attributes[:logo_url] = item.logo.url(:thumb) if item.respond_to?(:logo) && item.logo.present?
+        all_attributes[:mmddyyyy] = item.mmddyyyy if item.respond_to?(:mmddyyyy)
+        if item.respond_to?(:start_time)
+          all_attributes[:start_time] = item.start_time
+          all_attributes[:end_time] = item.end_time
+          all_attributes[:start_date] = item.start_date
+          all_attributes[:end_date] = item.end_date
+          all_attributes[:tz] = item.tz
+        end
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end
