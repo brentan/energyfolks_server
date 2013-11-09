@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :versions, :foreign_key => 'entity_id', :class_name => 'EventsVersion',:dependent => :destroy
 
-  default_scope order('created_at DESC')
+  default_scope order('start ASC')
 
   VERSION_CONTROLLED = %w(name host start end timezone html synopsis location location2 logo_file_name logo_content_type logo_file_size logo_updated_at)
   include MixinEntity
@@ -32,6 +32,30 @@ class Event < ActiveRecord::Base
                        :size => { :in => 0..2.megabytes }
 
   attr_accessible :name, :host, :location, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv
+
+
+  def self.date_column
+    'start'
+  end
+
+  def mmddyyyy
+    self.start.strftime("%m%d%Y")
+  end
+  def start_date
+    self.start.strftime( "%A, %B %-d, %Y")
+  end
+  def end_date
+    self.end.strftime( "%A, %B %-d, %Y")
+  end
+  def start_time
+    self.start.strftime("%l:%M %p")
+  end
+  def end_time
+    self.end.strftime("%l:%M %p")
+  end
+  def tz
+    self.start.strftime("%Z")
+  end
 
   def start_d
     self.start.present? ? strftime(self.start, "%Y-%m-%d") : strftime(Time.now, "%Y-%m-%d")

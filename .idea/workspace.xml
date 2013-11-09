@@ -2,19 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/event.rb" afterPath="$PROJECT_DIR$/app/models/event.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/index.html.erb" afterPath="$PROJECT_DIR$/app/views/events/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383188523860" ignored="false" />
-    <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383180240328" ignored="false" />
-    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383184815201" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383844829685" ignored="false" />
+    <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384014345176" ignored="false" />
+    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384020773706" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/app/helpers/home_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383180713510" ignored="false" />
-    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383184312991" ignored="false" />
+    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384020299112" ignored="false" />
     <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378234526512" ignored="false" />
     <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375248711333" ignored="false" />
     <file path="/_success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363284977600" ignored="false" />
@@ -31,7 +39,7 @@
     <file path="/notices.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289490328" ignored="false" />
     <file path="/loginform.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363291128515" ignored="false" />
     <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383100789699" ignored="false" />
-    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378234587911" ignored="false" />
+    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384015491179" ignored="false" />
     <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
     <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
     <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
@@ -67,7 +75,7 @@
     <file path="/affiliates_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383184194335" ignored="false" />
     <file path="/_form.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383100428679" ignored="false" />
     <file path="/index.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233973614" ignored="false" />
-    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383183959679" ignored="false" />
+    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384022748647" ignored="false" />
     <file path="/users.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369435941452" ignored="false" />
     <file path="/manual_verify.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347196074" ignored="false" />
     <file path="/freeze_account.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349860341" ignored="false" />
@@ -96,12 +104,12 @@
     <file path="/_terms.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907405598" ignored="false" />
     <file path="/login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373913475629" ignored="false" />
     <file path="/notification_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378225727085" ignored="false" />
-    <file path="/mixin_entity.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383268997954" ignored="false" />
+    <file path="/mixin_entity.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384020720042" ignored="false" />
     <file path="/20130715225158_add_broadcast_to_memberships.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373928756509" ignored="false" />
     <file path="/awaiting_moderation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373933893249" ignored="false" />
     <file path="/mixin_entity_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235426580" ignored="false" />
     <file path="/show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233952091" ignored="false" />
-    <file path="/data_display.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382930270407" ignored="false" />
+    <file path="/data_display.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384022672711" ignored="false" />
     <file path="/load_js.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235408796" ignored="false" />
     <file path="/subscription.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374453991593" ignored="false" />
     <file path="/20130722002220_create_subscriptions_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374452966221" ignored="false" />
@@ -119,7 +127,7 @@
     <file path="/jobs_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089643177" ignored="false" />
     <file path="/job.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089562969" ignored="false" />
     <file path="/jobs_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375560224276" ignored="false" />
-    <file path="/initialize.js.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378224116824" ignored="false" />
+    <file path="/initialize.js.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384016646783" ignored="false" />
     <file path="/after_deploy.config" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383091766913" ignored="false" />
     <file path="/whenever-elasticbeanstalk.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377304851760" ignored="false" />
     <file path="/20130903154745_fix_jobs_columns.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378223300051" ignored="false" />
@@ -128,7 +136,7 @@
     <file path="/events_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232632709" ignored="false" />
     <file path="/bulletins_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232649855" ignored="false" />
     <file path="/bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089580742" ignored="false" />
-    <file path="/event.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383102268694" ignored="false" />
+    <file path="/event.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384015986384" ignored="false" />
     <file path="/bulletins_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089622883" ignored="false" />
     <file path="/events_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089634163" ignored="false" />
     <file path="/affiliates_bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233042540" ignored="false" />
@@ -168,13 +176,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="data_display.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ajax_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="133" column="70" selection-start="5198" selection-end="5224" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_display.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="48" selection-start="3386" selection-end="3386" vertical-scroll-proportion="-16.2">
+            <state line="225" column="48" selection-start="10508" selection-end="10508" vertical-scroll-proportion="0.5590062">
               <folding>
-                <marker date="1383183962000" expanded="true" signature="1072:1084" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="1072:1084" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="4789:4795" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="6085:6124" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="6085:6091" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="6106:6123" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="6938:6955" placeholder="..." />
+                <marker date="1384022761000" expanded="true" signature="7015:7028" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/events/index.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="58" selection-start="292" selection-end="292" vertical-scroll-proportion="-3.125">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -182,29 +214,20 @@
       <file leaf-file-name="global.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="36" selection-start="2442" selection-end="2442" vertical-scroll-proportion="0.0">
+            <state line="178" column="32" selection-start="8780" selection-end="8807" vertical-scroll-proportion="-1.36">
               <folding>
-                <marker date="1383184321000" expanded="false" signature="2658:2676" placeholder="..." />
-                <marker date="1383184321000" expanded="false" signature="6851:6869" placeholder="..." />
-                <marker date="1383184321000" expanded="false" signature="7266:7279" placeholder="..." />
+                <marker date="1384020358000" expanded="false" signature="2658:2676" placeholder="..." />
+                <marker date="1384020358000" expanded="false" signature="6851:6869" placeholder="..." />
+                <marker date="1384020358000" expanded="false" signature="7266:7279" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="affiliates_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
+      <file leaf-file-name="data_display.css.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="89" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="events_version.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/models/events_version.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="193" column="14" selection-start="3560" selection-end="3560" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -213,20 +236,8 @@
       <file leaf-file-name="mixin_entity.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="249" column="69" selection-start="9910" selection-end="9910" vertical-scroll-proportion="0.0">
+            <state line="102" column="0" selection-start="3256" selection-end="3256" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="44" selection-start="1894" selection-end="1894" vertical-scroll-proportion="-24.375">
-              <folding>
-                <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#li#2;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#hr#0;n#li#2;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -252,22 +263,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/application.css" />
-        <option value="$PROJECT_DIR$/db/migrate/20131030015250_add_timezone_to_events.rb" />
-        <option value="$PROJECT_DIR$/app/views/users/edit.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/users/new.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/timepicker.js" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/timepicker.css.scss" />
         <option value="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
         <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/hash_change.js" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
         <option value="$PROJECT_DIR$/app/controllers/affiliates_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" />
+        <option value="$PROJECT_DIR$/app/views/events/index.html.erb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
         <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
+        <option value="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
       </list>
     </option>
   </component>
@@ -355,7 +366,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -369,49 +380,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="affiliates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="000" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="000" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="002" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -425,35 +398,81 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="affiliates" />
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="logos" />
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="000" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="000" />
+              <option name="myItemId" value="javascripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="002" />
+              <option name="myItemId" value="energyfolks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="thumb" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="events" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -486,6 +505,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1001,7 +1038,11 @@
       <created>1383188527614</created>
       <updated>1383188527614</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="various bug fixes">
+      <created>1383844832354</created>
+      <updated>1383844832354</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1026,7 +1067,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="805" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1034,7 +1075,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946378" sideWeight="0.67075664" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964131" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20731707" sideWeight="0.671831" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20731707" sideWeight="0.671831" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4117647" sideWeight="0.671831" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1132,115 +1173,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="105" />
+      <option name="time" value="109" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/iframe.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="23" selection-start="1075" selection-end="1075" vertical-scroll-proportion="0.5927052">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="44" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.2600897">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/jquery_browser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="2052" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="180" column="33" selection-start="9562" selection-end="9562" vertical-scroll-proportion="0.23916294">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1383180727000" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/hash_change.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1260" column="32" selection-start="51971" selection-end="51971" vertical-scroll-proportion="0.32453415">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/images/ef_logo.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/images/closegreycircle.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/affiliate.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0852017">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="44" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.30493274">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="48" selection-start="3386" selection-end="3386" vertical-scroll-proportion="-16.2">
-          <folding>
-            <marker date="1383183962000" expanded="true" signature="1072:1084" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="89" selection-start="890" selection-end="890" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="36" selection-start="2442" selection-end="2442" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1383184321000" expanded="false" signature="2658:2676" placeholder="..." />
-            <marker date="1383184321000" expanded="false" signature="6851:6869" placeholder="..." />
-            <marker date="1383184321000" expanded="false" signature="7266:7279" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p194/gems/activerecord-3.2.12/lib/active_record/associations/collection_proxy.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="77" column="0" selection-start="2900" selection-end="2900" vertical-scroll-proportion="0.31524926">
@@ -1248,20 +1184,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="69" selection-start="9910" selection-end="9910" vertical-scroll-proportion="0.0">
+        <state line="39" column="44" selection-start="1894" selection-end="1894" vertical-scroll-proportion="-24.375">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/show.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="44" selection-start="1894" selection-end="1894" vertical-scroll-proportion="-24.375">
-          <folding>
-            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#li#2;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#hr#0;n#li#2;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/edit.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/_show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="56" selection-start="80" selection-end="80" vertical-scroll-proportion="0.022796353">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/account_bar.css.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1269,6 +1223,81 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="89" selection-start="890" selection-end="890" vertical-scroll-proportion="0.49327356">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="24" selection-start="1542" selection-end="1542" vertical-scroll-proportion="0.5156951">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="70" selection-start="5198" selection-end="5224" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/events/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="58" selection-start="292" selection-end="292" vertical-scroll-proportion="-3.125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="23" selection-start="1023" selection-end="1034" vertical-scroll-proportion="0.49848023">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="32" selection-start="8780" selection-end="8807" vertical-scroll-proportion="-1.36">
+          <folding>
+            <marker date="1384020358000" expanded="false" signature="2658:2676" placeholder="..." />
+            <marker date="1384020358000" expanded="false" signature="6851:6869" placeholder="..." />
+            <marker date="1384020358000" expanded="false" signature="7266:7279" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="0" selection-start="3256" selection-end="3256" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="193" column="14" selection-start="3560" selection-end="3560" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="225" column="48" selection-start="10508" selection-end="10508" vertical-scroll-proportion="0.5590062">
+          <folding>
+            <marker date="1384022761000" expanded="true" signature="1072:1084" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="4789:4795" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="6085:6124" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="6085:6091" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="6106:6123" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="6938:6955" placeholder="..." />
+            <marker date="1384022761000" expanded="true" signature="7015:7028" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
