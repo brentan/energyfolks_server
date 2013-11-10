@@ -148,7 +148,7 @@ EnergyFolks.ajax_link = function(text, command, parameters) {
  */
 // Add loading message to a div
 EnergyFolks.loading = function(divname) {
-    EnergyFolks.$(divname).html('<div align=center class="energyfolks_loading" style="text-align:center;"><h1>Loading...</h1><br><img src="'+EnergyFolks.server_url+'/assets/loader.gif" border="0"></div>');
+    EnergyFolks.$(divname).html('<div align=center class="energyfolks_loading" style="text-align:center;"><h1>Loading...</h1><br><img src="'+EnergyFolks.server_url+'/assets/loader.gif" border="0" style="display:inline;"></div>');
 }
 // Create the popup elements if they dont already exist, and add loading message.  hide to start
 EnergyFolks.initialize_popup = function() {

@@ -1,4 +1,4 @@
 <script language="javascript">
-    <%= "EnergyFolks.id = #{@affiliate.id};" if @affiliate.present? %>
+    <%= "EnergyFolks.id = #{@affiliate.id};" if @affiliate.present? && @affiliate.id.present? %>
     EnergyFolks.showPage({source: 'users', format: 'list'});
 </script>

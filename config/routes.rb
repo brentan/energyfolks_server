@@ -85,6 +85,7 @@ EnergyfolksServer::Application.routes.draw do
   # EF Specific (non-platform) page routes:
   root :to => 'energyfolks#index'
   match "jobs" => "jobs#index"
+  match "users" => "affiliates#users"
   match "events" => "events#index"
   match "calendar" => "events#index"    #backwards compatible
   match "bulletins" => "bulletins#index"

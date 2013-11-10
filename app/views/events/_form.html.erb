@@ -1,4 +1,10 @@
 <div class='form'>
+  <%
+    if @item.start.blank? && params[:date].present?
+      @item.start = Time.at(params[:date].to_i).utc.to_datetime
+      @item.end = Time.at(params[:date].to_i+3600).utc.to_datetime
+    end
+  %>
   <%= nested_form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
       <%= raw(iframe_form) %>
       <% @item.affiliate_join << @item.class.join_table.new({affiliate_id: current_affiliate.id, approved_version: 1, admin_version: 1}) if current_affiliate.id.present? && (@item.affiliate_join.length == 0) %>
