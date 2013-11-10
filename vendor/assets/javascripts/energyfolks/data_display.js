@@ -125,9 +125,9 @@ EnergyFolks.showMonth = function() {
     var output = "<table cellpadding=0 cellspacing=0 class='enfolks_calendar' style='width:"+(7*wide)+"px;'><tr>";
     output += "<td class='enfolks_prev'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source == 'events'))
-        output += "PREV(0)"; //due to shift, previous is just start of current month
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + EnergyFolks.current_month + "'><- Previous</a>"; //due to shift, previous is just start of current month
     else
-        output += "PREV(-1)";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month-1) + "'><- Previous</a>";
     output += "</td><td colspan=5 class='enfolks_calendar_title'>";
     if(EnergyFolks.shift_later) {
         if(EnergyFolks.source == 'events')
@@ -138,9 +138,9 @@ EnergyFolks.showMonth = function() {
         output += EnergyFolks.date("F Y",EnergyFolks.mktime(0,0,1,month,1,year));
     output += "</td><td class='enfolks_next'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source != 'events'))
-        output += "NEXT(0)"; //due to shift, next is just start of current month
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month) + "'>Next -></a>";
     else
-        output += "NEXT(1)";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month+1) + "'>Next -></a>";
     output += "</td></tr><tr>";
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     for(var i=0;i<7;i++) {
@@ -157,8 +157,13 @@ EnergyFolks.showMonth = function() {
                 var bgclass=" enfolks_other_month";
             if(EnergyFolks.date("j m Y",curtime) == EnergyFolks.date("j m Y",EnergyFolks.mktime()))
                 var bgclass=' enfolks_today_month';
+            else if((EnergyFolks.source == 'events') && (curtime < EnergyFolks.mktime()))
+                bgclass += ' past';
             output += "<td class='enfolks_day" + bgclass + (i == 0 ? ' enfolks_first' : '') + (i < 4 ? ' enfolks_right' : '') + "' id='ef_" + EnergyFolks.date("mdY",curtime) + "' valign='top'>";
-            output += "<div style='text-align:right;'><a href='#' class='EnergyFolks_popup ef_add_event' style='display:none;' data-command='events/new' data-iframe='true' data-params='date" + curtime +"' >Add Event</a> "+EnergyFolks.date('j',curtime)+"</div>";
+            if(EnergyFolks.source == 'events')
+                output += "<div style='text-align:right;'><a href='#' class='EnergyFolks_popup ef_add_event' style='display:none;' data-command='events/new' data-iframe='true' data-params='date=" + curtime +"' >Add Event</a> "+EnergyFolks.date('j',curtime)+"</div>";
+            else
+                output += "<div style='text-align:right;'>"+EnergyFolks.date('j',curtime)+"</div>";
             output += "</td>";
             // DST FIX:
             if(EnergyFolks.date("j m Y",curtime) == EnergyFolks.date("j m Y",curtime+3600*24))
@@ -182,6 +187,7 @@ EnergyFolks.showMonth = function() {
         output += "</div>";
         box.append(output);
     });
+    //TODO: toolbar to change views
 }
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('mouseenter','.enfolks_day', function() {
@@ -199,6 +205,11 @@ EnergyFolks.$(function() {
         EnergyFolks.$(this).closest('.enfolks_day').find('.enfolks_detail_popup').hide();
         EnergyFolks.$(this).closest('.enfolks_day').find('.enfolks_detail_popup_white_2').hide();
         EnergyFolks.$(this).hide();
+    });
+    EnergyFolks.$('body').on('click','.enfolks_prev_next', function() {
+        EnergyFolks.current_month = $(this).attr('data-value')*1;
+        EnergyFolks.shift_later = false;
+        EnergyFolks.resetData();
     });
 });
 
@@ -236,6 +247,10 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.enfolks_item', function() {
         var params = EnergyFolks.$(this).find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
+        EnergyFolks.remote_popup('show', params);
+    });
+    EnergyFolks.$('body').on('click','.enfolks_detail_popup_white', function() {
+        var params = EnergyFolks.$(this).parent().find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
         EnergyFolks.remote_popup('show', params);
     });
 });

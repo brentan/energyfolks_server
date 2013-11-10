@@ -15,7 +15,7 @@
           <a href='/' border=0><%= image_tag 'ef_logo.png', {height: 60, width: 245, alt: 'energyfolks', border: 0} %></a>
        </div>
        <%
-           page_members = request.fullpath.include?("affiliate")
+           page_members = request.fullpath.include?("affiliate") || request.fullpath.include?("users")
            page_events = request.fullpath.include?("events")
            page_jobs = request.fullpath.include?("jobs")
            page_bulletins = request.fullpath.include?("bulletins")
