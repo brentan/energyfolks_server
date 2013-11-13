@@ -1,0 +1,80 @@
+#EnfolksFilterDiv {
+  position:relative;
+  height:28px;
+  margin: 3px;
+  padding: 0px;
+  #ef_search {
+    background-color: white;
+    border: 1px solid #aaaaaa;
+    height: 20px;
+    left:0px;
+    top:0px;
+    right:90px;
+    bottom: 0px;
+    position: absolute;
+    div {
+      position:absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      input {
+        border: 0px solid white;
+        background-color: white;
+        font-size: 16px;
+        padding: 0px;
+        margin: 1px;
+        height:18px;
+        width:100%;
+      }
+    }
+    img {
+      display: block;
+      position: absolute;
+      top:0px;
+      right: 0px;
+      cursor: pointer;
+    }
+  }
+  #ef_list {
+    position: absolute;
+    top: 0px;
+    right: 60px;
+    img {
+      cursor: pointer;
+    }
+  }
+  #ef_cal {
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    img {
+      cursor: pointer;
+    }
+  }
+  #ef_map {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    img {
+      cursor: pointer;
+    }
+  }
+  #ef_blog {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    img {
+      cursor: pointer;
+    }
+  }
+  &.ef_blogs, &.ef_bulletins {
+    #ef_search { right: 120px; }
+    #ef_list { right: 90px; }
+    #ef_cal { right: 60px; }
+    #ef_map { right: 30px; }
+  }
+  &.ef_users {
+    #ef_search { right: 0px; }
+  }
+}

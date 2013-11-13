@@ -85,7 +85,7 @@ module MixinEntity
     end
 
     def find_all_visible(user, affiliate = nil, page=0, per_page=20, limits='none')
-      # Date range options
+      # TODO: UPDATE THIS TO USE CLOUDFRONT.  UTILIZE ASARI GEM WITH CUSTOM BQ CONDITIONAL.  CREATE SOME SORT OF SPECIAL FUNCTION TO INDEX MODELS ETC.
       # Search term option
       # highlighted only option
       # geographic option
