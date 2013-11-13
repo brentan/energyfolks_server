@@ -11,36 +11,85 @@ The showpage function is the master function to show energyfolks data.  Params i
     format:
         list
         calendar
-        weekly (only with events)
         map
-        stream
+        stream (only blogs and bulletins)
  */
 EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
-    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
+    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
     var command = EnergyFolks.$.bbq.getState( "command" );
     var parameters = EnergyFolks.$.bbq.getState( "parameters" );
     if(typeof command != "undefined") {
+        EnergyFolks.loading('#EnfolksResultDiv');
         EnergyFolks.ajax(command, parameters, function(output) {
             EnergyFolks.$('#EnfolksResultDiv').html("<div style='padding:3px;'>" + output.html + "</div>");
         });
-    } else
+    } else {
+        EnergyFolks.$(function() {
+            EnergyFolks.showFilters();
+        });
         EnergyFolks.resetData();
+    }
 };
 /*
-Show energyfolks filter bar and sidebar options in the location this is called.  Otherwise, these options are shown at top of data display
+ * Show energyfolks filter bar and sidebar options in the location this is called.  Otherwise, these options are shown at top of data display
  */
 EnergyFolks.Sidebar = function() {
-    document.write("<div id='EnFolksSidebarDiv'><div id='ef_sidebar'></div></div>");
+    document.write("<div id='EnFolksSidebarDiv'></div>");
 }
 
 
 /*
-    All following functions are support functions that should not be directly called
+ * All following functions are support functions that should not be directly called
  */
+
+
+// Display the filter bar and sidebar
+EnergyFolks.showFilters = function() {
+    //TODO: Hide if in 'moderation' or 'my posts' views.
+    //If sidebar is not used, we add it to the filter bar instead:
+    if(EnergyFolks.$('#EnFolksSidebarDiv').length == 0)
+        EnergyFolks.$('#EnfolksResultDiv').before("<div id='EnFolksSidebarDiv'></div>");
+    var searchbar = "<div id='ef_search'><img src='"+EnergyFolks.server_url+"/assets/magnifier.png'><div><input type=text placeholder='Search'></div></div>";
+    if(EnergyFolks.source != 'users') {
+        searchbar += "<div id='ef_list'><img src='"+EnergyFolks.server_url+"/assets/list.png'></div>";
+        searchbar += "<div id='ef_cal'><img src='"+EnergyFolks.server_url+"/assets/calendar.png'></div>";
+        searchbar += "<div id='ef_map'><img src='"+EnergyFolks.server_url+"/assets/map.png'></div>";
+        if((EnergyFolks.source == 'blogs') || (EnergyFolks.source == 'bulletins'))
+            searchbar += "<div id='ef_stream'><img src='"+EnergyFolks.server_url+"/assets/stream.png'></div>";
+    }
+    EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
+}
+//Searchbar and filterbar listeners:
+EnergyFolks.$(function() {
+    EnergyFolks.$('body').on('click','#ef_list img', function() {
+        EnergyFolks.format = 'list';
+        EnergyFolks.resetData();
+    });
+    EnergyFolks.$('body').on('click','#ef_cal img', function() {
+        EnergyFolks.format = 'month';
+        EnergyFolks.resetData();
+    });
+    EnergyFolks.$('body').on('click','#ef_map img', function() {
+        EnergyFolks.format = 'map';
+        EnergyFolks.resetData();
+    });
+    EnergyFolks.$('body').on('click','#ef_stream img', function() {
+        EnergyFolks.format = 'stream';
+        EnergyFolks.resetData();
+    });
+    var search_function = function() {
+        var terms = EnergyFolks.$('#ef_search input').val();
+        alert(terms)
+    };
+    EnergyFolks.$('body').on('click','#ef_search img', search_function);
+    EnergyFolks.$('body').on('keypress','#ef_search input', function( event ) {
+        if(event.which == 13) search_function();
+    });
+});
+
 EnergyFolks.resetData = function() {
-    //TODO: Add code to create searchbar at top of page, buttons to switch around, etc.
     if(EnergyFolks.format == 'list') {
         EnergyFolks.data_start = 0;
         EnergyFolks.data_end = EnergyFolks.per_page - 1;
@@ -226,6 +275,8 @@ EnergyFolks.showList = function() {
         output += "<div class='enfolks_item enfolks_list_item " + (first ? 'ef_first_item ' : '') + (v.highlighted ? 'ef_highlight ' : '') + "ef_"+EnergyFolks.source+"' data-id='"+v.id+"'>"+EnergyFolks.itemDetailHTML(v)+"</div>";
         first = false;
     });
+    if(EnergyFolks.data.length == 0)
+        output = "<h2>No Results</h2>There were no results returned for this search.";
     EnergyFolks.$('#EnfolksResultDiv').html(output);
 }
 
