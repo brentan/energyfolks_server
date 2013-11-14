@@ -1,0 +1,7 @@
+:aws_access_key_id: "KEY"
+:aws_secret_access_key: "CODE"
+:s3_bucket: "BUCKET"
+:cloudsearch_endpoint: "ENDPOINT"
+:aws_params:
+  :region: 'REGION'
+:load_balanced: true/false

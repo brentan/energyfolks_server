@@ -126,10 +126,10 @@ module MixinEntity
       if true # Only on production do we use cloudfront, otherwise build normal SQL query
         #begin
           Asari.mode = :production
-          asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
-          asari.aws_region = 'ADD REGION HERE'
+          asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
+          asari.aws_region = AMAZON_REGION
 
-          filters = { and: { type: self.new.entity_name, affiliates: affiliates.map {|a| "aids#{a}aide" }.join('|') } }
+          filters = { and: { type: self.new.entity_name, affiliates: affiliates.map {|a| "ss#{a.to_s(27).tr("0-9a-q", "A-Z")}ee" }.join('|') } }
           if (limits == 'month') || (limits == 'month-shift')
             filters[:and][:date] = (DateTime.new(py, pm, pd).to_i)..(DateTime.new(ny, nm, nd).to_i)
           elsif limits == 'map'
@@ -226,8 +226,8 @@ module MixinEntity
     def reindex_all
       begin
         Asari.mode = :production
-        asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
-        asari.aws_region = 'ADD REGION HERE'
+        asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
+        asari.aws_region = AMAZON_REGION
         to_remove = asari.search({filter: {and: {date: 1..(1.day.ago.to_i*2), type: self.new.entity_name}},page_size: 100000})
         to_remove.each do |e|
           asari.remove_item(e)
@@ -255,12 +255,12 @@ module MixinEntity
     {
         :primary => self.name,
         :secondary => self.raw_tags,
-        :full_text => self.html,
+        :full_text => HTML::FullSanitizer.new.sanitize(self.html,:tags=>[]),
         :lat => latlng[:lat],
         :lng => latlng[:lng],
         :date => self.send(self.class.date_column).to_i,
-        :affiliates => "aids#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id }.join("aide aids")}aide",
-        :highlights => "aids#{self.highlights.map { |e| e.affiliate_id }.join("aide aids")}aide",
+        :affiliates => "ss#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
+        :highlights => "ss#{self.highlights.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :type => self.entity_name
     }
   end
@@ -273,9 +273,9 @@ module MixinEntity
       # This method updates the cloudfront index
       begin
         Asari.mode = :production
-        asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
-        asari.aws_region = 'ADD REGION HERE'
-        if destroy || (self.to_index[:affiliates] == "aidsaide")
+        asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
+        asari.aws_region = AMAZON_REGION
+        if destroy || (self.to_index[:affiliates] == "ssee")
           asari.remove_item(self.search_index_id)
         else
           asari.add_item(self.search_index_id, self.to_index)
