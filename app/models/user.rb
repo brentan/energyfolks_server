@@ -48,17 +48,17 @@ class User < ActiveRecord::Base
     rescue
       latlng = {lat: 0, lng: 0}
     end
-    affiliate_list = self.memberships.approved.map { |e| e.affiliate_id }
-    affiliate_list = [0] if affiliate_list.length == 0
+    affiliate_list = self.memberships.approved.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }
+    affiliate_list = ['A'] if affiliate_list.length == 0
     affiliate_list = [] unless self.verified?
     {
         :primary => "#{self.last_name}, #{self.first_name}",
         :secondary => self.raw_tags,
-        :full_text => "#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",
+        :full_text => HTML::FullSanitizer.new.sanitize("#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",:tags=>[]),
         :lat => latlng[:lat],
         :lng => latlng[:lng],
         :date => self.created_at.to_i,
-        :affiliates => "aids#{affiliate_list.join("aide aids")}aide",
+        :affiliates => "ss#{affiliate_list.join("ee ss")}ee",
         :highlights => "",
         :type => self.entity_name
     }
