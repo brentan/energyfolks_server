@@ -11,6 +11,7 @@ gem 'strip_attributes'
 gem 'geocoder'
 gem 'tinymce-rails'
 gem 'jscolor-rails'
+gem 'asari'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
@@ -24,8 +25,6 @@ gem 'email_reply_parser'
 
 gem 'mysql2'
 
-gem 'capistrano'
-gem 'capistrano-ec2group'
 gem 'nokogiri'
 
 

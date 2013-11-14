@@ -73,6 +73,7 @@ module MixinEntityController
           notice = 'Version has been reverted'
         end
       end
+      @item.update_index
     end
     redirect_to :action => 'show', :id => @item.id, :iframe => '1', :current_url => params[:current_url], :notice => notice
   end
@@ -95,6 +96,8 @@ module MixinEntityController
           end
           @item.reload
           @item.broadcast(false)
+        else
+          @item.update_index
         end
         flash[:notice]="Changes have been saved"
         render :action => :show
@@ -148,6 +151,7 @@ module MixinEntityController
       end
       join_item.awaiting_edit = true
       join_item.save
+      @item.update_index
       redirect_to :action => 'show', :id => @item.id, :iframe_next => true, :notice => notice
     else
       render 'common/reject_or_remove', locals: {join_item: join_item, aid: params[:aid]}

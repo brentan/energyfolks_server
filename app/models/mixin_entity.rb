@@ -50,6 +50,7 @@ module MixinEntity
     def acts_as_moderatable
       belongs_to :affiliate
       after_save :broadcast
+      before_destroy :remove_from_index
     end
     def acts_as_taggable
       has_many :tags_entities, as: :entity, :dependent => :destroy
@@ -84,22 +85,7 @@ module MixinEntity
       self.where(user_id: user.id).all
     end
 
-    def find_all_visible(user, affiliate = nil, page=0, per_page=20, limits='none')
-      # TODO: UPDATE THIS TO USE CLOUDFRONT.  UTILIZE ASARI GEM WITH CUSTOM BQ CONDITIONAL.  CREATE SOME SORT OF SPECIAL FUNCTION TO INDEX MODELS ETC.
-      # Search term option
-      # highlighted only option
-      # geographic option
-      affiliates = user.present? ? user.memberships.approved.map { |a| a.affiliate_id } : []
-      affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
-      affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
-      affiliates.compact!
-      select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
-      items = self.select("DISTINCT #{select.join(', ')}")
-      items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
-      items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
-      items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
-      items = items.offset(page * per_page).limit(per_page) if limits == 'order'
-      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
+    def search(terms, affiliates, page=0, per_page=20, limits='none', highlight = 0)
       if (limits == 'month') || (limits == 'month-shift')
         year = DateTime.now.year
         month = DateTime.now.month
@@ -136,9 +122,69 @@ module MixinEntity
             nd=1
           end
         end
+      end
+      if true # Only on production do we use cloudfront, otherwise build normal SQL query
+        #begin
+          Asari.mode = :production
+          asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
+          asari.aws_region = 'ADD REGION HERE'
+
+          filters = { and: { type: self.new.entity_name, affiliates: affiliates.map {|a| "aids#{a}aide" }.join('|') } }
+          if (limits == 'month') || (limits == 'month-shift')
+            filters[:and][:date] = (DateTime.new(py, pm, pd).to_i)..(DateTime.new(ny, nm, nd).to_i)
+          elsif limits == 'map'
+            filters[:and][:and] = Asari::Geography.coordinate_box(lat: page[0], lng: page[1], meters: per_page)
+          end
+          filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
+          filters[:and][:highlights] = "*,#{highlight},*" if highlight > 0
+          sort = ["date", :desc]
+          sort = "primary,secondary,full_text" if terms.length > 0
+          sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
+          sort = ["primary", :asc] if(self.name.downcase.pluralize == 'users')
+
+          options = {
+              filter: filters,
+              rank: sort,
+              page_size: %w(month month-shift map).include?(limits) ? 10000 : per_page,
+              page: %w(month month-shift map).include?(limits) ? 1 : (page+1)
+          }
+          if terms.length > 0
+            results = asari.search(terms, options)
+          else
+            results = asari.search(options)
+          end
+          ids = results.map { |e| self.entity_id_from_search_id(e) }
+          select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
+          results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
+          return results
+        #rescue
+          # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
+        #end
+      end
+      # no cloudsearch server, so use local search on SQL database.  NOTE THIS DOES NOT INCLUDE LAT/LNG SEARCH OR HIGHLIGHT SEARCH OR TERMS SEARCH
+      # TODO:
+      # Search term option
+      # highlighted only option
+      # geographic option
+      select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
+      items = self.select("DISTINCT #{select.join(', ')}")
+      items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
+      items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
+      items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
+      items = items.offset(page * per_page).limit(per_page) if limits == 'order'
+      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
+      if (limits == 'month') || (limits == 'month-shift')
         items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
       end
-      items = items.all
+      return items.all
+    end
+
+    def find_all_visible(user, affiliate = nil, page=0, per_page=20, limits='none')
+      affiliates = user.present? ? user.memberships.approved.map { |a| a.affiliate_id } : []
+      affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
+      affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
+      affiliates.compact!
+      items = self.search('',affiliates, page, per_page, limits, 0)
       return version_control(user, affiliate, items)
     end
 
@@ -173,6 +219,70 @@ module MixinEntity
 
     def version_table
       "#{self.name.capitalize.pluralize}Version".constantize
+    end
+    def entity_id_from_search_id(num)
+      num.split('_').last.to_i
+    end
+    def reindex_all
+      begin
+        Asari.mode = :production
+        asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
+        asari.aws_region = 'ADD REGION HERE'
+        to_remove = asari.search({filter: {and: {date: 1..(1.day.ago.to_i*2), type: self.new.entity_name}},page_size: 100000})
+        to_remove.each do |e|
+          asari.remove_item(e)
+        end
+      rescue
+      end
+      self.all.each do |i|
+        i.update_index
+      end
+    end
+  end
+
+  # Search and indexing methods
+  def search_index_id
+    # Returns a unique id for use in the index.  Id must be unique for every element from all entity types
+    "#{self.class.name.downcase}_#{self.id}"
+  end
+
+  def to_index
+    begin
+      latlng = Asari::Geography.degrees_to_int(lat: self.latitude, lng: self.longitude)
+    rescue
+      latlng = {lat: 0, lng: 0}
+    end
+    {
+        :primary => self.name,
+        :secondary => self.raw_tags,
+        :full_text => self.html,
+        :lat => latlng[:lat],
+        :lng => latlng[:lng],
+        :date => self.send(self.class.date_column).to_i,
+        :affiliates => "aids#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id }.join("aide aids")}aide",
+        :highlights => "aids#{self.highlights.map { |e| e.affiliate_id }.join("aide aids")}aide",
+        :type => self.entity_name
+    }
+  end
+
+  def remove_from_index
+    self.update_index(true)
+  end
+  def update_index(destroy = false)
+    if true # Only on production do we use cloudfront, otherwise do nothing
+      # This method updates the cloudfront index
+      begin
+        Asari.mode = :production
+        asari = Asari.new('ADD CLOUDSEARCH ACCESS NAME FROM CONFIG FILE HERE')
+        asari.aws_region = 'ADD REGION HERE'
+        if destroy || (self.to_index[:affiliates] == "aidsaide")
+          asari.remove_item(self.search_index_id)
+        else
+          asari.add_item(self.search_index_id, self.to_index)
+        end
+      rescue
+        #TODO: Add mailer here to inform sysadmin of failure
+      end
     end
   end
 
@@ -259,6 +369,7 @@ module MixinEntity
       i.broadcast = true
       i.save(:validate => false)
     end
+    self.update_index
     self.user_broadcast.delay(:run_at => 15.minutes.from_now) if call_user_broadcast
   end
 
@@ -379,9 +490,11 @@ module MixinEntity
       if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
         if self.highlighted?(affiliate)
           self.highlights.where(affiliate_id: affiliate.id).first.destroy
+          self.update_index
           return "Highlight Removed"
         else
           Highlight.create({affiliate_id: affiliate.id, entity: self})
+          self.update_index
           return "Highlight Added"
         end
       end
@@ -389,9 +502,11 @@ module MixinEntity
       if current_user.present? && current_user.admin?
         if self.highlighted?(affiliate)
           self.highlights.where(affiliate_id: 0).first.destroy
+          self.update_index
           return "Highlight Removed"
         else
           Highlight.create({affiliate_id: 0, entity: self})
+          self.update_index
           return "Highlight Added"
         end
       end
@@ -413,6 +528,7 @@ module MixinEntity
         Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        self.update_index
         return "This item has been approved#{highlight ? 'and highlighted' : ''}"
       end
     else
@@ -428,6 +544,7 @@ module MixinEntity
         Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        self.update_index
         return "This item has been approved#{highlight ? 'and highlighted' : ''}"
       end
     end

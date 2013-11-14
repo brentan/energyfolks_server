@@ -32,4 +32,6 @@ class Job < ActiveRecord::Base
                        :size => { :in => 0..2.megabytes }
 
   attr_accessible :name, :employer, :location, :html, :how_to_apply, :job_type, :logo, :affiliates_jobs_attributes, :last_updated_by
+
+
 end

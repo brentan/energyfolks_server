@@ -25,4 +25,6 @@ class Bulletin < ActiveRecord::Base
                        :size => { :in => 0..10.megabytes }
 
   attr_accessible :name, :html, :attachment, :affiliates_bulletins_attributes, :last_updated_by
+
+
 end
