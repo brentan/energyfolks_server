@@ -85,6 +85,7 @@ EnergyfolksServer::Application.routes.draw do
   # EF Specific (non-platform) page routes:
   root :to => 'energyfolks#index'
   match "jobs" => "jobs#index"
+  match "admin" => "admins#index"
   match "users" => "affiliates#users"
   match "events" => "events#index"
   match "calendar" => "events#index"    #backwards compatible
@@ -93,6 +94,7 @@ EnergyfolksServer::Application.routes.draw do
   match "welcome/privacy" => "energyfolks#privacy"
   match "welcome/terms" => "energyfolks#terms"
   match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes
+  match ':controller(/:action(/:id))(.:format)', controller: /admins/ #expose admin routes
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

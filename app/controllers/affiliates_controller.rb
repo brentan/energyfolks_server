@@ -81,6 +81,7 @@ class AffiliatesController < ApplicationController
       @membership.broadcast = true
       @membership.save!
       UserMailer.delay.affiliate_approved(@user,@aid, @host)
+      @user.update_index
     end
   end
 
@@ -97,8 +98,10 @@ class AffiliatesController < ApplicationController
       @membership.approved = false
       @membership.destroy
       @membership = nil
+      @user.update_index
     end
   end
+
 
   private
   def check_for_admin_rights

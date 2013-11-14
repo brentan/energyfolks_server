@@ -250,7 +250,7 @@ EnergyFolks.CreateTopBar = function() {
             outtext += '<li><a class="ab-item" href="../wp-admin">Wordpress Dashboard</a></li>';
             EnergyFolks.$("wp-admin-bar-energyfolks0-default").html(outtext);
         } else if(EnergyFolks.current_user.super_admin) {
-            EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item" href="https://www.energyfolks.com/admin/">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
+            EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/'+EnergyFolks.id+'/edit" data-iframe="true" data-params="">Partner Control Screen</a></li>');
         } else
             EnergyFolks.$("#wp-admin-bar-energyfolks0").css('display','none');
@@ -319,11 +319,11 @@ EnergyFolks.CreateTopBar = function() {
             outtext+='</ul></div></li>';
         } else if(EnergyFolks.current_user.super_admin) {
             outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub4\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub4\').show();">';
-            outtext+='<a class="ab-item" href="https://www.energyfolks.com/admin" >EF Administrator Page</a>';
+            outtext+='<a  class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>';
             outtext+='<div id="efadminbar_sub4" class="ab-sub-wrapper"><ul class="ab-submenu">';
             if(EnergyFolks.id > 0)
                 outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>Affiliate Dashboard</a></li>";
-            outtext += '<li><a class="ab-item" href="https://www.energyfolks.com/admin">EF Administrator Page</a></li>'
+            outtext += '<li><a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a></li>'
             outtext+='</ul></div></li>';
         }
         var tot=EnergyFolks.current_user.moderation_count.total;

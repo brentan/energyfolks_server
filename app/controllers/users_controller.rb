@@ -55,6 +55,7 @@ class UsersController < ApplicationController
       user.verified= true
       user.save!(validate:false)
       session[:userid]=user.id
+      user.update_index
       flash[:notice]="Your account has been activated"
       redirect_to :action => "profile"
     end
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
       user.email = user.email_to_verify
       user.email_to_verify = nil
       user.save!(validate:false)
+      user.update_index
       flash[:notice]="Your email address has been changed"
     else
       flash[:alert]="Invalid email change URL"
@@ -137,6 +139,7 @@ class UsersController < ApplicationController
         Tag.update_tags(@user.raw_tags, @user)
         UserMailer.delay.email_verification_request(@user, @aid, @host) if (old_email != @user.email_to_verify) && @user.email_to_verify.present?
         UserMailer.delay.reset_password_2(@user, @aid, @host) if params[:user][:password_old].present? && params[:user][:password].present?
+        @user.update_index
         flash[:notice]="Your account has been updated"
       else
         flash[:alert]="There are errors in your profile.  Please correct and resubmit."
@@ -233,6 +236,7 @@ class UsersController < ApplicationController
       user.verified = true
       user.active = true
       user.save!(validate:false)
+      user.update_index
     end
   end
 
@@ -244,6 +248,7 @@ class UsersController < ApplicationController
       @user.active = false
       @user.save!(validate:false)
       UserMailer.delay.account_frozen(@user, params[:reason],@aid, @host)
+      @user.update_index
     end
   end
 

@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   acts_as_taggable
 
   after_save :broadcast
+  before_destroy :remove_from_index
 
   after_create :setup_subscriptions
 
@@ -41,6 +42,27 @@ class User < ActiveRecord::Base
   # We dont use version control
   VERSION_CONTROLLED = []
 
+  def to_index
+    begin
+      latlng = Asari::Geography.degrees_to_int(lat: self.latitude, lng: self.longitude)
+    rescue
+      latlng = {lat: 0, lng: 0}
+    end
+    affiliate_list = self.memberships.approved.map { |e| e.affiliate_id }
+    affiliate_list = [0] if affiliate_list.length == 0
+    affiliate_list = [] unless self.verified?
+    {
+        :primary => "#{self.last_name}, #{self.first_name}",
+        :secondary => self.raw_tags,
+        :full_text => "#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",
+        :lat => latlng[:lat],
+        :lng => latlng[:lng],
+        :date => self.created_at.to_i,
+        :affiliates => "aids#{affiliate_list.join("aide aids")}aide",
+        :highlights => "",
+        :type => self.entity_name
+    }
+  end
   validates_each :email do |record, attr, value|
     if value.present?
       record.errors.add(attr, 'Invalid email address') unless value.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,12}$/
