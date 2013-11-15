@@ -38,6 +38,14 @@ EnergyFolksLogin.prototype.ForwardTo = function(url) {
 EnergyFolksLogin.prototype.SetAffiliate = function(id) {
     EnergyFolks.id = id;
 }
+EnergyFolksLogin.prototype.RestrictToAffiliate = function(id) {
+    EnergyFolks.id = id;
+    EnergyFolks.source_restrict = EnergyFolks.AFFILIATE_ONLY;
+}
+EnergyFolksLogin.prototype.RestrictToHighlighted = function(id) {
+    EnergyFolks.id = id;
+    EnergyFolks.source_restrict = EnergyFolks.HIGHLIGHTED_ONLY;
+}
 EnergyFolksLogin.prototype.CheckCookies = function() {}
 EnergyFolksLogin.prototype.DisplayLogin = function() {
     EnergyFolks.LoginBox();

@@ -22,6 +22,7 @@ EnergyFolks.TopBarFixed = true;
 EnergyFolks.checkCookies = true;
 //data-display constants:
 EnergyFolks.source = 'events';
+EnergyFolks.source_restrict = 1;
 EnergyFolks.format = 'list';
 EnergyFolks.page = 0; //0 = start
 EnergyFolks.per_page = 20;
@@ -38,7 +39,11 @@ EnergyFolks.map_lat = 0;
 EnergyFolks.map_lat = 0;
 EnergyFolks.map_zoom = 11;
 EnergyFolks.marker_layer = 0;
+EnergyFolks.map_location_lat = 0;
+EnergyFolks.map_location_lng = 0;
 EnergyFolks.map_bounds = [[10000,10000],[-10000,-10000]];
+EnergyFolks.map_location_name = 'Loading';
+EnergyFolks.map_location_radius = 50;
 
 //Initialize the Objects array
 EnergyFolks.objects = [];
@@ -49,3 +54,8 @@ EnergyFolks.EDITOR = 3;
 EnergyFolks.AUTHOR = 2;
 EnergyFolks.CONTRIBUTOR = 1;
 EnergyFolks.NO_RIGHTS = 0;
+
+//Set Restriction levels
+EnergyFolks.ANY_POST = 1;
+EnergyFolks.AFFILIATE_ONLY = 2;
+EnergyFolks.HIGHLIGHTED_ONLY = 3;

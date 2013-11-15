@@ -1,4 +1,4 @@
-class CreateEventsAndBulletinsTables < ActiveRecord::Migration
+class CreateEventsAndDiscussionsTables < ActiveRecord::Migration
   def change
     # EVENTS:
     create_table :events do |t|
@@ -47,7 +47,7 @@ class CreateEventsAndBulletinsTables < ActiveRecord::Migration
     add_column :affiliates_events, :awaiting_edit, :boolean, :default => true
     add_column :affiliates_events, :approved_versions, :string, :default => '0'
     # BULLETINS:
-    create_table :bulletins do |t|
+    create_table :discussions do |t|
       t.timestamps
       t.integer :user_id
       t.integer :affiliate_id
@@ -57,7 +57,7 @@ class CreateEventsAndBulletinsTables < ActiveRecord::Migration
       t.text  :html
       t.attachment :attachment
     end
-    create_table :bulletins_versions do |t|
+    create_table :discussions_versions do |t|
       t.timestamps
       t.integer :entity_id
       t.integer :version_number
@@ -65,18 +65,18 @@ class CreateEventsAndBulletinsTables < ActiveRecord::Migration
       t.text  :html
       t.attachment :attachment
     end
-    add_index :bulletins_versions, :entity_id
-    add_index :bulletins_versions, :version_number
-    create_table :affiliates_bulletins do |t|
-      t.integer :bulletin_id
+    add_index :discussions_versions, :entity_id
+    add_index :discussions_versions, :version_number
+    create_table :affiliates_discussions do |t|
+      t.integer :discussion_id
       t.integer :affiliate_id
       t.integer :approved_version, :default => 0
       t.integer :admin_version, :default => 0
       t.boolean :broadcast, :default => false
       t.boolean :user_broadcast, :default => false
     end
-    add_index :affiliates_bulletins, :bulletin_id
-    add_column :affiliates_bulletins, :awaiting_edit, :boolean, :default => true
-    add_column :affiliates_bulletins, :approved_versions, :string, :default => '0'
+    add_index :affiliates_discussions, :discussion_id
+    add_column :affiliates_discussions, :awaiting_edit, :boolean, :default => true
+    add_column :affiliates_discussions, :approved_versions, :string, :default => '0'
   end
 end

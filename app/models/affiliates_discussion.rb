@@ -1,12 +1,12 @@
-class AffiliatesBulletin < ActiveRecord::Base
+class AffiliatesDiscussion < ActiveRecord::Base
   belongs_to :affiliate
-  belongs_to :bulletin
+  belongs_to :discussion
   scope :waiting, where("(admin_version > approved_version) AND awaiting_edit = 0")
 
-  attr_accessible :bulletin_id, :affiliate_id, :approved_version, :admin_version, :broadcast, :user_broadcast
+  attr_accessible :discussion_id, :affiliate_id, :approved_version, :admin_version, :broadcast, :user_broadcast
 
   def entity_id
-    self.bulletin_id
+    self.discussion_id
   end
 
   def approved?

@@ -10,7 +10,7 @@ class CreateAffiliatesAndMembers < ActiveRecord::Migration
       t.string :url
       t.string :url_calendar
       t.string :url_jobs
-      t.string :url_bulletins
+      t.string :url_discussions
       t.string :url_users
       t.string :url_blog
       t.string :email
@@ -23,7 +23,7 @@ class CreateAffiliatesAndMembers < ActiveRecord::Migration
       t.string :location
       t.float :latitude
       t.float :longitude
-      t.integer :moderate_bulletins, :default => Affiliate::DIRECT
+      t.integer :moderate_discussions, :default => Affiliate::DIRECT
       t.integer :moderate_jobs, :default => Affiliate::DIRECT
       t.integer :moderate_calendar, :default => Affiliate::DIRECT
       t.string :shared_secret

@@ -65,7 +65,7 @@
               <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
         <h1>Email Subscriptions</h1>
           <%= f.fields_for :subscription do |s| %>
-            <%= render :partial => '/common/subscriptions', locals: {f: s} %>
+            <%= render :partial => '/common/subscriptions', locals: {f: s, show_rad: true} %>
           <% end %>
 
         <h1>Profile</h1>

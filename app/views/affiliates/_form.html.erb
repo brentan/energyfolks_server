@@ -21,9 +21,13 @@
 </div>
 
 
-<div class='form_label'>Distance Radius</div>
-<div class='form_entry'><%= f.text_field :radius %>
+<div class='form_label'>Event Radius</div>
+<div class='form_entry'><%= f.text_field :event_radius %>
   <div class='explain'>When showing events on your calendar, include events with above miles of group location</div>
+</div>
+<div class='form_label'>Jobs Radius</div>
+<div class='form_entry'><%= f.text_field :job_radius %>
+  <div class='explain'>When showing jobs on your website, include jobs with above miles of group location (use 0 for all jobs everywhere)</div>
 </div>
 
 <div class='form_label'>Contact Email Address</div>
@@ -41,8 +45,8 @@
 <div class='form_entry'><%= f.text_field :url_calendar %></div>
 <div class='form_label'>Jobs URL:</div>
 <div class='form_entry'><%= f.text_field :url_jobs %></div>
-<div class='form_label'>Bulletins URL:</div>
-<div class='form_entry'><%= f.text_field :url_bulletins %></div>
+<div class='form_label'>Discussions URL:</div>
+<div class='form_entry'><%= f.text_field :url_discussions %></div>
 <div class='form_label'>Member Directory URL:</div>
 <div class='form_entry'><%= f.text_field :url_users %></div>
 <div class='form_label'>Blog URL:</div>
@@ -67,7 +71,7 @@
 </div>
 
 <h1>Default Email Subscriptions for new members:</h1>
-<%= render :partial => '/common/subscriptions', :locals => { f: f } %>
+<%= render :partial => '/common/subscriptions', :locals => { f: f, show_rad: false} %>
 
 <h1>Moderation Settings</h1>
 <div class='form_label'>Events Moderation Settings:</div>
@@ -82,11 +86,11 @@
   <label><%= f.radio_button :moderate_jobs, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
   <label><%= f.radio_button :moderate_jobs, Affiliate::ALL %> moderate all posts</label>
 </div>
-<div class='form_label'>Bulletins Moderation Settings:</div>
+<div class='form_label'>Discussions Moderation Settings:</div>
 <div class='form_entry'>
-  <label><%= f.radio_button :moderate_bulletins, Affiliate::NONE %> No moderation, anyone can post</label>
-  <label><%= f.radio_button :moderate_bulletins, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
-  <label><%= f.radio_button :moderate_bulletins, Affiliate::ALL %> moderate all posts</label>
+  <label><%= f.radio_button :moderate_discussions, Affiliate::NONE %> No moderation, anyone can post</label>
+  <label><%= f.radio_button :moderate_discussions, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
+  <label><%= f.radio_button :moderate_discussions, Affiliate::ALL %> moderate all posts</label>
 </div>
 
 <h1>Look and Feel</h1>

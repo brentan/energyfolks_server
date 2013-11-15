@@ -60,8 +60,9 @@ EnergyFolks.iframe_popup = function(command, parameters) {
         EnergyFolks.$('#energyfolks_popup_content').append("<div id='energyfolks_popup_iframe' style='visibility:hidden;'><iframe src='"+url+"' frameborder='0' border='0' style='border-width:0px;width:900px;height:30px;overflow:auto;'></iframe></div>");
     }
 }
-EnergyFolks.create_iframe_popup = function(text, command, parameters) {
-    return "<a href='#' class='EnergyFolks_popup' data-command='"+command+"' data-iframe='true' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
+EnergyFolks.create_iframe_popup = function(text, command, parameters, klass) {
+    if(typeof klass === 'undefined') klass = '';
+    return "<a href='#' class='EnergyFolks_popup " + klass + "' data-command='"+command+"' data-iframe='true' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
 }
 
 EnergyFolks.justSet = false;
@@ -109,8 +110,9 @@ EnergyFolks.remote_popup = function(command, parameters) {
         EnergyFolks.vertically_center_popup();
     });
 }
-EnergyFolks.create_remote_popup = function(text, command, parameters) {
-    return "<a href='#' class='EnergyFolks_popup' data-command='"+command+"' data-iframe='false' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
+EnergyFolks.create_remote_popup = function(text, command, parameters,  klass) {
+    if(typeof klass === 'undefined') klass = '';
+    return "<a href='#' class='EnergyFolks_popup " + klass + "' data-command='"+command+"' data-iframe='false' data-params='"+EnergyFolks.$.param(parameters)+"'>"+text+"</a>";
 }
 
 //Load popup and directly insert html

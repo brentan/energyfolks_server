@@ -137,11 +137,12 @@ module MixinEntity
             ne = Asari::Geography.degrees_to_int(lat: bounds[2].to_i, lng: bounds[3].to_i)
             filters[:and][:lat] = sw[:lat]..ne[:lat]
             filters[:and][:lng] = sw[:lng]..ne[:lng]
-            #filters[:and][:and] = Asari::Geography.coordinate_box(lat: page[0], lng: page[1], meters: per_page)
+          elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
+            filters[:and][:and] = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
           end
-          # TODO: geo restriction by point/radius
           filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
           filters[:and][:highlights] = "ss#{options[:highlight].to_i.to_s(27).tr("0-9a-q", "A-Z")}ee" if options[:highlight] > 0
+          filters[:and][:primary_id] = options[:source] if options[:source] > 0
           sort = ["date", :desc]
           sort = "primary,secondary,full_text" if terms.length > 0
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
@@ -168,7 +169,7 @@ module MixinEntity
       end
       # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to names
       # TODO:
-      # geographic option
+      # primary network id
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
       items = self.select("DISTINCT #{select.join(', ')}")
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
@@ -180,10 +181,11 @@ module MixinEntity
       if options[:display] == 'map'
         bounds = options[:bounds].split('_')
         items = items.where("latitude > #{bounds[0]} AND latitude < #{bounds[2]} AND longitude > #{bounds[1]} AND longitude < #{bounds[3]}")
+      elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
+        items = items.near([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
       end
-      if options[:highlight] > 0
-        items = items.joins(:highlights).where("highlights.affiliate_id = ?",options[:highlight])
-      end
+      items = items.joins(:highlights).where("highlights.affiliate_id = ?",options[:highlight]) if options[:highlight] > 0
+      items = items.where("#{self.name.downcase.pluralize}.affiliate_id = ?", options[:source]) if options[:source] > 0
       if options[:display] == 'month'
         items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
       end
@@ -191,11 +193,6 @@ module MixinEntity
     end
 
     def find_all_visible(user, affiliate = nil, options = {})
-      if options[:highlight] && affiliate.present? && affiliate.id.present?
-        options[:highlight] = affiliate.id
-      else
-        options[:highlight] = 0
-      end
       affiliates = user.present? ? user.memberships.approved.map { |a| a.affiliate_id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
@@ -278,7 +275,8 @@ module MixinEntity
         :date => self.send(self.class.date_column).to_i,
         :affiliates => "ss#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :highlights => "ss#{self.highlights.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
-        :type => self.entity_name
+        :type => self.entity_name,
+        :primary_id => self.affiliate_id
     }
   end
 

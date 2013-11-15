@@ -6,13 +6,13 @@ The showpage function is the master function to show energyfolks data.  Params i
         events
         jobs
         users (only used with 'list' format)
-        bulletins
+        discussions
         blogs
     format:
         list
         calendar
         map
-        stream (only blogs and bulletins)
+        stream (only blogs and discussions)
  */
 EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
@@ -56,13 +56,108 @@ EnergyFolks.showFilters = function() {
         searchbar += "<div id='ef_list'><img src='"+EnergyFolks.server_url+"/assets/list.png'></div>";
         searchbar += "<div id='ef_cal'><img src='"+EnergyFolks.server_url+"/assets/calendar.png'></div>";
         searchbar += "<div id='ef_map'><img src='"+EnergyFolks.server_url+"/assets/map.png'></div>";
-        if((EnergyFolks.source == 'blogs') || (EnergyFolks.source == 'bulletins'))
+        if((EnergyFolks.source == 'blogs') || (EnergyFolks.source == 'discussions'))
             searchbar += "<div id='ef_stream'><img src='"+EnergyFolks.server_url+"/assets/stream.png'></div>";
     }
     EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
+    var filterbar = '';
+    if(EnergyFolks.source != 'Users')
+        filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post New "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
+    filterbar += "<div class='ef_filter_title'><h3>Filters:</h3></div>";
+    filterbar += "<div class='ef_filters'>";
+    if(EnergyFolks.source != 'discussions') filterbar += "<div class='ef_filter_house' id='location_filter'>Location: <span class='ef_text'></span><div><label><input name='ef_location_radio' type=radio class='ef_location_radio1' value=0>Anywhere</label><input name='ef_location_radio' type=radio class='ef_location_radio2' value=1 checked>Within <input type=text id='ef_filter_radius' value="+EnergyFolks.map_location_radius+"> miles of <input type=text id='ef_filter_location' value='"+EnergyFolks.map_location_name+"'><div id='ef_location_searching'>Searching...</div></div></div>";
+    filterbar += "<div class='ef_filter_house' id='tags_filter'>Tags: <span class='ef_text'></span><div></div></div>";
+    if((EnergyFolks.id > 0) && (EnergyFolks.source != 'users')) {
+        filterbar += "<div class='ef_filter_house' id='source_filter'>Source: <span class='ef_text'></span><div>";
+        filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio1' value=" + EnergyFolks.ANY_POST + (EnergyFolks.source_restrict == EnergyFolks.ANY_POST ? ' checked' : '') + "> Any EnergyFolks Network</label>";
+        filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio2' value=" + EnergyFolks.AFFILIATE_ONLY + (EnergyFolks.source_restrict == EnergyFolks.AFFILIATE_ONLY ? ' checked' : '') + "> <span class='ef_a_name'>This Network</span></label>";
+        if(EnergyFolks.source != 'blogs') filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio3' value=" + EnergyFolks.HIGHLIGHTED_ONLY + (EnergyFolks.source_restrict == EnergyFolks.HIGHLIGHTED_ONLY ? ' checked' : '') + "> Highlighted Items</label>";
+        filterbar += "</div></div>";
+    }
+    filterbar += "</div><div id='ef_submit_filters'><button>Update</button></div>";
+    EnergyFolks.$('#EnFolksSidebarDiv').html(filterbar);
+    EnergyFolks.UpdateFilterText();
+}
+EnergyFolks.UpdateFilterText = function() {
+    var restrict = 'Any';
+    if(EnergyFolks.source_restrict == EnergyFolks.AFFILIATE_ONLY) var restrict = 'This Network';
+    if(EnergyFolks.source_restrict == EnergyFolks.HIGHLIGHTED_ONLY) var restrict = 'Highlighted';
+    EnergyFolks.$("#source_filter span.ef_text").html(restrict);
+    EnergyFolks.$("#location_filter span.ef_text").html(EnergyFolks.map_location_radius == 0 ? 'Anywhere' : EnergyFolks.map_location_name);
+    //TODO: Tags update
+}
+EnergyFolks.HighlightUpdateButton = function() {
+    var el = EnergyFolks.$("#ef_submit_filters");
+    el.before("<div/>")
+    el.prev()
+        .width(el.width())
+        .height(el.height())
+        .css({
+            "position": "absolute",
+            "background-color": "#ffff99",
+            "opacity": ".9"
+        })
+        .fadeOut(500);
+}
+EnergyFolks.geocoded = function(response) {
+    EnergyFolks.$('#ef_location_searching').hide();
+    EnergyFolks.$('#ef_submit_filters').show();
+    if(response.length == 0)
+        EnergyFolks.showNotice("Unrecognized location: " + EnergyFolks.map_location_name,'red');
+    else {
+        EnergyFolks.map_location_lat = response[0].lat;
+        EnergyFolks.map_location_lng = response[0].lon;
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    }
 }
 //Searchbar and filterbar listeners:
 EnergyFolks.$(function() {
+    //filterbar
+    EnergyFolks.$('body').on('change','#location_filter input[type=radio]', function() {
+        var anywhere =  $('#location_filter input[type=radio]:checked').val();
+        var val = EnergyFolks.$('#ef_filter_radius').val()*1;
+        if(!(val > 0) && (anywhere > 0)) {
+            val = 50;
+            EnergyFolks.$('#ef_filter_radius').val(50);
+        }
+        EnergyFolks.map_location_radius = val * anywhere;
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    });
+    EnergyFolks.$('body').on('blur','#ef_filter_radius', function() {
+        var val = EnergyFolks.$('#ef_filter_radius').val()*1;
+        if(val > 0)
+            EnergyFolks.$('.ef_location_radio2').prop("checked", true);
+        else {
+            val = 0;
+            EnergyFolks.$('.ef_location_radio1').prop("checked", true);
+        }
+        EnergyFolks.map_location_radius = val;
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    });
+    EnergyFolks.$('body').on('blur','#ef_filter_location', function() {
+        var val = EnergyFolks.$('#ef_filter_radius').val()*1;
+        if(!(val > 0))
+            EnergyFolks.$('#ef_filter_radius').val(50);
+        EnergyFolks.map_location_radius = EnergyFolks.$('#ef_filter_radius').val();
+        EnergyFolks.$('.ef_location_radio2').prop("checked", true);
+        EnergyFolks.map_location_name = EnergyFolks.$('#ef_filter_location').val();
+        var script = document.createElement('script');
+        script.src = 'http://nominatim.openstreetmap.org/search/?format=json&json_callback=EnergyFolks.geocoded&q=' + encodeURIComponent(EnergyFolks.map_location_name);
+        document.body.appendChild(script);
+        EnergyFolks.$('#ef_submit_filters').hide();
+        EnergyFolks.$('#ef_location_searching').show();
+    });
+    EnergyFolks.$('body').on('change','#source_filter input[type=radio]', function() {
+        EnergyFolks.source_restrict =  $('#source_filter input[type=radio]:checked').val();
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    });
+    EnergyFolks.$('body').on('click','#ef_submit_filters button', function() { EnergyFolks.loadData(); return false; } );
+
+    //searchbar
     EnergyFolks.$('body').on('click','#ef_list img', function() {
         EnergyFolks.format = 'list';
         EnergyFolks.resetData();
@@ -90,10 +185,12 @@ EnergyFolks.$(function() {
 });
 
 EnergyFolks.resetData = function() {
+    EnergyFolks.$('#location_filter').show();
     if(EnergyFolks.format == 'list') {
         EnergyFolks.page = 0;
     }
     if(EnergyFolks.format == 'map') {
+        EnergyFolks.$('#location_filter').hide();
         EnergyFolks.showMap();
         EnergyFolks.moveMap(false);
     }
@@ -133,7 +230,7 @@ EnergyFolks.loadData = function() {
         bounds = "" + EnergyFolks.map_bounds[0][0] + "_" + EnergyFolks.map_bounds[0][1] + "_" + EnergyFolks.map_bounds[1][0] + "_" + EnergyFolks.map_bounds[1][1];
     } else
         EnergyFolks.loading('#EnfolksResultDiv');
-    EnergyFolks.ajax(EnergyFolks.source, {bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
+    EnergyFolks.ajax(EnergyFolks.source, {source: EnergyFolks.source_restrict, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
 /*
@@ -160,6 +257,10 @@ EnergyFolks.moveMap = function(allow_reload) {
 }
 EnergyFolks.showMap = function() {
     EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
+    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
+        window.setTimeout(function() {Energyfolks.showMap(); }, 250);
+        return;
+    }
     EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
     EnergyFolks.Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -434,11 +535,11 @@ EnergyFolks.getItemInfo = function(item) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','events/edit',{id: item.id});
         }
         output.admin_links = admin_links;
-    } else if(EnergyFolks.source == 'bulletins') {
+    } else if(EnergyFolks.source == 'discussions') {
         output.affiliate_id = item.affiliate_id;
         output.logo = '';
         output.title = item.name;
-        output.params = {id: item.id, model: 'Bulletin'};
+        output.params = {id: item.id, model: 'Discussion'};
         output.line_one = '';
         output.line_two = '';
         var admin_links = '';
@@ -446,9 +547,9 @@ EnergyFolks.getItemInfo = function(item) {
             //TODO: Links for moderation queue
             admin_links = 'MODERATION LINKS'
         } else if(EnergyFolks.current_user.super_admin) {
-            admin_links += EnergyFolks.create_iframe_popup('Edit Post','bulletins/edit',{id: item.id});
+            admin_links += EnergyFolks.create_iframe_popup('Edit Post','discussions/edit',{id: item.id});
         } else if(EnergyFolks.current_user.id == item.user_id) {
-            admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','bulletins/edit',{id: item.id});
+            admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','discussions/edit',{id: item.id});
         }
         output.admin_links = admin_links;
     }
