@@ -30,4 +30,13 @@ class Tag < ActiveRecord::Base
     end
   end
 
+  def self.popular_tags
+    Tag.unscoped.order('count DESC').where('count > 1').limit(6)
+  end
+
+  def refresh_count
+    self.count = self.tags_entities.length
+    self.save
+  end
+
 end
