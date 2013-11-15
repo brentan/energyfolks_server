@@ -80,8 +80,8 @@ EnergyFolks.$(function() {
         EnergyFolks.resetData();
     });
     var search_function = function() {
-        var terms = EnergyFolks.$('#ef_search input').val();
-        alert(terms)
+        EnergyFolks.search_terms = EnergyFolks.$('#ef_search input').val();
+        EnergyFolks.loadData();
     };
     EnergyFolks.$('body').on('click','#ef_search img', search_function);
     EnergyFolks.$('body').on('keypress','#ef_search input', function( event ) {
@@ -91,32 +91,49 @@ EnergyFolks.$(function() {
 
 EnergyFolks.resetData = function() {
     if(EnergyFolks.format == 'list') {
-        EnergyFolks.data_start = 0;
-        EnergyFolks.data_end = EnergyFolks.per_page - 1;
-        EnergyFolks.data_limits = 'order'
+        EnergyFolks.page = 0;
     }
-    if(EnergyFolks.format == 'month') {
-        EnergyFolks.data_start = EnergyFolks.current_month; //this is an offset from current month (current = 0)
-        EnergyFolks.data_limits = EnergyFolks.shift_later ? 'month-shift' : 'month'
+    if(EnergyFolks.format == 'map') {
+        EnergyFolks.showMap();
+        EnergyFolks.moveMap(false);
     }
-    //TODO: MORE formats
+    if(EnergyFolks.format == 'stream') {
+        EnergyFolks.page = 0;
+    }
     EnergyFolks.loadData();
 }
 
 EnergyFolks.showData = function(data) {
     EnergyFolks.data = data.data;
+    // Moderation box
+    var modtext = false;
+    EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
+        if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
+            modtext = true
+    });
+    if(modtext)
+        EnergyFolks.$("#moderation_box_" + EnergyFolks.source).html('<div class="moderation_box"><strong>You have items awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
     if(EnergyFolks.format == 'list') {
         EnergyFolks.showList();
     }
     if(EnergyFolks.format == 'month') {
         EnergyFolks.showMonth();
     }
+    if(EnergyFolks.format == 'map') {
+        EnergyFolks.populateMap();
+    }
     //TODO: more formats
 }
 
 EnergyFolks.loadData = function() {
-    EnergyFolks.loading('#EnfolksResultDiv');
-    EnergyFolks.ajax(EnergyFolks.source, {start: EnergyFolks.data_start, end: EnergyFolks.data_end, limits: EnergyFolks.data_limits, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
+    var bounds = '';
+    if((EnergyFolks.format == 'map') && (EnergyFolks.$('#EnfolksMapDiv').length > 0)) {
+        EnergyFolks.loading('#EnfolksMapDiv_loading');
+        EnergyFolks.$('#EnfolksMapDiv_loading').show();
+        bounds = "" + EnergyFolks.map_bounds[0][0] + "_" + EnergyFolks.map_bounds[0][1] + "_" + EnergyFolks.map_bounds[1][0] + "_" + EnergyFolks.map_bounds[1][1];
+    } else
+        EnergyFolks.loading('#EnfolksResultDiv');
+    EnergyFolks.ajax(EnergyFolks.source, {bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
 /*
@@ -130,6 +147,48 @@ EnergyFolks.$(function() {
         EnergyFolks.loadData();
     });
 });
+
+//Map View
+EnergyFolks.moveMap = function(allow_reload) {
+    var bounds = EnergyFolks.map_layer.getBounds();
+    var reload = false;
+    if(bounds.getSouth() < EnergyFolks.map_bounds[0][0]) { reload=true; EnergyFolks.map_bounds[0][0] = bounds.getSouth(); }
+    if(bounds.getWest() < EnergyFolks.map_bounds[0][1]) { reload=true; EnergyFolks.map_bounds[0][1] = bounds.getWest(); }
+    if(bounds.getNorth() > EnergyFolks.map_bounds[1][0]) { reload=true; EnergyFolks.map_bounds[1][0] = bounds.getNorth(); }
+    if(bounds.getEast() > EnergyFolks.map_bounds[1][1]) { reload=true; EnergyFolks.map_bounds[1][1] = bounds.getEast(); }
+    if(reload && allow_reload) EnergyFolks.loadData();
+}
+EnergyFolks.showMap = function() {
+    EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
+    EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
+    EnergyFolks.Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(EnergyFolks.map_layer);
+    EnergyFolks.marker_layer = new EnergyFolks.Leaflet.LayerGroup([]);
+    EnergyFolks.marker_layer.addTo(EnergyFolks.map_layer);
+    //Setup listeners
+    EnergyFolks.map_layer.on('resize', function(e) {
+        EnergyFolks.moveMap(true);
+    });
+    EnergyFolks.map_layer.on('zoomend', function(e) {
+        EnergyFolks.moveMap(true);
+    });
+    EnergyFolks.map_layer.on('dragend', function(e) {
+        EnergyFolks.moveMap(true);
+    });
+}
+EnergyFolks.populateMap = function() {
+    if(EnergyFolks.$('#EnfolksMapDiv').length == 0)
+        EnergyFolks.showMap();
+    EnergyFolks.$('#EnfolksMapDiv_loading').hide();
+    EnergyFolks.marker_layer.clearLayers();
+    EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
+        //EnergyFolks.marker_layer.addLayer(EnergyFolks.Leaflet.marker([v.latitude, v.longitude]).setPopupContent(EnergyFolks.itemDetailHTML(v, false)).openPopup());
+        var marker = EnergyFolks.Leaflet.marker([v.latitude, v.longitude]);
+        EnergyFolks.marker_layer.addLayer(marker);
+        marker.bindPopup(EnergyFolks.itemDetailHTML(v, false) + "<a href='#' class='enfolks_detail_map_popup' style='display:block;text-align:right;'>View Full Details</a>");
+    });
+}
 
 //CalendarView
 EnergyFolks.showMonth = function() {
@@ -236,7 +295,6 @@ EnergyFolks.showMonth = function() {
         output += "</div>";
         box.append(output);
     });
-    //TODO: toolbar to change views
 }
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('mouseenter','.enfolks_day', function() {
@@ -258,7 +316,7 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.enfolks_prev_next', function() {
         EnergyFolks.current_month = $(this).attr('data-value')*1;
         EnergyFolks.shift_later = false;
-        EnergyFolks.resetData();
+        EnergyFolks.loadData();
     });
 });
 
@@ -303,6 +361,11 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.enfolks_detail_popup_white', function() {
         var params = EnergyFolks.$(this).parent().find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
         EnergyFolks.remote_popup('show', params);
+    });
+    EnergyFolks.$('body').on('click','.enfolks_detail_map_popup', function() {
+        var params = EnergyFolks.$(this).parent().find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
+        EnergyFolks.remote_popup('show', params);
+        return false;
     });
 });
 EnergyFolks.getItemInfo = function(item) {

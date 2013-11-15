@@ -69,6 +69,7 @@ EnergyfolksServer::Application.configure do
   ec2info = YAML.load_file("#{Rails.root}/config/ec2.yml")
   AMAZON_CLOUDSEARCH_ENDPOINT = ec2info[:cloudsearch_endpoint]
   AMAZON_REGION = ec2info[:aws_params][:region]
+  USE_CLOUDSEARCH = true
   config.paperclip_defaults = {
       :url => ':s3_domain_url',
       :s3_protocal => 'https',

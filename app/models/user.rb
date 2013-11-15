@@ -106,7 +106,9 @@ class User < ActiveRecord::Base
 
   ITOA64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
-  def self.find_all_visible(current_user, affiliate = nil, page=0, per_page=20)
+  def self.find_all_visible(current_user, affiliate = nil, spage=0, sper_page=20)
+    page=0
+    per_page = 20
     visibility = User::PUBLIC
     visibility = User::LOGGED_IN if current_user.present?
     visibility = User::NETWORKS if current_user.present? && affiliate.present? && Membership.is_member?(current_user, affiliate)

@@ -12,3 +12,4 @@
 //= require energyfolks/accounts
 //= require energyfolks/data_display
 //= require energyfolks/backwards_compatible
+//= require energyfolks/leaflet
