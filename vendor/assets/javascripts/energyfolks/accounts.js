@@ -261,8 +261,6 @@ EnergyFolks.CreateTopBar = function() {
             outtext='';
             EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
                 outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="aid='+ v.aid+'">'+ v.title+' ('+ v.count+')</a></li>';
-                if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
-                    EnergyFolks.$("#moderation_box_" + v.method).html('<div class="moderation_box"><strong>'+ v.count + ' ' + v.title + (v.count == 1 ? '' : 's') + ' awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
             });
             EnergyFolks.$("#wp-admin-bar-energyfolks1-default").html(outtext);
         } else
@@ -333,8 +331,6 @@ EnergyFolks.CreateTopBar = function() {
             outtext+='<div id="efadminbar_subm" class="ab-sub-wrapper"><ul class="ab-submenu">';
             EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
                 outtext +='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="'+ v.method+'/moderation" data-iframe="true" data-params="aid='+ v.aid+'">'+ v.title+' ('+ v.count+')</a></li>';
-                if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
-                    EnergyFolks.$("#moderation_box_" + v.method).html('<div class="moderation_box"><strong>'+ v.count + ' ' + v.title + (v.count == 1 ? '' : 's') + ' awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
             });
             outtext+='</ul></div></li>';
         }

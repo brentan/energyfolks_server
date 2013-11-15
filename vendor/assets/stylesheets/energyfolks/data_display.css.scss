@@ -19,6 +19,7 @@
 }
 .enfolks_list_item {
   margin: 0px;
+  min-height: 40px;
   padding: 2px 4px;
   border: 0px solid #cccccc;
   border-bottom-width: 1px;
@@ -253,5 +254,71 @@ table.enfolks_calendar {
         margin-left: 46px;
       }
     }
+  }
+}
+.leaflet-popup-content {
+
+  img.enfolks_logo {
+    width: 40px;
+    height: 40px;
+    float: right;
+    border: 1px solid #cccccc;
+    margin: 0px 4px;
+  }
+  img.affiliate_logo {
+    width:40px;
+    height: 40px;
+    float: left;
+    border: 1px solid #cccccc;
+  }
+  h1.title {
+    margin:0px;
+    padding:0px 0px 3px 0px;
+    font-size: 15px;
+    margin-left: 46px;
+  }
+  h3.line1 {
+    color: #333333;
+    font-size: 12px;
+    margin:0px;
+    padding:0px 0px 2px 0px;
+    margin-left: 46px;
+  }
+  span.line2 {
+    margin:0px;
+    padding: 0px;
+    display: block;
+    color: #666666;
+    margin-left: 46px;
+  }
+}
+#EnfolksMapDiv {
+  position: relative;
+  height: 500px;
+  border: 1px solid black;
+  margin: 2px;
+  padding: 0px;
+  #EnfolksMapDiv_map {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid black;
+  }
+  #EnfolksMapDiv_loading {
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+    display:none;
+    top: 150px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid black;
   }
 }

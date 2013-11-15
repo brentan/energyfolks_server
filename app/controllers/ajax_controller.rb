@@ -62,7 +62,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Job.get_mine(current_user)
     else
-      data = Job.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
+      data = Job.find_all_visible(current_user, current_affiliate, fix_params(params))
     end
     render_ajax( {data: data} )
   end
@@ -73,7 +73,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Event.get_mine(current_user)
     else
-      data = Event.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
+      data = Event.find_all_visible(current_user, current_affiliate, fix_params(params))
     end
     render_ajax( {data: data} )
   end
@@ -84,7 +84,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Bulletin.get_mine(current_user)
     else
-      data = Bulletin.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i, params[:limits])
+      data = Bulletin.find_all_visible(current_user, current_affiliate, fix_params(params))
     end
     render_ajax( {data: data} )
   end
@@ -133,8 +133,26 @@ class AjaxController < ApplicationController
       output[:width] ||= 900   # default popup window width, if needed
       set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
       set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};" : ''
-      render :js => "#{set_current_user}#{set_affiliate}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      lat = 37.8044
+      lng = -122.2708
+      if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
+        lat = current_affiliate.latitude
+        lng = current_affiliate.longitude
+      elsif user_logged_in? && current_user.latitude.present?
+        lat = current_user.latitude
+        lng = current_user.longitude
+      end
+      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; }"
+      render :js => "#{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
+  end
+  def fix_params(inputs)
+    inputs[:month] = inputs[:month].to_i
+    inputs[:per_page] = inputs[:per_page].to_i
+    inputs[:page] = inputs[:page].to_i
+    inputs[:shift] = (inputs[:shift] == 'true')
+    inputs[:highlight] = (inputs[:highlight] == 'true')
+    return inputs
   end
 
 end

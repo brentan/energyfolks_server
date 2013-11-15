@@ -85,11 +85,11 @@ module MixinEntity
       self.where(user_id: user.id).all
     end
 
-    def search(terms, affiliates, page=0, per_page=20, limits='none', highlight = 0)
-      if (limits == 'month') || (limits == 'month-shift')
+    def search(terms, affiliates, options)
+      if options[:display] == 'month'
         year = DateTime.now.year
         month = DateTime.now.month
-        month += page
+        month += options[:month]
         while month > 12
           year += 1
           month -= 12
@@ -112,7 +112,7 @@ module MixinEntity
           nm = 1
           ny += 1
         end
-        if limits == 'month-shift'
+        if options[:shift]
           if (self.name.downcase.pluralize == 'events') && (DateTime.now.day > 15)
             pd=28
             nd=28
@@ -123,20 +123,25 @@ module MixinEntity
           end
         end
       end
-      if true # Only on production do we use cloudfront, otherwise build normal SQL query
-        #begin
+      if USE_CLOUDSEARCH # Only on production do we use cloudfront, otherwise build normal SQL query
+        begin
           Asari.mode = :production
           asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
           asari.aws_region = AMAZON_REGION
 
           filters = { and: { type: self.new.entity_name, affiliates: affiliates.map {|a| "ss#{a.to_s(27).tr("0-9a-q", "A-Z")}ee" }.join('|') } }
-          if (limits == 'month') || (limits == 'month-shift')
-            filters[:and][:date] = (DateTime.new(py, pm, pd).to_i)..(DateTime.new(ny, nm, nd).to_i)
-          elsif limits == 'map'
-            filters[:and][:and] = Asari::Geography.coordinate_box(lat: page[0], lng: page[1], meters: per_page)
+          filters[:and][:date] = (DateTime.new(py, pm, pd).to_i)..(DateTime.new(ny, nm, nd).to_i) if options[:display] == 'month'
+          if options[:display] == 'map'
+            bounds = options[:bounds].split('_')
+            sw = Asari::Geography.degrees_to_int(lat: bounds[0].to_i, lng: bounds[1].to_i)
+            ne = Asari::Geography.degrees_to_int(lat: bounds[2].to_i, lng: bounds[3].to_i)
+            filters[:and][:lat] = sw[:lat]..ne[:lat]
+            filters[:and][:lng] = sw[:lng]..ne[:lng]
+            #filters[:and][:and] = Asari::Geography.coordinate_box(lat: page[0], lng: page[1], meters: per_page)
           end
-          filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
-          filters[:and][:highlights] = "*,#{highlight},*" if highlight > 0
+          # TODO: geo restriction by point/radius
+          filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
+          filters[:and][:highlights] = "ss#{options[:highlight].to_i.to_s(27).tr("0-9a-q", "A-Z")}ee" if options[:highlight] > 0
           sort = ["date", :desc]
           sort = "primary,secondary,full_text" if terms.length > 0
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
@@ -145,10 +150,10 @@ module MixinEntity
           options = {
               filter: filters,
               rank: sort,
-              page_size: %w(month month-shift map).include?(limits) ? 10000 : per_page,
-              page: %w(month month-shift map).include?(limits) ? 1 : (page+1)
+              page_size: %w(month map).include?(options[:display]) ? 10000 : options[:per_page],
+              page: %w(month map).include?(options[:display]) ? 1 : (options[:page]+1)
           }
-          if terms.length > 0
+          if terms.present?
             results = asari.search(terms, options)
           else
             results = asari.search(options)
@@ -157,34 +162,45 @@ module MixinEntity
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
           return results
-        #rescue
+        rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
-        #end
+        end
       end
-      # no cloudsearch server, so use local search on SQL database.  NOTE THIS DOES NOT INCLUDE LAT/LNG SEARCH OR HIGHLIGHT SEARCH OR TERMS SEARCH
+      # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to names
       # TODO:
-      # Search term option
-      # highlighted only option
       # geographic option
       select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
       items = self.select("DISTINCT #{select.join(', ')}")
       items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
       items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
       items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
-      items = items.offset(page * per_page).limit(per_page) if limits == 'order'
-      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (limits == 'order') && (self.name.downcase.pluralize == 'events')
-      if (limits == 'month') || (limits == 'month-shift')
+      items = items.offset(options[:page] * options[:per_page]).limit(options[:per_page]) if %w(list stream).include?(options[:display])
+      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
+      items = items.where("name LIKE ?","%#{terms}%") if terms.present?
+      if options[:display] == 'map'
+        bounds = options[:bounds].split('_')
+        items = items.where("latitude > #{bounds[0]} AND latitude < #{bounds[2]} AND longitude > #{bounds[1]} AND longitude < #{bounds[3]}")
+      end
+      if options[:highlight] > 0
+        items = items.joins(:highlights).where("highlights.affiliate_id = ?",options[:highlight])
+      end
+      if options[:display] == 'month'
         items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
       end
       return items.all
     end
 
-    def find_all_visible(user, affiliate = nil, page=0, per_page=20, limits='none')
+    def find_all_visible(user, affiliate = nil, options = {})
+      if options[:highlight] && affiliate.present? && affiliate.id.present?
+        options[:highlight] = affiliate.id
+      else
+        options[:highlight] = 0
+      end
       affiliates = user.present? ? user.memberships.approved.map { |a| a.affiliate_id } : []
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
-      items = self.search('',affiliates, page, per_page, limits, 0)
+      items = self.search(options[:terms],affiliates, options)
       return version_control(user, affiliate, items)
     end
 
@@ -224,6 +240,7 @@ module MixinEntity
       num.split('_').last.to_i
     end
     def reindex_all
+      return unless USE_CLOUDSEARCH
       begin
         Asari.mode = :production
         asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
@@ -269,7 +286,7 @@ module MixinEntity
     self.update_index(true)
   end
   def update_index(destroy = false)
-    if true # Only on production do we use cloudfront, otherwise do nothing
+    if USE_CLOUDSEARCH # Only on production do we use cloudfront, otherwise do nothing
       # This method updates the cloudfront index
       begin
         Asari.mode = :production
@@ -374,15 +391,13 @@ module MixinEntity
   end
 
   def user_broadcast
-    # TODO: This should be called by the 'approve' method
     # This method takes some time...it is meant to be called by a 'delay' action, not directly
     self.affiliate_join.where(user_broadcast: false).where("approved_version > 0").each do |i|
       if i.affiliate_id == 0
         # Find all users, minus users in groups that do their own super moderation
         recipients = User.select(:id).where(verified: true).all.map { |r| r.id }
         Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-          # TODO: Base this on PRIMARY affiliation, not any affiliation
-          recipients = recipients - a.memberships.approved.map { |r| r.user_id }
+          recipients = recipients - User.find_all_by_affiliate_id(a.id).map { |r| r.id }
         end
       else
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }

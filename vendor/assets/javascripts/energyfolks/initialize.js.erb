@@ -23,10 +23,8 @@ EnergyFolks.checkCookies = true;
 //data-display constants:
 EnergyFolks.source = 'events';
 EnergyFolks.format = 'list';
-EnergyFolks.data_start = 0; //inclusive
-EnergyFolks.data_end = 20; //exclusive
+EnergyFolks.page = 0; //0 = start
 EnergyFolks.per_page = 20;
-EnergyFolks.data_limits = 'order';
 EnergyFolks.data = [];
 EnergyFolks.get_moderated = false;
 EnergyFolks.get_my_posts = false;
@@ -34,6 +32,13 @@ var date = new Date();
 EnergyFolks.mmddyyy = date.getMonth().toString() + date.getDay().toString() + date.getFullYear().toString();
 EnergyFolks.current_month = 0;
 EnergyFolks.shift_later = true;
+EnergyFolks.search_terms = '';
+EnergyFolks.map_layer = 0;
+EnergyFolks.map_lat = 0;
+EnergyFolks.map_lat = 0;
+EnergyFolks.map_zoom = 11;
+EnergyFolks.marker_layer = 0;
+EnergyFolks.map_bounds = [[10000,10000],[-10000,-10000]];
 
 //Initialize the Objects array
 EnergyFolks.objects = [];
