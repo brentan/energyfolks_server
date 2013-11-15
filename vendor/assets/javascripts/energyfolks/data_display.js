@@ -5,8 +5,8 @@ The showpage function is the master function to show energyfolks data.  Params i
     source:
         events
         jobs
-        users (only used with 'list' format)
-        discussions
+        users (only used with 'list' and 'map' format)
+        discussions (does not work with 'map' format)
         blogs
     format:
         list
@@ -17,7 +17,7 @@ The showpage function is the master function to show energyfolks data.  Params i
 EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
-    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div>");
+    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div><div style='display: none;'><img src='"+EnergyFolks.server_url+"/assets/loader.gif' border='0' style='display:inline;'></div>");
     var command = EnergyFolks.$.bbq.getState( "command" );
     var parameters = EnergyFolks.$.bbq.getState( "parameters" );
     if(typeof command != "undefined") {
