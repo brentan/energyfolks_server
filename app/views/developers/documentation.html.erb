@@ -86,10 +86,10 @@ most are less than 3 lines of total code to implement.</p>
                             <li><code>jobs</code>: The jobs database
                             <li><code>users</code>: the membership database
                             <li><code>blog</code>: the blog database (other group submitted blogs)
-                            <li><code>bulletins</code>: the bulletins database (default: forum view)
-                            <li><code>bulletins-stream</code>: the bulletins database using a 'stream' format (similar in nature to a facebook feed)
-                            <li><code>bulletins-forum</code>: the bulletins database using a traditional 'forum' style view
-                            <li><code>bulletins-long</code>: the bulletins database (long format view, similar to a blog)
+                            <li><code>discussions</code>: the discussions database (default: forum view)
+                            <li><code>discussions-stream</code>: the discussions database using a 'stream' format (similar in nature to a facebook feed)
+                            <li><code>discussions-forum</code>: the discussions database using a traditional 'forum' style view
+                            <li><code>discussions-long</code>: the discussions database (long format view, similar to a blog)
                     </ul>
                     Note that only one EnergyFolks object should be created per page (with the exception of widget objects explained below) as only a single data_view can exist on a particular page.
 </td>
@@ -198,15 +198,15 @@ most are less than 3 lines of total code to implement.</p>
               </tr><tr class="odd">
               <td><code>RestrictToThread( id:number)</code></td>
                 <td><code>none</code></td>
-                <td>Valid for data_type "bulletin" and "jobs", this will restrict the view to posts in the chosen thread or region.  To find the id, visit the jobs page or bulletins page (in forum view) and click on the thread of choice.  In the URL, the hash should be update with the thread ID.</td>
+                <td>Valid for data_type "discussion" and "jobs", this will restrict the view to posts in the chosen thread or region.  To find the id, visit the jobs page or discussions page (in forum view) and click on the thread of choice.  In the URL, the hash should be update with the thread ID.</td>
               </tr><tr class="odd">
                 <td><code>AnnounceOnly()</code></td>
                 <td><code>none</code></td>
-                <td>Shortcut for RestrictToThread.  Valid for data_type "bulletin", this will restrict the view to post in the 'announcements' thread.</td>
+                <td>Shortcut for RestrictToThread.  Valid for data_type "discussion", this will restrict the view to post in the 'announcements' thread.</td>
               </tr><tr class="odd">
                 <td><code>FeaturedOnly()</code></td>
                 <td><code>none</code></td>
-                <td>Shortcut for RestrictToThread.  Valid for data_type "bulletin", this will restrict the view to post in the 'Featured Posts' thread.</td>
+                <td>Shortcut for RestrictToThread.  Valid for data_type "discussion", this will restrict the view to post in the 'Featured Posts' thread.</td>
               </tr><tr class="odd">
                 <td><code>GetRSS()</code></td>
                 <td><code>none</code></td>
@@ -257,7 +257,7 @@ most are less than 3 lines of total code to implement.</p>
                     <ul>
                             <li><code>calendar</code>: Events Calendar
                             <li><code>jobs</code>: The jobs database
-                            <li><code>bulletins</code>: the bulletins database
+                            <li><code>discussions</code>: the discussions database
                             <li><code>blog</code>: the blog database (other group submitted blogs)
                     </ul>
                     The number of widgets that can be loaded on any given page is not limited, however a unique instance of EnergyFolks must be created for each one.<BR><BR>
@@ -336,7 +336,7 @@ most are less than 3 lines of total code to implement.</p>
               </tr><tr class="odd">
                 <td><code>RecentPostsVertical( width:number, height:number, number_of_items:number, auto_scroll:boolean, [title:string], [URL:string])</code></td>
                 <td><code>none</code></td>
-                <td>Creates a 'recent posts' widget (similar in nature to that created by <code>RecentPosts</code>) which will show recent posts (or upcoming events for type 'calendar') in a vertical list.  The list will have multiple 'panes' of results, scrollable by clickable arrow buttons on the top and bottom of the widget data view.  The first input is a <code>number</code> representing the width of the widget, in pixels.  Use <code>0</code> to fill the width of the parent element.  The second input is a <code>number</code> representing the height of the widget, in pixels.  The third input is a <code>number</code> representing the number of items to show in a single view.  The fourth input is a <code>boolean</code> representing whether the widget should auto-scroll between panes every 6 seconds (note that for bulletin widgets, the system will 'add' posts and comments to make it appear as if things are being added in real time.  Set to false to turn off this behavior).  The fifth input is an optional <code>string</code> which will be used as a title displayed at the top of the widget.  When set, a bounding box and title box will be included in the widget, otherwise no bounding box is drawn.  The sixth input is a <code>string</code> representing the local URL for the page showing the full view for this data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.</td>
+                <td>Creates a 'recent posts' widget (similar in nature to that created by <code>RecentPosts</code>) which will show recent posts (or upcoming events for type 'calendar') in a vertical list.  The list will have multiple 'panes' of results, scrollable by clickable arrow buttons on the top and bottom of the widget data view.  The first input is a <code>number</code> representing the width of the widget, in pixels.  Use <code>0</code> to fill the width of the parent element.  The second input is a <code>number</code> representing the height of the widget, in pixels.  The third input is a <code>number</code> representing the number of items to show in a single view.  The fourth input is a <code>boolean</code> representing whether the widget should auto-scroll between panes every 6 seconds (note that for discussion widgets, the system will 'add' posts and comments to make it appear as if things are being added in real time.  Set to false to turn off this behavior).  The fifth input is an optional <code>string</code> which will be used as a title displayed at the top of the widget.  When set, a bounding box and title box will be included in the widget, otherwise no bounding box is drawn.  The sixth input is a <code>string</code> representing the local URL for the page showing the full view for this data type.  Links from the widget will forward to this page, otherwise the energyfolks pages are used.</td>
               </tr><tr class="odd">
                 <td><code>FeaturedUser( [URL:string])</code></td>
                 <td><code>none</code></td>

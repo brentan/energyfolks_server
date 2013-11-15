@@ -10,13 +10,13 @@
         <!-- Beginning of Profile -->
         <% if visible %>
             <%= render :partial => '/common/show_top' if current_user.present? %>
-            <%= render :partial => '/bulletins/inner_show' %>
+            <%= render :partial => '/discussions/inner_show' %>
         <% else %>
             <h1>Oops!</h1>
-            <b>This bulletin's details are restricted, or this bulletin has not yet been approved.</b>
+            <b>This discussion's details are restricted, or this discussion has not yet been approved.</b>
         <% end %>
     <% end %>
 <% else %>
     <h1>Oops!</h1>
-    <b>This bulletin no longer exists.  The author may have deleted it.</b>
+    <b>This discussion no longer exists.  The author may have deleted it.</b>
 <% end %>

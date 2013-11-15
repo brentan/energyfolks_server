@@ -89,8 +89,8 @@ EnergyfolksServer::Application.routes.draw do
   match "users" => "affiliates#users"
   match "events" => "events#index"
   match "calendar" => "events#index"    #backwards compatible
-  match "bulletins" => "bulletins#index"
-  match "announce" => "bulletins#index" #backwards compatible
+  match "discussions" => "discussions#index"
+  match "announce" => "discussions#index" #backwards compatible
   match "welcome/privacy" => "energyfolks#privacy"
   match "welcome/terms" => "energyfolks#terms"
   match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes

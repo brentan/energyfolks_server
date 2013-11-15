@@ -62,7 +62,7 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Job.get_mine(current_user)
     else
-      data = Job.find_all_visible(current_user, current_affiliate, fix_params(params))
+      data = Job.find_all_visible(current_user, current_affiliate, fix_params(params, 'jobs'))
     end
     render_ajax( {data: data} )
   end
@@ -73,18 +73,18 @@ class AjaxController < ApplicationController
     elsif params[:my_posts] == "true"
       data = Event.get_mine(current_user)
     else
-      data = Event.find_all_visible(current_user, current_affiliate, fix_params(params))
+      data = Event.find_all_visible(current_user, current_affiliate, fix_params(params, 'events'))
     end
     render_ajax( {data: data} )
   end
 
-  def bulletins
+  def discussions
     if params[:moderation] == "true"
-      data = Bulletin.needing_moderation(current_user, current_affiliate)
+      data = Discussion.needing_moderation(current_user, current_affiliate)
     elsif params[:my_posts] == "true"
-      data = Bulletin.get_mine(current_user)
+      data = Discussion.get_mine(current_user)
     else
-      data = Bulletin.find_all_visible(current_user, current_affiliate, fix_params(params))
+      data = Discussion.find_all_visible(current_user, current_affiliate, fix_params(params, 'discussions'))
     end
     render_ajax( {data: data} )
   end
@@ -132,26 +132,63 @@ class AjaxController < ApplicationController
     else
       output[:width] ||= 900   # default popup window width, if needed
       set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
-      set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};" : ''
+      set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
       lat = 37.8044
       lng = -122.2708
+      loc = 'Oakland, CA'
+      rad_e = 50
+      rad_j = 0
       if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
         lat = current_affiliate.latitude
         lng = current_affiliate.longitude
+        loc = current_affiliate.location
+        rad_e = current_affiliate.event_radius
+        rad_j = current_affiliate.job_radius
       elsif user_logged_in? && current_user.latitude.present?
         lat = current_user.latitude
         lng = current_user.longitude
       end
-      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; }"
+      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng};EnergyFolks.UpdateFilterText(); }"
       render :js => "#{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
   end
-  def fix_params(inputs)
+  def fix_params(inputs, source)
     inputs[:month] = inputs[:month].to_i
     inputs[:per_page] = inputs[:per_page].to_i
     inputs[:page] = inputs[:page].to_i
     inputs[:shift] = (inputs[:shift] == 'true')
-    inputs[:highlight] = (inputs[:highlight] == 'true')
+    inputs[:highlight] = 0
+    inputs[:radius] = inputs[:radius].to_i
+    inputs[:source] = inputs[:source].to_i
+    inputs[:location_lat] = inputs[:location_lat].to_f
+    inputs[:location_lng] = inputs[:location_lng].to_f
+    if(inputs[:location_lng] == 0) && (inputs[:location_lat] == 0)
+      lat = 37.8044
+      lng = -122.2708
+      rad_e = 50
+      rad_j = 0
+      if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
+        lat = current_affiliate.latitude
+        lng = current_affiliate.longitude
+        rad_e = current_affiliate.event_radius
+        rad_j = current_affiliate.job_radius
+      elsif user_logged_in? && current_user.latitude.present?
+        lat = current_user.latitude
+        lng = current_user.longitude
+      end
+      inputs[:location_lat] = lat
+      inputs[:location_lng] = lng
+      inputs[:radius] = source == 'events' ? rad_e : rad_j
+    end
+    inputs[:radius] = inputs[:radius] * 1609.34
+    if (inputs[:source] == 3) && current_affiliate.present? && current_affiliate.id.present?
+      inputs[:highlight] = current_affiliate.id
+    end
+    if (inputs[:source] == 2) && current_affiliate.present? && current_affiliate.id.present?
+      inputs[:source] = current_affiliate.id
+    else
+      inputs[:source] = 0
+    end
     return inputs
   end
 

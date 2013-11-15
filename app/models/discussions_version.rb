@@ -1,5 +1,5 @@
-class BulletinsVersion < ActiveRecord::Base
-  belongs_to :bulletin, :foreign_key => :element_id
+class DiscussionsVersion < ActiveRecord::Base
+  belongs_to :discussion, :foreign_key => :element_id
   default_scope order('version_number DESC')
 
   has_attached_file :attachment, {
@@ -7,7 +7,7 @@ class BulletinsVersion < ActiveRecord::Base
       :hash_secret => "asfAdsfmasdfaSDFj23enujdskfsdjkfn23unjasdkfnakjsdfnnff-"
   }
 
-  Bulletin::VERSION_CONTROLLED.each do |r|
+  Discussion::VERSION_CONTROLLED.each do |r|
     attr_accessible r
   end
 end

@@ -18,8 +18,8 @@
            page_members = request.fullpath.include?("affiliate") || request.fullpath.include?("users")
            page_events = request.fullpath.include?("events")
            page_jobs = request.fullpath.include?("jobs")
-           page_bulletins = request.fullpath.include?("bulletins")
-           page_home = !page_members && !page_events && !page_jobs && !page_bulletins
+           page_discussions = request.fullpath.include?("discussions")
+           page_home = !page_members && !page_events && !page_jobs && !page_discussions
        %>
        <div style='position:absolute;bottom:10px;right:0px;'>
           <ul style='list-style:none;padding:0px;margin:0px;float:right;'>
@@ -33,7 +33,7 @@
               <a href='/jobs' class='toplink<%= ' selected' if page_jobs %>'>Jobs</a>
             </li>
             <li class='topbarli'>
-              <a href='/bulletins' class='toplink<%= ' selected' if page_bulletins %>'>Bulletins</a>
+              <a href='/discussions' class='toplink<%= ' selected' if page_discussions %>'>Discussions</a>
             </li>
             <li class='topbarli'>
               <a href='/users' class='toplink<%= ' selected' if page_members %>'>Members</a>
@@ -80,7 +80,7 @@
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/events'>Calendar</a> <BR>
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/jobs'>Job Board</a> <BR>
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/users'>Members</a> <BR>
-                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/bulletins'>Bulletins</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/discussions'>Discussions</a> <BR>
                 </td>
                 <td style='padding:30px;padding-bottom:0px;vertical-align:top;text-align:left;'>
                     <h4 style='border-bottom:1px solid #F16522;width:277px;text-align:left;color:white'>explore</h4>

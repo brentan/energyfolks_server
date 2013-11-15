@@ -9,13 +9,13 @@
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
-              <h1><%= new ? 'Post a Bulletin' : 'Edit Bulletin Post' %></h1>
+              <h1><%= new ? 'Post a Discussion' : 'Edit Discussion Post' %></h1>
               <%= raw(show_errors(@item)) %>
 
               <div class='form_label'>Title</div>
               <div class='form_entry'><%= f.text_field :name %></div>
 
-              <div class='form_label'>Bulletin</div>
+              <div class='form_label'>Message</div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
 
               <div class='form_label'>Add Tags</div>
@@ -67,7 +67,7 @@
                   </div>
               <% end %>
               <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
-              <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'bulletin', join_table: 'affiliates_bulletins'} %>
+              <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'discussion', join_table: 'affiliates_discussions'} %>
             </li>
           </ul>
           <%= prev_next_buttons %>

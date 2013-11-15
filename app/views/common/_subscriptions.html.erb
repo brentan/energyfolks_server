@@ -7,8 +7,12 @@
 <div class='form_label'>Notification Emails</div>
 <div class='form_entry'>
   <label><%= f.check_box :events %> New Events</label>
-  - Limit to events within <%= f.text_field :event_radius, :size => 4 %> miles
+  <% if show_rad %>
+      - Limit to events within <%= f.text_field :event_radius, :size => 4 %> miles
+  <% end %>
   <label><%= f.check_box :jobs %> New Jobs</label>
-  - Limit to jobs within <%= f.text_field :job_radius, :size => 4 %> miles (0 for no limit)
-  <label><%= f.check_box :bulletins %> New Discussions</label>
+  <% if show_rad %>
+    - Limit to jobs within <%= f.text_field :job_radius, :size => 4 %> miles (0 for no limit)
+  <% end %>
+  <label><%= f.check_box :discussions %> New Discussions</label>
 </div>

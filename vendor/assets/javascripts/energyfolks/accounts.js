@@ -279,7 +279,7 @@ EnergyFolks.CreateTopBar = function() {
         EnergyFolks.$("#wp-admin-bar-energyfolks_welcome_sub1").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="users/profiles" data-iframe="true">Update Profile</a>');
         EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub5").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a>');
         EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub6").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a>');
-        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub7").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="bulletins/new" data-iframe="true">Bulletin Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub7").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="discussions/new" data-iframe="true">Discussion Post</a>');
         return;
     }
     if(EnergyFolks.$("#efadminbar").length > 0) return;
@@ -346,7 +346,7 @@ EnergyFolks.CreateTopBar = function() {
         outtext+='<div id="efadminbar_sub3" class="ab-sub-wrapper"><ul class="ab-submenu">';
         outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a></li>';
         outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a></li>';
-        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="bulletins/new" data-iframe="true">Bulletin Post</a></li>';
+        outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="discussions/new" data-iframe="true">Discussion Post</a></li>';
         outtext+='</ul></div>';
         var tots=EnergyFolks.customMenuItems.length;
         for(var i=0;i<tots;i++)

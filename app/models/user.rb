@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :emails, :dependent => :destroy
   has_many :jobs, :dependent => :destroy
   has_many :events, :dependent => :destroy
-  has_many :bulletins, :dependent => :destroy
+  has_many :discussions, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
   belongs_to :affiliate
   scope :verified, where(:verified => true)
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization, :radius, :memberships_attributes, :subscription_attributes,
+                  :resume_visibility, :position, :organization, :memberships_attributes, :subscription_attributes,
                   :affiliate_id
   attr_accessor :password, :password_old
 
@@ -60,7 +60,8 @@ class User < ActiveRecord::Base
         :date => self.created_at.to_i,
         :affiliates => "ss#{affiliate_list.join("ee ss")}ee",
         :highlights => "",
-        :type => self.entity_name
+        :type => self.entity_name,
+        :primary_id => self.affiliate_id
     }
   end
   validates_each :email do |record, attr, value|
@@ -340,7 +341,7 @@ class User < ActiveRecord::Base
       subscription.daily = first_affiliate.daily
       subscription.jobs = first_affiliate.jobs
       subscription.events = first_affiliate.events
-      subscription.bulletins = first_affiliate.bulletins
+      subscription.discussions = first_affiliate.discussions
       subscription.job_radius = first_affiliate.job_radius
       subscription.event_radius = first_affiliate.event_radius
     end

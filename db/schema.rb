@@ -11,55 +11,54 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030015250) do
+ActiveRecord::Schema.define(:version => 20131115033941) do
 
   create_table "affiliates", :force => true do |t|
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
     t.string   "name"
     t.string   "short_name"
     t.string   "email_name"
     t.string   "url"
     t.string   "url_calendar"
     t.string   "url_jobs"
-    t.string   "url_bulletins"
+    t.string   "url_discussions"
     t.string   "url_users"
     t.string   "url_blog"
     t.string   "email"
-    t.boolean  "live",               :default => false
-    t.integer  "open",               :default => 1
-    t.boolean  "visible",            :default => true
-    t.string   "color",              :default => "777777"
+    t.boolean  "live",                 :default => false
+    t.integer  "open",                 :default => 1
+    t.boolean  "visible",              :default => true
+    t.string   "color",                :default => "777777"
     t.text     "email_header"
     t.text     "web_header"
     t.string   "location"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "moderate_bulletins", :default => 2
-    t.integer  "moderate_jobs",      :default => 2
-    t.integer  "moderate_events",    :default => 2
+    t.integer  "moderate_discussions", :default => 2
+    t.integer  "moderate_jobs",        :default => 2
+    t.integer  "moderate_events",      :default => 2
     t.string   "shared_secret"
     t.string   "cpanel_user"
     t.string   "cpanel_password"
-    t.boolean  "send_digest",        :default => true
-    t.integer  "radius",             :default => 50
+    t.boolean  "send_digest",          :default => true
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.boolean  "weekly",             :default => true
-    t.boolean  "daily",              :default => false
-    t.boolean  "events",             :default => false
-    t.boolean  "jobs",               :default => false
-    t.boolean  "bulletins",          :default => false
-    t.integer  "event_radius",       :default => 50
-    t.integer  "job_radius",         :default => 0
-    t.boolean  "show_details",       :default => true
-    t.string   "timezone",           :default => "Pacific Time (US & Canada)"
+    t.boolean  "weekly",               :default => true
+    t.boolean  "daily",                :default => false
+    t.boolean  "events",               :default => false
+    t.boolean  "jobs",                 :default => false
+    t.boolean  "discussions",          :default => false
+    t.integer  "event_radius",         :default => 50
+    t.integer  "job_radius",           :default => 0
+    t.boolean  "show_details",         :default => true
+    t.string   "timezone",             :default => "Pacific Time (US & Canada)"
   end
 
-  create_table "affiliates_bulletins", :force => true do |t|
-    t.integer "bulletin_id"
+  create_table "affiliates_discussions", :force => true do |t|
+    t.integer "discussion_id"
     t.integer "affiliate_id"
     t.integer "approved_version",  :default => 0
     t.integer "admin_version",     :default => 0
@@ -69,7 +68,7 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
     t.string  "approved_versions", :default => "0"
   end
 
-  add_index "affiliates_bulletins", ["bulletin_id"], :name => "index_affiliates_bulletins_on_bulletin_id"
+  add_index "affiliates_discussions", ["discussion_id"], :name => "index_affiliates_bulletins_on_bulletin_id"
 
   create_table "affiliates_events", :force => true do |t|
     t.integer "event_id"
@@ -97,37 +96,6 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
 
   add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
 
-  create_table "bulletins", :force => true do |t|
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.integer  "user_id"
-    t.integer  "affiliate_id"
-    t.integer  "current_version",         :default => 0
-    t.string   "name"
-    t.integer  "last_updated_by"
-    t.text     "html"
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
-  end
-
-  create_table "bulletins_versions", :force => true do |t|
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "entity_id"
-    t.integer  "version_number"
-    t.string   "name"
-    t.text     "html"
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
-  end
-
-  add_index "bulletins_versions", ["entity_id"], :name => "index_bulletins_versions_on_entity_id"
-  add_index "bulletins_versions", ["version_number"], :name => "index_bulletins_versions_on_version_number"
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -143,6 +111,37 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "discussions", :force => true do |t|
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "current_version",         :default => 0
+    t.string   "name"
+    t.integer  "last_updated_by"
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  create_table "discussions_versions", :force => true do |t|
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "entity_id"
+    t.integer  "version_number"
+    t.string   "name"
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "discussions_versions", ["entity_id"], :name => "index_bulletins_versions_on_entity_id"
+  add_index "discussions_versions", ["version_number"], :name => "index_bulletins_versions_on_version_number"
 
   create_table "emails", :force => true do |t|
     t.datetime "created_at",                     :null => false
@@ -284,7 +283,7 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
     t.boolean "daily",        :default => false
     t.boolean "events",       :default => false
     t.boolean "jobs",         :default => false
-    t.boolean "bulletins",    :default => false
+    t.boolean "discussions",  :default => false
     t.integer "event_radius", :default => 50
     t.integer "job_radius",   :default => 0
   end
@@ -295,6 +294,8 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
     t.string  "name"
     t.integer "count", :default => 0
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"
@@ -346,7 +347,6 @@ ActiveRecord::Schema.define(:version => 20131030015250) do
     t.datetime "resume_updated_at"
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "radius",              :default => 100
     t.boolean  "admin",               :default => false
     t.boolean  "active",              :default => true
     t.boolean  "admin_emails",        :default => false

@@ -1,8 +1,8 @@
-class Bulletin < ActiveRecord::Base
-  has_many :affiliates, :through => :affiliates_bulletins
-  has_many :affiliates_bulletins, :dependent => :destroy
+class Discussion < ActiveRecord::Base
+  has_many :affiliates, :through => :affiliates_discussions
+  has_many :affiliates_discussions, :dependent => :destroy
   belongs_to :user
-  has_many :versions, :foreign_key => 'entity_id', :class_name => 'BulletinsVersion',:dependent => :destroy
+  has_many :versions, :foreign_key => 'entity_id', :class_name => 'DiscussionsVersion',:dependent => :destroy
 
   default_scope order('created_at DESC')
 
@@ -12,7 +12,7 @@ class Bulletin < ActiveRecord::Base
   acts_as_moderatable
   acts_as_taggable
 
-  accepts_nested_attributes_for :affiliates_bulletins, :allow_destroy => true
+  accepts_nested_attributes_for :affiliates_discussions, :allow_destroy => true
 
   validates_presence_of :name, :html
 
@@ -24,7 +24,7 @@ class Bulletin < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ }, #TODO: More content types (pdf, word, excel)
                        :size => { :in => 0..10.megabytes }
 
-  attr_accessible :name, :html, :attachment, :affiliates_bulletins_attributes, :last_updated_by
+  attr_accessible :name, :html, :attachment, :affiliates_discussions_attributes, :last_updated_by
 
 
 end
