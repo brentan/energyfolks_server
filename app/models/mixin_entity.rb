@@ -140,9 +140,11 @@ module MixinEntity
           elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
             filters[:and][:and] = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
           end
+          filters[:and][:date] = 1..options[:visibility] if options[:visibility].present?  # User visibility info stored here
           filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
           filters[:and][:highlights] = "ss#{options[:highlight].to_i.to_s(27).tr("0-9a-q", "A-Z")}ee" if options[:highlight] > 0
           filters[:and][:primary_id] = options[:source] if options[:source] > 0
+          filters[:and][:secondary] = options[:tags].join('|') if options[:tags].present? && (options[:tags].length > 0)
           sort = ["date", :desc]
           sort = "primary,secondary,full_text" if terms.length > 0
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
@@ -167,22 +169,42 @@ module MixinEntity
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
         end
       end
-      # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to names
-      # TODO:
-      # primary network id
-      select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
-      items = self.select("DISTINCT #{select.join(', ')}")
-      items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
-      items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
-      items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
+      # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to name column
+      if self.name.downcase.pluralize == 'users' # User search, this has different SQL syntax!
+        items = User.verified.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name')
+        items = items.where('visibility <= ?',options[:visibility])
+        items = items.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliates[0]}) if affiliates[0] > 0
+      else
+        select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
+        items = self.select("DISTINCT #{select.join(', ')}")
+        items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
+        items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
+        items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
+      end
       items = items.offset(options[:page] * options[:per_page]).limit(options[:per_page]) if %w(list stream).include?(options[:display])
       items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
-      items = items.where("name LIKE ?","%#{terms}%") if terms.present?
+      if terms.present? && self.name.downcase.pluralize == 'users'
+        items = items.where("first_name LIKE ? OR last_name LIKE ?","%#{terms}%","%#{terms}%")
+      elsif terms.present?
+        items = items.where("name LIKE ?","%#{terms}%")
+      end
       if options[:display] == 'map'
         bounds = options[:bounds].split('_')
-        items = items.where("latitude > #{bounds[0]} AND latitude < #{bounds[2]} AND longitude > #{bounds[1]} AND longitude < #{bounds[3]}")
+        items = items.where("latitude > ? AND latitude < ? AND longitude > ? AND longitude < ?", bounds[0], bounds[2], bounds[1], bounds[3])
       elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
         items = items.near([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
+      end
+      if options[:tags].present? && (options[:tags].length > 0)
+        count = 0
+        wherehash = {}
+        wherearray = []
+        options[:tags].each do |t|
+          wherearray << "name = :n#{count}"
+          wherehash["n#{count}".to_sym] = t
+          count += 1
+        end
+        tags = Tag.where(wherearray.join(' OR '),wherehash).all.map{ |t| t.id }
+        items = items.joins(:tags_entities).where(tags_entities: { tag_id: tags })
       end
       items = items.joins(:highlights).where("highlights.affiliate_id = ?",options[:highlight]) if options[:highlight] > 0
       items = items.where("#{self.name.downcase.pluralize}.affiliate_id = ?", options[:source]) if options[:source] > 0
@@ -290,7 +312,7 @@ module MixinEntity
         Asari.mode = :production
         asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
         asari.aws_region = AMAZON_REGION
-        if destroy || (self.to_index[:affiliates] == "ssee")
+        if destroy || (self.to_index[:affiliates] == "ssee") || (self.instance_of?(User) && !self.verified?)
           asari.remove_item(self.search_index_id)
         else
           asari.add_item(self.search_index_id, self.to_index)

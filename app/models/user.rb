@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
         :full_text => HTML::FullSanitizer.new.sanitize("#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",:tags=>[]),
         :lat => latlng[:lat],
         :lng => latlng[:lng],
-        :date => self.created_at.to_i,
+        :date => self.visibility,
         :affiliates => "ss#{affiliate_list.join("ee ss")}ee",
         :highlights => "",
         :type => self.entity_name,
@@ -107,18 +107,16 @@ class User < ActiveRecord::Base
 
   ITOA64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
-  def self.find_all_visible(current_user, affiliate = nil, spage=0, sper_page=20)
-    page=0
-    per_page = 20
+  def self.find_all_visible(current_user, affiliate = nil, options = {})
     visibility = User::PUBLIC
     visibility = User::LOGGED_IN if current_user.present?
     visibility = User::NETWORKS if current_user.present? && affiliate.present? && Membership.is_member?(current_user, affiliate)
     visibility = User::PRIVATE if current_user.present? && affiliate.present? && Membership.is_admin?(current_user, affiliate, Membership::EDITOR)
     visibility = User::PRIVATE if current_user.present? && current_user.admin?
-    users = User.verified.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name').offset(page * per_page).limit(per_page)
-    users = users.where('visibility <= ?',visibility)
-    users = users.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliate.id}) if affiliate.present? && affiliate.id.present?
-    users.all
+    affiliates = [ (affiliate.present? && affiliate.id.present?) ? affiliate.id : 0 ]
+    options[:highlight] = 0
+    options[:visibility] = visibility
+    return self.search(options[:terms],affiliates, options)
   end
 
   def affiliate_join
@@ -174,7 +172,6 @@ class User < ActiveRecord::Base
         end
       end
     end
-    # TODO: Somehow super admin moderation count.
     return { total: total, values: values }
   end
 
@@ -334,9 +331,8 @@ class User < ActiveRecord::Base
   # After create, setup default email subscriptons
   def setup_subscriptions
     subscription = Subscription.new(user_id: self.id)
-    first_affiliate = self.affiliates.first
+    first_affiliate = self.affiliate
     if first_affiliate.present?
-      # TODO: Rewrite the below to just be in a loop and set all possible subscription attributes with affiliate equivalent
       subscription.weekly = first_affiliate.weekly
       subscription.daily = first_affiliate.daily
       subscription.jobs = first_affiliate.jobs

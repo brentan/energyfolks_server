@@ -49,7 +49,7 @@ class AjaxController < ApplicationController
     if params[:moderation] == "true"
       data = User.needing_moderation(current_user, current_affiliate)
     else
-      data = User.find_all_visible(current_user, current_affiliate, params[:start].to_i, params[:end].to_i - params[:start].to_i)
+      data = User.find_all_visible(current_user, current_affiliate, fix_params(params, 'users'))
     end
     data = data.map { |i| user_hash(i) }
     render_ajax( {data: data} )
@@ -148,8 +148,9 @@ class AjaxController < ApplicationController
         lat = current_user.latitude
         lng = current_user.longitude
       end
-      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng};EnergyFolks.UpdateFilterText(); }"
-      render :js => "#{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
+      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
+      render :js => "if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
   end
   def fix_params(inputs, source)

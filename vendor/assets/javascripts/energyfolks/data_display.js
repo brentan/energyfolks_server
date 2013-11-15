@@ -36,7 +36,7 @@ EnergyFolks.showPage = function(params) {
  * Show energyfolks filter bar and sidebar options in the location this is called.  Otherwise, these options are shown at top of data display
  */
 EnergyFolks.Sidebar = function() {
-    document.write("<div id='EnFolksSidebarDiv'></div>");
+    document.write("<div id='EnFolksSidebarDiv' class='ef_side'></div>");
 }
 
 
@@ -50,7 +50,7 @@ EnergyFolks.showFilters = function() {
     //TODO: Hide if in 'moderation' or 'my posts' views.
     //If sidebar is not used, we add it to the filter bar instead:
     if(EnergyFolks.$('#EnFolksSidebarDiv').length == 0)
-        EnergyFolks.$('#EnfolksResultDiv').before("<div id='EnFolksSidebarDiv'></div>");
+        EnergyFolks.$('#EnfolksResultDiv').before("<div id='EnFolksSidebarDiv' class='ef_top'></div>");
     var searchbar = "<div id='ef_search'><img src='"+EnergyFolks.server_url+"/assets/magnifier.png'><div><input type=text placeholder='Search'></div></div>";
     if(EnergyFolks.source != 'users') {
         searchbar += "<div id='ef_list'><img src='"+EnergyFolks.server_url+"/assets/list.png'></div>";
@@ -62,13 +62,13 @@ EnergyFolks.showFilters = function() {
     EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
     var filterbar = '';
     if(EnergyFolks.source != 'Users')
-        filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post New "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
+        filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
     filterbar += "<div class='ef_filter_title'><h3>Filters:</h3></div>";
     filterbar += "<div class='ef_filters'>";
-    if(EnergyFolks.source != 'discussions') filterbar += "<div class='ef_filter_house' id='location_filter'>Location: <span class='ef_text'></span><div><label><input name='ef_location_radio' type=radio class='ef_location_radio1' value=0>Anywhere</label><input name='ef_location_radio' type=radio class='ef_location_radio2' value=1 checked>Within <input type=text id='ef_filter_radius' value="+EnergyFolks.map_location_radius+"> miles of <input type=text id='ef_filter_location' value='"+EnergyFolks.map_location_name+"'><div id='ef_location_searching'>Searching...</div></div></div>";
-    filterbar += "<div class='ef_filter_house' id='tags_filter'>Tags: <span class='ef_text'></span><div></div></div>";
+    if(EnergyFolks.source != 'discussions') filterbar += "<div class='ef_filter_house' id='location_filter'>Location: <span class='ef_text'></span><div class='ef_filter_house2'><label><input name='ef_location_radio' type=radio class='ef_location_radio1' value=0>Anywhere</label><input name='ef_location_radio' type=radio class='ef_location_radio2' value=1 checked>Within <input type=text id='ef_filter_radius' value="+EnergyFolks.map_location_radius+"> miles of<BR><input type=text id='ef_filter_location' value='"+EnergyFolks.map_location_name+"'><div id='ef_location_searching'>Finding Location...</div></div></div>";
+    filterbar += "<div class='ef_filter_house' id='tags_filter'>Tags: <span class='ef_text'></span><div class='ef_filter_house2'><div id='ef_tags_list'></div><input type=text placeholder='Other (comma seperated)'>&nbsp;<a href='#' onclick='return false;'>Add</a></a></div></div>";
     if((EnergyFolks.id > 0) && (EnergyFolks.source != 'users')) {
-        filterbar += "<div class='ef_filter_house' id='source_filter'>Source: <span class='ef_text'></span><div>";
+        filterbar += "<div class='ef_filter_house' id='source_filter'>Source: <span class='ef_text'></span><div class='ef_filter_house2'>";
         filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio1' value=" + EnergyFolks.ANY_POST + (EnergyFolks.source_restrict == EnergyFolks.ANY_POST ? ' checked' : '') + "> Any EnergyFolks Network</label>";
         filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio2' value=" + EnergyFolks.AFFILIATE_ONLY + (EnergyFolks.source_restrict == EnergyFolks.AFFILIATE_ONLY ? ' checked' : '') + "> <span class='ef_a_name'>This Network</span></label>";
         if(EnergyFolks.source != 'blogs') filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio3' value=" + EnergyFolks.HIGHLIGHTED_ONLY + (EnergyFolks.source_restrict == EnergyFolks.HIGHLIGHTED_ONLY ? ' checked' : '') + "> Highlighted Items</label>";
@@ -84,11 +84,25 @@ EnergyFolks.UpdateFilterText = function() {
     if(EnergyFolks.source_restrict == EnergyFolks.HIGHLIGHTED_ONLY) var restrict = 'Highlighted';
     EnergyFolks.$("#source_filter span.ef_text").html(restrict);
     EnergyFolks.$("#location_filter span.ef_text").html(EnergyFolks.map_location_radius == 0 ? 'Anywhere' : EnergyFolks.map_location_name);
-    //TODO: Tags update
+    var tags = EnergyFolks.active_tags.join(', ');
+    if(tags.length > 32)
+        tags = tags.substr(0,30) + '...';
+    if(tags == '') tags = 'Any tag';
+    EnergyFolks.$("#tags_filter span.ef_text").html(tags);
+    var tag_text = '<label><input type=checkbox value="___" ' + (tags == 'Any tag' ? 'checked' : '') + '>Any tag</label>';
+    EnergyFolks.$.each(EnergyFolks.tag_list, function(i, v) {
+        if(EnergyFolks.$.inArray(v, EnergyFolks.active_tags) > -1)
+            var checked = true;
+        else
+            var checked = false;
+        tag_text += '<label><input type=checkbox value="'+v+'" ' + (checked ? 'checked' : '') + '>' + v + '</label>';
+    });
+    EnergyFolks.$('#ef_tags_list').html(tag_text);
 }
 EnergyFolks.HighlightUpdateButton = function() {
     var el = EnergyFolks.$("#ef_submit_filters");
-    el.before("<div/>")
+    el.show();
+    el.before("<div class='fade_class'></div>");
     el.prev()
         .width(el.width())
         .height(el.height())
@@ -114,6 +128,53 @@ EnergyFolks.geocoded = function(response) {
 //Searchbar and filterbar listeners:
 EnergyFolks.$(function() {
     //filterbar
+    EnergyFolks.$('body').on('mouseenter', '#EnFolksSidebarDiv.ef_top .ef_filter_house', function() {
+        EnergyFolks.$('div.ef_filter_house2').hide();
+        EnergyFolks.$('div.ef_filter_house').css('background-color','transparent');
+        EnergyFolks.$(this).css('background-color','#f0f0f0');
+        EnergyFolks.$(this).find('div.ef_filter_house2').show();
+    });
+    EnergyFolks.$('body').on('mouseleave', '#EnFolksSidebarDiv.ef_top .ef_filter_house2', function() {
+        EnergyFolks.$(this).hide();
+        EnergyFolks.$('div.ef_filter_house').css('background-color','transparent');
+    });
+    EnergyFolks.$('body').on('blur', '#tags_filter input[type=text]', function() {
+        var tags = EnergyFolks.$(this).val().split(',');
+        EnergyFolks.$.each(tags, function(i, v) {
+            v = EnergyFolks.$.trim(v).toLowerCase().replace(/"/g,'');
+            v = v.charAt(0).toUpperCase() + v.slice(1);
+            if(v == '') return;
+            if(EnergyFolks.$.inArray(v, EnergyFolks.tag_list) == -1) {
+                EnergyFolks.tag_list.push(v);
+                EnergyFolks.active_tags.push(v);
+            } else if(EnergyFolks.$.inArray(v, EnergyFolks.active_tags) == -1)
+                EnergyFolks.active_tags.push(v);
+        });
+        EnergyFolks.tag_list.sort();
+        EnergyFolks.active_tags.sort();
+        EnergyFolks.$(this).val('');
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    });
+    EnergyFolks.$('body').on('change', '#tags_filter input[type=checkbox]', function() {
+        EnergyFolks.active_tags = new Array();
+        if(EnergyFolks.$(this).val() == '___') {
+            EnergyFolks.$('#tags_filter input[type=checkbox]:checked').each(function() {
+                if(EnergyFolks.$(this).val() == '___') return;
+                EnergyFolks.$(this).prop('checked', false);
+            });
+        } else {
+            EnergyFolks.$('#tags_filter input[type=checkbox]:checked').each(function() {
+                if(EnergyFolks.$(this).val() == '___')
+                    EnergyFolks.$(this).prop('checked', false);
+                else
+                    EnergyFolks.active_tags.push(EnergyFolks.$(this).val());
+            });
+            EnergyFolks.active_tags.sort();
+        }
+        EnergyFolks.UpdateFilterText();
+        EnergyFolks.HighlightUpdateButton();
+    });
     EnergyFolks.$('body').on('change','#location_filter input[type=radio]', function() {
         var anywhere =  $('#location_filter input[type=radio]:checked').val();
         var val = EnergyFolks.$('#ef_filter_radius').val()*1;
@@ -155,7 +216,10 @@ EnergyFolks.$(function() {
         EnergyFolks.UpdateFilterText();
         EnergyFolks.HighlightUpdateButton();
     });
-    EnergyFolks.$('body').on('click','#ef_submit_filters button', function() { EnergyFolks.loadData(); return false; } );
+    EnergyFolks.$('body').on('click','#ef_submit_filters button', function() {
+        EnergyFolks.$(this).closest('div').hide();
+        EnergyFolks.loadData(); return false;
+    } );
 
     //searchbar
     EnergyFolks.$('body').on('click','#ef_list img', function() {
@@ -202,6 +266,8 @@ EnergyFolks.resetData = function() {
 
 EnergyFolks.showData = function(data) {
     EnergyFolks.data = data.data;
+    if(EnergyFolks.source != 'discussions')
+        EnergyFolks.$('#location_filter').show();
     // Moderation box
     var modtext = false;
     EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
@@ -217,6 +283,7 @@ EnergyFolks.showData = function(data) {
         EnergyFolks.showMonth();
     }
     if(EnergyFolks.format == 'map') {
+        EnergyFolks.$('#location_filter').hide();
         EnergyFolks.populateMap();
     }
     //TODO: more formats
@@ -230,7 +297,7 @@ EnergyFolks.loadData = function() {
         bounds = "" + EnergyFolks.map_bounds[0][0] + "_" + EnergyFolks.map_bounds[0][1] + "_" + EnergyFolks.map_bounds[1][0] + "_" + EnergyFolks.map_bounds[1][1];
     } else
         EnergyFolks.loading('#EnfolksResultDiv');
-    EnergyFolks.ajax(EnergyFolks.source, {source: EnergyFolks.source_restrict, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
+    EnergyFolks.ajax(EnergyFolks.source, {source: EnergyFolks.source_restrict, tags: EnergyFolks.active_tags, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
 /*
@@ -256,7 +323,10 @@ EnergyFolks.moveMap = function(allow_reload) {
     if(reload && allow_reload) EnergyFolks.loadData();
 }
 EnergyFolks.showMap = function() {
-    EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
+    if (!EnergyFolks.$.support.leadingWhitespace) //TEST FOR IE6-8
+        EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div class='ef_force_ie8'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div></div>");
+    else
+        EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
     if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
         window.setTimeout(function() {Energyfolks.showMap(); }, 250);
         return;
