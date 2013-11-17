@@ -343,6 +343,9 @@ module MixinEntity
   def comments
     Comment.find_all_by_hash(self.comment_hash)
   end
+  def static_url
+    "#{SITE_HOST}/#{self.method_name}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}"
+  end
 
   def broadcast(version_control =  true)
     if version_control
