@@ -51,22 +51,24 @@ EnergyFolks.showFilters = function() {
     //If sidebar is not used, we add it to the filter bar instead:
     if(EnergyFolks.$('#EnFolksSidebarDiv').length == 0)
         EnergyFolks.$('#EnfolksResultDiv').before("<div id='EnFolksSidebarDiv' class='ef_top'></div>");
-    var searchbar = "<div id='ef_search'><img src='"+EnergyFolks.server_url+"/assets/magnifier.png'><div><input type=text placeholder='Search'></div></div>";
+    var searchbar = "<div id='ef_search'><div><input type=text placeholder='Search'></div><img src='"+EnergyFolks.server_url+"/assets/magnifier.png'></div>";
     if(EnergyFolks.source != 'users') {
+        searchbar += "<div id='ef_views'>View:</div>";
         searchbar += "<div id='ef_list'><img src='"+EnergyFolks.server_url+"/assets/list.png'></div>";
         searchbar += "<div id='ef_cal'><img src='"+EnergyFolks.server_url+"/assets/calendar.png'></div>";
-        searchbar += "<div id='ef_map'><img src='"+EnergyFolks.server_url+"/assets/map.png'></div>";
+        if(!(EnergyFolks.source == 'discussions'))
+            searchbar += "<div id='ef_map'><img src='"+EnergyFolks.server_url+"/assets/map.png'></div>";
         if((EnergyFolks.source == 'blogs') || (EnergyFolks.source == 'discussions'))
             searchbar += "<div id='ef_stream'><img src='"+EnergyFolks.server_url+"/assets/stream.png'></div>";
     }
     EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
     var filterbar = '';
-    if(EnergyFolks.source != 'Users')
+    if(EnergyFolks.source != 'users')
         filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
     filterbar += "<div class='ef_filter_title'><h3>Filters:</h3></div>";
     filterbar += "<div class='ef_filters'>";
     if(EnergyFolks.source != 'discussions') filterbar += "<div class='ef_filter_house' id='location_filter'>Location: <span class='ef_text'></span><div class='ef_filter_house2'><label><input name='ef_location_radio' type=radio class='ef_location_radio1' value=0>Anywhere</label><input name='ef_location_radio' type=radio class='ef_location_radio2' value=1 checked>Within <input type=text id='ef_filter_radius' value="+EnergyFolks.map_location_radius+"> miles of<BR><input type=text id='ef_filter_location' value='"+EnergyFolks.map_location_name+"'><div id='ef_location_searching'>Finding Location...</div></div></div>";
-    filterbar += "<div class='ef_filter_house' id='tags_filter'>Tags: <span class='ef_text'></span><div class='ef_filter_house2'><div id='ef_tags_list'></div><input type=text placeholder='Other (comma seperated)'>&nbsp;<a href='#' onclick='return false;'>Add</a></a></div></div>";
+    filterbar += "<div class='ef_filter_house' id='tags_filter'>Tags: <span class='ef_text'></span><div class='ef_filter_house2'><div id='ef_tags_list'></div><input type=text placeholder='Other Tag'>&nbsp;<a href='#' onclick='return false;'>Add</a></a></div></div>";
     if((EnergyFolks.id > 0) && (EnergyFolks.source != 'users')) {
         filterbar += "<div class='ef_filter_house' id='source_filter'>Source: <span class='ef_text'></span><div class='ef_filter_house2'>";
         filterbar += "<label><input type=radio name='ef_source_radio' class='ef_source_radio1' value=" + EnergyFolks.ANY_POST + (EnergyFolks.source_restrict == EnergyFolks.ANY_POST ? ' checked' : '') + "> Any EnergyFolks Network</label>";
@@ -222,19 +224,19 @@ EnergyFolks.$(function() {
     } );
 
     //searchbar
-    EnergyFolks.$('body').on('click','#ef_list img', function() {
+    EnergyFolks.$('body').on('click','#ef_list', function() {
         EnergyFolks.format = 'list';
         EnergyFolks.resetData();
     });
-    EnergyFolks.$('body').on('click','#ef_cal img', function() {
+    EnergyFolks.$('body').on('click','#ef_cal', function() {
         EnergyFolks.format = 'month';
         EnergyFolks.resetData();
     });
-    EnergyFolks.$('body').on('click','#ef_map img', function() {
+    EnergyFolks.$('body').on('click','#ef_map', function() {
         EnergyFolks.format = 'map';
         EnergyFolks.resetData();
     });
-    EnergyFolks.$('body').on('click','#ef_stream img', function() {
+    EnergyFolks.$('body').on('click','#ef_stream', function() {
         EnergyFolks.format = 'stream';
         EnergyFolks.resetData();
     });
@@ -265,28 +267,44 @@ EnergyFolks.resetData = function() {
 }
 
 EnergyFolks.showData = function(data) {
+    if(EnergyFolks.get_moderated || EnergyFolks.get_my_posts) {
+        EnergyFolks.$('#EnfolksFilterDiv').hide();
+        EnergyFolks.$('#EnFolksSidebarDiv').hide();
+    }
+    EnergyFolks.$('.ef_selected').removeClass('ef_selected');
     EnergyFolks.data = data.data;
+    if(data.more_pages)
+        EnergyFolks.more_pages = true;
     if(EnergyFolks.source != 'discussions')
         EnergyFolks.$('#location_filter').show();
     // Moderation box
     var modtext = false;
-    EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
-        if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
-            modtext = true
-    });
+    if(EnergyFolks.user_logged_in) {
+        EnergyFolks.$.each(EnergyFolks.current_user.moderation_count.values, function(i, v) {
+            if((!EnergyFolks.get_moderated) && (v.method == EnergyFolks.source) && (v.aid == EnergyFolks.id))
+                modtext = true
+        });
+    }
     if(modtext)
         EnergyFolks.$("#moderation_box_" + EnergyFolks.source).html('<div class="moderation_box"><strong>You have items awaiting moderation</strong><a class="get_moderation" href="#">View Moderation Queue</a></div>');
     if(EnergyFolks.format == 'list') {
+        EnergyFolks.$('#ef_list').addClass('ef_selected');
         EnergyFolks.showList();
     }
     if(EnergyFolks.format == 'month') {
+        EnergyFolks.$('#ef_cal').addClass('ef_selected');
         EnergyFolks.showMonth();
     }
     if(EnergyFolks.format == 'map') {
+        EnergyFolks.$('#ef_map').addClass('ef_selected');
         EnergyFolks.$('#location_filter').hide();
         EnergyFolks.populateMap();
     }
-    //TODO: more formats
+    if(EnergyFolks.format == 'stream') {
+        EnergyFolks.$('#ef_stream').addClass('ef_selected');
+        EnergyFolks.showList();
+        //TODO: stream formats
+    }
 }
 
 EnergyFolks.loadData = function() {
@@ -295,8 +313,10 @@ EnergyFolks.loadData = function() {
         EnergyFolks.loading('#EnfolksMapDiv_loading');
         EnergyFolks.$('#EnfolksMapDiv_loading').show();
         bounds = "" + EnergyFolks.map_bounds[0][0] + "_" + EnergyFolks.map_bounds[0][1] + "_" + EnergyFolks.map_bounds[1][0] + "_" + EnergyFolks.map_bounds[1][1];
-    } else
+    } else if(EnergyFolks.page == 0)
         EnergyFolks.loading('#EnfolksResultDiv');
+    else
+        EnergyFolks.loading('#EnfolksResultDiv_' + EnergyFolks.page);
     EnergyFolks.ajax(EnergyFolks.source, {source: EnergyFolks.source_restrict, tags: EnergyFolks.active_tags, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
@@ -404,9 +424,9 @@ EnergyFolks.showMonth = function() {
     var output = "<table cellpadding=0 cellspacing=0 class='enfolks_calendar' style='width:"+(7*wide)+"px;'><tr>";
     output += "<td class='enfolks_prev'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source == 'events'))
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + EnergyFolks.current_month + "'><- Previous</a>"; //due to shift, previous is just start of current month
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + EnergyFolks.current_month + "'>< Previous</a>"; //due to shift, previous is just start of current month
     else
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month-1) + "'><- Previous</a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month-1) + "'>< Previous</a>";
     output += "</td><td colspan=5 class='enfolks_calendar_title'>";
     if(EnergyFolks.shift_later) {
         if(EnergyFolks.source == 'events')
@@ -417,9 +437,9 @@ EnergyFolks.showMonth = function() {
         output += EnergyFolks.date("F Y",EnergyFolks.mktime(0,0,1,month,1,year));
     output += "</td><td class='enfolks_next'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source != 'events'))
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month) + "'>Next -></a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month) + "'>Next ></a>";
     else
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month+1) + "'>Next -></a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month+1) + "'>Next ></a>";
     output += "</td></tr><tr>";
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     for(var i=0;i<7;i++) {
@@ -494,20 +514,38 @@ EnergyFolks.$(function() {
 //ListView
 EnergyFolks.showList = function() {
     var output = '';
-    var first = true;
+    var first = (EnergyFolks.page == 0);
     var last_date = '';
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
         if ((EnergyFolks.source == 'events') && (v.start_date != last_date)) {
             output += "<div class='enfolks_date_item" + (EnergyFolks.mmddyyyy == v.mmddyyyy ? ' enfolks_today' : '') + "' " + (EnergyFolks.mmddyyyy == v.mmddyyyy ? ('style="background-color:#' + EnergyFolks.color + ';" ') : '') + ">" + v.start_date + "</div>";
             last_date = v.start_date;
         }
-        output += "<div class='enfolks_item enfolks_list_item " + (first ? 'ef_first_item ' : '') + (v.highlighted ? 'ef_highlight ' : '') + "ef_"+EnergyFolks.source+"' data-id='"+v.id+"'>"+EnergyFolks.itemDetailHTML(v)+"</div>";
+        output += "<div class='enfolks_item enfolks_list_item " + (EnergyFolks.format == 'stream' ? 'ef_stream ' : '') + (first ? 'ef_first_item ' : '') + (v.highlighted ? 'ef_highlight ' : '') + "ef_"+EnergyFolks.source+"' data-id='"+v.id+"'>"+EnergyFolks.itemDetailHTML(v)+"</div>";
         first = false;
     });
     if(EnergyFolks.data.length == 0)
         output = "<h2>No Results</h2>There were no results returned for this search.";
-    EnergyFolks.$('#EnfolksResultDiv').html(output);
+    else if(!EnergyFolks.auto_load_on_scroll && EnergyFolks.more_pages)
+        output += "<div class='ef_load_more'>Show More Results</div>";
+    if(EnergyFolks.page == 0)
+        EnergyFolks.$('#EnfolksResultDiv').html(output);
+    else
+        EnergyFolks.$('#EnfolksResultDiv_' + EnergyFolks.page).html(output);
 }
+EnergyFolks.$(function() {
+    EnergyFolks.$( window ).scroll(function() {
+        if(!(EnergyFolks.more_pages && EnergyFolks.auto_load_on_scroll)) return;
+        var y_last = EnergyFolks.$('#EnfolksResultDiv_' + EnergyFolks.page).offset().top + EnergyFolks.$('#EnfolksResultDiv_' + EnergyFolks.page).height();
+        var win_y = EnergyFolks.$( window ).scrollTop() + EnergyFolks.$( window ).height();
+        if(win_y > y_last) {
+            EnergyFolks.more_pages = false;
+            EnergyFolks.page++;
+            EnergyFolks.$('#EnfolksResultDiv').append('<div id="EnfolksResultDiv_' + EnergyFolks.page + '" style="padding:0px;margin:0px;"></div>');
+            EnergyFolks.loadData();
+        }
+    });
+});
 
 EnergyFolks.itemDetailHTML = function(item, show_links) {
     if(typeof show_links === 'undefined') show_links = true;
@@ -520,12 +558,16 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
         output += '<img src="' + info.logo + '" class="enfolks_logo">';
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
     output += '<h3 class="line1">' + info.line_one + '</h3>';
-    output += '<span class="line2">' + info.line_two + '</span>';
+    if(EnergyFolks.format == 'stream')
+        output += '<div class="html">' + info.html + '</div>';
+    else
+        output += '<span class="line2">' + info.line_two + '</span>';
     return output;
 }
 // Listener for clicks on entries
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.enfolks_item', function() {
+        if(EnergyFolks.$(this).hasClass('ef_stream')) return;
         var params = EnergyFolks.$(this).find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
         EnergyFolks.remote_popup('show', params);
     });
@@ -537,6 +579,14 @@ EnergyFolks.$(function() {
         var params = EnergyFolks.$(this).parent().find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
         EnergyFolks.remote_popup('show', params);
         return false;
+    });
+    EnergyFolks.$('body').on('click','.ef_load_more', function() {
+        EnergyFolks.$(this).hide();
+        EnergyFolks.auto_load_on_scroll = true;
+        EnergyFolks.more_pages = false;
+        EnergyFolks.page++;
+        EnergyFolks.$('#EnfolksResultDiv').append('<div id="EnfolksResultDiv_' + EnergyFolks.page + '" style="padding:0px;margin:0px;"></div>');
+        EnergyFolks.loadData();
     });
 });
 EnergyFolks.getItemInfo = function(item) {
@@ -612,6 +662,7 @@ EnergyFolks.getItemInfo = function(item) {
         output.params = {id: item.id, model: 'Discussion'};
         output.line_one = '';
         output.line_two = '';
+        output.html = item.html;
         var admin_links = '';
         if(EnergyFolks.get_moderated) {
             //TODO: Links for moderation queue

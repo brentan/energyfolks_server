@@ -6,10 +6,10 @@
   #ef_search {
     background-color: white;
     border: 1px solid #aaaaaa;
-    height: 20px;
+    height: 25px;
     left:0px;
     top:0px;
-    right:90px;
+    right:140px;
     bottom: 0px;
     position: absolute;
     div {
@@ -17,59 +17,127 @@
       top: 0px;
       bottom: 0px;
       left: 0px;
-      right: 0px;
+      right: 1px;
       input {
         border: 0px solid white;
         background-color: white;
         font-size: 16px;
         padding: 0px;
         margin: 1px;
-        height:18px;
+        height:23px;
         width:100%;
       }
     }
     img {
       display: block;
       position: absolute;
-      top:0px;
-      right: 0px;
+      top:2px;
+      right: 1px;
       cursor: pointer;
     }
+  }
+  #ef_views {
+    position: absolute;
+    top: 4px;
+    right: 92px;
+    text-align: right;
+    font-size: 14px;
   }
   #ef_list {
     position: absolute;
     top: 0px;
     right: 60px;
+    width: 26px;
+    height: 25px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    &.ef_selected {
+      background-color: #e6e6e6;
+    }
+    &:hover {
+      background-color: #d0d0d0;
+    }
     img {
-      cursor: pointer;
+      display: block;
+      padding: 0px;
+      margin: 2px auto;
     }
   }
   #ef_cal {
     position: absolute;
     top: 0px;
     right: 30px;
+    width: 26px;
+    height: 25px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    &.ef_selected {
+      background-color: #e6e6e6;
+    }
+    &:hover {
+      background-color: #d0d0d0;
+    }
     img {
-      cursor: pointer;
+      display: block;
+      padding: 0px;
+      margin: 2px auto;
     }
   }
   #ef_map {
     position: absolute;
     top: 0px;
     right: 0px;
+    width: 26px;
+    height: 25px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    &.ef_selected {
+      background-color: #e6e6e6;
+    }
+    &:hover {
+      background-color: #d0d0d0;
+    }
     img {
-      cursor: pointer;
+      display: block;
+      padding: 0px;
+      margin: 1px auto;
     }
   }
-  #ef_blog {
+  #ef_stream {
     position: absolute;
     top: 0px;
     right: 0px;
+    width: 26px;
+    height: 25px;
+    cursor: pointer;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    border: 1px solid #aaaaaa;
+    &.ef_selected {
+      background-color: #e6e6e6;
+    }
+    &:hover {
+      background-color: #d0d0d0;
+    }
     img {
-      cursor: pointer;
+      display: block;
+      padding: 0px;
+      margin: 1px auto;
     }
   }
   &.ef_blogs {
-    #ef_search { right: 120px; }
+    #ef_views { right: 122px; }
+    #ef_search { right: 170px; }
     #ef_list { right: 90px; }
     #ef_cal { right: 60px; }
     #ef_map { right: 30px; }

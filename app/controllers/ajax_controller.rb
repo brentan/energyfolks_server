@@ -46,47 +46,51 @@ class AjaxController < ApplicationController
 
   # Return a list of visible users based on input criteria
   def users
+    more_pages = false
     if params[:moderation] == "true"
       data = User.needing_moderation(current_user, current_affiliate)
     else
-      data = User.find_all_visible(current_user, current_affiliate, fix_params(params, 'users'))
+      data, more_pages = User.find_all_visible(current_user, current_affiliate, fix_params(params, 'users'))
     end
     data = data.map { |i| user_hash(i) }
-    render_ajax( {data: data} )
+    render_ajax( {data: data, more_pages: more_pages} )
   end
 
   # Return a list of visible users based on input criteria
   def jobs
+    more_pages = false
     if params[:moderation] == "true"
       data = Job.needing_moderation(current_user, current_affiliate)
     elsif params[:my_posts] == "true"
       data = Job.get_mine(current_user)
     else
-      data = Job.find_all_visible(current_user, current_affiliate, fix_params(params, 'jobs'))
+      data, more_pages = Job.find_all_visible(current_user, current_affiliate, fix_params(params, 'jobs'))
     end
-    render_ajax( {data: data} )
+    render_ajax( {data: data, more_pages: more_pages} )
   end
 
   def events
+    more_pages = false
     if params[:moderation] == "true"
       data = Event.needing_moderation(current_user, current_affiliate)
     elsif params[:my_posts] == "true"
       data = Event.get_mine(current_user)
     else
-      data = Event.find_all_visible(current_user, current_affiliate, fix_params(params, 'events'))
+      data, more_pages = Event.find_all_visible(current_user, current_affiliate, fix_params(params, 'events'))
     end
-    render_ajax( {data: data} )
+    render_ajax( {data: data, more_pages: more_pages} )
   end
 
   def discussions
+    more_pages = false
     if params[:moderation] == "true"
       data = Discussion.needing_moderation(current_user, current_affiliate)
     elsif params[:my_posts] == "true"
       data = Discussion.get_mine(current_user)
     else
-      data = Discussion.find_all_visible(current_user, current_affiliate, fix_params(params, 'discussions'))
+      data, more_pages = Discussion.find_all_visible(current_user, current_affiliate, fix_params(params, 'discussions'))
     end
-    render_ajax( {data: data} )
+    render_ajax( {data: data, more_pages: more_pages} )
   end
 
   def show

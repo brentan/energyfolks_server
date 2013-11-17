@@ -17,6 +17,20 @@
     color: white;
   }
 }
+.ef_load_more {
+  margin: 0px;
+  min-height: 30px;
+  padding: 2px 4px;
+  border: 0px solid #cccccc;
+  border-bottom-width: 1px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: underline;
+  &:hover {
+    background-color: #efefef;
+  }
+}
 .enfolks_list_item {
   margin: 0px;
   min-height: 40px;
@@ -30,7 +44,20 @@
   &:hover {
     background-color: #efefef;
   }
-  &
+  &.ef_stream {
+    cursor: auto;
+    h1.title {
+      text-decoration: underline;
+    }
+    &:hover {
+      background-color: transparent;
+    }
+    div.html {
+      margin: 4px 2px;
+      margin-left: 50px;
+      padding: 0px;
+    }
+  }
 
   img.enfolks_logo {
     width: 40px;

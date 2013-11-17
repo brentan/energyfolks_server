@@ -78,11 +78,11 @@ module MixinEntity
         moderation += self.total_needing_moderation(affiliate).all if user.admin?
       end
       moderation = moderation.map { |m| m.entity_id }.compact
-      return self.where(id: moderation).all
+      return version_control(user, affiliate, self.where(id: moderation).all)
     end
 
     def get_mine(user)
-      self.where(user_id: user.id).all
+      version_control(user, Affiliate.find_by_id(0), self.where(user_id: user.id).all)
     end
 
     def search(terms, affiliates, options)
@@ -164,12 +164,13 @@ module MixinEntity
           ids = results.map { |e| self.entity_id_from_search_id(e) }
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
-          return results
+          return results, (results.total_pages < results.current_page)
         rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
         end
       end
       # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to name column
+      more_pages = false
       if self.name.downcase.pluralize == 'users' # User search, this has different SQL syntax!
         items = User.verified.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name')
         items = items.where('visibility <= ?',options[:visibility])
@@ -181,7 +182,7 @@ module MixinEntity
         items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
         items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
       end
-      items = items.offset(options[:page] * options[:per_page]).limit(options[:per_page]) if %w(list stream).include?(options[:display])
+      items = items.offset(options[:page] * options[:per_page]).limit(options[:per_page] + 1) if %w(list stream).include?(options[:display])
       items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
       if terms.present? && self.name.downcase.pluralize == 'users'
         items = items.where("first_name LIKE ? OR last_name LIKE ?","%#{terms}%","%#{terms}%")
@@ -211,7 +212,12 @@ module MixinEntity
       if options[:display] == 'month'
         items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
       end
-      return items.all
+      items = items.all
+      if %w(list stream).include?(options[:display]) && (items.length == (options[:per_page] + 1))
+        items = items[0...-1]
+        more_pages = true
+      end
+      return items, more_pages
     end
 
     def find_all_visible(user, affiliate = nil, options = {})
@@ -219,8 +225,8 @@ module MixinEntity
       affiliates << affiliate.id if affiliate.present? && affiliate.id.present?
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
-      items = self.search(options[:terms],affiliates, options)
-      return version_control(user, affiliate, items)
+      items, more_pages = self.search(options[:terms],affiliates, options)
+      return version_control(user, affiliate, items), more_pages
     end
 
     def version_control(user, affiliate, items)
@@ -329,6 +335,13 @@ module MixinEntity
     rt = @raw_tags
     rt = self.tags.map {|t| t.name.capitalize}.join(",") if rt.blank?
     return rt
+  end
+
+  def comment_hash
+    "#{self.entity_name}_#{self.id}"
+  end
+  def comments
+    Comment.find_all_by_hash(self.comment_hash)
   end
 
   def broadcast(version_control =  true)

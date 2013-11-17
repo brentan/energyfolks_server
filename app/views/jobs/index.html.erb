@@ -1,7 +1,4 @@
-<% if current_user.present? %>
-    <h1><%= link_to 'Create New Job', '#', :class => 'EnergyFolks_popup', :data => {command: 'jobs/new', iframe: 'true' } %></h1>
-<% end %>
-<h1>Energyfolks Jobs</h1>
+
 <script language="javascript">
     EnergyFolks.showPage({source: 'jobs', format: 'list'});
 </script>
