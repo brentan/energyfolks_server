@@ -167,7 +167,7 @@ EnergyFolks.vertically_center_popup = function() {
         var el_height = EnergyFolks.$('#energyfolks_popup_wrapper').height();
         var view_height = EnergyFolks.$(window).height();
         var scroll_location = EnergyFolks.$(document).scrollTop();
-        var offset = Math.max(Math.round((view_height - el_height)/2)-70,100);
+        var offset = Math.max(Math.round((view_height - el_height)/2)-30,100);
         EnergyFolks.$('#energyfolks_popup_wrapper').css('padding-top',(scroll_location + offset) + 'px');
     }
 }

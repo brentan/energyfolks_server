@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :subcomments, :dependent => :destroy
+
   belongs_to :affiliate
   scope :verified, where(:verified => true)
   include MixinEntity
@@ -116,7 +119,8 @@ class User < ActiveRecord::Base
     affiliates = [ (affiliate.present? && affiliate.id.present?) ? affiliate.id : 0 ]
     options[:highlight] = 0
     options[:visibility] = visibility
-    return self.search(options[:terms],affiliates, options)
+    results, more_pages = self.search(options[:terms],affiliates, options)
+    return results, more_pages
   end
 
   def affiliate_join

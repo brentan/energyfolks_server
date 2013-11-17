@@ -1,8 +1,4 @@
-<% if current_user.present? %>
-    <h1><%= link_to 'Create New Discussion', '#', :class => 'EnergyFolks_popup', :data => {command: 'discussions/new', iframe: 'true' } %></h1>
-<% end %>
-<h1>Energyfolks Discussions</h1>
+
 <script language="javascript">
-    <%= "EnergyFolks.id = 3" %>
     EnergyFolks.showPage({source: 'discussions', format: 'list'});
 </script>

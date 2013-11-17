@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115033941) do
+ActiveRecord::Schema.define(:version => 20131117030431) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -95,6 +95,16 @@ ActiveRecord::Schema.define(:version => 20131115033941) do
   end
 
   add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
+
+  create_table "comments", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.string   "hash"
+    t.text     "comment"
+  end
+
+  add_index "comments", ["hash"], :name => "index_comments_on_hash"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -277,6 +287,16 @@ ActiveRecord::Schema.define(:version => 20131115033941) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "subcomments", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.text     "comment"
+  end
+
+  add_index "subcomments", ["comment_id"], :name => "index_subcomments_on_comment_id"
+
   create_table "subscriptions", :force => true do |t|
     t.integer "user_id"
     t.boolean "weekly",       :default => true
@@ -294,6 +314,8 @@ ActiveRecord::Schema.define(:version => 20131115033941) do
     t.string  "name"
     t.integer "count", :default => 0
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"
