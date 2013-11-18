@@ -20,7 +20,7 @@ class Comment < ActiveRecord::Base
   def self.broadcast(user, item)
     item.subscribers.each do |e|
       next if e.user.blank?
-      #next if e.user_id == user.id
+      next if e.user_id == user.id
       NotificationMailer.new_comment_or_reply(e.user, item).deliver()
     end
   end
