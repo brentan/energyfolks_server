@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb" afterPath="$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/comment.rb" afterPath="$PROJECT_DIR$/app/models/comment.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384813556482" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817604099" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817151970" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384806811112" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -233,10 +231,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comment.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="comment.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="7" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
+            <state line="22" column="6" selection-start="638" selection-end="638" vertical-scroll-proportion="0.2837633">
               <folding />
             </state>
           </provider>
@@ -269,24 +267,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="20131117030431_create_comments_tables.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20131117030431_create_comments_tables.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="60" selection-start="52" selection-end="577" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="20131118174931_create_comment_subscriber.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="16" selection-start="544" selection-end="544" vertical-scroll-proportion="0.47799698">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -312,7 +292,6 @@
         <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js" />
         <option value="$PROJECT_DIR$/app/models/subcomment.rb" />
-        <option value="$PROJECT_DIR$/app/models/comment.rb" />
         <option value="$PROJECT_DIR$/app/controllers/subcomments_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/discussion.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20131118221014_update_affiliate_columns.rb" />
@@ -324,6 +303,7 @@
         <option value="$PROJECT_DIR$/app/mailers/error_mailer.rb" />
         <option value="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb" />
+        <option value="$PROJECT_DIR$/app/models/comment.rb" />
       </list>
     </option>
   </component>
@@ -411,25 +391,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrate" />
+              <option name="myItemId" value=".ebextensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1104,7 +1066,11 @@
       <created>1384813563610</created>
       <updated>1384813563610</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="fix irreversible migration to allow rollbacks">
+      <created>1384817609914</created>
+      <updated>1384817609914</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1193,7 +1159,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix irreversible migration to allow rollbacks" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1207,7 +1173,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="ec2 after deploy script" />
     <MESSAGE value="ec2 after deploy script try 2&#10;" />
     <MESSAGE value="add nokogiri" />
     <MESSAGE value="attempt to fix delayed job issue" />
@@ -1232,6 +1197,7 @@
     <MESSAGE value="begin comments/subcomments" />
     <MESSAGE value="Comment engine completion.  Still need to add to discussion detail page, add comments column to discussion, test in general" />
     <MESSAGE value="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER." />
+    <MESSAGE value="fix irreversible migration to allow rollbacks" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1256,13 +1222,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="351" column="21" selection-start="13997" selection-end="13997" vertical-scroll-proportion="0.7085202">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="7" selection-start="639" selection-end="639" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1316,13 +1275,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/after_deploy.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="6" selection-start="330" selection-end="355" vertical-scroll-proportion="0.27314112">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/subcomments_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="35" selection-start="674" selection-end="674" vertical-scroll-proportion="0.0">
@@ -1330,9 +1282,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
+    <entry file="file://$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="21" column="16" selection-start="544" selection-end="544" vertical-scroll-proportion="0.47799698">
           <folding />
         </state>
       </provider>
@@ -1344,9 +1296,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20131118174931_create_comment_subscriber.rb">
+    <entry file="file://$PROJECT_DIR$/.ebextensions/after_deploy.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="16" selection-start="544" selection-end="544" vertical-scroll-proportion="0.47799698">
+        <state line="17" column="82" selection-start="697" selection-end="738" vertical-scroll-proportion="0.38694993">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="6" selection-start="638" selection-end="638" vertical-scroll-proportion="0.2837633">
           <folding />
         </state>
       </provider>
