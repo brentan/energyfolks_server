@@ -11,10 +11,13 @@ class SubcommentsController < ApplicationController
     @item.user_name = "#{current_user.first_name} #{current_user.last_name}"
     @item.comment_id = params[:comment_id]
     return render :action => "new" if !@item.save
+    @item.subscribe(current_user) if params[:subscribe] == '1'
+    @item.broadcast(current_user).delay(:run_at => 5.minutes.from_now)
   end
 
   def delete
-
+    # TODO:
+    # Blog integration so that submitted blogs have same comment stream somehow
   end
 
 end

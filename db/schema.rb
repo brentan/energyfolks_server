@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131117030431) do
+ActiveRecord::Schema.define(:version => 20131118174931) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -96,6 +96,21 @@ ActiveRecord::Schema.define(:version => 20131117030431) do
 
   add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
 
+  create_table "comment_details", :force => true do |t|
+    t.string "name"
+    t.string "url"
+    t.string "comment_hash"
+  end
+
+  add_index "comment_details", ["comment_hash"], :name => "index_comment_details_on_comment_hash"
+
+  create_table "comment_subscribers", :force => true do |t|
+    t.integer "user_id"
+    t.string  "comment_hash"
+  end
+
+  add_index "comment_subscribers", ["comment_hash"], :name => "index_comment_subscribers_on_comment_hash"
+
   create_table "comments", :force => true do |t|
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -103,7 +118,6 @@ ActiveRecord::Schema.define(:version => 20131117030431) do
     t.integer  "affiliate_id"
     t.string   "unique_hash"
     t.string   "user_name"
-    t.string   "url"
     t.text     "comment"
   end
 

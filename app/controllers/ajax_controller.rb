@@ -94,8 +94,9 @@ class AjaxController < ApplicationController
   end
 
   def get_comments
+    CommentDetail.update(params[:hash], params[:title], params[:url])
     output = Comment.get_all_comments(params[:hash])
-    render :js => "EnergyFolks.callbacks[#{params['callback']}]({ data: #{output.to_json(:include => :subcomments)}, hash: '#{params[:hash]}' });EnergyFolks.callbacks[#{params['callback']}] = null;"
+    render_ajax "{ title: \"#{params[:title].gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(params[:hash], current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{params[:hash]}' }"
   end
 
   def get_comment
@@ -105,6 +106,23 @@ class AjaxController < ApplicationController
       output = Subcomment.find(params[:id].to_i)
     end
     render_ajax( {data: output} )
+  end
+  def delete_comment
+    if params[:model] == 'Comment'
+      output = Comment.find(params[:id].to_i)
+    else
+      output = Subcomment.find(params[:id].to_i)
+    end
+    output.destroy if current_user.present? && ((current_user == output.user) || current_user.admin?)
+    render_ajax
+  end
+  def subscribe_comment
+    CommentSubscriber.subscribe(params[:hash], current_user)
+    render_ajax
+  end
+  def unsubscribe_comment
+    CommentSubscriber.unsubscribe(params[:hash], current_user)
+    render_ajax
   end
 
   def show
@@ -148,7 +166,7 @@ class AjaxController < ApplicationController
     if output.blank?
       render :js => "//Completed"
     else
-      output[:width] ||= 900   # default popup window width, if needed
+      output[:width] ||= 900 unless output.is_a?(String)  # default popup window width, if needed
       set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
       set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
       lat = 37.8044
@@ -168,7 +186,7 @@ class AjaxController < ApplicationController
       end
       set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
       set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
-      render :js => "if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      render :js => "if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.is_a?(String) ? output : output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
     end
   end
   def fix_params(inputs, source)

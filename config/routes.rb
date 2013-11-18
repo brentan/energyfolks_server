@@ -52,10 +52,9 @@ EnergyfolksServer::Application.routes.draw do
   # Comment routes
   get "comments/new"
   post "comments/create"
-  get "comments/delete"
   get "subcomments/new"
   post "subcomments/create"
-  get "subcomments/delete"
+  post "inbound_emails/inbound"
 
   # ENTITY ROUTES
   resources :users, only: ['show']

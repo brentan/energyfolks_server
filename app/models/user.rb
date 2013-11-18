@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_one :subscription, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :comment_subscribers, :dependent => :destroy
 
   belongs_to :affiliate
   scope :verified, where(:verified => true)
