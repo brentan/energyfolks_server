@@ -192,7 +192,7 @@ module MixinEntity
       if options[:display] == 'map'
         bounds = options[:bounds].split('_')
         items = items.where("latitude > ? AND latitude < ? AND longitude > ? AND longitude < ?", bounds[0], bounds[2], bounds[1], bounds[3])
-      elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
+      elsif (self.name.downcase.pluralize != 'discussions') && options[:radius].present? && (options[:radius] > 0)
         items = items.near([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
       end
       if options[:tags].present? && (options[:tags].length > 0)
@@ -248,6 +248,7 @@ module MixinEntity
           all_attributes[:end_date] = item.end_date
           all_attributes[:tz] = item.tz
         end
+        all_attributes[:comments] = item.comment_count if item.instance_of?(Discussion) # TODO: || item.instance_of?(Blog)
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end
@@ -341,7 +342,10 @@ module MixinEntity
     "#{self.entity_name}_#{self.id}"
   end
   def comments
-    Comment.find_all_by_hash(self.comment_hash)
+    Comment.get_all_comments(self.comment_hash)
+  end
+  def comment_count
+    Comment.count_comments(self.comment_hash)
   end
   def static_url
     "#{SITE_HOST}/#{self.method_name}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}"

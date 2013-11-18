@@ -66,11 +66,14 @@
     border: 1px solid #cccccc;
     margin: 0px 4px;
   }
-  img.affiliate_logo {
+  .ef_affiliate_logo {
     width:40px;
     height: 40px;
     float: left;
-    border: 1px solid #cccccc;
+    img {
+      width:40px;
+      height: 40px;
+    }
   }
   h1.title {
     margin:0px;
@@ -254,11 +257,14 @@ table.enfolks_calendar {
         border: 1px solid #cccccc;
         margin: 0px 4px;
       }
-      img.affiliate_logo {
+      .ef_affiliate_logo {
         width:40px;
         height: 40px;
         float: left;
-        border: 1px solid #cccccc;
+        img {
+          width:40px;
+          height: 40px;
+        }
       }
       h1.title {
         margin:0px;
@@ -292,11 +298,14 @@ table.enfolks_calendar {
     border: 1px solid #cccccc;
     margin: 0px 4px;
   }
-  img.affiliate_logo {
+  .ef_affiliate_logo {
     width:40px;
     height: 40px;
     float: left;
-    border: 1px solid #cccccc;
+    img {
+      width:40px;
+      height: 40px;
+    }
   }
   h1.title {
     margin:0px;
@@ -348,4 +357,39 @@ table.enfolks_calendar {
     margin: 0px;
     border: 0px solid black;
   }
+}
+.ef_affiliate_logo {
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+  img.affiliate_logo {
+    border: 1px solid #cccccc;
+  }
+  div {
+    display: none;
+    position: absolute;
+    white-space: nowrap;
+    top: -5px;
+    left: -5px;
+    border: 1px solid #555555;
+    background-color: white;
+    padding: 0px;
+    margin: 0px;
+    table {
+      padding: 0px;
+      margin: 0px;
+      border: 0px solid black;
+    }
+    td {
+      padding: 3px;
+      vertical-align: top;
+      margin: 0px;
+      border: 0px solid black;
+    }
+    img {
+      margin: 0px;
+    }
+
+  }
+
 }

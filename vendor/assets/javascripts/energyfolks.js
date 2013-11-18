@@ -10,6 +10,7 @@
 //= require energyfolks/listeners
 //= require energyfolks/global
 //= require energyfolks/accounts
+//= require energyfolks/comments
 //= require energyfolks/data_display
 //= require energyfolks/backwards_compatible
 //= require energyfolks/leaflet

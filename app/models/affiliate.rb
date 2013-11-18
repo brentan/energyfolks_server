@@ -6,6 +6,8 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliates_discussions, :dependent => :destroy
   has_many :emails, as: :entity, :dependent => :destroy
   has_many :highlights, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :subcomments, :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_discussions, :url_users, :url_blog,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,

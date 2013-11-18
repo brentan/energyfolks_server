@@ -24,6 +24,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def avatar
+    user = User.find_by_id(params[:id])
+    if user.blank? || (user.present? && user.avatar.blank?)
+      image_url = "#{Rails.root}/app/assets/images/noimage.png" # Render the base noimage
+    else
+      image_url = user.avatar.url(:thumb) # Render the image directly for this user here
+      image_url = user.avatar.path(:thumb) if image_url[0..0] == '/' # Non-s3 is local
+    end
+    response.headers['Cache-Control'] = "public, max-age=#{96.hours.to_i}"
+    response.headers['Content-Type'] = 'image/jpeg'
+    response.headers['Content-Disposition'] = 'inline'
+    render :text => open(image_url, 'rb').read
+  end
 
   def show
     @item = User.find_by_id(params[:id])

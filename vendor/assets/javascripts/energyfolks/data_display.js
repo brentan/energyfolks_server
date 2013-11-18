@@ -551,7 +551,7 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     if(typeof show_links === 'undefined') show_links = true;
     var output = ''
     var info = EnergyFolks.getItemInfo(item);
-    output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + info.affiliate_id + '" class="affiliate_logo">';
+    output += EnergyFolks.affiliateLogo(info.affiliate_id, EnergyFolks.source == 'users' ? 'User is a member of' : 'Posted from the website of');
     if((info.admin_links != '') && (show_links))
         output += '<div class="admin_links">'+info.admin_links+'</div>';
     if(info.logo != '')

@@ -3,14 +3,18 @@ class CreateCommentsTables < ActiveRecord::Migration
     create_table :comments do |t|
       t.timestamps
       t.integer  :user_id
-      t.string   :hash
+      t.integer  :affiliate_id
+      t.string   :unique_hash
+      t.string   :user_name
       t.string   :url
       t.text     :comment
     end
-    add_index :comments, :hash
+    add_index :comments, :unique_hash
     create_table :subcomments do |t|
       t.timestamps
       t.integer  :user_id
+      t.integer  :affiliate_id
+      t.string   :user_name
       t.integer  :comment_id
       t.text     :comment
     end
