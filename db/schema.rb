@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118174931) do
+ActiveRecord::Schema.define(:version => 20131118221014) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(:version => 20131118174931) do
     t.string   "short_name"
     t.string   "email_name"
     t.string   "url"
-    t.string   "url_calendar"
+    t.string   "url_events"
     t.string   "url_jobs"
     t.string   "url_discussions"
     t.string   "url_users"
-    t.string   "url_blog"
+    t.string   "url_blogs"
     t.string   "email"
     t.boolean  "live",                 :default => false
     t.integer  "open",                 :default => 1
