@@ -1,0 +1,28 @@
+.comment_form {
+  background-color: #eeeeee;
+  padding: 0px;
+  margin: 0px;
+  .not_logged {
+    text-align: center;
+    padding: 4px;
+  }
+  textarea {
+    width: 400px;
+    height: 40px;
+    margin-left: 3px;
+  }
+  img {
+    float: left;
+    width: 40px;
+    height: 40px;
+  }
+  input[type=submit].button {
+    display: block;
+    margin-left: 375px;
+    padding: 4px 20px;
+    font-size: 15px;
+    margin-top: -3px;
+    border: 0px solid #ffffff;
+  }
+
+}

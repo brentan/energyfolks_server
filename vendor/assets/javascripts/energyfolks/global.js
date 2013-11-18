@@ -270,6 +270,35 @@ EnergyFolks.testAdmin = function(level) {
 }
 
 /*
+ * Create box will affiliate logo that upon mouseover will show more info
+ */
+
+EnergyFolks.affiliateLogo = function(id, text) {
+    id = id*1;
+    if(typeof EnergyFolks.affiliates[id] === 'undefined') id = 0;
+    var output = '<div class="ef_affiliate_logo">';
+    output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '" class="affiliate_logo">';
+    output += '<div><table><tr><td><img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '"></td><td>' + text + '<BR><a href="' + EnergyFolks.affiliates[id].url + '" target="_blank">' + EnergyFolks.affiliates[id].name + '</a></td></tr></table></div>';
+    output += '</div>';
+    return output;
+}
+EnergyFolks.$(function() {
+    var AffiliateTimeout = null;
+    EnergyFolks.$('body').on('mouseenter','.affiliate_logo',function() {
+        var self = EnergyFolks.$(this);
+        AffiliateTimeout = setTimeout(function() {
+            self.closest('div').find('div').show();
+        },200);
+    });
+    EnergyFolks.$('body').on('mouseleave','.affiliate_logo',function() {
+        clearTimeout(AffiliateTimeout);
+    })
+    EnergyFolks.$('body').on('mouseleave','.ef_affiliate_logo div',function() {
+        EnergyFolks.$(this).hide();
+    })
+});
+
+/*
  * Cookie functions
  */
 EnergyFolks.cookie = function(name, value, days) {

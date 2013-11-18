@@ -17,6 +17,7 @@ EnergyfolksServer::Application.routes.draw do
   get "users/from_hash"
   match 'accounts/external_Login_Verification/:hash' => 'users#from_hash' # Backwards compatibility
   get "users/verify"
+  get "users/avatar"
 
   get "users/rights"
   put "users/rights"
@@ -47,6 +48,14 @@ EnergyfolksServer::Application.routes.draw do
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
   get "affiliates/logo"
+
+  # Comment routes
+  get "comments/new"
+  post "comments/create"
+  get "comments/delete"
+  get "subcomments/new"
+  post "subcomments/create"
+  get "subcomments/delete"
 
   # ENTITY ROUTES
   resources :users, only: ['show']

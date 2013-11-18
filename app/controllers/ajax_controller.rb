@@ -93,6 +93,20 @@ class AjaxController < ApplicationController
     render_ajax( {data: data, more_pages: more_pages} )
   end
 
+  def get_comments
+    output = Comment.get_all_comments(params[:hash])
+    render :js => "EnergyFolks.callbacks[#{params['callback']}]({ data: #{output.to_json(:include => :subcomments)}, hash: '#{params[:hash]}' });EnergyFolks.callbacks[#{params['callback']}] = null;"
+  end
+
+  def get_comment
+    if params[:model] == 'Comment'
+      output = Comment.find(params[:id].to_i)
+    else
+      output = Subcomment.find(params[:id].to_i)
+    end
+    render_ajax( {data: output} )
+  end
+
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
     output = render_to_string :partial => "#{@item.method_name}/show"

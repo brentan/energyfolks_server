@@ -1,0 +1,27 @@
+<div class='comment_form'>
+  <% if current_user.present? %>
+    <%= image_tag(current_user.avatar.url(:thumb)) if current_user.avatar.present? %>
+    <%= image_tag('noimage.png') unless current_user.avatar.present? %>
+    <%= form_for @item, :url => { :action => 'create' } do |f| %>
+        <%= raw(iframe_form) %>
+        <%= f.text_area(:comment) %>
+        <% if @item.respond_to?(:unique_hash) %>
+            <%= f.hidden_field :unique_hash, :value => params[:hash] %>
+            <%= f.hidden_field :url, :value => params[:url] %>
+            <%= f.hidden_field :url, :value => params[:url] %>
+        <% else %>
+            <%= f.hidden_field :comment_id, :value => params[:comment_id] %>
+        <% end %>
+        <%= f.hidden_field :affiliate_id, :value => params[:aid] %>
+        <input type=hidden name='current_url' value='<%= params[:current_url] %>'>
+        <input type=hidden name='random_id' value='<%= params[:random_id] %>'>
+        <input type=hidden name='hash' value='<%= params[:hash] %>'>
+        <input type=hidden name='comment_id' value='<%= params[:comment_id] %>'>
+        <input type=hidden name='url' value='<%= params[:url] %>'>
+        <input type=hidden name='aid' value='<%= params[:aid] %>'>
+        <%= f.submit 'Post', :class => 'button' %>
+    <% end %>
+  <% else %>
+    <div class='not_logged'>You must be logged in to comment.</div>
+  <% end %>
+</div>
