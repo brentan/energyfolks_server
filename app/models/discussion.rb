@@ -4,6 +4,8 @@ class Discussion < ActiveRecord::Base
   belongs_to :user
   has_many :versions, :foreign_key => 'entity_id', :class_name => 'DiscussionsVersion',:dependent => :destroy
 
+  after_save :update_comment_details
+
   default_scope order('created_at DESC')
 
   VERSION_CONTROLLED = %w(name html attachment_file_name attachment_content_type attachment_file_size attachment_updated_at)
@@ -21,10 +23,14 @@ class Discussion < ActiveRecord::Base
       :hash_secret => "asfAdsfmasdfaSDFj23enujdskfsdjkfn23unjasdkfnakjsdfnnff-"
   }
   validates_attachment :attachment,
-                       :content_type => { :content_type => /^(image).*/ }, #TODO: More content types (pdf, word, excel)
-                       :size => { :in => 0..10.megabytes }
+                       :content_type => { :content_type => /^(text|image|application\/pdf|application\/x\-pdf|application\/ms|application\/vnd\.ms|application\/vnd\.openxmlformats|application\/x\-ms).*/ }, #TODO: More content types (pdf, word, excel)
+                       :size => { :in => 0..26.megabytes }
 
   attr_accessible :name, :html, :attachment, :affiliates_discussions_attributes, :last_updated_by
 
+  private
+  def update_comment_details
+    CommentDetail.update(self.comment_hash, self.name, self.static_url)
+  end
 
 end

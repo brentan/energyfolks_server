@@ -347,8 +347,16 @@ module MixinEntity
   def comment_count
     Comment.count_comments(self.comment_hash)
   end
-  def static_url
-    "#{SITE_HOST}/#{self.method_name}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}"
+  def static_url(affil = nil)
+    if affil.present?
+      affil_url = affil.send("url_#{self.method_name}")
+      return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?
+    end
+    if (self.affiliate_id) > 0 && self.affiliate.present?
+      affil_url = self.affiliate.send("url_#{self.method_name}")
+      return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?
+    end
+    return "#{SITE_HOST}/#{self.method_name}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}"
   end
 
   def broadcast(version_control =  true)

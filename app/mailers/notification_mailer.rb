@@ -15,7 +15,19 @@ class NotificationMailer < ActionMailer::Base
   def entity(user, entity)
     @item = entity
     @user = user
-    mail(to: @user.email, from: 'donotreply@energyfolks.com', subject: "[TODO-MAIN AFFILIATE:#{entity.entity_name} #{entity.entity_type}] #{entity.name}")
+    if(entity.instance_of?(Discussion))
+      from = "comment_0_#{entity.comment_hash}"
+      mail(to: @user.email, reply_to: "#{from}@reply.energyfolks.com", from: 'messages@energyfolks.com', subject: "[TODO-MAIN AFFILIATE:#{entity.entity_name} #{entity.entity_type}] #{entity.name}")
+    else
+      mail(to: @user.email, from: 'donotreply@energyfolks.com', subject: "[TODO-MAIN AFFILIATE:#{entity.entity_name} #{entity.entity_type}] #{entity.name}")
+    end
+  end
+
+  def new_comment_or_reply(user, entity)
+    @entity = entity
+    @user = user
+    from = "comment_#{entity.comment_id}_#{entity.unique_hash}"
+    mail(to: @user.email, from: 'messages@energyfolks.com', reply_to: "#{from}@reply.energyfolks.com", subject: "[TODO-MAIN AFFILIATE:New Comment] #{entity.name}")
   end
 
   def item_removed(item, reason, affiliate)

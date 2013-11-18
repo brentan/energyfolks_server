@@ -10,10 +10,8 @@ class CommentsController < ApplicationController
     @item.user_id = current_user.id
     @item.user_name = "#{current_user.first_name} #{current_user.last_name}"
     return render :action => "new" if !@item.save
-  end
-
-  def delete
-
+    @item.subscribe(current_user) if params[:subscribe] == '1'
+    @item.broadcast(current_user).delay(:run_at => 5.minutes.from_now)
   end
 
 end

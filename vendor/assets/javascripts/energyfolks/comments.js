@@ -1,18 +1,19 @@
 /*
  * Energyfolks comments library.  Adds a comment stream to any page that utilizes EF user accounts.  Multiple
  * comment streams can be embedded on a single page. To create a stream, utilize the EnergyFolks.Comments method.
- * It takes 1 optional input, which is a unique ID to identify this comment stream.  If none is supplied, a ID
- * is generated based on the URL.  For pages that have the same comment thread on multiple pages or URLs, a unique
- * ID must be supplied to identify the stream.  Multiple streams are allowed on a page.
+ * It takes 1 required input, a title (usually the page title) and 1 optional input, which is a unique ID to identify
+ * this comment stream.  If none is supplied, a ID is generated based on the URL.  For pages that have the same comment
+ * thread on multiple pages or URLs, a unique ID must be supplied to identify the stream.  Multiple streams are
+ * allowed on a page.
  */
 
 // Directly embed comments at this point on the page
-EnergyFolks.Comments = function(hash) {
-    document.write(EnergyFolks.Comments_HTML(hash));
+EnergyFolks.Comments = function(title, hash) {
+    document.write(EnergyFolks.Comments_HTML(title, hash));
 }
 
 // Return comments HTML for use elsewhere.  Also add the callback to fill in the comment stream
-EnergyFolks.Comments_HTML = function(hash) {
+EnergyFolks.Comments_HTML = function(title, hash) {
     if(typeof hash == "undefined") {
         var url=window.location.href;
         url=url.replace("?","");
@@ -23,23 +24,45 @@ EnergyFolks.Comments_HTML = function(hash) {
         hash=EnergyFolks.MD5(url.toLowerCase());
     } else
         hash = EnergyFolks.MD5("EF_AFFILIATE_" + EnergyFolks.id + "_" + hash);
-    EnergyFolks.ajax('get_comments', {hash: hash}, EnergyFolks.Populate_Comments);
+    EnergyFolks.ajax('get_comments', {hash: hash, title: title, url: window.location.href}, EnergyFolks.Populate_Comments);
     return "<div id='Enfolks_comments_" + hash + "' class='Enfolks_comments' data-hash='" + hash + "'><div class='ef_comments_loading'>Loading comments...</div></div>";
 }
 
 // Populate comments when returned by the server
 EnergyFolks.Populate_Comments = function(data) {
     var output = '';
+    if(EnergyFolks.user_logged_in) {
+        if(data.subscribed)
+            output += '<div class="ef_comment_subscribe">You are currently receiving email replies to this thread.  <a href="#" data-hash="' + data.hash + '" data-method="unsubscribe_comment">Unsubscribe</a></div>';
+        else
+            output += '<div class="ef_comment_subscribe"><a href="#" data-hash="' + data.hash + '" data-method="subscribe_comment">Subscribe to receive emails when comments are added</a></div>';
+    }
     if(data.data.length == 0) {
         output += '<div class="ef_no_comment">Be the first to comment on this post!</div>';
     } else {
+        var count = 0;
+        var some_hidden = 0;
         EnergyFolks.$.each(data.data, function(i, v) {
+            if(count == EnergyFolks.max_comment_before_collapse)
+                output += '<div class="ef_collapsed_comments">';
+            if(count >= EnergyFolks.max_comment_before_collapse)
+                some_hidden++;
+            count += 1;
             output += EnergyFolks.comment_item(v, true);
         });
+        if(some_hidden > 0)
+            output +='</div><div class="ef_hidden_comments"><a href="#">Show ' + some_hidden + ' more comment' + (some_hidden > 1 ? 's' : '') + '</a></div>';
     }
-    output += "<div id='ef_add_comment_" + EnergyFolks.comment_id_count + "' class='ef_add_comment'><iframe border='0' frameborder='0' src='" + EnergyFolks.server_url + "/comments/new?iframe_next=true&random_id=" + EnergyFolks.comment_id_count + "&hash=" + data.hash + "&url=" + encodeURIComponent(window.location.href) + "&aid="+EnergyFolks.id + "&" + EnergyFolks.urlhash() + "'></iframe></div>"
+    output += "<div id='ef_add_comment_" + EnergyFolks.comment_id_count + "' class='ef_add_comment'><iframe border='0' frameborder='0' src='" + EnergyFolks.server_url + "/comments/new?iframe_next=true&random_id=" + EnergyFolks.comment_id_count + "&hash=" + data.hash + "&title=" + encodeURIComponent(data.title) + "&url=" + encodeURIComponent(window.location.href) + "&aid="+EnergyFolks.id + "&" + EnergyFolks.urlhash() + "'></iframe></div>"
     EnergyFolks.comment_id_count += 1;
     EnergyFolks.$('#Enfolks_comments_' + data.hash).html(output);
+    EnergyFolks.$('.ef_comment_text_wrapper').each(function() {
+        if(EnergyFolks.$(this).height() > 100) {
+            EnergyFolks.$(this).css('max-height','100px');
+            EnergyFolks.$(this).css('overflow','hidden');
+            EnergyFolks.$(this).after('<a href="#" class="ef_comment_show_more">Show More...</a>');
+        }
+    });
 }
 
 // Attach listener to hash for handling response of comment submission
@@ -56,6 +79,25 @@ EnergyFolks.$(function() {
             });
         }
     });
+    EnergyFolks.$('body').on('click', '.ef_hidden_comments a', function() {
+        EnergyFolks.$(this).closest('.ef_hidden_comments').hide();
+        EnergyFolks.$(this).closest('.ef_hidden_comments').prev('.ef_collapsed_comments').show();
+        return false;
+    });
+    EnergyFolks.$('body').on('click', '.ef_comment_show_more', function() {
+        EnergyFolks.$(this).hide();
+        EnergyFolks.$(this).prev('.ef_comment_text_wrapper').css('max-height','none');
+        EnergyFolks.$(this).prev('.ef_comment_text_wrapper').css('overflow','visible');
+    });
+    EnergyFolks.$('body').on('click','.ef_comment_subscribe a', function() {
+        EnergyFolks.ajax(EnergyFolks.$(this).attr('data-method'), {hash: EnergyFolks.$(this).attr('data-hash')});
+        if(EnergyFolks.$(this).attr('data-method') == 'subscribe_comment')
+            var output = 'You are currently receiving email replies to this thread.  <a href="#" data-hash="' + EnergyFolks.$(this).attr('data-hash') + '" data-method="unsubscribe_comment">Unsubscribe</a>';
+        else
+            var output = '<a href="#" data-hash="' + EnergyFolks.$(this).attr('data-hash') + '" data-method="subscribe_comment">Subscribe to receive emails when comments are added</a>';
+        EnergyFolks.$(this).closest('.ef_comment_subscribe').html(output);
+        return false;
+    });
     EnergyFolks.$('body').on('click','.ef_reply_link', function() {
         if(EnergyFolks.$(this).closest('.ef_comment_replies').length > 0) {
             //subcomment
@@ -68,12 +110,19 @@ EnergyFolks.$(function() {
         EnergyFolks.$.scrollTo(el.offset().top - 70, {duration: 500});
         return false;
     });
+    EnergyFolks.$('body').on('click', '.ef_delete_comment', function() {
+        EnergyFolks.ajax('delete_comment', { model: EnergyFolks.$(this).attr('data-model'), id: EnergyFolks.$(this).attr('data-id')});
+        EnergyFolks.$(this).closest('.ef_comment_item').hide();
+        if(EnergyFolks.$(this).attr('data-model') == 'Comment')
+            EnergyFolks.$(this).closest('.ef_comment_item').next('.ef_comment_replies').hide();
+        return false;
+    });
 });
 
 EnergyFolks.comment_item = function(c, show_reply) {
     var output = '<div class="ef_comment_item"><img src="' + EnergyFolks.server_url + '/users/avatar?id=' + c.user_id + '" class="ef_avatar">';
-    output += '<div class="ef_comment_text"><span class="ef_name">' + EnergyFolks.create_remote_popup(c.user_name,'show',{model: 'User', id: c.user_id}) + '</span>' + c.comment;
-    output += '<div class="ef_comment_bottom">' + EnergyFolks.affiliateLogo(c.affiliate_id,'Posted from the website of') + ' | Posted ';
+    output += '<div class="ef_comment_text"><div class="ef_comment_text_wrapper"><span class="ef_name">' + EnergyFolks.create_remote_popup(c.user_name,'show',{model: 'User', id: c.user_id}) + '</span>' + c.comment + '</div>';
+    output += '<div class="ef_comment_bottom">' + EnergyFolks.affiliateLogo(c.affiliate_id,'Posted from the website of') + ' ';
     var when = Date.parse(c.created_at);
     var elapsed = Math.ceil((Date.now() - when)/1000);
     try {
@@ -92,12 +141,24 @@ EnergyFolks.comment_item = function(c, show_reply) {
         timestring = 'Unknown';
     }
     output += timestring;
-    if(show_reply) output += ' | <a href="#" class="ef_reply_link">Reply</a></div></div></div>';
+    if(EnergyFolks.user_logged_in && ((EnergyFolks.current_user.id == c.user_id) || EnergyFolks.current_user.super_admin))
+        output += ' | <a href="#" class="ef_delete_comment" data-id=' + c.id + ' data-model="' + (typeof c.unique_hash === 'undefined' ? 'Subcomment' : 'Comment') + '">Delete</a>';
+    if(show_reply && EnergyFolks.user_logged_in) output += ' | <a href="#" class="ef_reply_link">Reply</a>';
+    output += '</div></div></div>';
     if(!(typeof c.subcomments === 'undefined')) {
         output += '<div class="ef_comment_replies">';
+        var count = 0;
+        var some_hidden = 0;
         EnergyFolks.$.each(c.subcomments, function(i, v) {
+            if(count == EnergyFolks.max_replies_before_collapse)
+                output += '<div class="ef_collapsed_comments">';
+            if(count >= EnergyFolks.max_replies_before_collapse)
+                some_hidden++;
+            count += 1;
             output += EnergyFolks.comment_item(v, true);
         });
+        if(some_hidden > 0)
+            output +='</div><div class="ef_hidden_comments"><a href="#">Show ' + some_hidden + ' more repl' + (some_hidden > 1 ? 'ies' : 'y') + '</a></div>';
         output += "<div id='ef_add_comment_" + EnergyFolks.comment_id_count + "' class='ef_add_comment'><iframe border='0' frameborder='0' src='" + EnergyFolks.server_url + "/subcomments/new?iframe_next=true&random_id=" + EnergyFolks.comment_id_count + "&comment_id=" + c.id + "&url=" + encodeURIComponent(window.location.href) + "&aid="+EnergyFolks.id + "&" + EnergyFolks.urlhash() + "'></iframe></div>"
         EnergyFolks.comment_id_count += 1;
         output += '</div>';

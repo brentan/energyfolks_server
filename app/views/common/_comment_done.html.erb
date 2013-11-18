@@ -3,6 +3,6 @@
     EnergyFolks.$(function() {
         EnergyFolks.parent_url = '<%= raw(params[:current_url].gsub("#","").gsub(/_dot_/,".").gsub(/_slash_/,"/").gsub(/_colon_/,":").gsub(/_qmark_/,"?").gsub(/_amp_/,"&").gsub(/_equals_/,"=")) %>';
         window.parent.location=EnergyFolks.parent_url+'#comment_<%= params[:random_id] %>_<%= @item.instance_of?(Comment) ? 'Comment' : 'Subcomment' %>_<%= @item.id %>';
-        window.location = '/<%= @item.instance_of?(Comment) ? 'comments' : 'subcomments' %>/new?iframe_next=true&random_id=<%= params[:random_id] %>&hash=<%= params[:hash] %>&comment_id=<%= params[:comment_id] %>&url=<%= params[:url] %>&aid=<%= params[:aid] %>&current_url=<%= params[:current_url] %>';
+        window.location = '/<%= @item.instance_of?(Comment) ? 'comments' : 'subcomments' %>/new?iframe_next=true&random_id=<%= params[:random_id] %>&hash=<%= params[:hash] %>&comment_id=<%= params[:comment_id] %>&aid=<%= params[:aid] %>&current_url=<%= params[:current_url] %>';
     });
 </script>

@@ -9,7 +9,7 @@ class Affiliate < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
 
-  attr_accessible :name, :short_name, :email_name, :url, :url_calendar, :url_jobs, :url_discussions, :url_users, :url_blog,
+  attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
@@ -17,11 +17,11 @@ class Affiliate < ActiveRecord::Base
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
-  validates :url_calendar, :format => URI::regexp(%w(http https)), :allow_blank => true
+  validates :url_events, :format => URI::regexp(%w(http https)), :allow_blank => true
   validates :url_jobs, :format => URI::regexp(%w(http https)), :allow_blank => true
   validates :url_discussions, :format => URI::regexp(%w(http https)), :allow_blank => true
   validates :url_users, :format => URI::regexp(%w(http https)), :allow_blank => true
-  validates :url_blog, :format => URI::regexp(%w(http https)), :allow_blank => true
+  validates :url_blogs, :format => URI::regexp(%w(http https)), :allow_blank => true
 
   validates_each :email do |record, attr, value|
     if value.present?

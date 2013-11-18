@@ -22,6 +22,8 @@ EnergyFolks.TopBarFixed = true;
 EnergyFolks.checkCookies = true;
 //data-display constants:
 EnergyFolks.comment_id_count = 0;
+EnergyFolks.max_comment_before_collapse = 5;
+EnergyFolks.max_replies_before_collapse = 3;
 EnergyFolks.affiliates = new Array();
 EnergyFolks.affiliates[0] = {name: "EnergyFolks", url: '<%= SITE_HOST %>'};
 <% Affiliate.all.each do |a| %>
