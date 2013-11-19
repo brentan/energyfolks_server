@@ -108,6 +108,8 @@ EnergyFolks.remote_popup = function(command, parameters) {
         EnergyFolks.$('#energyfolks_popup_content').html(output.html);
         EnergyFolks.globalCallback(EnergyFolks.$('#energyfolks_popup_content'));
         EnergyFolks.vertically_center_popup();
+        if(typeof output.execute !== 'undefined')
+            eval(output.execute);
     });
 }
 EnergyFolks.create_remote_popup = function(text, command, parameters,  klass) {

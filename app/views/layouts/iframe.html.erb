@@ -29,6 +29,9 @@
   </style>
 </head>
 <body class='iframe_popup'>
+<script language="javascript">
+    <%= raw(user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : '') %>
+</script>
 
 <%= yield %>
 <script language="javascript">

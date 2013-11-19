@@ -4,7 +4,7 @@
  * It takes 1 required input, a title (usually the page title) and 1 optional input, which is a unique ID to identify
  * this comment stream.  If none is supplied, a ID is generated based on the URL.  For pages that have the same comment
  * thread on multiple pages or URLs, a unique ID must be supplied to identify the stream.  Multiple streams are
- * allowed on a page.
+ * allowed on a page.  Unique ID should only include letters and numbers (no ')
  */
 
 // Directly embed comments at this point on the page
@@ -13,8 +13,8 @@ EnergyFolks.Comments = function(title, hash) {
 }
 
 // Return comments HTML for use elsewhere.  Also add the callback to fill in the comment stream
-EnergyFolks.Comments_HTML = function(title, hash) {
-    if(typeof hash == "undefined") {
+EnergyFolks.Comments_HTML = function(title, hash, no_hash_md5) {
+    if(typeof hash === "undefined") {
         var url=window.location.href;
         url=url.replace("?","");
         url=url.replace("#","");
@@ -22,7 +22,7 @@ EnergyFolks.Comments_HTML = function(title, hash) {
         url=url.replace("https://","");
         url=url.replace("www.","");
         hash=EnergyFolks.MD5(url.toLowerCase());
-    } else
+    } else if(typeof no_hash_md5 === "undefined")
         hash = EnergyFolks.MD5("EF_AFFILIATE_" + EnergyFolks.id + "_" + hash);
     EnergyFolks.ajax('get_comments', {hash: hash, title: title, url: window.location.href}, EnergyFolks.Populate_Comments);
     return "<div id='Enfolks_comments_" + hash + "' class='Enfolks_comments' data-hash='" + hash + "'><div class='ef_comments_loading'>Loading comments...</div></div>";
@@ -70,6 +70,7 @@ EnergyFolks.$(function() {
     EnergyFolks.$(window).on('hashchange',function() {
         var hash = location.hash;
         if(hash.substr(1,8) == 'comment_') {
+            EnergyFolks.justSet = true;
             var ss = EnergyFolks.$(window).scrollTop();
             window.location.hash = '';
             EnergyFolks.$(window).scrollTop(ss);

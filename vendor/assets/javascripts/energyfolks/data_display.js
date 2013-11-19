@@ -24,6 +24,8 @@ EnergyFolks.showPage = function(params) {
         EnergyFolks.loading('#EnfolksResultDiv');
         EnergyFolks.ajax(command, parameters, function(output) {
             EnergyFolks.$('#EnfolksResultDiv').html("<div style='padding:3px;'>" + output.html + "</div>");
+            if(typeof output.execute !== 'undefined')
+                eval(output.execute);
         });
     } else {
         EnergyFolks.$(function() {
@@ -303,7 +305,6 @@ EnergyFolks.showData = function(data) {
     if(EnergyFolks.format == 'stream') {
         EnergyFolks.$('#ef_stream').addClass('ef_selected');
         EnergyFolks.showList();
-        //TODO: stream formats
     }
 }
 
@@ -559,7 +560,7 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
     output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
-        output += '<div class="html">' + info.html + '</div>';
+        output += '<div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else
         output += '<span class="line2">' + info.line_two + '</span>';
     return output;
@@ -663,6 +664,7 @@ EnergyFolks.getItemInfo = function(item) {
         output.line_one = '';
         output.line_two = '';
         output.html = item.html;
+        output.hash = "Discussion_" + item.id;
         var admin_links = '';
         if(EnergyFolks.get_moderated) {
             //TODO: Links for moderation queue

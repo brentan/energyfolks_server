@@ -5,7 +5,7 @@
     <%= form_for @item, :url => { :action => 'create' } do |f| %>
         <%= raw(iframe_form) %>
         <%= f.text_area(:comment) %>
-        <% if @item.respond_to?(:unique_hash) %>
+        <% if @item.instance_of?(Comment) %>
             <%= f.hidden_field :unique_hash, :value => params[:hash] %>
         <% else %>
             <%= f.hidden_field :comment_id, :value => params[:comment_id] %>
