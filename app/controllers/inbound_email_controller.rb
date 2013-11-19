@@ -62,9 +62,9 @@ class InboundEmailsController < ApplicationController
 
     # Pull out from address
     from_address = params['from']
-    from_address = params['from'].scan(/<.*>/).first[1...-1] unless (from_address =~ Email::EMAIL_VALIDATION)
+    from_address = params['from'].scan(/<.*>/).first[1...-1] unless (from_address =~ User::EMAIL_VALIDATION)
     # Test for valid from address
-    if !(from_address =~ Email::EMAIL_VALIDATION)
+    if !(from_address =~ User::EMAIL_VALIDATION)
       log_it("invalid from email",params)
       render :json => { "message" => "OK" }, :status => 200
       return
@@ -79,7 +79,7 @@ class InboundEmailsController < ApplicationController
     else
       spam_score = nil
     end
-    if params['SPF'].blank? || (params['SPF'].present? && (params['SPF'].downcase != 'pass') && (params['SPF'].downcase != 'softfail')) || spam_score.nil? || (spam_score.present? && (spam_score > spam_threshold))
+    if params['SPF'].blank? || (params['SPF'].present? && (params['SPF'].downcase == 'fail')) || spam_score.nil? || (spam_score.present? && (spam_score > spam_threshold))
       log_it("spam message (score of #{spam_score}, SPF #{params['SPF']})",params)
       # Send error only if user is known to us
       ErrorMailer.delay.error_back_to_sender(from_address, "Delivery error: message marked as spam", params['subject'], "Your message received a high spam score and was discarded.") if sender.present?
@@ -104,11 +104,11 @@ class InboundEmailsController < ApplicationController
     to_addresses = []
     to_addresses_dirty = (params['to'].present? ? params['to'].split(", ") : []) + (params['cc'].present? ? params['cc'].split(", ") : [])
     to_addresses_dirty.each do |to_address|
-      to_address = to_address.scan(/<.*>/).first[1...-1] unless (to_address =~ Email::EMAIL_VALIDATION)
-      next if !(to_address =~ Email::EMAIL_VALIDATION)
-      to_addresses << to_address.downcase.gsub(/@[a-z0-9\.\-]+.energyfolks.com/, '') if to_address.include?('@mail')
+      to_address = to_address.scan(/<.*>/).first[1...-1] unless (to_address =~ User::EMAIL_VALIDATION)
+      next if !(to_address =~ User::EMAIL_VALIDATION)
+      to_addresses << to_address.downcase.gsub(/@[a-z0-9\.\-]+.energyfolks.com/, '') if (to_address.include?('@reply') || to_address.include?('@inbound'))
     end
-    if to_addresses.empty? && user_addresses.empty?
+    if to_addresses.empty?
       log_it("No Valid To Addresses",params)
       render :json => { "message" => "OK" }, :status => 200
       return
@@ -133,7 +133,7 @@ class InboundEmailsController < ApplicationController
           c = Comment.new()
           c.unique_hash = to_address[2]
         else
-          prev_comment = Comment.where(hash: to_address[2], id: to_address[1])
+          prev_comment = Comment.where(unique_hash: to_address[2], id: to_address[1])
           if prev_comment.blank?
             log_it("Could not find comment",params)
             render :json => { "message" => "OK" }, :status => 200
