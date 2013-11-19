@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :subcomments, :dependent => :destroy
   has_many :comment_subscribers, :dependent => :destroy
 
+  EMAIL_VALIDATION = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+
   belongs_to :affiliate
   scope :verified, where(:verified => true)
   include MixinEntity
@@ -25,6 +27,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates_length_of :password, :within => 4..40, :if => :password_entered?
   validates_confirmation_of :password, :if => :password_entered?
+  validates_format_of :email, :with => EMAIL_VALIDATION
 
   accepts_nested_attributes_for :memberships, :allow_destroy => true
   accepts_nested_attributes_for :subscription

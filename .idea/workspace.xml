@@ -2,23 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/common/_comment_form.html.erb" afterPath="$PROJECT_DIR$/app/views/common/_comment_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/discussions/_show.html.erb" afterPath="$PROJECT_DIR$/app/views/discussions/_show.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384818046574" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820969440" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817151970" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820517728" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -32,7 +22,7 @@
     <file path="/error.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285643390" ignored="false" />
     <file path="/success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375663526720" ignored="false" />
     <file path="/user_login_hash.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296252591" ignored="false" />
-    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384796900284" ignored="false" />
+    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384822927134" ignored="false" />
     <file path="/clean_up.rake" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296917985" ignored="false" />
     <file path="/20130314184054_create_user_login_hash_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363286895114" ignored="false" />
     <file path="/hash_change.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383179792159" ignored="false" />
@@ -176,7 +166,7 @@
     <file path="/20131118174931_create_comment_subscriber.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817565023" ignored="false" />
     <file path="/new_comment_or_reply.html.erb.html" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384806683018" ignored="false" />
     <file path="/new_comment_or_reply.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384806884400" ignored="false" />
-    <file path="/inbound_email_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384819119748" ignored="false" />
+    <file path="/inbound_email_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384824146412" ignored="false" />
     <file path="/mailerror.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384808811328" ignored="false" />
     <file path="/comment_details.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384810292518" ignored="false" />
     <file path="/discussion.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812150668" ignored="false" />
@@ -242,10 +232,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comments.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="comments.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="39" selection-start="4255" selection-end="4255" vertical-scroll-proportion="0.39130434">
+            <state line="74" column="103" selection-start="4350" selection-end="4350" vertical-scroll-proportion="-44.4">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -262,10 +252,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inbound_email_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="inbound_email_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="14" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.0">
+            <state line="134" column="87" selection-start="6026" selection-end="6112" vertical-scroll-proportion="0.76811594">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="56" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -292,7 +291,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
         <option value="$PROJECT_DIR$/app/mailers/notification_mailer.rb" />
         <option value="$PROJECT_DIR$/app/views/error_mailer/message_back_to_sender.html.erb" />
         <option value="$PROJECT_DIR$/app/mailers/error_mailer.rb" />
@@ -300,7 +298,6 @@
         <option value="$PROJECT_DIR$/app/models/comment.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss" />
-        <option value="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/discussions/_show.html.erb" />
@@ -308,6 +305,8 @@
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
         <option value="$PROJECT_DIR$/app/views/common/_comment_form.html.erb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js" />
+        <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" />
       </list>
     </option>
   </component>
@@ -382,100 +381,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="energyfolks_server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1158,7 +1063,11 @@
       <created>1384818048554</created>
       <updated>1384818048555</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Kill some comment bugs">
+      <created>1384820974522</created>
+      <updated>1384820974522</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1247,7 +1156,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="dont send comments to yourself" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kill some comment bugs" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1261,7 +1170,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="add nokogiri" />
     <MESSAGE value="attempt to fix delayed job issue" />
     <MESSAGE value="ec2 after deploy script update" />
     <MESSAGE value="Fix jobs" />
@@ -1286,6 +1194,7 @@
     <MESSAGE value="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER." />
     <MESSAGE value="fix irreversible migration to allow rollbacks" />
     <MESSAGE value="dont send comments to yourself" />
+    <MESSAGE value="Kill some comment bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1293,13 +1202,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.ebextensions/after_deploy.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="82" selection-start="697" selection-end="738" vertical-scroll-proportion="0.38694993">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1338,13 +1240,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="341" column="24" selection-start="13764" selection-end="13764" vertical-scroll-proportion="-204.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="14" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1408,10 +1303,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="39" selection-start="4255" selection-end="4255" vertical-scroll-proportion="0.39130434">
+        <state line="74" column="103" selection-start="4350" selection-end="4350" vertical-scroll-proportion="-44.4">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="56" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="134" column="87" selection-start="6026" selection-end="6112" vertical-scroll-proportion="0.76811594">
+          <folding />
         </state>
       </provider>
     </entry>
