@@ -127,8 +127,15 @@ class AjaxController < ApplicationController
 
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
-    output = render_to_string :partial => "#{@item.method_name}/show"
-    render_ajax( {html: output} )
+    output = render_to_string :partial => "#{@item.method_name}/show", :locals => {ajax: 1}
+    if @item.instance_of?(Discussion)
+      CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
+      comments = Comment.get_all_comments(@item.comment_hash)
+      execute = "EnergyFolks.Populate_Comments({ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{comments.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' });"
+      render_ajax( {html: output, execute: execute} )
+    else
+      render_ajax( {html: output} )
+    end
   end
 
   def tags

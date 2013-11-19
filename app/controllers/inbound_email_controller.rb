@@ -2,20 +2,22 @@ class InboundEmailsController < ApplicationController
 
   def inbound
     require 'sanitize'
-    # Check for valid sender ip
-    valid_ips = %w(50.22.57.66 50.22.57.67 50.22.57.68 50.22.57.69 50.22.57.70 75.126.253.5 174.36.68.190 174.36.68.189 173.193.154.132 74.86.7.102 67.228.32.8 67.228.32.9 67.228.32.7 67.228.60.18 75.126.100.76 173.193.154.70 67.228.32.10 173.193.154.153 173.193.154.74 50.56.19.204)
-    if !(valid_ips.include? request.remote_ip)
-      # try a reverse DNS and see if the IP belongs to sendgrid:
-      Socket.do_not_reverse_lookup = false
-      s = Socket.getaddrinfo(request.remote_ip,nil)
-      if s.present? && s[0].present? && s[0][2].present? && (s[0][2].downcase =~ /\A[a-z0-9\.\-]\.sendgrid\.(com|me|net|biz)\Z/)
-        err = log_it("new sendgrid IP found (#{request.remote_ip})",params)
-        ErrorMailer.delay.mailerror(err)
-      else
-        err = log_it("Invalid poster IP (#{request.remote_ip})",params)
-        ErrorMailer.delay.mailerror(err)
-        render :json => { "message" => "OK" }, :status => 200
-        return
+    # Check for valid sender ip - disabled for now but can be enabled if spamming becomes an issue
+    if false
+      valid_ips = %w(50.22.57.66 50.22.57.67 50.22.57.68 50.22.57.69 50.22.57.70 75.126.253.5 174.36.68.190 174.36.68.189 173.193.154.132 74.86.7.102 67.228.32.8 67.228.32.9 67.228.32.7 67.228.60.18 75.126.100.76 173.193.154.70 67.228.32.10 173.193.154.153 173.193.154.74 50.56.19.204 198.37.145.35)
+      if !(valid_ips.include? request.remote_ip)
+        # try a reverse DNS and see if the IP belongs to sendgrid:
+        Socket.do_not_reverse_lookup = false
+        s = Socket.getaddrinfo(request.remote_ip,nil)
+        if s.present? && s[0].present? && s[0][2].present? && (s[0][2].downcase =~ /\A[a-z0-9\.\-]\.sendgrid\.(com|me|net|biz)\Z/)
+          err = log_it("new sendgrid IP found (#{request.remote_ip})",params)
+          ErrorMailer.delay.mailerror(err)
+        else
+          err = log_it("Invalid poster IP (#{request.remote_ip})",params)
+          ErrorMailer.delay.mailerror(err)
+          render :json => { "message" => "OK" }, :status => 200
+          return
+        end
       end
     end
 

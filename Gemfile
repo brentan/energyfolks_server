@@ -26,6 +26,7 @@ gem 'email_reply_parser'
 gem 'mysql2'
 
 gem 'nokogiri'
+gem 'sanitize'
 
 
 # Gems used only for assets and not required
