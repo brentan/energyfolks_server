@@ -138,7 +138,9 @@ module MixinEntity
             filters[:and][:lat] = sw[:lat]..ne[:lat]
             filters[:and][:lng] = sw[:lng]..ne[:lng]
           elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
-            filters[:and][:and] = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
+            latlng = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
+            filters[:and][:lat] = latlng[:lat]
+            filters[:and][:lng] = latlng[:lng]
           end
           filters[:and][:date] = 1..options[:visibility] if options[:visibility].present?  # User visibility info stored here
           filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
@@ -150,21 +152,21 @@ module MixinEntity
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
           sort = ["primary", :asc] if(self.name.downcase.pluralize == 'users')
 
-          options = {
+          asari_options = {
               filter: filters,
               rank: sort,
               page_size: %w(month map).include?(options[:display]) ? 10000 : options[:per_page],
               page: %w(month map).include?(options[:display]) ? 1 : (options[:page]+1)
           }
           if terms.present?
-            results = asari.search(terms, options)
+            asari_results = asari.search(terms, asari_options)
           else
-            results = asari.search(options)
+            asari_results = asari.search(asari_options)
           end
-          ids = results.map { |e| self.entity_id_from_search_id(e) }
+          ids = asari_results.map { |e| self.entity_id_from_search_id(e) }
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
-          return results, (results.total_pages < results.current_page)
+          return results, (asari_results.total_pages < asari_results.current_page)
         rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
         end
