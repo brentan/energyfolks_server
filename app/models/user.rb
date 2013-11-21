@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
       latlng = {lat: 0, lng: 0}
     end
     affiliate_list = self.memberships.approved.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }
-    affiliate_list = ['A'] if affiliate_list.length == 0
+    affiliate_list << 'A'
     affiliate_list = [] unless self.verified?
     {
         :primary => "#{self.last_name}, #{self.first_name}",
