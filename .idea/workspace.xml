@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/development.rb" afterPath="$PROJECT_DIR$/config/environments/development.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385016326800" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385016632241" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385008449254" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385014932888" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -214,19 +209,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mixin_entity.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mixin_entity.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="144" selection-start="4230" selection-end="4230" vertical-scroll-proportion="0.19254659">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="38" selection-start="479" selection-end="479" vertical-scroll-proportion="0.0">
+            <state line="13" column="30" selection-start="303" selection-end="303" vertical-scroll-proportion="-7.8">
               <folding />
             </state>
           </provider>
@@ -241,10 +227,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="development.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="69" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
+            <state line="45" column="25" selection-start="1742" selection-end="1742" vertical-scroll-proportion="0.8240469">
               <folding />
             </state>
           </provider>
@@ -294,8 +280,8 @@
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$USER_HOME$/.rvm/gems/ruby-1.9.3-p194/gems/asari-0.10.3/lib/asari/geography.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
+        <option value="$PROJECT_DIR$/config/environments/development.rb" />
       </list>
     </option>
   </component>
@@ -1064,7 +1050,11 @@
       <created>1384915750435</created>
       <updated>1384915750436</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Fix issues with search / latlng bounding issues">
+      <created>1385016637744</created>
+      <updated>1385016637744</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1089,7 +1079,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="805" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1153,7 +1143,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix some errors with search" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix issues with search / latlng bounding issues" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1167,7 +1157,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fix jobs" />
     <MESSAGE value="Finish mixin entity stuff, should be working.  More testing needed to be sure." />
     <MESSAGE value="Create Events and Bulletins" />
     <MESSAGE value="Finish adding Events and Bulletins" />
@@ -1192,6 +1181,7 @@
     <MESSAGE value="Kill some comment bugs" />
     <MESSAGE value="various bug fixes for inbound email" />
     <MESSAGE value="fix some errors with search" />
+    <MESSAGE value="Fix issues with search / latlng bounding issues" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1265,13 +1255,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="36" selection-start="9315" selection-end="9321" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p194/gems/asari-0.10.3/lib/asari/geography.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="136" selection-start="367" selection-end="367" vertical-scroll-proportion="0.2283105">
@@ -1293,9 +1276,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/ajax_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="69" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0">
+        <state line="204" column="36" selection-start="9315" selection-end="9321" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="38" selection-start="479" selection-end="479" vertical-scroll-proportion="0.39589444">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="30" selection-start="303" selection-end="303" vertical-scroll-proportion="-7.8">
           <folding />
         </state>
       </provider>
@@ -1307,16 +1304,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
+    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="38" selection-start="479" selection-end="479" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="144" selection-start="4230" selection-end="4230" vertical-scroll-proportion="0.19254659">
+        <state line="45" column="25" selection-start="1742" selection-end="1742" vertical-scroll-proportion="0.8240469">
           <folding />
         </state>
       </provider>
