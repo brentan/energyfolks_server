@@ -11,7 +11,7 @@ gem 'strip_attributes'
 gem 'geocoder'
 gem 'tinymce-rails'
 gem 'jscolor-rails'
-gem 'asari'
+gem 'asari', :git => 'git://github.com/brentan/asari.git'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
