@@ -19,3 +19,5 @@ pickle-email-*.html
 /config/deploy.rb
 .idea/workspace.xml
 .idea/tasks.xml
+/log/development.log
+/config/database.yml
