@@ -32,6 +32,10 @@ EnergyfolksServer::Application.routes.draw do
   get "users/resend_activation"
   post "users/resend_activation"
 
+  # Omniauth routes
+  get '/external_login', to: 'users#external_login'
+  get '/auth/linkedin/callback', to: 'users#linkedin'
+
   # AFFILIATE ROUTES
 
   get "affiliates/new"
