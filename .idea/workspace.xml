@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/ruby.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/omniauth.rb.template" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/omniauth.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
@@ -10,7 +13,7 @@
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385086151793" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385086904143" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385008449254" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385086124736" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -111,7 +114,7 @@
     <file path="/_subscriptions.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384484616356" ignored="false" />
     <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377234612234" ignored="false" />
     <file path="/schedule.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375045177052" ignored="false" />
-    <file path="/.gitignore" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375461930639" ignored="false" />
+    <file path="/.gitignore" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088177849" ignored="false" />
     <file path="/error_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384813435424" ignored="false" />
     <file path="/deploy.rb.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375235775418" ignored="false" />
     <file path="/exception_notification.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375235329775" ignored="false" />
@@ -213,10 +216,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mixin_entity.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mixin_entity.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="218" column="138" selection-start="9522" selection-end="9522" vertical-scroll-proportion="0.49534163">
+            <state line="204" column="132" selection-start="8606" selection-end="8606" vertical-scroll-proportion="-4.36">
               <folding />
             </state>
           </provider>
@@ -231,19 +234,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+      <file leaf-file-name="mixin_entity_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="77" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.0">
+            <state line="45" column="12" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mixin_entity_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb">
+      <file leaf-file-name="inbound_email_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="12" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
+            <state line="125" column="90" selection-start="5440" selection-end="5440" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gemfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="23" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="omniauth.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="3" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="7" selection-start="280" selection-end="280" vertical-scroll-proportion="0.46187684">
               <folding />
             </state>
           </provider>
@@ -270,8 +300,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/models/comment.rb" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss" />
         <option value="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/discussions/_show.html.erb" />
@@ -284,8 +312,10 @@
         <option value="$USER_HOME$/.rvm/gems/ruby-1.9.3-p194/gems/asari-0.10.3/lib/asari/geography.rb" />
         <option value="$PROJECT_DIR$/app/models/mixin_entity.rb" />
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/.ebextensions/ruby.config" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/config/initializers/omniauth.rb" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -360,6 +390,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="initializers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1062,7 +1124,11 @@
       <created>1385017419230</created>
       <updated>1385017419230</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="temporary change ec2 git bundling due to need to bundle asari gem from custom location">
+      <created>1385086909076</created>
+      <updated>1385086909076</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1151,7 +1217,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove cloudsearch from local" />
+    <option name="LAST_COMMIT_MESSAGE" value="temporary change ec2 git bundling due to need to bundle asari gem from custom location" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1165,7 +1231,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Create Events and Bulletins" />
     <MESSAGE value="Finish adding Events and Bulletins" />
     <MESSAGE value="Add primary network to user profile" />
     <MESSAGE value="Base EF and developer layouts created" />
@@ -1190,6 +1255,7 @@
     <MESSAGE value="fix some errors with search" />
     <MESSAGE value="Fix issues with search / latlng bounding issues" />
     <MESSAGE value="remove cloudsearch from local" />
+    <MESSAGE value="temporary change ec2 git bundling due to need to bundle asari gem from custom location" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1197,55 +1263,12 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="562" column="100" selection-start="29847" selection-end="29851" vertical-scroll-proportion="0.34460548">
-          <folding>
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1384820624000" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="30" selection-start="3315" selection-end="3334" vertical-scroll-proportion="-4.0454545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="6" selection-start="638" selection-end="638" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="74" column="103" selection-start="4350" selection-end="4350" vertical-scroll-proportion="-44.4">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="90" selection-start="5440" selection-end="5440" vertical-scroll-proportion="0.5310559">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="12" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1291,13 +1314,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="23" selection-start="292" selection-end="292" vertical-scroll-proportion="0.28592375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.ebextensions/ruby.config">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="0" selection-start="132" selection-end="161" vertical-scroll-proportion="0.109970674">
@@ -1314,7 +1330,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/mixin_entity.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="218" column="138" selection-start="9522" selection-end="9522" vertical-scroll-proportion="0.49534163">
+        <state line="204" column="132" selection-start="8606" selection-end="8606" vertical-scroll-proportion="-4.36">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="12" selection-start="1352" selection-end="1352" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/inbound_email_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="90" selection-start="5440" selection-end="5440" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="23" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb.template">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="3" selection-start="120" selection-end="120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="7" selection-start="280" selection-end="280" vertical-scroll-proportion="0.46187684">
           <folding />
         </state>
       </provider>

@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/brentan/asari.git
-  revision: 955ed4363c135e11089505316c9dbabc42000197
+  revision: 0dca1b18d42a8a99559c0855cdb623a1ce1db54d
   specs:
-    asari (0.10.31)
+    asari (0.10.3)
       httparty
 
 GEM
@@ -115,6 +115,14 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     oauth (0.4.7)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-linkedin (0.1.0)
+      omniauth-oauth (~> 1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     paperclip (3.5.2)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -209,7 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  asari!
+  asari (= 0.10.3)!
   aws-sdk
   capybara
   coffee-rails (~> 3.2.1)
@@ -229,6 +237,8 @@ DEPENDENCIES
   mysql2
   nested_form
   nokogiri
+  omniauth
+  omniauth-linkedin
   paperclip
   rails (= 3.2.12)
   rails-asset-jqueryui
