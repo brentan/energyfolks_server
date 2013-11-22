@@ -3,13 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="start linkedin integration (via omniauth)">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/omniauth.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/omniauth.rb.template" afterPath="$PROJECT_DIR$/config/initializers/omniauth.rb.template" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/deploy.rb" afterPath="$PROJECT_DIR$/config/deploy.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088321617" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088431034" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385008449254" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385086124736" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -108,7 +107,7 @@
     <file path="/subscription.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374453991593" ignored="false" />
     <file path="/20130722002220_create_subscriptions_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374452966221" ignored="false" />
     <file path="/_subscriptions.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384484616356" ignored="false" />
-    <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377234612234" ignored="false" />
+    <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088426320" ignored="false" />
     <file path="/schedule.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375045177052" ignored="false" />
     <file path="/.gitignore" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088338934" ignored="false" />
     <file path="/error_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384813435424" ignored="false" />
@@ -180,6 +179,7 @@
     <file path="$PROJECT_DIR$/../asari/Gemfile.lock" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385085895224" ignored="false" />
     <file path="$PROJECT_DIR$/../asari/spec/geography_spec.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385086141545" ignored="false" />
     <file path="/omniauth.rb.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088274182" ignored="false" />
+    <file path="/omniauth.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385088451077" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,19 +249,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="omniauth.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="omniauth.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
+            <state line="2" column="43" selection-start="144" selection-end="144" vertical-scroll-proportion="0.04398827">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.35190615">
+            <state line="11" column="94" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -288,7 +288,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/discussions/_show.html.erb" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
@@ -301,9 +300,10 @@
         <option value="$PROJECT_DIR$/config/environments/development.rb" />
         <option value="$PROJECT_DIR$/.ebextensions/ruby.config" />
         <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/config/initializers/omniauth.rb" />
         <option value="$PROJECT_DIR$/config/initializers/omniauth.rb.template" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/config/deploy.rb" />
+        <option value="$PROJECT_DIR$/config/initializers/omniauth.rb" />
       </list>
     </option>
   </component>
@@ -1120,7 +1120,11 @@
       <created>1385088203944</created>
       <updated>1385088203946</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="start linkedin integration (via omniauth)">
+      <created>1385088349863</created>
+      <updated>1385088349864</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1255,15 +1259,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="103" selection-start="4350" selection-end="4350" vertical-scroll-proportion="-44.4">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p194/gems/asari-0.10.3/lib/asari/geography.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="136" selection-start="367" selection-end="367" vertical-scroll-proportion="0.2283105">
@@ -1355,16 +1350,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb">
+    <entry file="file://$PROJECT_DIR$/config/deploy.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="46" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
+        <state line="3" column="27" selection-start="79" selection-end="79" vertical-scroll-proportion="0.06726457">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="19" selection-start="210" selection-end="210" vertical-scroll-proportion="0.35190615">
+        <state line="11" column="94" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/initializers/omniauth.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="43" selection-start="144" selection-end="144" vertical-scroll-proportion="0.04398827">
           <folding />
         </state>
       </provider>
