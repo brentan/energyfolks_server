@@ -11,7 +11,7 @@ gem 'strip_attributes'
 gem 'geocoder'
 gem 'tinymce-rails'
 gem 'jscolor-rails'
-gem 'asari'
+gem 'asari', '0.10.3', :git => 'git://github.com/brentan/asari.git'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
@@ -20,6 +20,8 @@ gem 'whenever'
 gem 'whenever-elasticbeanstalk'
 
 gem 'linkedin'   #used to do pull profile info from LinkedIn.com
+gem 'omniauth'
+gem 'omniauth-linkedin'
 
 gem 'email_reply_parser'
 

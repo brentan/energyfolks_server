@@ -16,6 +16,8 @@ pickle-email-*.html
 .elasticbeanstalk/
 *elasticbeanstalk.yml
 *ec2.yml
+*omniauth.rb
+/config/initializers/omniauth.rb
 /config/deploy.rb
 .idea/*
 /log/development.log

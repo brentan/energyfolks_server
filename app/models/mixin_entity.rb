@@ -138,6 +138,7 @@ module MixinEntity
             filters[:and][:lat] = sw[:lat]..ne[:lat]
             filters[:and][:lng] = sw[:lng]..ne[:lng]
           elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
+            latlng = Geocoder::Calculations.bounding_box([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
             latlng = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
@@ -274,13 +275,19 @@ module MixinEntity
         asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
         asari.aws_region = AMAZON_REGION
         to_remove = asari.search({filter: {and: {date: 1..(1.day.ago.to_i*2), type: self.new.entity_name}},page_size: 100000})
+        to_remove = to_remove.map { |e| e }
+      rescue
+      end
+      to_index = self.all
+      to_index.each do |i|
+        i.update_index
+      end
+      begin
+        to_remove = to_remove - (to_index.map { |t| t.search_index_id})
         to_remove.each do |e|
           asari.remove_item(e)
         end
       rescue
-      end
-      self.all.each do |i|
-        i.update_index
       end
     end
   end

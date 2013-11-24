@@ -44,8 +44,4 @@ EnergyfolksServer::Application.configure do
   config.sitemailer_protocol = 'http://'
 
   USE_CLOUDSEARCH = false
-  # TODO: after cloudsearch testing locally, following lines can be removed
-  ec2info = YAML.load_file("#{Rails.root}/config/ec2.yml")
-  AMAZON_CLOUDSEARCH_ENDPOINT = ec2info[:cloudsearch_endpoint]
-  AMAZON_REGION = ec2info[:aws_params][:region]
 end
