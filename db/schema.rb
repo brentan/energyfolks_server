@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118221014) do
+ActiveRecord::Schema.define(:version => 20131122032656) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -390,6 +390,7 @@ ActiveRecord::Schema.define(:version => 20131118221014) do
     t.boolean  "active",              :default => true
     t.boolean  "admin_emails",        :default => false
     t.integer  "affiliate_id",        :default => 0
+    t.string   "linkedin_hash"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
