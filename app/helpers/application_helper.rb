@@ -49,4 +49,19 @@ module ApplicationHelper
   def ajax_link(text, command, params, delete=false)
     link_to text, '#', class: (delete ? 'EnergyFolks_delete' : 'EnergyFolks_ajax'), data: {command: command, params: params.to_query}
   end
+
+	def progress_bar(current_step, number_of_steps)
+		html = ''
+		html += "<div class='progress_bar'>"
+		number_of_steps.times do |index|
+			step = index + 1  #index is zero-based, we want steps to be numbered from 1
+			if step <= current_step
+				html += "<div>#{step}</div>"
+			else
+				html += "<div class='still_to_go'>#{step}</div>"
+			end
+		end
+	  html += '</div>'
+	end
+
 end
