@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122032656) do
+ActiveRecord::Schema.define(:version => 20131125015651) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -345,6 +345,13 @@ ActiveRecord::Schema.define(:version => 20131122032656) do
   add_index "tags_entities", ["entity_id"], :name => "index_tags_entities_on_entity_id"
   add_index "tags_entities", ["entity_type"], :name => "index_tags_entities_on_entity_type"
   add_index "tags_entities", ["tag_id"], :name => "index_tags_entities_on_tag_id"
+
+  create_table "third_party_logins", :force => true do |t|
+    t.integer "user_id"
+    t.string  "service"
+    t.string  "token"
+    t.string  "secret"
+  end
 
   create_table "user_login_hashes", :force => true do |t|
     t.integer  "user_id"

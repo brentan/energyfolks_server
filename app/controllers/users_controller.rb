@@ -284,23 +284,21 @@ class UsersController < ApplicationController
   end
 
   def external_login
-    # TODO:
-    # - javascript link to create the popup (instead of link currently used on login page)
-    # - common/new_external page that gives user option to create new account or attach to an EF account
-    # - testing of all possible login scenarios
-    # - addition to profile page as well.
     # Use an external service to login the user
-    cookies[:create_new] = true if params[:create_new]
     cookies[:aid] = current_affiliate.id.present? ? current_affiliate.id : 0
     return redirect_to "/auth/linkedin" if params[:service] == 'linkedin'
     redirect_to "/", :notice => "Unrecognized service"
   end
 
+  def omniauth_failure
+    return redirect_to env['PATH_INFO'].gsub("callback","") if env['omniauth.error'].problem == 'parameter_absent'
+    redirect_to "/", :notice => 'There was an error during the authentication process'
+  end
+
   def linkedin
-    # TODO: Save token and secret in a table related to user for later use
-    hash = request.env['omniauth.auth']
-    return redirect_to "/auth/linkedin" if hash.nil?
     begin
+      hash = request.env['omniauth.auth']
+      return redirect_to "/auth/linkedin" if hash.nil?
       # Find user email:
       email = hash.info.email
       # Attempt to login this user:
@@ -312,31 +310,41 @@ class UsersController < ApplicationController
         user.last_login = Time.now
         user.linkedin_hash = hash.uid
         user.save!(validate: false)
+        ThirdPartyLogin.update(user, 'linkedin', hash.credentials.token, hash.credentials.secret)
+        user.update_by_linkedin
+        user.update_index
         session[:userid] = user.id
         cookies[:cookieID] = user.cookie
-        # TODO: update user profile based on linkedin information
         render 'common/refresh_parent', layout: "iframe"
-      elsif cookies[:create_new]
-        user = User.new()
+      elsif params[:create_new].present?
+        cookies.delete(:create_new)
+        if current_affiliate.id.present?
+          user = User.new({ memberships_attributes: [ { affiliate_id: current_affiliate.id, reason: 'linkedin login' } ] })
+        else
+          user = User.new()
+        end
         user.email = hash.info.email
         user.first_name = hash.info.first_name
         user.last_name = hash.info.last_name
         user.location = hash.info.location
         user.linkedin_hash = hash.uid
-        user.position = hash.info.headline
-        pass = rand(1..10000000)
+        pass = rand(1..10000000).to_s
         user.password = pass
         user.password_confirmation = pass
         user.verified = true
         user.active = true
         user.save!
+        ThirdPartyLogin.update(user, 'linkedin', hash.credentials.token, hash.credentials.secret)
+        user.update_by_linkedin
         user.update_index
         session[:userid] = user.id
         cookies[:cookieID] = user.cookie
-        # TODO: Add user membership based on cookie[:aid]
         render 'common/refresh_parent', layout: "iframe"
       else
         # We have never seen this user...ask what they want to do
+        @name = hash.info.name
+        @service = 'LinkedIn'
+        @link = 'linkedin'
         render 'common/new_external', layout: "iframe"
       end
     rescue
