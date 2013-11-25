@@ -1,5 +1,8 @@
 <% if session[:userid] && (@user.id == session[:userid]) %>
     <div class='form'>
+      <div class='EnFolksLoginForm'>
+            <a href='#' class='ef_third_party_link' data-type='linkedin'><BR>Update your Profile<BR>from LinkedIn</a>
+        </div>
         <%=	 nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
           <%= raw(iframe_form) %>
         <h1>Basic Information</h1>

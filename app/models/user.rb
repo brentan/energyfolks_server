@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :comment_subscribers, :dependent => :destroy
+  has_many :third_party_logins, :dependent => :destroy
 
   EMAIL_VALIDATION = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
@@ -270,6 +271,32 @@ class User < ActiveRecord::Base
     user = User.where(where_clause).first
     return nil unless user.present? && user.verified?
     return user
+  end
+
+  def update_by_linkedin
+    #TODO: add to rake task to auto-update folks profiles each week or so?
+    token = ThirdPartyLogin.linkedin.where(:user_id => self.id).first
+    return if token.blank?
+    begin
+      client = LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET)
+      client.authorize_from_access(token.token, token.secret)
+      info = client.profile(:fields => %w(summary picture-url public-profile-url headline specialties positions first-name last-name email-address interests))
+      self.first_name = info.first_name if info.first_name.present?
+      self.last_name = info.last_name if info.last_name.present?
+      self.email = info.email_address.downcase if info.email_address.present?
+      self.bio = info.summary if info.summary.present?
+      self.expertise = info.specialties if info.specialties.present?
+      self.interests = info.interests if info.interests.present?
+      self.avatar = info.picture_url if info.picture_url.present?
+      if info.positions.present? && info.positions.all.present? && info.positions.all[0].present?
+        self.position = info.positions.all[0].title if info.positions.all[0].title.present?
+        self.organization = info.positions.all[0].company.name if info.positions.all[0].company.present?
+      elsif info.headline.present?
+        self.position = info.headline
+      end
+      self.save!
+    rescue
+    end
   end
 
   protected
