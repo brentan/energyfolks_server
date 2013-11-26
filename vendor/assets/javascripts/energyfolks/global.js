@@ -36,6 +36,19 @@ EnergyFolks.ajax = function(command, parameters, callback) {
     head.appendChild(script);
 }
 
+/*
+ * Create links to create third party login buttons
+ */
+EnergyFolks.ThirdPartyLogin = function(type) {
+
+}
+EnergyFolks.$(function() {
+    EnergyFolks.$('body').on('click', '.ef_third_party_link', function() {
+        window.open(EnergyFolks.server_url + "/external_login?service=" + EnergyFolks.$(this).attr('data-type') + "&aid=" + EnergyFolks.id, "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
+        return false;
+    });
+});
+
 
 /*
  * Popup functions: Used to create modal popup dialogs used by energyfolks

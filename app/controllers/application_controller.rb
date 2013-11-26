@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
     # TODO: check for subdomain and then set AID accordingly
     @aid = 0
     @host = SITE_HOST #"http://dev.energyfolks.com:3000"
+    @aid = cookies[:aid] if cookies[:aid].present?
     @aid = params[:aid] if params[:aid].present?
   end
 
@@ -80,8 +81,8 @@ class ApplicationController < ActionController::Base
         :verified => i.verified?,
         :super_admin => i.admin?,
         :affiliate_id => i.affiliate_id,
-        :avatar => i.avatar,
-        :avatar_url => i.avatar.url(:thumb),
+        :avatar => i.avatar.present?,
+        :avatar_url => i.avatar.present? ? i.avatar.url(:thumb) : "#{SITE_HOST}/assets/noimage.png",
         :affiliates => i.memberships.approved.map { |m| { id: m.affiliate_id, admin_level: m.admin_level, approved: m.approved? } },
         :moderation_count => i.moderation_count,
         :user_posts => i.user_posts,

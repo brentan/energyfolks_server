@@ -1,8 +1,26 @@
-<a href="/users/login">LOGIN PAGE</a>
-<BR>
-<a href="/affiliates">affiliates</a>
-<BR>
-<h1>COMMENT ENGINE TEST</h1>
+<h1>ENERGYFOLKS SERVER DEVELOPMENT SITE</h1>
+<p>Welcome to the development site for the energyfolks server.  Recent code repository commit messages are listed below.  In addition,
+the comment system at the bottom of this page (in addition to testing the comment engine) is where important messages and updates
+will be posted as development progresses.</p>
+<h3>FEEDBACK</h3>
+Bugs, ideas, and other feedback can be sent directly to <a href='brentan@energyfolks.com'>brentan@energyfolks.com</a>.  Alternatively,
+post your comment or idea in the comment section below.
+<h3>RECENT COMMITS</h3>
+<%
+   require 'rss'
+   url = 'https://github.com/brentan/energyfolks_server/commits/master.atom'
+   open(url) do |rss|
+     feed = RSS::Parser.parse(rss)
+     feed.items.each do |item| %>
+       <%= raw(strip_tags(item.updated.content.strftime("%A, %B %-d, %Y at %l:%M %p:"))) %> -
+       <i><%= raw(strip_tags(item.author.email.to_s.gsub(/@.*/, ''))) %></i> -
+       <%= raw(strip_tags(item.content.content)) %><BR>
+     <% end
+   end
+%>
+
+
+<h1>UPDATES AND COMMENTS</h1>
 <script language='javascript'>
-    EnergyFolks.Comments("ENERGYFOLKS HOMEPAGE TEST THREAD");
+    EnergyFolks.Comments("Energyfolks Development Update", "EF HOMEPAGE COMMENTS");
 </script>
