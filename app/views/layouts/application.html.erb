@@ -18,8 +18,9 @@
            page_members = request.fullpath.include?("affiliate") || request.fullpath.include?("users")
            page_events = request.fullpath.include?("events")
            page_jobs = request.fullpath.include?("jobs")
+           affiliates_members = request.fullpath.include?("affilaites")
            page_discussions = request.fullpath.include?("discussions")
-           page_home = !page_members && !page_events && !page_jobs && !page_discussions
+           page_home = !page_members && !page_events && !page_jobs && !page_discussions && !affiliates_members
        %>
        <div style='position:absolute;bottom:10px;right:0px;'>
           <ul style='list-style:none;padding:0px;margin:0px;float:right;'>
@@ -34,6 +35,9 @@
             </li>
             <li class='topbarli'>
               <a href='/discussions' class='toplink<%= ' selected' if page_discussions %>'>Discussions</a>
+            </li>
+            <li class='topbarli'>
+              <a href='/affiliates' class='toplink<%= ' selected' if affiliates_members %>'>Affiliates</a>
             </li>
             <li class='topbarli'>
               <a href='/users' class='toplink<%= ' selected' if page_members %>'>Members</a>
@@ -80,6 +84,7 @@
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/events'>Calendar</a> <BR>
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/jobs'>Job Board</a> <BR>
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/users'>Members</a> <BR>
+                        <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/affiliates'>Affiliates</a> <BR>
                         <%= image_tag 'rightarrowb.png', {class: 'rightarrowb', border: 0} %><a href='/discussions'>Discussions</a> <BR>
                 </td>
                 <td style='padding:30px;padding-bottom:0px;vertical-align:top;text-align:left;'>

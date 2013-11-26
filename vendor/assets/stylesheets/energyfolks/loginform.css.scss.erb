@@ -1,0 +1,43 @@
+.EnFolksLoginForm, #efadminbar .EnFolksLoginForm {
+  .login_loading {
+
+  }
+  a.ef_third_party_link {
+    display:block;
+    padding: 3px 3px 3px 76px;
+    margin: 10px auto;
+    background-image: url(<%= SITE_HOST %>/assets/third_party/linkedin.png);
+    background-position: 5px;
+    background-repeat: no-repeat;
+    height: 75px;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+    vertical-align: middle;
+    background-color: #eeeeee;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+    &:hover {
+        background-color: #dddddd;
+    }
+    border-radius: 5px;
+  }
+  hr {
+      padding: 0px;
+      margin: 4px;
+      height: 1px;
+  }
+  .EnFolks_create_account {
+      padding: 2px;
+      margin: 3px;
+  }
+  label {
+      display: inline;
+  }
+  a {
+      display: inline;
+  }
+}
+.hide_external .ef_external_logins {
+    display: none;
+}

@@ -1,17 +1,12 @@
-<div class='EnFolksClass'>
-  <h3>Login or Sign up with<BR>
-<a href='#' onclick='window.open ("<%= SITE_HOST %>/external_login?service=linkedin&aid=<%= current_affiliate.id.present? ? current_affiliate.id : 0 %>", "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");return false;'>LinkedIn</a>
-  <hr width="95%" size=1 color="#999999">
-
-  <h3>Join us!</h3>
-  Signup for an <a href='https://www.energyfolks.com' target='_blank'>energyfolks</a> account to gain access to this site.  An account is <b>free</b> and open to
-  <b>anyone</b>.<BR>
-
-  <button class='EnFolks_create_account'>Get an Account</button>
-  <hr width="95%" size=1 color="#999999">
+<div class='EnFolksClass EnFolksLoginForm'>
+  <div class='ef_external_logins'>
+    <a href='#' class='ef_third_party_link' data-type='linkedin'><BR>Login with<BR>LinkedIn</a>
+    <hr width="95%" size=1 color="#999999">
+  <i>Don't have a LinkedIn account?</i>
+  <button class='EnFolks_create_account'>Signup for a new Account</button>
+  </div>
   <form method=post class='EnFolksExternalLoginForm'>
 
-    <h3 style="padding-top:7px;">Sign in with your <a href='https://www.energyfolks.com' target='_blank'>energyfolks</a> account</h3>
     <div align=center>
       <table border=0 cellpadding=1 cellspacing=0 align=center style='align:center;'>
         <tr>
@@ -30,7 +25,7 @@
             <input type=password name='passw' class='EnFolksPass' size=13></td>
         </tr>
         <tr>
-          <td colspan=2 align=center>
+          <td colspan=2 align=right>
             <label><input type=checkbox class='EnFolksCookie' name=remember checked value=11> Remember Me</label>
           </td>
         </tr>

@@ -1,0 +1,20 @@
+
+<h1 style='text-align:center'>Welcome <%= @name %></h1>
+<div style='text-align:center'>This looks like the first time you have logged in to our site using <%= @service %>.</div>
+
+<table border=0 cellpadding=10><tr><td style='border-right: 1px solid black;vertical-align: text-top;text-align: center;' class='hide_external'>
+  <h2>I already have an account</h2>
+  Login to link your <%= @service %> account with us.
+  <script language=javascript>
+    <%= "EnergyFolks.id = #{current_affiliate.id};" if current_affiliate.id.present? %>
+    EnergyFolks.LoginBox();
+  </script>
+</td><td style='vertical-align: text-top;text-align: center;'>
+  <h2>I'm a new user</h2>
+  Welcome!  Click the link below to complete your login with <%= @service %>. <BR><BR>
+  <a href='/auth/<%= @link %>?create_new=true' class='button'>Complete Login</a>
+</td></tr></table>
+
+<script language='javascript'>
+    EnergyFolks.parent_url = window.location.href;
+</script>
