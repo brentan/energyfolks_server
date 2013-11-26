@@ -10,7 +10,7 @@
           <ul class="overview">
             <li class='slide'>
               <h1><%= new ? 'Post a Job' : 'Edit Job Post' %></h1>
-              <%= raw(progress_bar(1,3)) %>
+              <%= raw(progress_bar(1,4)) %>
               <br/><br/>
               <hr>
 
@@ -46,8 +46,8 @@
 
             </li>
             <li class='slide'>
-              <h1>Tag this Job Post</h1>
-              <%= raw(progress_bar(2,3)) %>
+              <h1>Job Details</h1>
+              <%= raw(progress_bar(2,4)) %>
               <br/><br/>
               <hr>
 
@@ -60,13 +60,13 @@
               </div>
 
               <div class='form_label'>How to Apply</div>
-              <div class='form_entry'><%= f.text_area :how_to_apply %></div>
+              <div class='form_entry'><%= f.text_area :how_to_apply, class: 'tinymce' %></div>
 
               <%= tinymce %>
             </li>
             <li class='slide'>
               <h1>Sharing</h1>
-              <%= raw(progress_bar(3,3)) %>
+              <%= raw(progress_bar(3,4)) %>
 	            <br/><br/>
 	            <hr>
 
@@ -102,6 +102,13 @@
               <% end %>
               <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
+            </li>
+            <li class='slide'>
+              <h1>Preview</h1>
+              <%= raw(progress_bar(3,4)) %>
+              <br/><br/>
+              <hr>
+
             </li>
           </ul>
           <%= prev_next_buttons %>
