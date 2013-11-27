@@ -108,4 +108,34 @@ class Affiliate < ActiveRecord::Base
     end
   end
 
+  def url_users
+    url = super
+    url ||= "#{SITE_HOST}/users"
+    url
+  end
+
+  def url_events
+    url = super
+    url ||= "#{SITE_HOST}/events"
+    url
+  end
+
+  def url_jobs
+    url = super
+    url ||= "#{SITE_HOST}/jobs"
+    url
+  end
+
+  def url_discussions
+    url = super
+    url ||= "#{SITE_HOST}/discussions"
+    url
+  end
+
+  def url_blogs
+    url = super
+    url ||= "#{SITE_HOST}/blogs"
+    url
+  end
+
 end

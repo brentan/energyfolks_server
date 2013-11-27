@@ -148,7 +148,9 @@ EnergyFolks.hide_popup = function() {
         window.parent.location=EnergyFolks.parent_url+'#closepopup';
     else {
         EnergyFolks.justSet = true;
+        var ss = EnergyFolks.$(window).scrollTop();
         window.location.hash = '';
+        EnergyFolks.$(window).scrollTop(ss);
         EnergyFolks.$('#energyfolks_popup').remove();
         EnergyFolks.$('#energyfolks_popup_greyout').remove();
     }

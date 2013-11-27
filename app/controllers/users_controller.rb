@@ -307,6 +307,7 @@ class UsersController < ApplicationController
       user ||= current_user if user_logged_in?
       if user
         # We know who this user is...lets log them in
+        redirect_to "/", :alert => "Your account is frozen and your login is not allowed." unless user.active?
         user.last_login = Time.now
         user.linkedin_hash = hash.uid
         user.save!(validate: false)

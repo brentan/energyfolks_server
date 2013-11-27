@@ -1,0 +1,46 @@
+h2.ef_widget_title {
+  display: block;
+  text-align: center;
+}
+div.ef_widget_show_more {
+  background-color: #cccccc;
+  text-align:center;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 2px;
+  margin-top: -2px;
+  padding: 3px;
+  &:hover {
+    background-color: #dddddd;
+  }
+}
+div.ef_widget {
+  border: 1px solid #cccccc;
+  margin: 2px;
+  padding: 0px;
+  overflow-x: none;
+  overflow-y: auto;
+  div.ef_item {
+    border-top: 1px solid #dddddd;
+    background-color: white;
+    cursor: pointer;
+    margin: 0px;
+    padding: 2px;
+    text-align: left;
+    &:hover {
+      background-color: #eeeeee;
+    }
+    &.first {
+      border-top-width: 0px;
+    }
+    &.ef_highlight {
+      background-color: #ffffaa;
+    }
+  }
+  div.line_one {
+    font-size: 13px;
+  }
+  div.line_one {
+    font-size: 11px;
+  }
+}
