@@ -41,6 +41,9 @@
   &.ef_first_item {
     border-top-width: 1px;
   }
+  &.ef_highlight {
+    background-color: #ffffaa;
+  }
   &:hover {
     background-color: #efefef;
   }

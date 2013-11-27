@@ -18,7 +18,7 @@
            page_members = request.fullpath.include?("affiliate") || request.fullpath.include?("users")
            page_events = request.fullpath.include?("events")
            page_jobs = request.fullpath.include?("jobs")
-           affiliates_members = request.fullpath.include?("affilaites")
+           affiliates_members = request.fullpath.include?("affiliates")
            page_discussions = request.fullpath.include?("discussions")
            page_home = !page_members && !page_events && !page_jobs && !page_discussions && !affiliates_members
        %>

@@ -44,7 +44,7 @@ EnergyFolks.shift_later = true;
 EnergyFolks.search_terms = '';
 EnergyFolks.map_layer = 0;
 EnergyFolks.map_lat = 0;
-EnergyFolks.map_lat = 0;
+EnergyFolks.map_lng = 0;
 EnergyFolks.map_zoom = 11;
 EnergyFolks.marker_layer = 0;
 EnergyFolks.map_location_lat = 0;
@@ -56,6 +56,13 @@ EnergyFolks.tag_list = new Array();
 EnergyFolks.active_tags = new Array();
 EnergyFolks.auto_load_on_scroll = false;
 EnergyFolks.more_pages = false;
+
+//URLS
+EnergyFolks.url_users = '<%= SITE_HOST %>/users'
+EnergyFolks.url_events = '<%= SITE_HOST %>/events'
+EnergyFolks.url_jobs = '<%= SITE_HOST %>/jobs'
+EnergyFolks.url_discussions = '<%= SITE_HOST %>/discussions'
+EnergyFolks.url_blogs = '<%= SITE_HOST %>/blogs'
 
 //Initialize the Objects array
 EnergyFolks.objects = [];

@@ -1,7 +1,7 @@
 //TODO: Check MIT page custom CSS and ensure we use the same class names here
 
 /*
-The showpage function is the master function to show energyfolks data.  Params is a JSON array with the following options:
+The showPage function is the master function to show energyfolks data.  Params is a JSON array with the following options:
     source:
         events
         jobs
@@ -590,15 +590,17 @@ EnergyFolks.$(function() {
         EnergyFolks.loadData();
     });
 });
-EnergyFolks.getItemInfo = function(item) {
+EnergyFolks.getItemInfo = function(item, source) {
     var output = {};
-    if(EnergyFolks.source == 'users') {
+    if(typeof source === 'undefined') source = EnergyFolks.source;
+    if(source == 'users') {
         output.affiliate_id = item.affiliate_id;
         output.logo = item.avatar ? item.avatar_url : '';
         output.params = {id: item.id, model: 'User'};
         output.title = item.first_name + ' ' + item.last_name;
         output.line_one = item.position;
         output.line_two = item.organization;
+        output.widget = output.line_one;
         var admin_links = '';
         if(EnergyFolks.current_user.super_admin) {
             admin_links += EnergyFolks.create_iframe_popup('Global Rights','users/rights',{id: item.id});
@@ -622,13 +624,14 @@ EnergyFolks.getItemInfo = function(item) {
             }
         }
         output.admin_links = admin_links;
-    } else if(EnergyFolks.source == 'jobs') {
+    } else if(source == 'jobs') {
         output.affiliate_id = item.affiliate_id;
         output.logo = item.logo ? item.logo_url : '';
         output.title = item.name;
         output.params = {id: item.id, model: 'Job'};
         output.line_one = item.employer;
         output.line_two = item.location;
+        output.widget = output.line_one;
         var admin_links = '';
         if(EnergyFolks.get_moderated) {
             //TODO: Links for moderation queue
@@ -639,13 +642,14 @@ EnergyFolks.getItemInfo = function(item) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','jobs/edit',{id: item.id});
         }
         output.admin_links = admin_links;
-    } else if(EnergyFolks.source == 'events') {
+    } else if(source == 'events') {
         output.affiliate_id = item.affiliate_id;
         output.logo = item.logo ? item.logo_url : '';
         output.title = item.name;
         output.params = {id: item.id, model: 'Event'};
         output.line_one = item.start_time + " - " + item.end_time + " " + item.tz;
         output.line_two = item.location;
+        output.widget = item.start_data + ", " + output.line_one;
         var admin_links = '';
         if(EnergyFolks.get_moderated) {
             //TODO: Links for moderation queue
@@ -656,13 +660,14 @@ EnergyFolks.getItemInfo = function(item) {
             admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post','events/edit',{id: item.id});
         }
         output.admin_links = admin_links;
-    } else if(EnergyFolks.source == 'discussions') {
+    } else if(source == 'discussions') {
         output.affiliate_id = item.affiliate_id;
         output.logo = '';
         output.title = item.name;
         output.params = {id: item.id, model: 'Discussion'};
         output.line_one = '';
         output.line_two = '';
+        output.widget = output.line_one;
         output.html = item.html;
         output.hash = "Discussion_" + item.id;
         var admin_links = '';
