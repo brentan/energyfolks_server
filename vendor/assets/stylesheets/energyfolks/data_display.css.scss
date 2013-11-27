@@ -108,6 +108,9 @@
     background-color: #ffffcc;
     a {
       display: block;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
