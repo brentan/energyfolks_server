@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/ruby.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.generators" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/common/refresh_parent.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/omniauth.rb.template" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20131122032656_add_linked_in_to_user.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/collectd/collectd-runner.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/collectd/role/examples/example_db_query.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/collectd/role/examples/example_simple.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/collectd/role/web_tools/global_worker_stats.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/collectd/role/web_tools/resque_jobs_processed.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/rubber" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/ajax/_login.html.erb" afterPath="$PROJECT_DIR$/app/views/users/ajax/_login.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/development.rb" afterPath="$PROJECT_DIR$/config/environments/development.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
+    </list>
+    <ignored path="energyfolks_server.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820969440" ignored="false" />
+    <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817151970" ignored="false" />
+    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820517728" ignored="false" />
+    <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
+    <file path="$USER_HOME$/AES/repos/aes_web/app/helpers/home_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
+    <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
+    <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383180713510" ignored="false" />
+    <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820038628" ignored="false" />
+    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384808616064" ignored="false" />
+    <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384715622022" ignored="false" />
+    <file path="/_success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363284977600" ignored="false" />
+    <file path="/error.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363285643390" ignored="false" />
+    <file path="/success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375663526720" ignored="false" />
+    <file path="/user_login_hash.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296252591" ignored="false" />
+    <file path="/user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384822927134" ignored="false" />
+    <file path="/clean_up.rake" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363296917985" ignored="false" />
+    <file path="/20130314184054_create_user_login_hash_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363286895114" ignored="false" />
+    <file path="/hash_change.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383179792159" ignored="false" />
+    <file path="/initialize.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373745375414" ignored="false" />
+    <file path="/application.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384047575531" ignored="false" />
+    <file path="/energyfolks.css" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289756745" ignored="false" />
+    <file path="/notices.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363289490328" ignored="false" />
+    <file path="/loginform.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363291128515" ignored="false" />
+    <file path="/application_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383100789699" ignored="false" />
+    <file path="/ajax_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384819984591" ignored="false" />
+    <file path="/_profile.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429287376" ignored="false" />
+    <file path="/_login_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363893440777" ignored="false" />
+    <file path="/_profile_links.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364429069277" ignored="false" />
+    <file path="/site.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375235941562" ignored="false" />
+    <file path="/session_store.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363297020693" ignored="false" />
+    <file path="/popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378225223719" ignored="false" />
+    <file path="/backwards_compatible.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384483043522" ignored="false" />
+    <file path="/iframe.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384819846131" ignored="false" />
+    <file path="/new.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384716740489" ignored="false" />
+    <file path="/application_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373937054782" ignored="false" />
+    <file path="/forms.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373912198575" ignored="false" />
+    <file path="/layout.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378229596830" ignored="false" />
+    <file path="/user_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697005699" ignored="false" />
+    <file path="/site_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363890078275" ignored="false" />
+    <file path="/user_mailer.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363892328934" ignored="false" />
+    <file path="/create.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384718647939" ignored="false" />
+    <file path="/activate.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363891547963" ignored="false" />
+    <file path="/confirmation_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363900274420" ignored="false" />
+    <file path="/resend_activation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363901001457" ignored="false" />
+    <file path="/reset_password.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697376229" ignored="false" />
+    <file path="/reset_password_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363901990124" ignored="false" />
+    <file path="/20130321215623_add_to_users_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363903128388" ignored="false" />
+    <file path="/edit.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384484567311" ignored="false" />
+    <file path="/20130327210802_change_user_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364423352741" ignored="false" />
+    <file path="/email_verification_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427394648" ignored="false" />
+    <file path="/email_verification_request_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428102701" ignored="false" />
+    <file path="/profile.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373914476350" ignored="false" />
+    <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383087832616" ignored="false" />
+    <file path="/20130514180745_change_lat_lng_in_user_model.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554925685" ignored="false" />
+    <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812687012" ignored="false" />
+    <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374454984676" ignored="false" />
+    <file path="/20130515155502_create_affiliates_and_members.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368634255218" ignored="false" />
+    <file path="/affiliates_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383184194335" ignored="false" />
+    <file path="/_form.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812703846" ignored="false" />
+    <file path="/index.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384714292382" ignored="false" />
+    <file path="/data_display.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820621096" ignored="false" />
+    <file path="/users.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384047452727" ignored="false" />
+    <file path="/manual_verify.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347196074" ignored="false" />
+    <file path="/freeze_account.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349860341" ignored="false" />
+    <file path="/20130523221932_add_active_to_users.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369349708094" ignored="false" />
+    <file path="/account_frozen.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369347886813" ignored="false" />
+    <file path="/rights.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369437773415" ignored="false" />
+    <file path="/_rights.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369435452800" ignored="false" />
+    <file path="/reject_or_remove.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439130444" ignored="false" />
+    <file path="/approve.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439150218" ignored="false" />
+    <file path="/affiliate_approved.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1369439550875" ignored="false" />
+    <file path="/affiliate_rejected.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697123867" ignored="false" />
+    <file path="/affiliate_removed.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1371697202424" ignored="false" />
+    <file path="/index.html" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233849883" ignored="false" />
+    <file path="$APPLICATION_HOME_DIR$/lib/rubymine.jar!/resources/relaxng.rng" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373739251397" ignored="false" />
+    <file path="/tinymce.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373757541218" ignored="false" />
+    <file path="/reject_or_remove.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378229210671" ignored="false" />
+    <file path="/20130714011426_add_defaults_to_memberships.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373764630400" ignored="false" />
+    <file path="/_affiliate_picker.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382210961602" ignored="false" />
+    <file path="/affiliate_picker.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373765661652" ignored="false" />
+    <file path="/affiliate_picker.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382210571929" ignored="false" />
+    <file path="/carousel.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373911981754" ignored="false" />
+    <file path="/carousel.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373911060827" ignored="false" />
+    <file path="/affiliate_specific.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382930948164" ignored="false" />
+    <file path="/terms.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907220121" ignored="false" />
+    <file path="/privacy.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907234646" ignored="false" />
+    <file path="/_terms.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373907405598" ignored="false" />
+    <file path="/login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373913475629" ignored="false" />
+    <file path="/notification_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812845606" ignored="false" />
+    <file path="/mixin_entity.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812773491" ignored="false" />
+    <file path="/20130715225158_add_broadcast_to_memberships.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373928756509" ignored="false" />
+    <file path="/awaiting_moderation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373933893249" ignored="false" />
+    <file path="/mixin_entity_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235426580" ignored="false" />
+    <file path="/show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233952091" ignored="false" />
+    <file path="/data_display.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384732586812" ignored="false" />
+    <file path="/load_js.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235408796" ignored="false" />
+    <file path="/subscription.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374453991593" ignored="false" />
+    <file path="/20130722002220_create_subscriptions_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374452966221" ignored="false" />
+    <file path="/_subscriptions.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384484616356" ignored="false" />
+    <file path="/deploy.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377234612234" ignored="false" />
+    <file path="/schedule.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375045177052" ignored="false" />
+    <file path="/.gitignore" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375461930639" ignored="false" />
+    <file path="/error_mailer.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384813435424" ignored="false" />
+    <file path="/deploy.rb.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375235775418" ignored="false" />
+    <file path="/exception_notification.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375235329775" ignored="false" />
+    <file path="/experror.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375249334037" ignored="false" />
+    <file path="/20130803161045_create_jobs_table.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375662742773" ignored="false" />
+    <file path="/email.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375557716226" ignored="false" />
+    <file path="/affiliates_job.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378229424073" ignored="false" />
+    <file path="/jobs_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089643177" ignored="false" />
+    <file path="/job.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089562969" ignored="false" />
+    <file path="/jobs_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1375560224276" ignored="false" />
+    <file path="/initialize.js.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384804546084" ignored="false" />
+    <file path="/after_deploy.config" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383091766913" ignored="false" />
+    <file path="/whenever-elasticbeanstalk.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1377304851760" ignored="false" />
+    <file path="/20130903154745_fix_jobs_columns.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378223300051" ignored="false" />
+    <file path="/listeners.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378223968014" ignored="false" />
+    <file path="/_show_top.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236765821" ignored="false" />
+    <file path="/events_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232632709" ignored="false" />
+    <file path="/bulletins_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378232649855" ignored="false" />
+    <file path="/bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089580742" ignored="false" />
+    <file path="/event.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384015986384" ignored="false" />
+    <file path="/bulletins_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089622883" ignored="false" />
+    <file path="/events_version.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383089634163" ignored="false" />
+    <file path="/affiliates_bulletin.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233042540" ignored="false" />
+    <file path="/affiliates_event.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233047580" ignored="false" />
+    <file path="/20130903183119_create_events_and_bulletins_tables.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378233524062" ignored="false" />
+    <file path="/_show.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820125654" ignored="false" />
+    <file path="/20130903185742_rename_moderate_calendar_to_events.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378235304056" ignored="false" />
+    <file path="/entity.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1378236480858" ignored="false" />
+    <file path="/20131019192318_add_affiliate_id_to_user.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382210640885" ignored="false" />
+    <file path="/iframe_popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382930407195" ignored="false" />
+    <file path="/paperclip.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383090102820" ignored="false" />
+    <file path="/ec2.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383086844197" ignored="false" />
+    <file path="/development.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383090368646" ignored="false" />
+    <file path="/jquery_browser.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383093059898" ignored="false" />
+    <file path="/20131030015250_add_timezone_to_events.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383097999475" ignored="false" />
+    <file path="/ec2.yml.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384446177499" ignored="false" />
+    <file path="/production.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384446396155" ignored="false" />
+    <file path="/20131115031151_bulletins_to_discussions.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486309475" ignored="false" />
+    <file path="/20131115032751_update_bulletins_in_database.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486235211" ignored="false" />
+    <file path="/20131115033941_last_bulletin_to_discussion.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486804763" ignored="false" />
+    <file path="/filter_bar_search_bar.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384639956244" ignored="false" />
+    <file path="/comments.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384657412198" ignored="false" />
+    <file path="/subcomment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384811287062" ignored="false" />
+    <file path="/comment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384811315319" ignored="false" />
+    <file path="/20131117030431_create_comments_tables.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384737369892" ignored="false" />
+    <file path="/comments.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820923418" ignored="false" />
+    <file path="/comments.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384803945745" ignored="false" />
+    <file path="/comments_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384804853156" ignored="false" />
+    <file path="/subcomments_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384811438337" ignored="false" />
+    <file path="/_comment_form.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384820734740" ignored="false" />
+    <file path="/comment_form.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384796532182" ignored="false" />
+    <file path="/_comment_done.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384805245286" ignored="false" />
+    <file path="/comment_subscriber.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384799588653" ignored="false" />
+    <file path="/20131118174931_create_comment_subscriber.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384817565023" ignored="false" />
+    <file path="/new_comment_or_reply.html.erb.html" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384806683018" ignored="false" />
+    <file path="/new_comment_or_reply.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384806884400" ignored="false" />
+    <file path="/inbound_email_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384824146412" ignored="false" />
+    <file path="/mailerror.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384808811328" ignored="false" />
+    <file path="/comment_details.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384810292518" ignored="false" />
+    <file path="/discussion.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812150668" ignored="false" />
+    <file path="/20131118221014_update_affiliate_columns.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384812654190" ignored="false" />
+    <file path="/message_back_to_sender.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384813381081" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DatabaseView">
+    <flatten value="false" />
+    <groupTables value="false" />
+    <sortChildren value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="energyfolks_server" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/routes.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="energyfolks_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/energyfolks_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/energyfolks/index.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="18" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="accounts.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="152" column="8" selection-start="7967" selection-end="7967" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1384935038000" expanded="false" signature="11885:11916" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="13918:13943" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="17501:17545" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="17680:17756" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="17770:17788" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="17865:17880" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="18851:18886" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="21333:21358" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="23892:23936" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="24071:24147" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="24161:24179" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="24256:24271" placeholder="..." />
+                <marker date="1384935038000" expanded="false" signature="24991:25004" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_show.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/users/_show.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1384935037000" expanded="true" signature="410:522" placeholder="..." />
+                <marker date="1384935037000" expanded="true" signature="780:1131" placeholder="..." />
+                <marker date="1384935037000" expanded="true" signature="1214:1735" placeholder="..." />
+                <marker date="1384935037000" expanded="true" signature="1881:2209" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users_controller.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="187" column="0" selection-start="6620" selection-end="6620" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="0" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="energyfolks_server.iml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/energyfolks_server.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="219" column="0" selection-start="8741" selection-end="8741" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="GeneratorOptions">
+    <option name="ENVIRONMENT" value="development" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/app/models/comment.rb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss" />
+        <option value="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/discussions/_show.html.erb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+        <option value="$PROJECT_DIR$/app/views/common/_comment_form.html.erb" />
+        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/comments.js" />
+        <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/inbound_email_controller.rb" />
+        <option value="$PROJECT_DIR$/config/database.yml" />
+        <option value="$PROJECT_DIR$/config/ec2.yml" />
+        <option value="$PROJECT_DIR$/app/views/users/login.html.erb" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+      </list>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="22" />
+    <option name="width" value="1440" />
+    <option name="height" value="790" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="RailsProjectView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="log" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.ruby.settings.RubyIdeSdkConfigurable" />
+    <property name="recentsLimit" value="5" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AES/repos" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="Ruby.ViewRefParam.DefaultExtension" value="html.erb" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config" />
+      <recent name="$PROJECT_DIR$/app/views/developers" />
+      <recent name="$PROJECT_DIR$/app/views" />
+      <recent name="$PROJECT_DIR$/app/models" />
+      <recent name="$PROJECT_DIR$/app/controllers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/user_mailer" />
+      <recent name="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks" />
+      <recent name="$PROJECT_DIR$/vendor/assets/javascripts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Rails.Development: energyfolks_server">
+    <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
+      <module name="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="RailsRunConfigurationType" factoryName="Rails">
+      <predefined_log_file id="RUBY_RAILS_SERVER" enabled="true" />
+      <module name="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SCRIPT_ARGS" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="3000" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="IP" VALUE="0.0.0.0" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="DUMMY_APP" VALUE="test/dummy" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RAILS_SERVER_TYPE" VALUE="Default" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ENVIRONMENT_TYPE" VALUE="development" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="RSpecRunConfigurationType" factoryName="RSpec">
+      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
+      <module name="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="RubyRunConfigurationType" factoryName="Ruby">
+      <module name="" />
+      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest">
+      <predefined_log_file id="RUBY_TESTUNIT" enabled="true" />
+      <module name="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
+      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
+      <module name="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs>
+        <env name="ANSICON" value="" />
+      </envs>
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Production: energyfolks_server" type="RailsRunConfigurationType" factoryName="Rails">
+      <predefined_log_file id="RUBY_RAILS_SERVER" enabled="true" />
+      <module name="energyfolks_server" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SCRIPT_ARGS" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="3000" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="IP" VALUE="0.0.0.0" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="DUMMY_APP" VALUE="test/dummy" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RAILS_SERVER_TYPE" VALUE="default" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ENVIRONMENT_TYPE" VALUE="production" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Development: energyfolks_server" type="RailsRunConfigurationType" factoryName="Rails">
+      <predefined_log_file id="RUBY_RAILS_SERVER" enabled="true" />
+      <module name="energyfolks_server" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="RVM: ruby-1.9.3-p194" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="SCRIPT_ARGS" VALUE="" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="PORT" VALUE="3000" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="IP" VALUE="0.0.0.0" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="DUMMY_APP" VALUE="test/dummy" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="RAILS_SERVER_TYPE" VALUE="default" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="ENVIRONMENT_TYPE" VALUE="development" />
+      <RAILS_SERVER_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
+      <RunnerSettings RunnerId="RubyDebugRunner" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyDebugRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test" type="RakeRunConfigurationType" factoryName="Rake">
+      <module name="energyfolks_server" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs>
+        <env name="RAILS_ENV" value="test" />
+      </envs>
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="test" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE=":test_unit " />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="spec" type="RakeRunConfigurationType" factoryName="Rake">
+      <module name="energyfolks_server" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$PROJECT_DIR$" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_NAME" VALUE="spec" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ARGS" VALUE="" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_ATTACHED_TEST_FRAMEWORKS" VALUE=":rspec " />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TRACE" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_DRYRUN" VALUE="false" />
+      <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_PREREQS" VALUE="false" />
+      <method />
+    </configuration>
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="Rails.Production: energyfolks_server" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Development: energyfolks_server" />
+      <item index="2" class="java.lang.String" itemvalue="Rake.test" />
+      <item index="3" class="java.lang.String" itemvalue="Rake.spec" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="" />
+      <created>1362447732467</created>
+      <updated>1362447732467</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Continued work on accounts...cookies now work and login/logout functionality is complete.">
+      <created>1363361892364</created>
+      <updated>1363361892364</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add in popup functionality and server callback hooks that enable them to work with remote/iframe content">
+      <created>1363824128251</created>
+      <updated>1363824128251</updated>
+    </task>
+    <task id="LOCAL-00003" summary="User functionality.  Complete profile page, take care of authenticating new email addresses and auto-notifications for email/password changes.">
+      <created>1364429377896</created>
+      <updated>1364429377896</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Complete external hash login script, more JS cleanup to remove old code.">
+      <created>1368557452815</created>
+      <updated>1368557452815</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Affiliate stuff looks more or less done for now...missing ability for user to join an affiliate network.  Users list still poorly displayed.">
+      <created>1371697595732</created>
+      <updated>1371697595732</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Accountbar is now active and working.">
+      <created>1373757679894</created>
+      <updated>1373757679894</updated>
+    </task>
+    <task id="LOCAL-00007" summary="network chooser is now working and attached to new/edit user as well">
+      <created>1373914759940</created>
+      <updated>1373914759940</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Moderation counts for user-affiliate now works, groundwork laid for mixins to work for all element types.">
+      <created>1374452412528</created>
+      <updated>1374452412528</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add email subscriptions and default subscriptions for users">
+      <created>1374455047605</created>
+      <updated>1374455047605</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fix exception notification via email">
+      <created>1375235022062</created>
+      <updated>1375235022062</updated>
+    </task>
+    <task id="LOCAL-00011" summary="attempt ec2 integration in capistrano">
+      <created>1375235279260</created>
+      <updated>1375235279260</updated>
+    </task>
+    <task id="LOCAL-00012" summary="attempt ec2 integration in capistrano">
+      <created>1375235545836</created>
+      <updated>1375235545836</updated>
+    </task>
+    <task id="LOCAL-00013" summary="finish ec2 integration in capistrano">
+      <created>1375235788248</created>
+      <updated>1375235788248</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix password reset bug">
+      <created>1375236259955</created>
+      <updated>1375236259955</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Ubuntu friendly repo">
+      <created>1375460759239</created>
+      <updated>1375460759239</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Ubuntu friendly repo">
+      <created>1375461939416</created>
+      <updated>1375461939416</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Begin entity work, with jobs as first entity.  Current 'new' works.  Next up is 'edit' and all moderation functionality 'approve/reject'.  methods in controller mixin should serve as guide">
+      <created>1375667589117</created>
+      <updated>1375667589117</updated>
+    </task>
+    <task id="LOCAL-00018" summary="ec2 test">
+      <created>1377232302622</created>
+      <updated>1377232302622</updated>
+    </task>
+    <task id="LOCAL-00019" summary="ec2 after deploy script">
+      <created>1377303243792</created>
+      <updated>1377303243792</updated>
+    </task>
+    <task id="LOCAL-00020" summary="ec2 after deploy script try 2&#10;">
+      <created>1377304262700</created>
+      <updated>1377304262700</updated>
+    </task>
+    <task id="LOCAL-00021" summary="ec2 after deploy script try 2&#10;">
+      <created>1377304871650</created>
+      <updated>1377304871650</updated>
+    </task>
+    <task id="LOCAL-00022" summary="ec2 after deploy script try 2&#10;">
+      <created>1377304896047</created>
+      <updated>1377304896047</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add nokogiri">
+      <created>1377305219639</created>
+      <updated>1377305219639</updated>
+    </task>
+    <task id="LOCAL-00024" summary="attempt to fix delayed job issue">
+      <created>1377305798261</created>
+      <updated>1377305798261</updated>
+    </task>
+    <task id="LOCAL-00025" summary="ec2 after deploy script update">
+      <created>1377307958209</created>
+      <updated>1377307958210</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fix jobs">
+      <created>1377308132292</created>
+      <updated>1377308132292</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Finish mixin entity stuff, should be working.  More testing needed to be sure.">
+      <created>1378232681579</created>
+      <updated>1378232681579</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Create Events and Bulletins">
+      <created>1378234453983</created>
+      <updated>1378234453983</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Finish adding Events and Bulletins">
+      <created>1378236613330</created>
+      <updated>1378236613330</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Finish adding Events and Bulletins">
+      <created>1378236787235</created>
+      <updated>1378236787235</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Add primary network to user profile">
+      <created>1382211405970</created>
+      <updated>1382211405970</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Base EF and developer layouts created">
+      <created>1382927038589</created>
+      <updated>1382927038589</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Start to style data displays">
+      <created>1383011806250</created>
+      <updated>1383011806250</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Start to style data displays">
+      <created>1383011845241</created>
+      <updated>1383011845241</updated>
+    </task>
+    <task id="LOCAL-00035" summary="attempt to integrate s3">
+      <created>1383090948683</created>
+      <updated>1383090948683</updated>
+    </task>
+    <task id="LOCAL-00036" summary="attempt to integrate s3">
+      <created>1383091803263</created>
+      <updated>1383091803263</updated>
+    </task>
+    <task id="LOCAL-00037" summary="finalize uploads to s3">
+      <created>1383097288467</created>
+      <updated>1383097288467</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Event datetime work with working timezone shifting">
+      <created>1383102327843</created>
+      <updated>1383102327843</updated>
+    </task>
+    <task id="LOCAL-00039" summary="add onhashchange controls for item detail (or any direct ajax remote request)">
+      <created>1383181632122</created>
+      <updated>1383181632122</updated>
+    </task>
+    <task id="LOCAL-00040" summary="various bug fixes">
+      <created>1383188527614</created>
+      <updated>1383188527614</updated>
+    </task>
+    <task id="LOCAL-00041" summary="various bug fixes">
+      <created>1383844832354</created>
+      <updated>1383844832354</updated>
+    </task>
+    <task id="LOCAL-00042" summary="started calendar view">
+      <created>1384022795317</created>
+      <updated>1384022795317</updated>
+    </task>
+    <task id="LOCAL-00043" summary="continue calendar view">
+      <created>1384047849503</created>
+      <updated>1384047849503</updated>
+    </task>
+    <task id="LOCAL-00044" summary="finish cloudsearch integration (testing still needed)">
+      <created>1384450638332</created>
+      <updated>1384450638332</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Start adding in filtering ability">
+      <created>1384499594792</created>
+      <updated>1384499594792</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Finish front-end views and search/filter bars">
+      <created>1384657773477</created>
+      <updated>1384657773477</updated>
+    </task>
+    <task id="LOCAL-00047" summary="begin comments/subcomments">
+      <created>1384658339809</created>
+      <updated>1384658339809</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Comment engine completion.  Still need to add to discussion detail page, add comments column to discussion, test in general">
+      <created>1384737985745</created>
+      <updated>1384737985745</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER.">
+      <created>1384813563610</created>
+      <updated>1384813563610</updated>
+    </task>
+    <task id="LOCAL-00050" summary="fix irreversible migration to allow rollbacks">
+      <created>1384817609914</created>
+      <updated>1384817609914</updated>
+    </task>
+    <task id="LOCAL-00051" summary="dont send comments to yourself">
+      <created>1384818048554</created>
+      <updated>1384818048555</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Kill some comment bugs">
+      <created>1384820974522</created>
+      <updated>1384820974522</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
+    <servers />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="22" width="1440" height="790" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32900432" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946378" sideWeight="0.67075664" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964131" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21879484" sideWeight="0.67099565" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4117647" sideWeight="0.671831" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783356" sideWeight="0.671831" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32957748" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32816902" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kill some comment bugs" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="attempt to fix delayed job issue" />
+    <MESSAGE value="ec2 after deploy script update" />
+    <MESSAGE value="Fix jobs" />
+    <MESSAGE value="Finish mixin entity stuff, should be working.  More testing needed to be sure." />
+    <MESSAGE value="Create Events and Bulletins" />
+    <MESSAGE value="Finish adding Events and Bulletins" />
+    <MESSAGE value="Add primary network to user profile" />
+    <MESSAGE value="Base EF and developer layouts created" />
+    <MESSAGE value="Start to style data displays" />
+    <MESSAGE value="attempt to integrate s3" />
+    <MESSAGE value="finalize uploads to s3" />
+    <MESSAGE value="Event datetime work with working timezone shifting" />
+    <MESSAGE value="add onhashchange controls for item detail (or any direct ajax remote request)" />
+    <MESSAGE value="various bug fixes" />
+    <MESSAGE value="started calendar view" />
+    <MESSAGE value="continue calendar view" />
+    <MESSAGE value="finish cloudsearch integration (testing still needed)" />
+    <MESSAGE value="Start adding in filtering ability" />
+    <MESSAGE value="Finish front-end views and search/filter bars" />
+    <MESSAGE value="begin comments/subcomments" />
+    <MESSAGE value="Comment engine completion.  Still need to add to discussion detail page, add comments column to discussion, test in general" />
+    <MESSAGE value="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER." />
+    <MESSAGE value="fix irreversible migration to allow rollbacks" />
+    <MESSAGE value="dont send comments to yourself" />
+    <MESSAGE value="Kill some comment bugs" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/app/controllers/users_controller.rb</url>
+          <line>9</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/app/controllers/users_controller.rb</url>
+          <line>126</line>
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="14" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="14" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/site.yml.template">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/site.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/ec2.yml.template">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="171" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/ec2.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="33" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/energyfolks_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/energyfolks/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/users/_show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1384935037000" expanded="true" signature="410:522" placeholder="..." />
+            <marker date="1384935037000" expanded="true" signature="780:1131" placeholder="..." />
+            <marker date="1384935037000" expanded="true" signature="1214:1735" placeholder="..." />
+            <marker date="1384935037000" expanded="true" signature="1881:2209" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="8" selection-start="7967" selection-end="7967" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1384935038000" expanded="false" signature="11885:11916" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="13918:13943" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="17501:17545" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="17680:17756" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="17770:17788" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="17865:17880" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="18851:18886" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="21333:21358" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="23892:23936" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="24071:24147" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="24161:24179" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="24256:24271" placeholder="..." />
+            <marker date="1384935038000" expanded="false" signature="24991:25004" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="0" selection-start="6620" selection-end="6620" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="219" column="0" selection-start="8741" selection-end="8741" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="336" selection-end="336" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/energyfolks_server.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

@@ -19,5 +19,6 @@ pickle-email-*.html
 *omniauth.rb
 /config/initializers/omniauth.rb
 /config/deploy.rb
-.idea/workspace.xml
-.idea/tasks.xml
+/.idea/*
+/log/development.log
+/config/database.yml

@@ -1,18 +1,119 @@
+$current_affiliate_color: #f16522;
+$unselected_radio_button_color: gray;
+$progress_bar_still_to_go_color: gray;
+
 div.form {
+  h1 {
+    float: left;
+    display: inline-block;
+  }
+
+  h2 {
+    float: left;
+    clear: left;
+  }
+
+  hr {
+    background-color: $current_affiliate_color;
+    border-width: 0px;
+    height: 3px;
+  }
+
+  div.progress_bar {
+    float: left;
+    clear: right;
+    margin-left: 100px;
+
+    div {
+      display: inline-block;
+      background-color: $current_affiliate_color;
+      color: white;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 15px; /* shape into circles*/
+      margin-left: 5px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    div.still_to_go {
+      background-color: $progress_bar_still_to_go_color; /* different color for the slides user hasn't completed yet */
+    }
+  }
+
   div.form_label {
     font-weight: bold;
     font-size: 1.3em;
-    width: 300px;
+    color: $current_affiliate_color;
     float: left;
+    clear: left;
   }
+
   div.form_entry {
-    margin-left: 320px;
+    margin-left: 0px;
     margin-bottom: 10px;
+    float: left;
+    clear: both;
+
+    input[type="text"] {
+      width: 300px;
+    }
+
+    input[type="radio"].toggle {
+      display: none;  /* we'll show as a styled label instead of radio button */
+    }
+
+    input[type="radio"].toggle + label {
+      color: white;
+      background-color: $unselected_radio_button_color;
+      display: inline-block; /* so we can set height */
+      height: 25px;
+      line-height: 25px;
+      vertical-align: middle;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      margin-left: 1px;
+      margin-right: 0px;
+    }
+
+    input[type="radio"].toggle:checked + label {
+      background-color: $current_affiliate_color;
+      cursor: default;
+    }
+
+    input[type="radio"].toggle:checked + label.btn:hover {
+      border-color: $current_affiliate_color;
+    }
+
+    input[type="radio"].toggle-left + label {
+      border-right: 0;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    input[type="radio"].toggle-right + label {
+      border-right: 0;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
   }
+
+  div.show_inline {
+    float: left;
+    clear: right;
+    margin-left: 30px;
+    margin-bottom: 0px;
+  }
+
   div.explain {
     font-style: italic;
     font-size: .8em;
   }
+
   div.form_button {
   }
 
