@@ -110,31 +110,31 @@ class Affiliate < ActiveRecord::Base
 
   def url_users
     url = super
-    url ||= "#{SITE_HOST}/users"
+    url = "#{SITE_HOST}/users" if url.blank?
     url
   end
 
   def url_events
     url = super
-    url ||= "#{SITE_HOST}/events"
+    url = "#{SITE_HOST}/events" if url.blank?
     url
   end
 
   def url_jobs
     url = super
-    url ||= "#{SITE_HOST}/jobs"
+    url = "#{SITE_HOST}/jobs" if url.blank?
     url
   end
 
   def url_discussions
     url = super
-    url ||= "#{SITE_HOST}/discussions"
+    url = "#{SITE_HOST}/discussions" if url.blank?
     url
   end
 
   def url_blogs
     url = super
-    url ||= "#{SITE_HOST}/blogs"
+    url = "#{SITE_HOST}/blogs" if url.blank?
     url
   end
 

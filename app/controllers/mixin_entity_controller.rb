@@ -140,18 +140,7 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     join_item = @item.affiliate_join.where(affiliate_id: @affiliate.id.present? ? @affiliate.id : 0).first
     if join_item.present? && params[:reason].present?
-      if join_item.approved_version == @item.current_version
-        NotificationMailer.delay.item_removed(@item, params[:reason], @affiliate)
-        join_item.approved_version = 0
-        join_item.approved_versions ='0'
-        notice = "Item removed"
-      else
-        NotificationMailer.delay.item_rejected(@item, params[:reason], @affiliate)
-        notice = "Item Rejected"
-      end
-      join_item.awaiting_edit = true
-      join_item.save
-      @item.update_index
+      notice = @item.reject_or_remove(current_user, @affiliate, params[:reason])
       redirect_to :action => 'show', :id => @item.id, :iframe_next => true, :notice => notice
     else
       render 'common/reject_or_remove', locals: {join_item: join_item, aid: params[:aid]}
