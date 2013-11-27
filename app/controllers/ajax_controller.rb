@@ -181,26 +181,33 @@ class AjaxController < ApplicationController
       render :js => "//Completed"
     else
       output[:width] ||= 900 unless output.is_a?(String)  # default popup window width, if needed
-      set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
-      set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.url_events = '#{current_affiliate.url_events}';EnergyFolks.url_discussions = '#{current_affiliate.url_discussions}';EnergyFolks.url_users = '#{current_affiliate.url_users}';EnergyFolks.url_jobs = '#{current_affiliate.url_jobs}';EnergyFolks.url_blogs = '#{current_affiliate.url_blogs}';EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
-      lat = 37.8044
-      lng = -122.2708
-      loc = 'Oakland, CA'
-      rad_e = 50
-      rad_j = 0
-      if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
-        lat = current_affiliate.latitude
-        lng = current_affiliate.longitude
-        loc = current_affiliate.location
-        rad_e = current_affiliate.event_radius
-        rad_j = current_affiliate.job_radius
-      elsif user_logged_in? && current_user.latitude.present?
-        lat = current_user.latitude
-        lng = current_user.longitude
+      if params['load_all'] == 'true'
+        set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
+        set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.url_events = '#{current_affiliate.url_events}';EnergyFolks.url_discussions = '#{current_affiliate.url_discussions}';EnergyFolks.url_users = '#{current_affiliate.url_users}';EnergyFolks.url_jobs = '#{current_affiliate.url_jobs}';EnergyFolks.url_blogs = '#{current_affiliate.url_blogs}';EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
+        lat = 37.8044
+        lng = -122.2708
+        loc = 'Oakland, CA'
+        rad_e = 50
+        rad_j = 0
+        if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
+          lat = current_affiliate.latitude
+          lng = current_affiliate.longitude
+          loc = current_affiliate.location
+          rad_e = current_affiliate.event_radius
+          rad_j = current_affiliate.job_radius
+        elsif user_logged_in? && current_user.latitude.present?
+          lat = current_user.latitude
+          lng = current_user.longitude
+        end
+        set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
+        set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
+      else
+        set_current_user = ''
+        set_affiliate = ''
+        set_tags = ''
+        set_latlng = ''
       end
-      set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
-      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
-      render :js => "if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.is_a?(String) ? output : output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      render :js => "EnergyFolks.load_all = false;if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.is_a?(String) ? output : output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;EnergyFolks.load_all = false;"
     end
   end
   def fix_params(inputs, source)

@@ -601,7 +601,7 @@ module MixinEntity
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
         self.update_index
-        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
+        return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
     else
       if current_user.present? && current_user.admin?
@@ -617,7 +617,7 @@ module MixinEntity
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
         self.update_index
-        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
+        return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
     end
     return "You are not authorized here"
@@ -627,6 +627,7 @@ module MixinEntity
     if affiliate.id.present?
       if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
         join_item = self.affiliate_join.where(affiliate_id: affiliate.id).first
+        return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
           NotificationMailer.delay.item_removed(self, reason, affiliate)
           join_item.approved_version = 0
@@ -644,6 +645,7 @@ module MixinEntity
     else
       if current_user.present? && current_user.admin?
         join_item = self.affiliate_join.where(affiliate_id: 0).first
+        return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
           NotificationMailer.delay.item_removed(self, reason, affiliate)
           join_item.approved_version = 0

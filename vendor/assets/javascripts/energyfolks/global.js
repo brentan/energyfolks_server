@@ -26,6 +26,7 @@ EnergyFolks.ajax = function(command, parameters, callback) {
         EnergyFolks.callbacks.push(callback);
         url+="&callback="+(EnergyFolks.callbacks.length-1)
     }
+    url+="&load_all=" + EnergyFolks.load_all;
     if(url.indexOf("aid=") == -1)
         url+="&aid="+EnergyFolks.id;
     // Append to the head the javascript load request...upon addition the browser will load the external js file.
