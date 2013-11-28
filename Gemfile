@@ -31,7 +31,6 @@ gem 'nokogiri'
 gem 'sanitize'
 
 gem 'rubyzip'
-gem 'php-serialize'
 
 
 # Gems used only for assets and not required

@@ -13,6 +13,12 @@ class AdminsController < ApplicationController
     redirect_to '/admins/index?iframe_next=1', notice: "Synchronization complete"
   end
 
+  def wordpress_versions
+    @items = Affiliate.order(:name).all
+    ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
+    @current_version = ef_data['version']
+  end
+
   private
   def check_for_admin_rights
     return redirect_to '/' unless current_user.present?
