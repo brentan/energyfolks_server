@@ -12,21 +12,20 @@ class DevelopersController < ApplicationController
 
   def update_check
     return redirect_to '/' unless request.env['HTTP_USER_AGENT'].include?('WordPress')
-    require 'php_serialize'
-    info = PHP.unserialize(params[:request])
-    # TODO: read params[:?] for 'update_check', then info 'slug' to make sure its energyfolks.  Also check user-agent.  Copy from wordpress for output!
     ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
-
-    output = ''
+    output = {}
+    current_affiliate.update_column(:wordpress_plugin_version, params[:version]) if current_affiliate.present? && current_affiliate.id.present?
+    current_affiliate.update_column(:wordpress_version, params[:w_version]) if current_affiliate.present? && current_affiliate.id.present?
     if params[:r_action] == 'basic_check'
-      ef_data['new_version'] = ef_data['version'] if info['version'].blank? || (info['version'].to_f < ef_data['version'].to_f)
-      output = PHP.serialize(ef_data)
+      ef_data['new_version'] = ef_data['version'] if params[:version].blank? || (params[:version].to_f < ef_data['version'].to_f)
+      ef_data['package'] = "#{ef_data['package']}?aid=0#{params[:aid]}"
+      output = ef_data
     elsif params[:r_action] == 'plugin_information'
-      output = PHP.serialize({
+      output = {
           :slug => ef_data['slug'],
           :version => ef_data['version'],
           :last_updated => ef_data['date'],
-          :download_link => ef_data['package'],
+          :download_link => "#{ef_data['package']}?aid=0#{params[:aid]}",
           :author => ef_data['author'],
           :external => ef_data['external'],
           :requires => ef_data['requires'],
@@ -34,15 +33,16 @@ class DevelopersController < ApplicationController
           :homepage => ef_data['homepage'],
           :downloaded => ef_data['downloaded'],
           :sections => ef_data['sections']
-                             })
+      }
+      output[:new_version] = ef_data['version'] if params[:version].blank? || (params[:version].to_f < ef_data['version'].to_f)
     end
-
-    render :inline => output
+    render :inline => output.to_json
   end
 
   def wordpress_zip
     require 'zip'
-
+    ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
+    current_affiliate.update_column(:wordpress_checked_version, ef_data['version']) if current_affiliate.present? && current_affiliate.id.present?
     t = Tempfile.new("ef_wordpress_download-#{request.remote_ip}")
     # Give the path of the temp file to the zip outputstream, it won't try to open it as an archive.
         Zip::OutputStream.open(t.path) do |zos|

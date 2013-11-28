@@ -18,6 +18,11 @@ function aaa_result($res, $action, $args) {
 // NOTE: All variables and functions will need to be prefixed properly to allow multiple plugins to be updated
 */
 
+if ( ! function_exists( 'get_plugins' ) )
+    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$ef_plugin_file = plugin_basename( dirname( __FILE__ ));
+$ef_plugin_folder = get_plugins( '/' . $ef_plugin_file );
+$ef_version = $ef_plugin_folder['energyfolks.php']['Version'];
 
 $ef_api_url = 'http://dev.energyfolks.com:3000/developers/update_check';
 $ef_plugin_slug = 'energyfolks';
@@ -27,21 +32,14 @@ $ef_plugin_slug = 'energyfolks';
 add_filter('pre_set_site_transient_update_plugins', 'ef_check_for_plugin_update');
 
 function ef_check_for_plugin_update($checked_data) {
-	global $ef_api_url, $ef_plugin_slug;
+	global $ef_api_url, $ef_plugin_slug, $ef_plugin_file, $ef_version, $wp_version;
 	
-	//Comment out these two lines during testing.
-	//if (empty($checked_data->checked))
-	//	return $checked_data;
-	
-	$args = array(
-		'slug' => $ef_plugin_slug,
-		'version' => $checked_data->checked[$ef_plugin_slug .'/'. $ef_plugin_slug .'.php'],
-	);
 	$request_string = array(
 			'body' => array(
 				'r_action' => 'basic_check',
-				'affiliate_id' => get_option('energyfolks_affiliate_id'),
-				'request' => serialize($args),
+				'aid' => get_option('energyfolks_affiliate_id'),
+                                'version' => $ef_version,
+                                'w_version' => $wp_version,
 				'api-key' => md5(get_bloginfo('url'))
 			),
 			'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo('url')
@@ -51,10 +49,10 @@ function ef_check_for_plugin_update($checked_data) {
 	$raw_response = wp_remote_post($ef_api_url, $request_string);
 	
 	if (!is_wp_error($raw_response) && ($raw_response['response']['code'] == 200))
-		$response = ef_array_to_object(unserialize($raw_response['body']));
+		$response = ef_array_to_object(json_decode($raw_response['body'],true));
 	
 	if (is_object($response) && !empty($response)) // Feed the update data into WP updater
-		$checked_data->response[$ef_plugin_slug .'/'. $ef_plugin_slug .'.php'] = $response;
+		$checked_data->response[$ef_plugin_file .'/'. $ef_plugin_slug .'.php'] = $response;
         return $checked_data;
 }
 
@@ -63,19 +61,18 @@ function ef_check_for_plugin_update($checked_data) {
 add_filter('plugins_api', 'ef_plugin_api_call', 10, 3);
 
 function ef_plugin_api_call($def, $action, $args) {
-	global $ef_plugin_slug, $ef_api_url;
-	if (($args->slug != $ef_plugin_slug) && ($args->slug != ''))
+	global $ef_plugin_slug, $ef_api_url, $ef_version, $wp_version;
+	if ($args->slug != $ef_plugin_slug)
 		return false;
 	// Get the current version
 	$plugin_info = get_site_transient('update_plugins');
-	$current_version = $plugin_info->checked[$ef_plugin_slug .'/'. $ef_plugin_slug .'.php'];
-	$args->version = $current_version;
 	
 	$request_string = array(
 			'body' => array(
 				'r_action' => $action,
-				'request' => serialize(Array()),
-				'affiliate_id' => get_option('energyfolks_affiliate_id'),
+                                'version' => $ef_version,
+                                'w_version' => $wp_version,
+				'aid' => get_option('energyfolks_affiliate_id'),
 				'api-key' => md5(get_bloginfo('url'))
 			),
 			'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo('url')
@@ -85,7 +82,7 @@ function ef_plugin_api_call($def, $action, $args) {
 	if (is_wp_error($request)) {
 		$res = new WP_Error('plugins_api_failed', __('An Unexpected HTTP Error occurred during the API request.</p> <p><a href="?" onclick="document.location.reload(); return false;">Try again</a>'), $request->get_error_message());
 	} else {
-		$res = ef_array_to_object(unserialize($request['body']));
+		$res = ef_array_to_object(json_decode($request['body'],true));
 		
 		if ($res === false)
 			$res = new WP_Error('plugins_api_failed', __('An unknown error occurred'), $request['body']);

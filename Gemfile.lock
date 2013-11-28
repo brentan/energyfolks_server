@@ -128,7 +128,6 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    php-serialize (1.1.0)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -242,7 +241,6 @@ DEPENDENCIES
   omniauth
   omniauth-linkedin
   paperclip
-  php-serialize
   rails (= 3.2.12)
   rails-asset-jqueryui
   rspec-rails (~> 2.4)
