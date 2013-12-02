@@ -15,7 +15,6 @@ EnergyfolksServer::Application.routes.draw do
   get "users/logout"
   get "users/activate"
   get "users/from_hash"
-  match 'accounts/external_Login_Verification/:hash' => 'users#from_hash' # Backwards compatibility
   get "users/verify"
   get "users/avatar"
 
@@ -39,6 +38,7 @@ EnergyfolksServer::Application.routes.draw do
   # AFFILIATE ROUTES
 
   get "affiliates/new"
+  get "affiliates/wordpress_details"
   match "affiliates/:id/edit" => 'affiliates#edit'
   match "affiliates/:id/delete" => 'affiliates#delete'
   put "affiliates/update"

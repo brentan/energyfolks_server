@@ -143,6 +143,10 @@ class User < ActiveRecord::Base
   def self.join_table
     Membership
   end
+  def wordpress_password(affiliate_id)
+    #password auto-generated and used by wordpress logins
+    Digest::MD5.hexdigest(self.id.to_s + "ENERGYFOLKS_SALT" + affiliate_id.to_s)
+  end
   def is_visible?(user)
     return true if self.visibility == PUBLIC
     if user.present?

@@ -10,6 +10,23 @@ class DevelopersController < ApplicationController
   def wordpress
   end
 
+  # Function is used to setup a new wordpress system for a particular affiliate.  Note that 1 wordpress install is allowed per affiliate!
+  def wordpress_sync
+  end
+  def wordpress_sync_2
+    @next_url = URI.unescape(params[:return_url])
+    return redirect_to "/" if current_affiliate.blank? || current_affiliate.id.blank?
+    require 'open-uri'
+    current_affiliate.create_shared_secret
+    current_affiliate.update_column(:url, @next_url)
+    js_hash = Rails.application.assets.find_asset('energyfolks.js').digest_path.split('-')[1].split('.')[0]
+    css_hash = Rails.application.assets.find_asset('energyfolks.css').digest_path.split('-')[1].split('.')[0]
+    response = open("#{@next_url}?enfolks_sync=#{current_affiliate.id}&secret=#{current_affiliate.shared_secret}&color=#{current_affiliate.color}&js_hash=#{js_hash}&css_hash=#{css_hash}").read
+    return render :inline => "OOPS!  Something went wrong.  We were unable to communicate with your wordpress installation.  Please try again." unless (response == 'COMPLETE')
+    current_affiliate.update_column(:wordpress_css_hash, css_hash)
+    current_affiliate.update_column(:wordpress_js_hash, js_hash)
+  end
+
   def update_check
     return redirect_to '/' unless request.env['HTTP_USER_AGENT'].include?('WordPress')
     ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
@@ -36,7 +53,7 @@ class DevelopersController < ApplicationController
       }
       output[:new_version] = ef_data['version'] if params[:version].blank? || (params[:version].to_f < ef_data['version'].to_f)
     end
-    render :inline => output.to_json
+    render :json => output
   end
 
   def wordpress_zip

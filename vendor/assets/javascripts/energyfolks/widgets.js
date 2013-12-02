@@ -23,6 +23,10 @@
   tags: comma separated list of tags to use to limit results (default '')
  */
 EnergyFolks.showWidget = function(source, params) {
+    //Backwards compatible
+    if(source == 'calendar') source = 'events';
+    if(source == 'bulletins') source = 'discussions';
+    if(source == 'bulletins-stream') source = 'discussions';
     if(typeof params.items !== 'undefined') var items = params.items; else var items = 5;
     if(typeof params.item_height !== 'undefined') var height = params.item_height; else var height = 35;
     if(typeof params.latitude !== 'undefined') var lat = params.latitude; else var lat = 0;

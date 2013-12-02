@@ -108,6 +108,15 @@ class Affiliate < ActiveRecord::Base
     end
   end
 
+  def check_hash(hash, salt='worddet')
+    return false if self.shared_secret.blank?
+    return hash == Digest::MD5.hexdigest("#{self.shared_secret}#{salt}")
+  end
+
+  def create_shared_secret
+    self.update_column(:shared_secret, Digest::MD5.hexdigest("#{Time.now()}.energyfolkssalt"))
+  end
+
   def url_users
     url = super
     url = "#{SITE_HOST}/users" if url.blank?
