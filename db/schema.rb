@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131125015651) do
+ActiveRecord::Schema.define(:version => 20131202055535) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                     :null => false
@@ -55,6 +55,9 @@ ActiveRecord::Schema.define(:version => 20131125015651) do
     t.integer  "job_radius",           :default => 0
     t.boolean  "show_details",         :default => true
     t.string   "timezone",             :default => "Pacific Time (US & Canada)"
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
   end
 
   create_table "affiliates_discussions", :force => true do |t|

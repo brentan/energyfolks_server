@@ -70,38 +70,8 @@
 	            <br/><br/>
 	            <hr>
 
-              <% if current_affiliate.id.present? %>
-                <div class='center'>
-                  <h1><%= current_affiliate.name %> is an energyfolks network</h1>
-                  <table align=center border=0 cellpadding=1 cellspacing=0>
-                    <tr>
-                      <td>
-                        <img src='<%= current_affiliate.logo.url %>' style='max-width:290px;border:1px solid black;'>
-                      </td><td>
-                      <%= image_tag('enfolksarrow.png') %>
-                    </td>
-                    </tr>
-                  </table>
-                  <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
-                    Your login with <%= current_affiliate.name %> also allows you to increase the reach of your post by sending your post to other affiliates.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
-                </div>
-              <% else %>
-                  <div class='center'>
-                    <h1>Select energyfolks networks</h1>
-                    <table align=center border=0 cellpadding=1 cellspacing=0>
-                      <tr>
-                        <td>
-                          <%= image_tag('noimage.png') %>
-                        </td><td>
-                        <%= image_tag('enfolksarrow.png') %>
-                      </td>
-                      </tr>
-                    </table>
-                    <i>Energyfolks is a network of networks connecting energy interested students and professionals around the globe. Select the affiliates that you would like to receive this post.</i>
-                  </div>
-              <% end %>
-              <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
+
             </li>
             <li class='slide'>
               <h1>Preview</h1>
