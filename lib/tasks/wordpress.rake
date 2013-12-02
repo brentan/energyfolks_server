@@ -12,8 +12,10 @@ namespace :wordpress do
         js_hash = Rails.application.assets.find_asset('energyfolks.js').digest_path.split('-')[1].split('.')[0]
         css_hash = Rails.application.assets.find_asset('energyfolks.css').digest_path.split('-')[1].split('.')[0]
         response = open("#{affiliate.url}?enfolks_update=true&color=#{affiliate.color}&js_hash=#{js_hash}&css_hash=#{css_hash}").read
-        affiliate.update_column(:wordpress_css_hash, css_hash)
-        affiliate.update_column(:wordpress_js_hash, js_hash)
+        if response == 'COMPLETE'
+          affiliate.update_column(:wordpress_css_hash, css_hash)
+          affiliate.update_column(:wordpress_js_hash, js_hash)
+        end
       rescue
       end
     end
