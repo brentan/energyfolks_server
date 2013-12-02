@@ -5,13 +5,12 @@ $progress_bar_still_to_go_color: gray;
 div.form {
   h1 {
     float: left;
-    display: inline-block;
   }
 
-  h2 {
+  /*h2 {
     float: left;
     clear: left;
-  }
+  } */
 
   hr {
     background-color: $current_affiliate_color;

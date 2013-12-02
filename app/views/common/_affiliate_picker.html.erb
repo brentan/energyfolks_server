@@ -3,11 +3,16 @@
      send_to_all = current.map { |a| a.affiliate_id }.include?(0)
   %>
   <% if table != 'user' %>
-      <label><input id='send_to_all_yes' type=radio name='send_to_all' value=1 <%= send_to_all ? 'checked' : '' %>> Send to All</label><BR>
-      <label><input id='send_to_all_no' type=radio name='send_to_all' value=0 <%= !send_to_all ? 'checked' : '' %>> Choose Networks Individually</label>
+    <div class='form_entry'>
+      <input id='send_to_all_yes' type=radio name='send_to_all' value=1 class='toggle' <%= send_to_all ? 'checked' : '' %>>
+      <label for="send_to_all_yes">Send to All <%= Affiliate.all.count() %> Energyfolks Affiliates</label><BR>
+      <h2>OR</h2>
+      <input id='send_to_all_no' type=radio name='send_to_all' value=0 class='toggle' <%= !send_to_all ? 'checked' : '' %>>
+      <label for="send_to_all_no">Choose Networks Individually</label>
+    </div>
   <% end %>
 
-  <div id='choose_affiliates' <%= send_to_all ? 'style="display:none;"' : '' %>>
+  <div id='choose_affiliates' class='form_entry' <%= send_to_all ? 'style="display:none;"' : '' %>>
       <%= content_tag(:h1, "Current Networks") if (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) %>
       <% count = 0
          completed = current.map{|c| c.affiliate_id }
