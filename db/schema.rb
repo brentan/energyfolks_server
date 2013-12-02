@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128163929) do
+ActiveRecord::Schema.define(:version => 20131202061120) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20131128163929) do
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
+    t.string   "wordpress_css_hash"
+    t.string   "wordpress_js_hash"
   end
 
   create_table "affiliates_discussions", :force => true do |t|

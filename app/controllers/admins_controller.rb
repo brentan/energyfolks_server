@@ -14,9 +14,12 @@ class AdminsController < ApplicationController
   end
 
   def wordpress_versions
-    @items = Affiliate.order(:name).all
+    @items = Affiliate.where("shared_secret <> ''").order(:name).all
+    @not_on = Affiliate.where("shared_secret = ''").order(:name).all
     ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
     @current_version = ef_data['version']
+    @js_hash = Rails.application.assets.find_asset('energyfolks.js').digest_path.split('-')[1].split('.')[0]
+    @css_hash = Rails.application.assets.find_asset('energyfolks.css').digest_path.split('-')[1].split('.')[0]
   end
 
   private

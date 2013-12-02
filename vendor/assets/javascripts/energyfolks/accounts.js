@@ -126,7 +126,7 @@ EnergyFolks.logout_callback = function() {
         var url = EnergyFolks.callbackURL;
         url=url.split("#");
         url=url[0].split("?");
-        url=url[0]+"?logout=true";
+        url=url[0]+"?enfolks_logout=true";
         var head= document.getElementsByTagName('head')[0];
         var script= document.createElement('script');
         script.type= 'text/javascript';
@@ -142,6 +142,7 @@ EnergyFolks.$(function() {
     if(EnergyFolks.checkCookies) {
         // Check for cookies and reload page (if newly logged in)
         var url=EnergyFolks.server_url + "/users/try_cookie?"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
+        if(EnergyFolks.forceLogin) url += "&force_login=true";
         var head= document.getElementsByTagName('head')[0];
         var script= document.createElement('script');
         script.type= 'text/javascript';
@@ -246,9 +247,10 @@ EnergyFolks.CreateTopBar = function() {
         if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) {
             EnergyFolks.$("#wp-admin-bar-energyfolks0").html("<a href='#' class='ab-item'>Administrator Tools</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
             outtext = '';
-            if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>EnergyFolks Dashboard</a></li>";
-            outtext += '<li><a class="ab-item" href="../wp-admin">Wordpress Dashboard</a></li>';
-            EnergyFolks.$("wp-admin-bar-energyfolks0-default").html(outtext);
+            if(EnergyFolks.current_user.super_admin) outtext+= '<li><a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a></li>';
+            if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) outtext += "<li><a href='/wp-admin/admin.php?page=energyfolks' class='ab-item'>EnergyFolks Options</a></li>";
+            outtext += '<li><a class="ab-item" href="/wp-admin/">Wordpress Dashboard</a></li>';
+            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html(outtext);
         } else if(EnergyFolks.current_user.super_admin) {
             EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/'+EnergyFolks.id+'/edit" data-iframe="true" data-params="">Partner Control Screen</a></li>');
@@ -265,7 +267,6 @@ EnergyFolks.CreateTopBar = function() {
             EnergyFolks.$("#wp-admin-bar-energyfolks1-default").html(outtext);
         } else
             EnergyFolks.$("#wp-admin-bar-energyfolks1").css('display','none');
-        EnergyFolks.$("#wp-admin-bar-energyfolks2").css('display','none'); //TODO: Remove this reference from wordpress plugin
         if(EnergyFolks.current_user.user_posts.total > 0) {
             outtext='';
             EnergyFolks.$("#wp-admin-bar-energyfolks3").html("<a class='ab-item' href='#'>Your Posts</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks3-default'></ul></div>");
@@ -276,10 +277,11 @@ EnergyFolks.CreateTopBar = function() {
         } else {
             EnergyFolks.$("#wp-admin-bar-energyfolks3").css('display','none');
         }
-        EnergyFolks.$("#wp-admin-bar-energyfolks_welcome_sub1").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="users/profiles" data-iframe="true">Update Profile</a>');
-        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub5").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a>');
-        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub6").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a>');
-        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub7").replaceWith('<a class="ab-item EnergyFolks_popup" href="#" data-command="discussions/new" data-iframe="true">Discussion Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_welcome_sub1").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="users/profile" data-iframe="true">Update Profile</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_welcome_sub3").html('<a class="ab-item EnFolks_logout" href="#">Logout</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub5").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="events/new" data-iframe="true">Event Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub6").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="jobs/new" data-iframe="true">Job Post</a>');
+        EnergyFolks.$("#wp-admin-bar-energyfolks_add_sub7").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="discussions/new" data-iframe="true">Discussion Post</a>');
         return;
     }
     if(EnergyFolks.$("#efadminbar").length > 0) return;

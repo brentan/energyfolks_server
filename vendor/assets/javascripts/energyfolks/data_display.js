@@ -17,6 +17,10 @@ The showPage function is the master function to show energyfolks data.  Params i
 EnergyFolks.showPage = function(params) {
     if(typeof params.source !== 'undefined') EnergyFolks.source = params.source
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
+    //Backwards compatible
+    if(EnergyFolks.source == 'calendar') EnergyFolks.source = 'events';
+    if(EnergyFolks.source == 'bulletins') EnergyFolks.source = 'discussions';
+    if(EnergyFolks.source == 'bulletins-stream') EnergyFolks.source = 'discussions';
     document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div><div style='display: none;'><img src='"+EnergyFolks.server_url+"/assets/loader.gif' border='0' style='display:inline;'></div>");
     var command = EnergyFolks.$.bbq.getState( "command" );
     var parameters = EnergyFolks.$.bbq.getState( "parameters" );

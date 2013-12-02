@@ -1,6 +1,8 @@
 <a href='/admins/?iframe_next=1'>Back to Admin Main Screen</a>
 <h1>Wordpress Update Status:</h1>
-<b>Current wordpress version: <%= @current_version %></b>
+<b>Current wordpress version: <%= @current_version %></b>   <BR>
+<b>Current CSS hash: <%= @css_hash %></b>       <BR>
+<b>Current JS hash: <%= @js_hash %></b>           <BR><BR>
 <table border=1>
   <tr>
     <th>
@@ -18,6 +20,12 @@
     <th>
       Last Downloaded Version
     </th>
+    <th>
+      CSS Hash
+    </th>
+    <th>
+      JS Hash
+    </th>
   </tr>
   <% @items.each do |affiliate| %>
   <tr>
@@ -30,12 +38,28 @@
     <td>
       <%= affiliate.wordpress_version %>
     </td>
-    <td>
+    <td style='color:white;background-color:<%= affiliate.wordpress_plugin_version == @current_version ? 'darkgreen' : 'darkred' %>'>
       <%= affiliate.wordpress_plugin_version %>
     </td>
     <td>
       <%= affiliate.wordpress_checked_version %>
     </td>
+    <td style='color:white;background-color:<%= affiliate.wordpress_css_hash == @css_hash ? 'darkgreen' : 'darkred' %>'>
+      <%= affiliate.wordpress_css_hash %>
+    </td>
+    <td style='color:white;background-color:<%= affiliate.wordpress_js_hash == @js_hash ? 'darkgreen' : 'darkred' %>'>
+      <%= affiliate.wordpress_js_hash %>
+    </td>
   </tr>
   <% end %>
 </table>
+
+<% if @not_on.length > 0 %>
+    <BR><BR>
+    <h3>Affiliates not connected through wordpress:</h3>
+    <ul>
+      <% @not_on.each do |a| %>
+        <li><%= a.name %></li>
+      <% end %>
+    </ul>
+<% end %>
