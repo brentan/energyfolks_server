@@ -4,149 +4,114 @@
 <p>Please also remember to check out the <a href='examples.php'>integration examples</a>.  All examples include fully commented code, and
 most are less than 3 lines of total code to implement.</p>
 <h4>WordPress Plugin</h4>
-<p>Looking for the energyfolks wordpress plugin?  <a href='wordpress.php'>Find the documentation here</a>.  The wordpress plugin integrates energyfolks and eliminates the need to directly call the javascript functions on this page (advanced users can still directly utilize the javascript functions found here).</p>
+<p>Looking for the energyfolks wordpress plugin?  <a href='wordpress'>Find the documentation here</a>.  The wordpress plugin integrates energyfolks and eliminates the need to directly call the javascript functions on this page (advanced users can still directly utilize the javascript functions found here).</p>
 
 <h4>contents</h4>
     <ul>
-        <li><a href='#onload'>Handling Body OnLoad Events</a>
         <li><a href='#css'>Styling the EnergyFolks Library</a>
         <li><a href='#library'>The EnergyFolks Javascript Library</a>
         <ul>
             <li><a href='#object'>The EnergyFolks Object</a>
             <li><a href='#objectvars'>Public Properties</a>
-            <li><a href='#objectmethod'>Public Methods</a>
+            <li><a href='#objectvars2'>Read-Only Properties</a>
         </ul>
-        <li><a href='#widgets'>The EnergyFolksWidgets Javascript Library</a>
-        <ul>
-            <li><a href='#widgetsvars'>Public Properties</a>
-            <li><a href='#widgetsmethod'>Public Methods</a>
-        </ul>
-        <li><a href='#comment'>The EnergyFolksComments Javascript Library</a>
-        <ul>
-            <li><a href='#commentmethod'>Functions</a>
-        </ul>
-        <li><a href='#login'>External Logins to energyfolks</a>
-        <ul>
-            <li><a href='#loginjs'>The EnFolksLogin Javascript Library</a>
+        <li><a href='#objectmethod'>Data Display Methods</a>
+        <li><a href='#widgets'>EnergyFolks Widgets</a>
+        <li><a href='#comment'>The EnergyFolks Comments Javascript Library</a>
+        <li><a href='#login'>Logins to Energyfolks</a>
             <ul>
-                <li><a href='#loginjsobject'>The EnFolksLogin Object</a>
                 <li><a href='#loginjsvars'>Public Properties</a>
                 <li><a href='#loginjsmethod'>Public Methods</a>
             </ul>
-            <li><a href='#loginphp'>The EnergyFolks PHP Library</a>
+        </li>
+        <li><a href='#loginphp'>The EnergyFolks PHP Library</a>
             <ul>
                 <li><a href='#loginphpobject'>The EnergyFolks Class</a>
                 <li><a href='#loginphpmethod'>Public Methods</a>
             </ul>
-        </ul>
+        </li>
     </ul>
 
 
-
-
-      <h2><a name="onload"></a>Handling Body OnLoad Events</h2>
-        <p>The EnergyFolks library uses various onload events to create objects and elements needed by the library throughout the page.  If you use any body onload events on your page, these may overwrite the onload functions set by the EnergyFolks library.  Custom functions can be appended to the onload event tag using the function below:</p>
-    <table summary="class Map - Constructor" width="90%">
-          <tbody>
-            <tr>
-              <th>Function</th>
-              <th>Description</th>
-            </tr>
-              <tr class="odd">
-                <td><code>EnFolks_Add_Onload( input_function:function )</code></td>
-                <td>Appends the function <code>input_function</code> to the end of the onload event.  This function should be set within a script tag, not using 'onload=function();' in the body tag (this willl overwrite all onload functions previously set).  <code>input_function</code> is an anonymous function.<BR><BR>example: <BR><code>EnFolks_Add_Onload(function() { alert('hello world'); });</code></td>
-            </tr>
-          </tbody>
-      </table>
-
-
       <h2><a name="css"></a>Styling the EnergyFolks library</h2>
-        <p><b><i>Important: You are highly encouraged to include a CSS stylesheet on your pages to correctly style energyfolks content.  A default sheet can be loaded directly in your <Code>head</Code> section from <a href='https://scripts.energyfolks.com/FolksStyle.css'>https://scripts.energyfolks.com/FolksStyle.css</a></i></b></p>
-        <p>The EnergyFolks library uses inline-styles throughout its many displays to obtain a desired look (by setting element positioning, padding, and other options).  Colors, font choices, and other styles are usually not set inline, and flow from a set of CSS styles.  All of your pages that show any energyfolks content need to load a css stlysheet for proper display, and we recommend our default stylesheet hosted at <a href='https://scripts.energyfolks.com/FolksStyle.css'>https://scripts.energyfolks.com/FolksStyle.css</a>.  Custom stylesheets can be loaded instead as well (and there is a method in the EnergyFolks library to ensure the library does not overwrite your custom styles), and the default stylesheet can be used as a template for your custom CSS file.  If you use a custom sheet, it is still recommended that you load the FolksStyle.css file from our servers in your head section <i>before</i> loading your custom file.  This will ensure that any future styles added to the platform reach your users, and any customizations you have in your files will take precedence over the default styles if you load your custom file after the default file on your page.</p>
+        <p><b><i>Important: You are highly encouraged to include a CSS stylesheet on your pages to customize the style of energyfolks content.  A default sheet can be loaded directly in your <Code>head</Code> section from <a href='<%= SITE_HOST %>/assets/EenrgyFolks.css'><%= SITE_HOST %>/assets/EenrgyFolks.css</a></i></b></p>
+        <p>The EnergyFolks library uses occasional inline-styles throughout its many displays to obtain a desired look (by setting element positioning, padding, and other options).  Colors, font choices, and other styles are not set inline, and flow from your set of CSS styles.  All of your pages that show any energyfolks content should load a stylesheet for proper display, and we recommend our default stylesheet.  Custom stylesheets can be loaded instead as well, and the default stylesheet can be used as a template for your custom CSS file.  <b>Regardless of customizations, it is still recommended that you load the EnergyFolks.css file from our servers in your head section <i>before</i> loading your custom file</b>.  This will ensure that any future styles added to the platform reach your users and requires you to only define styles that differ from our defaults in your css files. (Note: any customizations you have in your files will take precedence over the default styles if you load your custom file after the default file in your header).</p>
 
       <h2><a name="library"></a>
       The EnergyFolks Javascript Library</h2>
-        <p>The EnergyFolks library is available for download or inclusion into your site at: <a href='https://scripts.energyfolks.com/javascript/EnergyFolks.js'>https://scripts.energyfolks.com/javascript/EnergyFolks.js</a>.  We recommend loading the library directly from energyfolks servers (instead of storing a copy locally on your server) as any bug fixes or updates will then automatically flow to your userbase.  For proper display, be sure to include either the default energyfolks css file (<a href='#css'>described above</a>) or your own custom file.</a></p>
-        <h3><a name="object"></a>Constructor</h3>
-        <table summary="class Map - Constructor" width="90%">
-          <tbody>
-            <tr>
-              <th>Constructor</th>
-              <th>Description</th>
-            </tr>
-              <tr class="odd">
-                <td><code>EnergyFolks( data_type:string)</code></td>
-                <td>Creates a new EnergyFolks object for data type <code>data_type</code>.  <code>data_type</code> is a string with the following possible values:
-                    <ul>
-                            <li><code>calendar-agenda</code>: Events Calendar in agenda view
-                            <li><code>calendar-weekly</code>: Events Calendar in weekly view
-                            <li><code>calendar-monthly</code>: Events Calendar in monthly view
-                            <li><code>calendar</code>: Events Calendar in the last selected user view (stored via cookies).
-                                Defaults to monthly
-                            <li><code>jobs</code>: The jobs database
-                            <li><code>users</code>: the membership database
-                            <li><code>blog</code>: the blog database (other group submitted blogs)
-                            <li><code>discussions</code>: the discussions database (default: forum view)
-                            <li><code>discussions-stream</code>: the discussions database using a 'stream' format (similar in nature to a facebook feed)
-                            <li><code>discussions-forum</code>: the discussions database using a traditional 'forum' style view
-                            <li><code>discussions-long</code>: the discussions database (long format view, similar to a blog)
-                    </ul>
-                    Note that only one EnergyFolks object should be created per page (with the exception of widget objects explained below) as only a single data_view can exist on a particular page.
-</td>
-              </tr>
-          </tbody>
-        </table>
+        <p>The EnergyFolks library is available for download or inclusion into your site at: <a href='<%= SITE_HOST %>/assets/EnergyFolks.js'><%= SITE_HOST %>/assets/EnergyFolks.js</a>.  We recommend loading the library directly from energyfolks servers (instead of storing a copy locally on your server) as any bug fixes or updates will automatically flow to your userbase.  For proper display, be sure to include either the default energyfolks css file (<a href='#css'>described above</a>) or your own custom file.</p>
+        <p>The library includes a version of JQuery for its operation.  To avoid conflicts with other JQuery installations or other javascript libraries that utilize the '$' namepsace, JQuery is mapped to <code>EnergyFolks.$</code> in the Energyfolks library.</p>
 
-        <h3><a name="objectvars"></a>Properties</h3>
+        <h3><a name="objectvars"></a>Addressable Properties</h3>
+        <p>These global properties are used library-wide and can be overwritten to customize library operation.  For example, the accent color can be customized by adding <code>EnergyFolks.color = 'AABBCC';</code> to your page in a javascript tag.</p>
         <table summary="class Map - Properties" width="90%">
           <tbody>
             <tr>
-              <th>Properties</th>
+              <th>Property</th>
                   <th>Type</th>
               <th>Description</th>
             </tr>
+                <tr class="odd">
+                  <td><code>id</code></td>
+                  <td><code>number</code></td>
+                  <td>A unique id number that identifies the affiliate group that should be associated with this request.  If you do not know your group id, email <a href='mailto:contact@energyfolks.com'>contact@energyfolks.com</a>.</td>
+                </tr>
               <tr class="odd">
-                <td><code>default_color</code></td>
+                <td><code>color</code></td>
                 <td><code>string</code></td>
-                <td>A hexadecimal color code representing the color scheme to be used.  Defaults to <code>26313B</code> (dark bluish-grey).  If an affiliateID is set, this will be set to the affiliate color set in the energyfolks database.</td>
+                <td>A hexadecimal color code representing the color scheme to be used.  Defaults to <code>F16522</code> (Orange).  Note that if an id is set, this will automatically be set to the affiliate color set in the energyfolks database.</td>
               </tr>
               <tr class="odd">
-                <td><code>type</code></td>
+                <td><code>max_comment_before_collapse</code></td>
                 <td><code>string</code></td>
                 <td>String representing the data-type to be displayed</td>
               </tr>
               <tr class="odd">
-                <td><code>data_loaded</code></td>
+                <td><code>max_replies_before_collapse</code></td>
                 <td><code>boolean</code></td>
                 <td>Flag representing whether data from server has been loaded yet via AJAX.</td>
               </tr>
               <tr class="odd">
-                <td><code>logged</code></td>
+                <td><code>per_page</code></td>
                 <td><code>boolean</code></td>
                 <td>Flag representing whether the current user is logged in to energyfolks.  Note that this is set when the data is received from the server, so any function monitoring this value should wait for <code>data_loaded</code> to be <code>true</code>.  If more immediate determination of user state is needed, consider using the EnergyFolksLogin.js library described in detail further down this page.</td>
               </tr>
               <tr class="odd">
-                <td><code>full_name</code></td>
+                <td><code>get_moderated</code></td>
                 <td><code>string</code></td>
                 <td>Full name of logged in user, if user is currently logged in</td>
               </tr>
               <tr class="odd">
-                <td><code>userid</code></td>
+                <td><code>get_my_posts</code></td>
                 <td><code>number</code></td>
                 <td>ID value associated with the current user, if logged</td>
               </tr>
-              <tr class="odd">
-                <td><code>affiliateid</code></td>
-                <td><code>string</code></td>
-                <td>The ID of the affiliate organization to use.  If your affiliate account has partial or full content moderation enabled, this parameter will ensure that only posts approved for display on your site are delivered.  The ID is also used for header and footer content on the 'new post' pages (defaults to using energyfolks headers and footers).</td>
-              </tr>
-              <tr class="odd">
-                <td><code>LocalLoginURL</code></td>
-                <td><code>string</code></td>
-                <td>The local URL for a login page that utilizes the energyfolkslogin library.  When set, all links provided for unlogged users to 'login' will forward to this URL, otherwise they will forward to a login page on energyfolks.com (https://www.energyfolks.com/accounts/Login).</td>
-              </tr>
           </tbody>
         </table>
+
+        <h3><a name="objectvars2"></a>Read-Only Properties</h3>
+        <p>These properties are set by the library and can be read site-wide to access information.  Note that these parameters <i>can</i> be overwritten, but doing so may cause unexpected behavior.</p>
+        <table summary="class Map - Properties" width="90%">
+        <tbody>
+        <tr>
+          <th>Property</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+        </tr>
+        <tr class="odd">
+          <td><code>user_logged_in</code></td>
+          <td><code>boolean</code></td>
+          <td>A unique id number that identifies the affiliate group that should be associated with this request.  If you do not know your group id, email <a href='mailto:contact@energyfolks.com'>contact@energyfolks.com</a>.</td>
+        </tr>
+        <tr class="odd">
+          <td><code>current_user</code></td>
+          <td><code>json</code></td>
+          <td>A unique id number that identifies the affiliate group that should be associated with this request.  If you do not know your group id, email <a href='mailto:contact@energyfolks.com'>contact@energyfolks.com</a>.</td>
+        </tr>
+        </table>
+
+
         <h3><a name="objectmethod"></a>Methods</h3>
         <table summary="class Map - Methods" width="90%">
           <tbody>
