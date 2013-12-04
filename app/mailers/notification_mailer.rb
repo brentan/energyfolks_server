@@ -31,6 +31,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def item_removed(item, reason, affiliate)
+    return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
     @reason = reason
@@ -41,6 +42,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def item_rejected(item, reason, affiliate)
+    return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @user = @item.user
     @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate
@@ -50,6 +52,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   def item_approved(item, affiliate)
+    return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @user = @item.user
     @host = SITE_HOST #"http://dev.energyfolks.com:3000" #TODO: Fix this to be based on affiliate

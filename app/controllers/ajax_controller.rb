@@ -93,6 +93,18 @@ class AjaxController < ApplicationController
     render_ajax( {data: data, more_pages: more_pages} )
   end
 
+  def blogs
+    more_pages = false
+    if params[:moderation] == "true"
+      data = Blog.needing_moderation(current_user, current_affiliate)
+    elsif params[:my_posts] == "true"
+      data = Blog.get_mine(current_user)
+    else
+      data, more_pages = Blog.find_all_visible(current_user, current_affiliate, fix_params(params, 'blogs'))
+    end
+    render_ajax( {data: data, more_pages: more_pages} )
+  end
+
   def get_comments
     CommentDetail.update(params[:hash], params[:title], params[:url])
     output = Comment.get_all_comments(params[:hash])
@@ -128,7 +140,7 @@ class AjaxController < ApplicationController
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
     output = render_to_string :partial => "#{@item.method_name}/show", :locals => {ajax: 1}
-    if @item.instance_of?(Discussion)
+    if @item.instance_of?(Discussion) || @item.instance_of?(Blog)
       CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
       comments = Comment.get_all_comments(@item.comment_hash)
       execute = "EnergyFolks.Populate_Comments({ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{comments.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' });"

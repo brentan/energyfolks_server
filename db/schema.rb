@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131202061120) do
+ActiveRecord::Schema.define(:version => 20131203221134) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -60,7 +60,22 @@ ActiveRecord::Schema.define(:version => 20131202061120) do
     t.string   "wordpress_checked_version", :default => ""
     t.string   "wordpress_css_hash"
     t.string   "wordpress_js_hash"
+    t.boolean  "blogs",                     :default => false
+    t.boolean  "announcement",              :default => true
   end
+
+  create_table "affiliates_blogs", :force => true do |t|
+    t.integer "blog_id"
+    t.integer "affiliate_id"
+    t.integer "approved_version",  :default => 0
+    t.integer "admin_version",     :default => 0
+    t.boolean "broadcast",         :default => false
+    t.boolean "user_broadcast",    :default => false
+    t.boolean "awaiting_edit",     :default => true
+    t.string  "approved_versions", :default => "0"
+  end
+
+  add_index "affiliates_blogs", ["blog_id"], :name => "index_affiliates_blogs_on_blog_id"
 
   create_table "affiliates_discussions", :force => true do |t|
     t.integer "discussion_id"
@@ -100,6 +115,42 @@ ActiveRecord::Schema.define(:version => 20131202061120) do
   end
 
   add_index "affiliates_jobs", ["job_id"], :name => "index_affiliates_jobs_on_job_id"
+
+  create_table "blogs", :force => true do |t|
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "current_version",         :default => 0
+    t.string   "name"
+    t.string   "url"
+    t.integer  "wordpress_id"
+    t.integer  "last_updated_by"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "announcement",            :default => false
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  create_table "blogs_versions", :force => true do |t|
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "entity_id"
+    t.integer  "version_number"
+    t.string   "name"
+    t.text     "html"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "blogs_versions", ["entity_id"], :name => "index_blogs_versions_on_entity_id"
+  add_index "blogs_versions", ["version_number"], :name => "index_blogs_versions_on_version_number"
 
   create_table "comment_details", :force => true do |t|
     t.string "name"
@@ -330,6 +381,8 @@ ActiveRecord::Schema.define(:version => 20131202061120) do
     t.boolean "discussions",  :default => false
     t.integer "event_radius", :default => 50
     t.integer "job_radius",   :default => 0
+    t.boolean "blogs",        :default => false
+    t.boolean "announcement", :default => true
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"
@@ -338,8 +391,6 @@ ActiveRecord::Schema.define(:version => 20131202061120) do
     t.string  "name"
     t.integer "count", :default => 0
   end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"

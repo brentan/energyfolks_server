@@ -12,7 +12,7 @@
             <%= render :partial => '/common/show_top' if current_user.present? %>
             <%= render :partial => '/discussions/inner_show' %>
             <div id='Enfolks_comments_<%= @item.comment_hash %>' class='Enfolks_comments' data-hash='<%= @item.comment_hash %>'></div>
-            <% if ajax.nil?
+            <% if defined?(ajax).nil?
                 CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
                 output = Comment.get_all_comments(@item.comment_hash)
                 hash = "{ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' }"

@@ -32,9 +32,6 @@ EnergyFolks.showPage = function(params) {
                 eval(output.execute);
         });
     } else {
-        EnergyFolks.$(function() {
-            EnergyFolks.showFilters();
-        });
         EnergyFolks.resetData();
     }
 };
@@ -69,7 +66,10 @@ EnergyFolks.showFilters = function() {
     }
     EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
     var filterbar = '';
-    if(EnergyFolks.source != 'users')
+    if(EnergyFolks.source == 'blogs') {
+        if(EnergyFolks.current_user.super_admin || EnergyFolks.testAdmin(EnergyFolks.AUTHOR))
+            filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
+    } else if(EnergyFolks.source != 'users')
         filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
     filterbar += "<div class='ef_filter_title'><h3>Filters:</h3></div>";
     filterbar += "<div class='ef_filters'>";
@@ -273,6 +273,10 @@ EnergyFolks.resetData = function() {
 }
 
 EnergyFolks.showData = function(data) {
+    if(EnergyFolks.populateFilters) {
+        EnergyFolks.showFilters();
+        EnergyFolks.populateFilters = false;
+    }
     if(EnergyFolks.get_moderated || EnergyFolks.get_my_posts) {
         EnergyFolks.$('#EnfolksFilterDiv').hide();
         EnergyFolks.$('#EnFolksSidebarDiv').hide();
@@ -657,6 +661,17 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.html = item.html;
         output.hash = "Discussion_" + item.id;
         output.admin_links = EnergyFolks.adminLink(item, 'discussions');
+    } else if(source == 'blogs') {
+        output.affiliate_id = item.affiliate_id;
+        output.logo = '';
+        output.title = item.name;
+        output.params = {id: item.id, model: 'Blog'};
+        output.line_one = '';
+        output.line_two = '';
+        output.widget = output.line_one;
+        output.html = item.html;
+        output.hash = "Blog_" + item.id; //TODO: FIGURE THIS ONE OUT TO MATCH WORDPRESS AND BLOG.COMMENT_HASH
+        output.admin_links = EnergyFolks.adminLink(item, 'blogs');
     }
     return output;
 };

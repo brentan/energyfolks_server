@@ -93,7 +93,7 @@ GEM
       railties (>= 3.1.0)
     jscolor-rails (1.4.0.1)
     json (1.8.1)
-    launchy (2.4.1)
+    launchy (2.4.2)
       addressable (~> 2.3)
     letter_opener (1.1.2)
       launchy (~> 2.2)
@@ -201,7 +201,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.3.1)
+    uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     uuidtools (2.1.4)

@@ -1,0 +1,57 @@
+
+<% if @item.wordpress_id.present? %>
+  <h1>Wordpress Post</h1>
+  <p>This blog post was synchronized to energyfolks from the wordpress system used by <%= Affiliate.find_by_id(@item.affiliate_id).name %>.  To edit or update
+  this post, please find the post in the wordpress system and edit it there.</p>
+  <% #TODO: Add a link to wordpress backend edit screen for this particular post here! %>
+<% else %>
+  <div class='form'>
+    <div id='ef_carousel'>
+        <%= nested_form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
+          <%= raw(iframe_form) %>
+          <%
+             # Blog posts are universal, they go to all users automatically.  Auto select 'send to all' and dont allow affiliate picker (hide it)
+             @item.affiliate_join << @item.class.join_table.new({affiliate_id: 0, approved_version: 1, admin_version: 1}) if @item.affiliate_join.length == 0
+          if !new %>
+              <input type=hidden name='id' value=<%= @item.id %>>
+          <% end %>
+          <h1><%= new ? 'New Blog Post' : 'Edit Blog Post' %></h1>
+          <%= raw(show_errors(@item)) %>
+
+
+          <div class='form_label'>Title</div>
+          <div class='form_entry'><%= f.text_field :name %></div>
+
+          <div class='form_label'>Post</div>
+          <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
+
+          <div class='form_label'>Add Tags</div>
+          <div class='form_entry'>
+            <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
+            <div class='explain'>
+              Enter tags such as 'solar' or 'entrepreneurship' that describe this post
+            </div>
+          </div>
+          <% if new %>
+              <div class='form_label'>Email to Members</div>
+              <div class='form_entry'>
+                <label><%= f.check_box :announcement %> Immediately send this to all members via email</label>
+              </div>
+          <% end %>
+
+          <div class='form_label'>Attachment</div>
+          <div class='form_entry'>
+            <%= link_to @item.attachment.url if @item.attachment.present? %>
+            <%= f.file_field :attachment %>
+            <div class='explain'>Images and Documents, 10MB Maximum</div>
+          </div>
+          <%= tinymce %>
+          <div style='display:none;'>
+            <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'blog', join_table: 'affiliates_blogs'} %>
+          </div>
+
+            <%= content_tag(:div, raw(link_to('Submit', '#', class: 'button submit')), class: 'buttons') %>
+        <% end %>
+    </div>
+  </div>
+<% end %>

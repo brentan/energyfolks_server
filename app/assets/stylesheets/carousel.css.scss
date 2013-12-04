@@ -1,5 +1,6 @@
 #ef_carousel {
   overflow:hidden;
+  overflow-y: auto;
   height: 600px;
   .viewport {
     float: left;
@@ -7,6 +8,7 @@
     height: 600px;
     width: 884px;
     overflow: hidden;
+    overflow-y: auto;
   }
   .overview {
     list-style: none;
@@ -30,7 +32,6 @@
       display: none;
     }
     position: fixed;
-    background-color:white;
     top: 556px;
     left: 5px;
     right: 5px;
