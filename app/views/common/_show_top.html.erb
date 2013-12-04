@@ -33,7 +33,7 @@
                   <h3>Post management for <%= affiliate.name %></h3>
                   Post is currently approved -
                   <%= popup 'Revoke Approval', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
-                  <% if m.affiliate_id > 0 %>
+                  <% if (m.affiliate_id > 0) && !@item.instance_of?(Blog) %>
                       <BR>
                       <%= @item.highlighted?(affiliate) ? 'Post is highlighted - ' : '' %>
                       <%= ajax_link "#{@item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {model: @item.entity_name, id: @item.id, aid: m.affiliate_id} %>
@@ -55,7 +55,7 @@
                       Your group has currently approved <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= m.approved_version %>&aid=<%= m.affiliate_id %>' target='_blank'>version <%= m.approved_version %></a> of this post.  The current post shown below is version <%= @item.current_version %>.
                   <% end %>
                   <BR>
-                  <%= popup('Approve Request and Highlight', "#{@item.method_name}/approve", true, {id: @item.id, highlight: true, aid: m.affiliate_id}) if m.affiliate_id > 0 %> <BR>
+                  <%= popup('Approve Request and Highlight', "#{@item.method_name}/approve", true, {id: @item.id, highlight: true, aid: m.affiliate_id}) if (m.affiliate_id > 0) && !@item.instance_of?(Blog) %> <BR>
                   <%= popup 'Approve Request', "#{@item.method_name}/approve", true, {id: @item.id, highlight: false, aid: m.affiliate_id} %><BR>
                   <%= popup 'Reject Request', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
                 </div>
@@ -63,7 +63,7 @@
         <% end %>
     <% end %>
     <%
-       if @item.affiliate_join.map { |a| a.affiliate_id }.include?(0)
+       if @item.affiliate_join.map { |a| a.affiliate_id }.include?(0) && !@item.instance_of?(Blog)
          current_user.memberships.approved.each do |m|
            if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) %>
              <div class='admin_controls'>

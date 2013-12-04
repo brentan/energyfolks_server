@@ -32,6 +32,7 @@ EnergyFolks.affiliates[0] = {name: "EnergyFolks", url: '<%= SITE_HOST %>'};
     EnergyFolks.affiliates[<%= a.id %>] = {name: "<%= a.name.gsub('"','') %>", url: '<%= a.url %>'};
 <% end %>
 EnergyFolks.source = 'events';
+EnergyFolks.populateFilters = true;
 EnergyFolks.source_restrict = 1;
 EnergyFolks.format = 'list';
 EnergyFolks.page = 0; //0 = start

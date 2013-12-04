@@ -251,7 +251,7 @@ module MixinEntity
           all_attributes[:end_date] = item.end_date
           all_attributes[:tz] = item.tz
         end
-        all_attributes[:comments] = item.comment_count if item.instance_of?(Discussion) # TODO: || item.instance_of?(Blog)
+        all_attributes[:comments] = item.comment_count if (item.instance_of?(Discussion) || item.instance_of?(Blog))
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end
@@ -397,9 +397,11 @@ module MixinEntity
     # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
     if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
       all_current = self.affiliate_join.map{|a| a.affiliate_id}
-      Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-        self.affiliate_join.create({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
-        all_current << a.id unless all_current.include?(a.id)
+      if !self.instance_of?(Blog)
+        Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+          self.affiliate_join.create({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
+          all_current << a.id unless all_current.include?(a.id)
+        end
       end
       # If current user is posting to 'all' but from a group that does not moderate these posts, approve immediately for this group
       # If current user is posting to 'all' but is posting from a group that they are an admin for, immediately approve for this group
@@ -453,8 +455,10 @@ module MixinEntity
       if i.affiliate_id == 0
         # Find all users, minus users in groups that do their own super moderation
         recipients = User.select(:id).where(verified: true).all.map { |r| r.id }
-        Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-          recipients = recipients - User.find_all_by_affiliate_id(a.id).map { |r| r.id }
+        if !self.instance_of?(Blog)
+          Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+            recipients = recipients - User.find_all_by_affiliate_id(a.id).map { |r| r.id }
+          end
         end
       else
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
@@ -462,7 +466,12 @@ module MixinEntity
       recipients.each do |user_id|
         u = User.find_by_id_and_verified(user_id, true)
         next if u.blank?
-        next unless u.subscription.send("#{self.method_name}?")
+        if self.instance_of?(Blog)
+          next if !self.announcement? && !u.subscription.blogs?
+          next if self.announcement? && !u.subscription.announcement?
+        else
+          next unless u.subscription.send("#{self.method_name}?")
+        end
         if ((self.entity_name == 'Job') || (self.entity_name == 'Event')) && u.geocoded?
           # geocode test
           if self.geocoded?

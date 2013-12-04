@@ -8,12 +8,13 @@ class Affiliate < ActiveRecord::Base
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :blog_posts, :class_name => 'Blogs', :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
-                  :show_details, :timezone
+                  :show_details, :timezone, :blogs, :announcement
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
@@ -145,6 +146,10 @@ class Affiliate < ActiveRecord::Base
     url = super
     url = "#{SITE_HOST}/blogs" if url.blank?
     url
+  end
+
+  def moderate_blogs
+    Affiliate::NONE
   end
 
 end

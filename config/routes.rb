@@ -100,6 +100,7 @@ EnergyfolksServer::Application.routes.draw do
   match "admin" => "admins#index"
   match "users" => "affiliates#users"
   match "events" => "events#index"
+  match "blogs" => "blogs#index"
   match "calendar" => "events#index"    #backwards compatible
   match "discussions" => "discussions#index"
   match "announce" => "discussions#index" #backwards compatible

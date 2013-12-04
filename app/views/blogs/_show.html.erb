@@ -1,0 +1,34 @@
+<% if @item.present? %>
+    <% if current_user.blank? && !current_affiliate.show_details %>
+        <h1>Please login to view</h1>
+        <b>Post details are restricted to registered members.  Please create an account and login in order to access detailed content.</b>
+    <% else %>
+        <%
+           # Visibility control:
+           visible = @item.is_visible?(current_affiliate, current_user)
+        %>
+        <!-- Beginning of Profile -->
+        <% if visible %>
+            <%= render :partial => '/common/show_top' if current_user.present? %>
+            <%= render :partial => '/blogs/inner_show' %>
+            <div id='Enfolks_comments_<%= @item.comment_hash %>' class='Enfolks_comments' data-hash='<%= @item.comment_hash %>'></div>
+            <% if defined?(ajax).nil?
+                 CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
+                 output = Comment.get_all_comments(@item.comment_hash)
+                 hash = "{ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' }"
+            %>
+                <script language='javascript'>
+                    EnergyFolks.$(function() {
+                        EnergyFolks.Populate_Comments(<%= raw(hash) %>);
+                    });
+                </script>
+            <% end %>
+        <% else %>
+            <h1>Oops!</h1>
+            <b>This blog post's details are restricted, or this post has not yet been approved.</b>
+        <% end %>
+    <% end %>
+<% else %>
+    <h1>Oops!</h1>
+    <b>This post no longer exists.  The author may have deleted it.</b>
+<% end %>
