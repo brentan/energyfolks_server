@@ -296,7 +296,7 @@ EnergyFolks.affiliateLogo = function(id, text) {
     if(typeof EnergyFolks.affiliates[id] === 'undefined') id = 0;
     var output = '<div class="ef_affiliate_logo">';
     output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '" class="affiliate_logo">';
-    output += '<div><table><tr><td><img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '"></td><td>' + text + '<BR><a href="' + EnergyFolks.affiliates[id].url + '" target="_blank">' + EnergyFolks.affiliates[id].name + '</a></td></tr></table></div>';
+    output += '<div><table><tr><td class="ef_a_logo"><img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '"></td><td>' + text + '<BR><a href="' + EnergyFolks.affiliates[id].url + '" target="_blank">' + EnergyFolks.affiliates[id].name + '</a></td></tr></table></div>';
     output += '</div>';
     return output;
 }
@@ -311,7 +311,7 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('mouseleave','.affiliate_logo',function() {
         clearTimeout(AffiliateTimeout);
     })
-    EnergyFolks.$('body').on('mouseleave','.ef_affiliate_logo div',function() {
+    EnergyFolks.$('body').on('mouseleave','div.ef_affiliate_logo div',function() {
         EnergyFolks.$(this).hide();
     })
 });

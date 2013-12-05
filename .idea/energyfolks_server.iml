@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="letter_opener (v1.1.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="libv8 (v3.16.14.3, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="linkedin (v0.4.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="macaddr (v1.6.1, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.4.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v1.25.1, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_portile (v0.5.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
@@ -87,6 +88,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rspec-expectations (v2.14.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-mocks (v2.14.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-rails (v2.14.0, RVM: ruby-1.9.3-p194) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-saml-idp (v0.3.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v1.1.0, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sanitize (v2.0.6, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sass (v3.2.12, RVM: ruby-1.9.3-p194) [gem]" level="application" />
@@ -96,6 +98,7 @@
     <orderEntry type="library" scope="PROVIDED" name="simplecov-html (v0.8.0, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v2.2.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="strip_attributes (v1.4.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="systemu (v2.5.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="therubyracer (v0.12.0, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.18.1, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tilt (v1.4.1, RVM: ruby-1.9.3-p194) [gem]" level="application" />
@@ -103,6 +106,7 @@
     <orderEntry type="library" scope="PROVIDED" name="treetop (v1.4.15, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v0.3.38, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.3.2, RVM: ruby-1.9.3-p194) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="uuid (v2.3.7, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uuidtools (v2.1.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="whenever (v0.8.4, RVM: ruby-1.9.3-p194) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="whenever-elasticbeanstalk (v1.1.3, RVM: ruby-1.9.3-p194) [gem]" level="application" />

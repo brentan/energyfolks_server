@@ -558,20 +558,24 @@ EnergyFolks.$(function() {
 });
 
 EnergyFolks.itemDetailHTML = function(item, show_links) {
+
     if(typeof show_links === 'undefined') show_links = true;
-    var output = ''
+    var output = '<table border=0 class="ef_item_details"><tr><td class="ef_affiliate_logo">';
     var info = EnergyFolks.getItemInfo(item);
     output += EnergyFolks.affiliateLogo(info.affiliate_id, EnergyFolks.source == 'users' ? 'User is a member of' : 'Posted from the website of');
-    if((info.admin_links != '') && (show_links))
-        output += '<div class="admin_links">'+info.admin_links+'</div>';
-    if(info.logo != '')
-        output += '<img src="' + info.logo + '" class="enfolks_logo">';
+    output += "</td><td class='ef_main_td'>";
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
     output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
         output += '<div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else
         output += '<span class="line2">' + info.line_two + '</span>';
+    output += '</td>';
+    if(info.logo != '')
+        output += '<td class="enfolks_logo"><img src="' + info.logo + '"></td>';
+    if((info.admin_links != '') && (show_links))
+        output += '<td class="admin_links">'+info.admin_links+'</td>';
+    output += '</tr></table>';
     return output;
 }
 // Listener for clicks on entries
