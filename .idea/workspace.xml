@@ -2,28 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/google.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/google/saml_post.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/comments.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/comments.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/data_display.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/google_client.rb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/google.rb" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/energyfolks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/energyfolks_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/filter_bar_search_bar.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/filter_bar_search_bar.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" afterPath="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/global.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/google_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/google_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/google/inbound.html.erb" afterPath="$PROJECT_DIR$/app/views/google/inbound.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/notices.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/notices.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/reset_styles.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/reset_styles.css.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386213400965" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386227148166" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386218553379" ignored="false" />
-    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386220243583" ignored="false" />
+    <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386231228747" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385347235200" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/app/helpers/home_helper.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
@@ -73,7 +65,7 @@
     <file path="/email_verification_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427394648" ignored="false" />
     <file path="/email_verification_request_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428102701" ignored="false" />
     <file path="/profile.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373914476350" ignored="false" />
-    <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386225790436" ignored="false" />
+    <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386227469763" ignored="false" />
     <file path="/20130514180745_change_lat_lng_in_user_model.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554925685" ignored="false" />
     <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385763312275" ignored="false" />
     <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374454984676" ignored="false" />
@@ -216,8 +208,8 @@
     <file path="/google_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386222541320" ignored="false" />
     <file path="/inbound.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386220227490" ignored="false" />
     <file path="/reset_styles.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386219092668" ignored="false" />
-    <file path="/google.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386226063925" ignored="false" />
-    <file path="/energyfolks_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386225288769" ignored="false" />
+    <file path="/google.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386231220655" ignored="false" />
+    <file path="/energyfolks_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386228069294" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,10 +234,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="google.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/google.rb">
+      <file leaf-file-name="google_client.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/google_client.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
+            <state line="4" column="27" selection-start="113" selection-end="113" vertical-scroll-proportion="0.08797654">
               <folding />
             </state>
           </provider>
@@ -254,16 +246,7 @@
       <file leaf-file-name="energyfolks_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/energyfolks_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="19" selection-start="723" selection-end="723" vertical-scroll-proportion="0.7478006">
+            <state line="3" column="2" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -290,7 +273,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/layout.css.scss" />
         <option value="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/popup.css.scss" />
         <option value="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/filter_bar_search_bar.css.scss" />
         <option value="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/notices.css.scss" />
@@ -303,9 +285,10 @@
         <option value="$PROJECT_DIR$/app/controllers/google_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/google/saml_post.html.erb" />
         <option value="$PROJECT_DIR$/config/environment.rb" />
-        <option value="$PROJECT_DIR$/app/models/google.rb" />
         <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/app/models/google.rb" />
         <option value="$PROJECT_DIR$/app/controllers/energyfolks_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/google_client.rb" />
       </list>
     </option>
   </component>
@@ -379,6 +362,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1185,7 +1200,11 @@
       <created>1386213412855</created>
       <updated>1386213412855</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Complete google SAML integration.  Start server-server google chatting to update/create groups/users">
+      <created>1386227153555</created>
+      <updated>1386227153555</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1274,7 +1293,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add highlight links and bug fixes...need to fix reset_style a bit more" />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete google SAML integration.  Start server-server google chatting to update/create groups/users" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1288,7 +1307,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Finish comments to allow reply to comment via email, also allow emails to discussions@reply.energyfolks.com to post discussion posts.  Needs to be tested on SERVER." />
     <MESSAGE value="fix irreversible migration to allow rollbacks" />
     <MESSAGE value="dont send comments to yourself" />
     <MESSAGE value="Kill some comment bugs" />
@@ -1313,10 +1331,11 @@
     <MESSAGE value="Change deployment to access config files from S3 instead of locally do allow new EC2 instances to work out-of-box" />
     <MESSAGE value="First pass at google SAML integration" />
     <MESSAGE value="Add highlight links and bug fixes...need to fix reset_style a bit more" />
+    <MESSAGE value="Complete google SAML integration.  Start server-server google chatting to update/create groups/users" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="221" />
+      <option name="time" value="227" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1411,23 +1430,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/energyfolks_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/google.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="19" selection-start="723" selection-end="723" vertical-scroll-proportion="0.7478006">
+        <state line="36" column="35" selection-start="748" selection-end="748" vertical-scroll-proportion="0.7917889">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/energyfolks_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="2" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/google_client.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="27" selection-start="113" selection-end="113" vertical-scroll-proportion="0.08797654">
           <folding />
         </state>
       </provider>

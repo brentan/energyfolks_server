@@ -1,4 +1,0 @@
-class Google
-
-
-end

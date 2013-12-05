@@ -33,6 +33,7 @@ gem 'sanitize'
 gem 'rubyzip'
 
 gem 'ruby-saml-idp'
+gem 'google-api-client'
 
 
 # Gems used only for assets and not required
