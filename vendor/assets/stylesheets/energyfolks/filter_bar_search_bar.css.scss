@@ -1,4 +1,4 @@
-#EnfolksFilterDiv {
+div#EnfolksFilterDiv {
   position:relative;
   height:28px;
   margin: 3px;
@@ -166,6 +166,7 @@
   &.ef_top {
     position: relative;
     height: 50px;
+    white-space: nowrap;
     input[type=text] {
       border: 1px solid #aaaaaa;
     }
@@ -176,7 +177,16 @@
       bottom: 0px;
       width: 180px;
       text-align:center;
-      button {width: 170px;}
+      button {
+        width: 170px;
+        margin: 0px;
+        padding: 7px 15px;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
     }
     #ef_submit_filters, .fade_class {
       position: absolute;
@@ -191,6 +201,9 @@
       position: absolute;
       top: 10px;
       left: 180px;
+      h3 {
+        font-size: 14px;
+      }
     }
     .ef_filters {
       position: absolute;

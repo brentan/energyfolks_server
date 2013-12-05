@@ -4,11 +4,11 @@ div.EnergyFolks_notice_holder {
   left: 0px;
   right: 0px;
   z-index: 99999;
-  .notice {
+  div.notice {
     height: 40px;
+    padding-top: 5px;
     border-bottom: 2px solid #aaaaaa;
     text-align:center;
-    padding-top: 20px;
     font-size: 20px;
 
     &.yellow {

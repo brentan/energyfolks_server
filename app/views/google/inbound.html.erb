@@ -9,8 +9,9 @@
     <p>Please choose the account you wish to login with below:</p>
     <% @admin_list.each do |a| %>
         <%= form_tag(@saml_acs_url) do %>
-            <%= hidden_field_tag("SAMLResponse", a.response) %>
-            <%= submit_tag "#{a.name} - #{a.email}" %>
+            <%= hidden_field_tag("SAMLResponse", a[:response]) %>
+            <%= hidden_field_tag("RelayState", params[:RelayState]) %>
+            <%= submit_tag "#{a[:name]} - #{a[:email]}" %>
         <% end %>
     <% end %>
 <% end %>
