@@ -184,7 +184,7 @@ EnergyFolks.$(function() {
         EnergyFolks.HighlightUpdateButton();
     });
     EnergyFolks.$('body').on('change','#location_filter input[type=radio]', function() {
-        var anywhere =  $('#location_filter input[type=radio]:checked').val();
+        var anywhere =  EnergyFolks.$('#location_filter input[type=radio]:checked').val();
         var val = EnergyFolks.$('#ef_filter_radius').val()*1;
         if(!(val > 0) && (anywhere > 0)) {
             val = 50;
@@ -220,7 +220,7 @@ EnergyFolks.$(function() {
         EnergyFolks.$('#ef_location_searching').show();
     });
     EnergyFolks.$('body').on('change','#source_filter input[type=radio]', function() {
-        EnergyFolks.source_restrict =  $('#source_filter input[type=radio]:checked').val();
+        EnergyFolks.source_restrict =  EnergyFolks.$('#source_filter input[type=radio]:checked').val();
         EnergyFolks.UpdateFilterText();
         EnergyFolks.HighlightUpdateButton();
     });
@@ -514,9 +514,10 @@ EnergyFolks.$(function() {
         EnergyFolks.$(this).hide();
     });
     EnergyFolks.$('body').on('click','.enfolks_prev_next', function() {
-        EnergyFolks.current_month = $(this).attr('data-value')*1;
+        EnergyFolks.current_month = EnergyFolks.$(this).attr('data-value')*1;
         EnergyFolks.shift_later = false;
         EnergyFolks.loadData();
+        return false;
     });
 });
 
@@ -691,6 +692,8 @@ EnergyFolks.adminLink = function(item, source) {
     } else if(EnergyFolks.current_user.id == item.user_id) {
         admin_links += '<strong>This is your post</strong>' + EnergyFolks.create_iframe_popup('Edit Post',source + '/edit',{id: item.id});
     }
+    if(EnergyFolks.testAdmin(EnergyFolks.EDITOR) && (source != 'blogs'))
+        admin_links += EnergyFolks.ajax_link(item.highlighted ? 'Remove&nbsp;highlight' : 'Highlight', 'toggle_highlight',{model: model ,id: item.id});
     return admin_links;
 }
 EnergyFolks.$(function() {
