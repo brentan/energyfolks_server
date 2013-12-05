@@ -125,7 +125,11 @@
 <% if current_user.admin? %>
     <h1>Admin options</h1>
     <div class='form_label'>Email Name</div>
-    <div class='form_entry'><%= f.text_field :email_name %></div>
+    <% if @affiliate.email_name.blank? %>
+        <div class='form_entry'><%= f.text_field :email_name %></div>
+    <% else %>
+        <div class='form_entry'><%= @affiliate.email_name %> (locked)</div>
+    <% end %>
 
     <div class='form_label'>Live Group?</div>
     <div class='form_entry'>

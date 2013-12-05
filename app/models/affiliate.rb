@@ -36,6 +36,8 @@ class Affiliate < ActiveRecord::Base
   after_validation :geocode
 
   before_destroy :remove_all_primary_references
+  before_destroy :remove_from_google
+  after_create :add_to_google
 
   # 'open' codes
   OPEN = 1
@@ -76,9 +78,18 @@ class Affiliate < ActiveRecord::Base
   end
 
   def admins(type = Membership::ADMINISTRATOR, emails_only = false)
-    search = self.memberships.where("admin_level >= #{type}")
+    search = self.memberships.approved.where("admin_level >= #{type}").joins(:user)
     search = search.where("moderation_emails = 1") if emails_only
     return search.all.map{|u| u.user }
+  end
+  def approved_members
+    self.memberships.approved.joins(:user).all.map {|u| u.user }
+  end
+  def announcement_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:announcement => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+  def digest_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
 
   def email
@@ -150,6 +161,18 @@ class Affiliate < ActiveRecord::Base
 
   def moderate_blogs
     Affiliate::NONE
+  end
+
+  def add_to_google
+    return unless Rails.env.production?
+    google_client = GoogleClient.new
+    google_client.create_affiliate(self)
+  end
+
+  def remove_from_google
+    return unless Rails.env.production?
+    google_client = GoogleClient.new
+    google_client.remove_affiliate(self)
   end
 
 end

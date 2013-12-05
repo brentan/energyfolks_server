@@ -40,3 +40,8 @@ document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
 File.open("google_key.txt", "w") do |f|
   f.write(document.read)
 end
+document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
+
+File.open("google_privatekey.p12", "w") do |f|
+  f.write(document.read)
+end
