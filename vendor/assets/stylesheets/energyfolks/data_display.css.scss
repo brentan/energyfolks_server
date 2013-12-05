@@ -1,401 +1,403 @@
-.moderation_box {
-  border: 5px solid #aa0000;
-  background-color: #ffdddd;
-  a {
-    display: block;
-  }
-}
-.enfolks_date_item {
-  margin: 0px;
-  padding: 2px 4px;
-  border: 0px solid #cccccc;
-  background-color: #cccccc;
-  font-size: 14px;
-  text-align:left;
-  &.enfolks_today {
-    font-weight: bold;
-    color: white;
-  }
-}
-.ef_load_more {
-  margin: 0px;
-  min-height: 30px;
-  padding: 2px 4px;
-  border: 0px solid #cccccc;
-  border-bottom-width: 1px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 14px;
-  text-decoration: underline;
-  &:hover {
-    background-color: #efefef;
-  }
-}
-.enfolks_list_item {
-  margin: 0px;
-  min-height: 40px;
-  padding: 2px 4px;
-  border: 0px solid #cccccc;
-  border-bottom-width: 1px;
-  cursor: pointer;
-  &.ef_first_item {
-    border-top-width: 1px;
-  }
-  &.ef_highlight {
-    background-color: #ffffaa;
-  }
-  &:hover {
-    background-color: #efefef;
-  }
-  &.ef_stream {
-    cursor: auto;
-    h1.title {
-      text-decoration: underline;
-    }
-    &:hover {
-      background-color: transparent;
-    }
-    div.html {
-      margin: 4px 2px;
-      margin-left: 50px;
-      padding: 0px;
-    }
-  }
-
-  img.enfolks_logo {
-    width: 40px;
-    height: 40px;
-    float: right;
-    border: 1px solid #cccccc;
-    margin: 0px 4px;
-  }
-  .ef_affiliate_logo {
-    width:40px;
-    height: 40px;
-    float: left;
-    img {
-      width:40px;
-      height: 40px;
-    }
-  }
-  h1.title {
-    margin:0px;
-    padding:0px 0px 3px 0px;
-    font-size: 15px;
-    margin-left: 46px;
-  }
-  h3.line1 {
-    color: #333333;
-    font-size: 12px;
-    margin:0px;
-    padding:0px 0px 2px 0px;
-    margin-left: 46px;
-  }
-  span.line2 {
-    margin:0px;
-    padding: 0px;
-    display: block;
-    color: #666666;
-    margin-left: 46px;
-  }
-  div.admin_links {
-    float: right;
-    width: 200px;
-    padding: 2px;
-    margin: -2px -4px 0px 0px;
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    background-color: #ffffcc;
+#EnFolksmainbodydiv {
+  .moderation_box {
+    border: 5px solid #aa0000;
+    background-color: #ffdddd;
     a {
       display: block;
-      &:hover {
+    }
+  }
+  .enfolks_date_item {
+    margin: 0px;
+    padding: 2px 4px;
+    border: 0px solid #cccccc;
+    background-color: #cccccc;
+    font-size: 14px;
+    text-align:left;
+    &.enfolks_today {
+      font-weight: bold;
+      color: white;
+    }
+  }
+  .ef_load_more {
+    margin: 0px;
+    min-height: 30px;
+    padding: 2px 4px;
+    border: 0px solid #cccccc;
+    border-bottom-width: 1px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-decoration: underline;
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+  .enfolks_list_item {
+    margin: 0px;
+    min-height: 40px;
+    padding: 2px 4px;
+    border: 0px solid #cccccc;
+    border-bottom-width: 1px;
+    cursor: pointer;
+    &.ef_first_item {
+      border-top-width: 1px;
+    }
+    &.ef_highlight {
+      background-color: #ffffaa;
+    }
+    &:hover {
+      background-color: #efefef;
+    }
+    &.ef_stream {
+      cursor: auto;
+      h1.title {
         text-decoration: underline;
       }
-    }
-  }
-
-  &.ef_jobs {
-
-  }
-  &.ef_users {
-
-  }
-  &.ef_discussions {
-
-  }
-  &.ef_events {
-
-  }
-
-}
-table.enfolks_calendar {
-  padding: 0px;
-  margin: 2px;
-  tr {
-    margin: 0px;
-    padding: 0px;
-  }
-  td {
-    margin: 0px;
-    border: 0px solid #444444;
-    border-bottom-width: 1px;
-    border-right-width: 1px;
-    padding: 2px;
-  }
-  td.enfolks_first {
-    border-left-width: 1px;
-  }
-  td.enfolks_prev, td.enfolks_next {
-    text-align:center;
-    border-right-width: 0px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-  }
-  td.enfolks_calendar_title {
-    text-align:center;
-    font-weight: bold;
-    border-right-width: 0px;
-    border-left-width: 0px;
-    border-bottom-width: 0px;
-  }
-  td.enfolks_day_header {
-    color: white;
-    text-align: center;
-    border-top-width: 1px;
-  }
-  td.enfolks_day {
-    height: 80px;
-  }
-  td.enfolks_current_month {
-    background-color: white;
-  }
-  td.enfolks_other_month {
-    background-color: #eeeeee;
-  }
-  td.enfolks_today_month {
-    background-color: #ffffdd;
-  }
-  td.enfolks_current_month.past .enfolks_calendar_item_content, td.enfolks_other_month.past .enfolks_calendar_item_content {
-    background-color: #eeeeee;
-    color: #999999;
-    border: 1px solid #bbbbbb;
-  }
-  td.enfolks_current_month.past .enfolks_calendar_item_content.highlight, td.enfolks_other_month.past .enfolks_calendar_item_content.highlight {
-    color: #bbbbbb;
-    border: 1px solid #888888;
-  }
-  div.enfolks_calendar_item {
-    margin: 1px;
-    cursor: pointer;
-    position: relative;
-    height: 17px;
-    .enfolks_calendar_item_content {
-      font-size: 13px;
-      padding: 2px;
-      padding-top:0px;
-      overflow:hidden;
-      text-wrap: none;
-      position:absolute;
-      top:0px;
-      left:0px;
-      right:0px;
-      bottom: 0px;
-      background-color: #dddddd;
-      border: 1px solid #999999;
-      &.highlight {
-        color: white;
-        border: 1px solid black;
+      &:hover {
+        background-color: transparent;
       }
-    }
-    .enfolks_detail_popup_white {
-      z-index: 97;
-      font-size: 13px;
-      border: 1px solid black;
-      overflow:hidden;
-      padding: 2px;
-      padding-top:0px;
-      text-wrap: none;
-      color: black;
-      background-color: white;
-      position:absolute;
-      top:0px;
-      left:0px;
-      right:0px;
-      bottom: 0px;
-      display: none;
-    }
-    .enfolks_detail_popup_white_2 {
-      background-color: white;
-      width: 2px;
-      z-index: 99;
-      position:absolute;
-      top: 1px;
-      bottom: 1px;
-      display: none;
-      &.left {
-        left: -1px;
-      }
-      &.right {
-        right: -1px;
-      }
-    }
-    .enfolks_detail_popup {
-      z-index: 98;
-      padding: 2px;
-      border: 1px solid black;
-      background-color: white;
-      position:absolute;
-      text-align: left;
-      display: none;
-      top: 0px;
-      width: 300px;
-      &.left {
-        left:-306px;
-      }
-      &.right {
-        right: -306px;
-      }
-
-      img.enfolks_logo {
-        width: 40px;
-        height: 40px;
-        float: right;
-        border: 1px solid #cccccc;
-        margin: 0px 4px;
-      }
-      .ef_affiliate_logo {
-        width:40px;
-        height: 40px;
-        float: left;
-        img {
-          width:40px;
-          height: 40px;
-        }
-      }
-      h1.title {
-        margin:0px;
-        padding:0px 0px 3px 0px;
-        font-size: 15px;
-        margin-left: 46px;
-      }
-      h3.line1 {
-        color: #333333;
-        font-size: 12px;
-        margin:0px;
-        padding:0px 0px 2px 0px;
-        margin-left: 46px;
-      }
-      span.line2 {
-        margin:0px;
+      div.html {
+        margin: 4px 2px;
+        margin-left: 50px;
         padding: 0px;
-        display: block;
-        color: #666666;
-        margin-left: 46px;
       }
     }
-  }
-}
-.leaflet-popup-content {
 
-  img.enfolks_logo {
-    width: 40px;
-    height: 40px;
-    float: right;
-    border: 1px solid #cccccc;
-    margin: 0px 4px;
-  }
-  .ef_affiliate_logo {
-    width:40px;
-    height: 40px;
-    float: left;
-    img {
+    img.enfolks_logo {
+      width: 40px;
+      height: 40px;
+      float: right;
+      border: 1px solid #cccccc;
+      margin: 0px 4px;
+    }
+    .ef_affiliate_logo {
       width:40px;
       height: 40px;
+      float: left;
+      img {
+        width:40px;
+        height: 40px;
+      }
+    }
+    h1.title {
+      margin:0px;
+      padding:0px 0px 3px 0px;
+      font-size: 15px;
+      margin-left: 46px;
+    }
+    h3.line1 {
+      color: #333333;
+      font-size: 12px;
+      margin:0px;
+      padding:0px 0px 2px 0px;
+      margin-left: 46px;
+    }
+    span.line2 {
+      margin:0px;
+      padding: 0px;
+      display: block;
+      color: #666666;
+      margin-left: 46px;
+    }
+    div.admin_links {
+      float: right;
+      width: 200px;
+      padding: 2px;
+      margin: -2px -4px 0px 0px;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      background-color: #ffffcc;
+      a {
+        display: block;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &.ef_jobs {
+
+    }
+    &.ef_users {
+
+    }
+    &.ef_discussions {
+
+    }
+    &.ef_events {
+
+    }
+
+  }
+  table.enfolks_calendar {
+    padding: 0px;
+    margin: 2px;
+    tr {
+      margin: 0px;
+      padding: 0px;
+    }
+    td {
+      margin: 0px;
+      border: 0px solid #444444;
+      border-bottom-width: 1px;
+      border-right-width: 1px;
+      padding: 2px;
+    }
+    td.enfolks_first {
+      border-left-width: 1px;
+    }
+    td.enfolks_prev, td.enfolks_next {
+      text-align:center;
+      border-right-width: 0px;
+      border-left-width: 0px;
+      border-bottom-width: 0px;
+    }
+    td.enfolks_calendar_title {
+      text-align:center;
+      font-weight: bold;
+      border-right-width: 0px;
+      border-left-width: 0px;
+      border-bottom-width: 0px;
+    }
+    td.enfolks_day_header {
+      color: white;
+      text-align: center;
+      border-top-width: 1px;
+    }
+    td.enfolks_day {
+      height: 80px;
+    }
+    td.enfolks_current_month {
+      background-color: white;
+    }
+    td.enfolks_other_month {
+      background-color: #eeeeee;
+    }
+    td.enfolks_today_month {
+      background-color: #ffffdd;
+    }
+    td.enfolks_current_month.past .enfolks_calendar_item_content, td.enfolks_other_month.past .enfolks_calendar_item_content {
+      background-color: #eeeeee;
+      color: #999999;
+      border: 1px solid #bbbbbb;
+    }
+    td.enfolks_current_month.past .enfolks_calendar_item_content.highlight, td.enfolks_other_month.past .enfolks_calendar_item_content.highlight {
+      color: #bbbbbb;
+      border: 1px solid #888888;
+    }
+    div.enfolks_calendar_item {
+      margin: 1px;
+      cursor: pointer;
+      position: relative;
+      height: 17px;
+      .enfolks_calendar_item_content {
+        font-size: 13px;
+        padding: 2px;
+        padding-top:0px;
+        overflow:hidden;
+        text-wrap: none;
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom: 0px;
+        background-color: #dddddd;
+        border: 1px solid #999999;
+        &.highlight {
+          color: white;
+          border: 1px solid black;
+        }
+      }
+      .enfolks_detail_popup_white {
+        z-index: 97;
+        font-size: 13px;
+        border: 1px solid black;
+        overflow:hidden;
+        padding: 2px;
+        padding-top:0px;
+        text-wrap: none;
+        color: black;
+        background-color: white;
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom: 0px;
+        display: none;
+      }
+      .enfolks_detail_popup_white_2 {
+        background-color: white;
+        width: 2px;
+        z-index: 99;
+        position:absolute;
+        top: 1px;
+        bottom: 1px;
+        display: none;
+        &.left {
+          left: -1px;
+        }
+        &.right {
+          right: -1px;
+        }
+      }
+      .enfolks_detail_popup {
+        z-index: 98;
+        padding: 2px;
+        border: 1px solid black;
+        background-color: white;
+        position:absolute;
+        text-align: left;
+        display: none;
+        top: 0px;
+        width: 300px;
+        &.left {
+          left:-306px;
+        }
+        &.right {
+          right: -306px;
+        }
+
+        img.enfolks_logo {
+          width: 40px;
+          height: 40px;
+          float: right;
+          border: 1px solid #cccccc;
+          margin: 0px 4px;
+        }
+        .ef_affiliate_logo {
+          width:40px;
+          height: 40px;
+          float: left;
+          img {
+            width:40px;
+            height: 40px;
+          }
+        }
+        h1.title {
+          margin:0px;
+          padding:0px 0px 3px 0px;
+          font-size: 15px;
+          margin-left: 46px;
+        }
+        h3.line1 {
+          color: #333333;
+          font-size: 12px;
+          margin:0px;
+          padding:0px 0px 2px 0px;
+          margin-left: 46px;
+        }
+        span.line2 {
+          margin:0px;
+          padding: 0px;
+          display: block;
+          color: #666666;
+          margin-left: 46px;
+        }
+      }
     }
   }
-  h1.title {
-    margin:0px;
-    padding:0px 0px 3px 0px;
-    font-size: 15px;
-    margin-left: 46px;
+  .leaflet-popup-content {
+
+    img.enfolks_logo {
+      width: 40px;
+      height: 40px;
+      float: right;
+      border: 1px solid #cccccc;
+      margin: 0px 4px;
+    }
+    .ef_affiliate_logo {
+      width:40px;
+      height: 40px;
+      float: left;
+      img {
+        width:40px;
+        height: 40px;
+      }
+    }
+    h1.title {
+      margin:0px;
+      padding:0px 0px 3px 0px;
+      font-size: 15px;
+      margin-left: 46px;
+    }
+    h3.line1 {
+      color: #333333;
+      font-size: 12px;
+      margin:0px;
+      padding:0px 0px 2px 0px;
+      margin-left: 46px;
+    }
+    span.line2 {
+      margin:0px;
+      padding: 0px;
+      display: block;
+      color: #666666;
+      margin-left: 46px;
+    }
   }
-  h3.line1 {
-    color: #333333;
-    font-size: 12px;
-    margin:0px;
-    padding:0px 0px 2px 0px;
-    margin-left: 46px;
-  }
-  span.line2 {
-    margin:0px;
+  #EnfolksMapDiv {
+    position: relative;
+    height: 500px;
+    border: 1px solid black;
+    margin: 2px;
     padding: 0px;
-    display: block;
-    color: #666666;
-    margin-left: 46px;
-  }
-}
-#EnfolksMapDiv {
-  position: relative;
-  height: 500px;
-  border: 1px solid black;
-  margin: 2px;
-  padding: 0px;
-  #EnfolksMapDiv_map {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid black;
-  }
-  #EnfolksMapDiv_loading {
-    position: absolute;
-    font-size: 30px;
-    font-weight: bold;
-    display:none;
-    top: 150px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    padding: 0px;
-    margin: 0px;
-    border: 0px solid black;
-  }
-}
-.ef_affiliate_logo {
-  position: relative;
-  padding: 0px;
-  margin: 0px;
-  img.affiliate_logo {
-    border: 1px solid #cccccc;
-  }
-  div {
-    display: none;
-    position: absolute;
-    white-space: nowrap;
-    top: -5px;
-    left: -5px;
-    border: 1px solid #555555;
-    background-color: white;
-    padding: 0px;
-    margin: 0px;
-    table {
+    #EnfolksMapDiv_map {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
       padding: 0px;
       margin: 0px;
       border: 0px solid black;
     }
-    td {
-      padding: 3px;
-      vertical-align: top;
+    #EnfolksMapDiv_loading {
+      position: absolute;
+      font-size: 30px;
+      font-weight: bold;
+      display:none;
+      top: 150px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      padding: 0px;
       margin: 0px;
       border: 0px solid black;
     }
-    img {
+  }
+  .ef_affiliate_logo {
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+    img.affiliate_logo {
+      border: 1px solid #cccccc;
+    }
+    div {
+      display: none;
+      position: absolute;
+      white-space: nowrap;
+      top: -5px;
+      left: -5px;
+      border: 1px solid #555555;
+      background-color: white;
+      padding: 0px;
       margin: 0px;
+      table {
+        padding: 0px;
+        margin: 0px;
+        border: 0px solid black;
+      }
+      td {
+        padding: 3px;
+        vertical-align: top;
+        margin: 0px;
+        border: 0px solid black;
+      }
+      img {
+        margin: 0px;
+      }
+
     }
 
   }
-
 }

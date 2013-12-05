@@ -243,28 +243,28 @@ EnergyFolks.showNotice = function(notice, klass, timeout) {
     klass+=' notice';
     while(true) {
         var id = 'notice_id_'+Math.floor(10000000 * Math.random());
-        if($('#'+id).length == 0) break;
+        if(EnergyFolks.$('#'+id).length == 0) break;
     }
-    if($('.EnergyFolks_notice_holder').length == 0) {
-        var holder = $('<div class="EnergyFolks_notice_holder"></div>').hide().appendTo('body');
+    if(EnergyFolks.$('.EnergyFolks_notice_holder').length == 0) {
+        var holder = EnergyFolks.$('<div class="EnergyFolks_notice_holder"></div>').hide().appendTo('body');
         holder.show();
     }
-    var overlay = $('<div id="'+id+'" class="'+klass+'"></div>').hide().appendTo('.EnergyFolks_notice_holder');
+    var overlay = EnergyFolks.$('<div id="'+id+'" class="'+klass+'"></div>').hide().appendTo('.EnergyFolks_notice_holder');
     notice = '<div class="close">X</div>' + notice;
-    $('#'+id).html(notice);
-    $('#'+id).on('click','.close', function() {
+    EnergyFolks.$('#'+id).html(notice);
+    EnergyFolks.$('#'+id).on('click','.close', function() {
         EnergyFolks.hideNotice(id);
     });
-    $('#'+id).slideDown(400);
+    EnergyFolks.$('#'+id).slideDown(400);
     window.setTimeout(function() { EnergyFolks.hideNotice(id); }, timeout + 400);
 }
 
 // Hide a particular notice
 EnergyFolks.hideNotice = function(id) {
-    if($('#'+id).length == 0) return;
-    $('#'+id).slideUp(400, function() {
-        $('#'+id).remove();
-        if($('.EnergyFolks_notice_holder').find('.notice').length == 0) $('.EnergyFolks_notice_holder').remove();
+    if(EnergyFolks.$('#'+id).length == 0) return;
+    EnergyFolks.$('#'+id).slideUp(400, function() {
+        EnergyFolks.$('#'+id).remove();
+        if(EnergyFolks.$('.EnergyFolks_notice_holder').find('.notice').length == 0) $('.EnergyFolks_notice_holder').remove();
     });
 }
 
