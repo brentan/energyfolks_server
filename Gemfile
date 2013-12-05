@@ -11,7 +11,7 @@ gem 'strip_attributes'
 gem 'geocoder'
 gem 'tinymce-rails'
 gem 'jscolor-rails'
-gem 'asari', '0.10.3', :git => 'git://github.com/brentan/asari.git'
+gem 'asari', :git => 'git://github.com/brentan/asari.git'
 
 # For doing either periodic background tasks or any long, one-time task in the background.
 gem 'daemons'
@@ -31,6 +31,8 @@ gem 'nokogiri'
 gem 'sanitize'
 
 gem 'rubyzip'
+
+gem 'ruby-saml-idp'
 
 
 # Gems used only for assets and not required

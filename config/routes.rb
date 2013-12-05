@@ -31,6 +31,10 @@ EnergyfolksServer::Application.routes.draw do
   get "users/resend_activation"
   post "users/resend_activation"
 
+  # Google Apps SAML SSO routes
+  get '/google/saml/inbound', to: 'google#inbound'
+  get '/google/saml/logout', to: 'google#logout'
+
   # Omniauth routes
   get '/external_login', to: 'users#external_login'
   get '/auth/linkedin/callback', to: 'users#linkedin'

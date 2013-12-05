@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ebextensions/after_deploy.config" afterPath="$PROJECT_DIR$/.ebextensions/after_deploy.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/google_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/google/inbound.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/load_config.rb" afterPath="$PROJECT_DIR$/config/load_config.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386206402073" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386206623460" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385763759539" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385764179706" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385347235200" ignored="false" />
@@ -15,7 +23,7 @@
     <file path="$USER_HOME$/AES/repos/aes_web/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362778266316" ignored="false" />
     <file path="/accounts.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385961433794" ignored="false" />
     <file path="/global.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385527346241" ignored="false" />
-    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385090902921" ignored="false" />
+    <file path="/routes.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386211263001" ignored="false" />
     <file path="/users_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385959060355" ignored="false" />
     <file path="/_success.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1363284977600" ignored="false" />
     <file path="/error.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385347782731" ignored="false" />
@@ -59,7 +67,7 @@
     <file path="/email_verification_request.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364427394648" ignored="false" />
     <file path="/email_verification_request_2.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1364428102701" ignored="false" />
     <file path="/profile.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1373914476350" ignored="false" />
-    <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385596242555" ignored="false" />
+    <file path="/Gemfile" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386206546264" ignored="false" />
     <file path="/20130514180745_change_lat_lng_in_user_model.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1368554925685" ignored="false" />
     <file path="/affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385763312275" ignored="false" />
     <file path="/membership.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1374454984676" ignored="false" />
@@ -141,11 +149,11 @@
     <file path="/iframe_popup.css.scss" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1382930407195" ignored="false" />
     <file path="/paperclip.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383090102820" ignored="false" />
     <file path="/ec2.yml" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383086844197" ignored="false" />
-    <file path="/development.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385016606258" ignored="false" />
+    <file path="/development.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386208599836" ignored="false" />
     <file path="/jquery_browser.js" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383093059898" ignored="false" />
     <file path="/20131030015250_add_timezone_to_events.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1383097999475" ignored="false" />
     <file path="/ec2.yml.template" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384446177499" ignored="false" />
-    <file path="/production.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384446396155" ignored="false" />
+    <file path="/production.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386208423433" ignored="false" />
     <file path="/20131115031151_bulletins_to_discussions.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486309475" ignored="false" />
     <file path="/20131115032751_update_bulletins_in_database.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486235211" ignored="false" />
     <file path="/20131115033941_last_bulletin_to_discussion.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384486804763" ignored="false" />
@@ -198,7 +206,9 @@
     <file path="/wordpress.rake" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385965389678" ignored="false" />
     <file path="/20131202061120_add_current_hash_to_affiliate.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385964709034" ignored="false" />
     <file path="/documentation.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1385966928488" ignored="false" />
-    <file path="/load_config.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386206250265" ignored="false" />
+    <file path="/load_config.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386208258250" ignored="false" />
+    <file path="/google_controller.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386211205337" ignored="false" />
+    <file path="/inbound.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386211475083" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,30 +233,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="documentation.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/developers/documentation.html.erb">
+      <file leaf-file-name="google_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/google_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="33" selection-start="7008" selection-end="7008" vertical-scroll-proportion="-5.0">
-              <folding>
-                <element signature="n#style#0;n#h1#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="after_deploy.config" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.ebextensions/after_deploy.config">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="12" selection-start="412" selection-end="412" vertical-scroll-proportion="0.32991204">
+            <state line="27" column="17" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.6053812">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="initialize.js.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb">
+      <file leaf-file-name="inbound.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/google/inbound.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="18" selection-start="1299" selection-end="1305" vertical-scroll-proportion="-20.625">
+            <state line="4" column="35" selection-start="130" selection-end="130" vertical-scroll-proportion="-2.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/routes.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="35" selection-start="809" selection-end="809" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="load_config.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/load_config.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="29" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="88" column="40" selection-start="3314" selection-end="3314" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -273,12 +299,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/config/routes.rb" />
-        <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js" />
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/data_display.js" />
-        <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/widgets.js" />
         <option value="$PROJECT_DIR$/db/migrate/20131202061120_add_current_hash_to_affiliate.rb" />
         <option value="$PROJECT_DIR$/app/controllers/developers_controller.rb" />
         <option value="$PROJECT_DIR$/config/schedule.rb" />
@@ -287,8 +307,14 @@
         <option value="$PROJECT_DIR$/lib/tasks/wordpress.rake" />
         <option value="$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb" />
         <option value="$PROJECT_DIR$/app/views/developers/documentation.html.erb" />
-        <option value="$PROJECT_DIR$/config/load_config.rb" />
         <option value="$PROJECT_DIR$/.ebextensions/after_deploy.config" />
+        <option value="$PROJECT_DIR$/Gemfile" />
+        <option value="$PROJECT_DIR$/config/load_config.rb" />
+        <option value="$PROJECT_DIR$/config/environments/production.rb" />
+        <option value="$PROJECT_DIR$/config/environments/development.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/google_controller.rb" />
+        <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/app/views/google/inbound.html.erb" />
       </list>
     </option>
   </component>
@@ -362,6 +388,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="energyfolks_server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1156,7 +1214,11 @@
       <created>1386206408950</created>
       <updated>1386206408950</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Change deployment to access config files from S3 instead of locally do allow new EC2 instances to work out-of-box">
+      <created>1386206457536</created>
+      <updated>1386206457536</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1291,120 +1353,129 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/tasks/clean_up.rake">
+    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="200" vertical-scroll-proportion="0.0">
+        <state line="139" column="80" selection-start="5516" selection-end="5590" vertical-scroll-proportion="0.49327356">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20131202061120_add_current_hash_to_affiliate.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="41" selection-start="169" selection-end="169" vertical-scroll-proportion="0.0659824">
+        <state line="0" column="0" selection-start="0" selection-end="92" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/schedule.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/events/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="33" selection-start="719" selection-end="719" vertical-scroll-proportion="0.6598241">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admins/wordpress_versions.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="56" selection-start="701" selection-end="701" vertical-scroll-proportion="0.8206687">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/new.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/accounts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.9596412">
           <folding>
-            <element signature="n#style#0;n#td#3;n#tr#1;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#5;n#tr#1;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#6;n#tr#1;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1385961457000" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tasks/wordpress.rake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="11" selection-start="833" selection-end="833" vertical-scroll-proportion="0.3739003">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/developers_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="35" selection-start="1471" selection-end="1471" vertical-scroll-proportion="-0.21076234">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/affiliates_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="45" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/admins_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="49" selection-start="380" selection-end="380" vertical-scroll-proportion="0.35190615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/database.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="43" selection-start="397" selection-end="397" vertical-scroll-proportion="0.32991204">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/application.rb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/comment_form.css.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.elasticbeanstalk/config">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.14369501">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/affiliate_specific.css.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.elasticbeanstalk/optionsettings.energyfolksserver-env">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/popup.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.8255132">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/assets/javascripts/energyfolks/initialize.js.erb">
+    <entry file="file://$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/loginform.css.scss.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="18" selection-start="1299" selection-end="1305" vertical-scroll-proportion="-20.625">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.09422492">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/google/inbound.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="35" selection-start="130" selection-end="130" vertical-scroll-proportion="-2.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="35" selection-start="809" selection-end="809" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/load_config.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="22" selection-start="895" selection-end="895" vertical-scroll-proportion="0.6378299">
+        <state line="33" column="29" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/developers/documentation.html.erb">
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="33" selection-start="7008" selection-end="7008" vertical-scroll-proportion="-5.0">
-          <folding>
-            <element signature="n#style#0;n#h1#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="88" column="40" selection-start="3314" selection-end="3314" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/after_deploy.config">
+    <entry file="file://$PROJECT_DIR$/app/controllers/google_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="12" selection-start="412" selection-end="412" vertical-scroll-proportion="0.32991204">
+        <state line="27" column="17" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.6053812">
           <folding />
         </state>
       </provider>

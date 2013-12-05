@@ -78,4 +78,12 @@ EnergyfolksServer::Application.configure do
       :s3_credentials => {:access_key_id => ec2info[:aws_access_key_id], :secret_access_key => ec2info[:aws_secret_access_key]},
       :s3_permissions => 'public-read'
   }
+
+  # load google cert and key for SAML
+  file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
+  SamlIdp.config.x509_certificate = file.read
+  file.close
+  file = File.open("#{Rails.root}/config/google_key.txt", "rb")
+  SamlIdp.config.secret_key = file.read
+  file.close
 end
