@@ -30,3 +30,13 @@ document = s3.buckets['energyfolks-uploads'].objects['omniauth.rb']
 File.open("omniauth.rb", "w") do |f|
   f.write(document.read)
 end
+document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
+
+File.open("google_cert.txt", "w") do |f|
+  f.write(document.read)
+end
+document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
+
+File.open("google_key.txt", "w") do |f|
+  f.write(document.read)
+end

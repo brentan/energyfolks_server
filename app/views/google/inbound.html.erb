@@ -1,0 +1,16 @@
+<% if !user_logged_in? %>
+    <h1>Please login</h1>
+    <script language=javascript>
+        EnergyFolks.LoginBox();
+    </script>
+
+<% else %>
+    <h1>You are authorized for multiple accounts</h1>
+    <p>Please choose the account you wish to login with below:</p>
+    <% @admin_list.each do |a| %>
+        <%= form_tag(@saml_acs_url) do %>
+            <%= hidden_field_tag("SAMLResponse", a.response) %>
+            <%= submit_tag "#{a.name} - #{a.email}" %>
+        <% end %>
+    <% end %>
+<% end %>
