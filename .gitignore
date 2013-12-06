@@ -22,3 +22,4 @@ pickle-email-*.html
 /.idea/*
 /log/development.log
 /config/database.yml
+/config/site.yml
