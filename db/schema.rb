@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203221134) do
+ActiveRecord::Schema.define(:version => 20131206225017) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -337,6 +337,26 @@ ActiveRecord::Schema.define(:version => 20131203221134) do
 
   add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
+
+  create_table "mark_read_actions", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "ip"
+    t.integer  "mark_read_id"
+    t.integer  "affiliate_id"
+  end
+
+  add_index "mark_read_actions", ["mark_read_id"], :name => "index_mark_read_actions_on_mark_read_id"
+
+  create_table "mark_reads", :force => true do |t|
+    t.string  "ip"
+    t.integer "entity_id"
+    t.string  "entity_type"
+    t.integer "user_id"
+  end
+
+  add_index "mark_reads", ["entity_id"], :name => "index_mark_reads_on_entity_id"
+  add_index "mark_reads", ["entity_type"], :name => "index_mark_reads_on_entity_type"
 
   create_table "memberships", :force => true do |t|
     t.datetime "created_at",                           :null => false

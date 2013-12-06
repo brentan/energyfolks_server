@@ -56,6 +56,7 @@ module MixinEntity
       has_many :tags_entities, as: :entity, :dependent => :destroy
       has_many :highlights, as: :entity, :dependent => :destroy
       has_many :tags, :through => :tags_entities
+      has_many :mark_reads, as: :entity, :dependent => :destroy
       attr_accessible :raw_tags
       attr_writer :raw_tags
     end
@@ -672,4 +673,26 @@ module MixinEntity
     end
     return "You are not authorized here"
   end
+
+  def mark_read(user_id, affiliate_id, ip)
+    return if user_id == self.user_id # Don't count our own views
+    if user_id > 0
+      read = self.mark_reads.where(:user_id => user_id).first
+      if read.blank?
+        read = MarkRead.new({user_id: user_id})
+        read.entity = self
+      end
+      read.ip = ip
+      read.save!
+    else
+      read = self.mark_reads.where(:ip => ip).first
+      if read.blank?
+        read = MarkRead.new({ip: ip})
+        read.entity = self
+        read.save!
+      end
+    end
+    MarkReadAction.create(:mark_read_id => read.id, :ip => ip, :affiliate_id => affiliate_id)
+  end
+
 end

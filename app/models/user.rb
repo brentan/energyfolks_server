@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_one :subscription, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :mark_reads
   has_many :comment_subscribers, :dependent => :destroy
   has_many :third_party_logins, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blogs'
