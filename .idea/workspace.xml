@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="Add blogs to system...still need to integrate wordpress">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20131206225017_create_mark_read_tables.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/mark_read.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/mark_read_action.rb" />
+    <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/common/_show_top.html.erb" afterPath="$PROJECT_DIR$/app/views/common/_show_top.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/ajax_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log/development.log" afterPath="$PROJECT_DIR$/log/development.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="$PROJECT_DIR$/.idea/energyfolks_server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/mixin_entity.rb" afterPath="$PROJECT_DIR$/app/models/mixin_entity.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/mixin_entity_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386370205078" ignored="false" />
+    <file path="/Dummy.txt" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386374250611" ignored="false" />
     <file path="/a.dummy" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1384454836945" ignored="false" />
     <file path="/fragment.rb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1386281384745" ignored="false" />
     <file path="/_login.html.erb" changelist="2423579f-47b4-4e3f-932e-9ffc442dd6cb" time="1362703249981" ignored="false" />
@@ -199,9 +190,9 @@
       <file leaf-file-name="_show_top.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/common/_show_top.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="198" selection-start="5776" selection-end="5776" vertical-scroll-proportion="0.68586385">
+            <state line="72" column="48" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.7329843">
               <folding>
-                <element signature="e#6220#6241#0" expanded="true" />
+                <element signature="e#6219#6240#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1028,7 +1019,11 @@
       <created>1386281563250</created>
       <updated>1386281563250</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Start adding post analytics (total web views and display on post page now operating.  Still need to add email analytics and combine them into a single 'impressions' statistic)">
+      <created>1386374263660</created>
+      <updated>1386374263660</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1117,7 +1112,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Google Apps (admin SDK Directory) API integration.  Still need to do a bit more..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Start adding post analytics (total web views and display on post page now operating.  Still need to add email analytics and combine them into a single 'impressions' statistic)" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1131,7 +1126,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fix exception notification via email" />
     <MESSAGE value="attempt ec2 integration in capistrano" />
     <MESSAGE value="finish ec2 integration in capistrano" />
     <MESSAGE value="Fix password reset bug" />
@@ -1156,6 +1150,7 @@
     <MESSAGE value="finish filter bar.  Asari Cloudsearch integration needs to be thoroughly tested" />
     <MESSAGE value="Add blogs to system...still need to integrate wordpress" />
     <MESSAGE value="Google Apps (admin SDK Directory) API integration.  Still need to do a bit more..." />
+    <MESSAGE value="Start adding post analytics (total web views and display on post page now operating.  Still need to add email analytics and combine them into a single 'impressions' statistic)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1270,9 +1265,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/common/_show_top.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="198" selection-start="5776" selection-end="5776" vertical-scroll-proportion="0.68586385">
+        <state line="72" column="48" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.7329843">
           <folding>
-            <element signature="e#6220#6241#0" expanded="true" />
+            <element signature="e#6219#6240#0" expanded="true" />
           </folding>
         </state>
       </provider>
