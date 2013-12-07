@@ -10,7 +10,7 @@
           <ul class="overview">
             <li class='slide'>
               <h1><%= new ? 'Post a Job' : 'Edit Job Post' %></h1>
-              <%= raw(progress_bar(1,4)) %>
+              <%= raw(progress_bar(1,3)) %>
               <br/><br/>
               <hr>
 
@@ -21,8 +21,14 @@
 
               <div class='form_label'>Employer</div>
               <div class='form_entry show_inline'>
-                  <%= image_tag @item.logo.url(:thumb_big) if @item.logo.present? %>
+                <%= image_tag(@item.logo.url(:thumb), class: "logo_img") if @item.logo.present? %>
+                <div class="file_inputs">
                   <%= f.file_field :logo %>
+                  <div class="fake_file">
+                    <div class="file_input_btn">Upload Logo</div>
+                    <div class="file_name_label"></div>
+                  </div>
+                </div>
               </div>
               <div class='form_entry'><%= f.text_field :employer %></div>
 
@@ -47,7 +53,7 @@
             </li>
             <li class='slide'>
               <h1>Job Details</h1>
-              <%= raw(progress_bar(2,4)) %>
+              <%= raw(progress_bar(2,3)) %>
               <br/><br/>
               <hr>
 
@@ -66,18 +72,11 @@
             </li>
             <li class='slide'>
               <h1>Sharing</h1>
-              <%= raw(progress_bar(3,4)) %>
+              <%= raw(progress_bar(3,3)) %>
 	            <br/><br/>
 	            <hr>
 
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
-
-            </li>
-            <li class='slide'>
-              <h1>Preview</h1>
-              <%= raw(progress_bar(3,4)) %>
-              <br/><br/>
-              <hr>
 
             </li>
           </ul>
