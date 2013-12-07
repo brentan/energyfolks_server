@@ -70,7 +70,7 @@
             <BR>TODO! - Also add a plot showing impressions over time..perhaps a stat of impressions (email + page views) with plot, then all of this stuff becomes the 'details' link that shows more
             <BR><strong>Website Views</strong>
           <% end %>
-          <BR><%= @item.mark_reads.count %> users<%= @item.mark_reads.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads).count %> time<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>.
+          <BR><%= @item.mark_reads.count %> user<%= @item.mark_reads.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads).count %> time<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>.
           <a href='#' onclick='EnergyFolks.$(this).hide();EnergyFolks.$(this).next("div").show();return false;'>More details</a>
           <div style='display:none;'>
           <%= @item.mark_reads.registered.count %> registered user<%= @item.mark_reads.registered.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads.registered).count %> time<%= MarkRead.total_reads(@item.mark_reads.registered).count == 1 ? '' : 's' %>.
