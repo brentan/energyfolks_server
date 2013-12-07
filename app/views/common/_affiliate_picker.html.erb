@@ -22,6 +22,18 @@
           <% else %>
               <div class='affiliate selected' <%= "data-name=#{a.affiliate.name} data-override-all=#{completed.include?(0)} data-tid=#{a.id.present? ? a.id : 0} data-table=#{table} data-join-table=#{join_table} data-id=#{a.affiliate_id} data-jid=#{count} data-reason=#{false}"%> >
                 <%= a.affiliate.name %>
+                <div class="affiliate-details">
+                  <div class="affiliate-FAQs">
+                    <div class="affiliate-FAQs-title">Quick FAQs</div>
+                    <div class="affiliate-FAQs-label">Date Founded</div>
+                    <div><%= a.affiliate.year_founded %></div>
+                    <div class="affiliate-FAQs-label">Total Members</div>
+                    <div><%= Membership.find_all_by_affiliate_id(a.affiliate.id).count %></div>
+                    <div class="affiliate-FAQs-label">President</div>
+                    <div><%= a.affiliate.president_name %></div>
+                  </div>
+                  <%= a.affiliate.description %>
+                </div>
                 <%= raw(" <span class='descriptor'>#{a.approved? ? '' : "(Pending#{a.reason.present? ? ", #{a.reason}" : ''})"}</span>") %>
               </div>
           <% end %>
@@ -31,16 +43,27 @@
         <div class='affiliate_0' <%= "data-name='Energyfolks' data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=0 data-jid=#{count} data-reason=#{false}"%> style='display:none;'></div>
       <% end %>
       <% if (current.length - (completed.include?(0) ? 1 : 0) - Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').length) < 0 %>
-          <%= content_tag(:h1, (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) ? "Add More Networks" : "Choose Networks")  %>
-          <%
-             completed = current.map{|c| c.affiliate_id }
-             Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').each do |a|
-                next if completed.include? a.id %>
-                <div class='affiliate unselected' <%= "data-name=#{a.name} data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=#{a.id} data-jid=#{count} data-reason=#{table == 'user' ? (a.open > 1) : false}"%> >
-                  <%= a.name %>
-                  <span class='descriptor'></span>
-                  <% count += 1 %>
+        <%
+          completed = current.map{|c| c.affiliate_id }
+          Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').each do |a|
+            next if completed.include? a.id %>
+            <div class='affiliate unselected' <%= "data-name=#{a.name} data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=#{a.id} data-jid=#{count} data-reason=#{table == 'user' ? (a.open > 1) : false}"%> >
+              <%= a.name %>
+              <div class="affiliate-details">
+                <div class="affiliate-FAQs">
+                  <div class="affiliate-FAQs-title">Quick FAQs</div>
+                  <div class="affiliate-FAQs-label">Date Founded</div>
+                  <div><%= a.year_founded %></div>
+                  <div class="affiliate-FAQs-label">Total Members</div>
+                  <div><%= Membership.find_all_by_affiliate_id(a.id).count %></div>
+                  <div class="affiliate-FAQs-label">President</div>
+                  <div><%= a.president_name %></div>
                 </div>
+                <%= a.description %>
+              </div>
+              <span class='descriptor'></span>
+              <% count += 1 %>
+            </div>
           <% end %>
       <% end %>
   </div>
