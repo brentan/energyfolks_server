@@ -1,117 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source source="LOCAL" name="Rails energyfolks_server: development" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="097dcfd4-6f0a-48f4-a312-57193421bf2c">
-    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-    <jdbc-url>jdbc:mysql://127.0.0.1/energyfolks_development</jdbc-url>
-    <user-name>root</user-name>
-    <user-password>dfdadfcbdfd9dfd9</user-password>
-    <libraries>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-license.txt</url>
-      </library>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar</url>
-      </library>
-    </libraries>
-  </data-source>
-  <data-source source="LOCAL" name="Rails energyfolks_server: development" product="MySQL" version="5.5.27" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.18 ( Revision: tonci.grgin@oracle.com-20110930151701-jfj14ddfq48ifkfq )" uuid="086e7090-3a77-4a89-8d50-0deced889893">
-    <extra-name-characters>#@</extra-name-characters>
-    <identifier-quote-string>`</identifier-quote-string>
-    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-    <jdbc-url>jdbc:mysql://127.0.0.1/energyfolks_development</jdbc-url>
-    <user-name>root</user-name>
-    <user-password>dfdadfcbdfd9dfd9</user-password>
-    <libraries>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-license.txt</url>
-      </library>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar</url>
-      </library>
-    </libraries>
-    <schema name="" catalog="LearnRails_development"/>
-    <schema name="" catalog="LearnRails_test"/>
+  <data-source source="LOCAL" name="Rails energyfolks_server: development" uuid="46046561-49d0-4057-8738-5487393e0d13">
+    <database-info product="MySQL" version="5.5.27" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.18 ( Revision: tonci.grgin@oracle.com-20110930151701-jfj14ddfq48ifkfq )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
     <schema name="" catalog="aes2_development"/>
     <schema name="" catalog="aes2_test"/>
     <schema name="" catalog="energyfolks_development"/>
+    <schema name="" catalog="energyfolks_server_test"/>
     <schema name="" catalog="information_schema"/>
     <schema name="" catalog="mysql"/>
     <schema name="" catalog="performance_schema"/>
-    <table name="meetings" schema="" catalog="LearnRails_development" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="meets_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
-      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="presentations" schema="" catalog="LearnRails_development" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="meeting_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
-      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
-      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <index name="index_presentations_on_meeting_id" unique="false" columns="meeting_id"/>
-      <index name="index_presentations_on_user_id" unique="false" columns="user_id"/>
-    </table>
-    <table name="schema_migrations" schema="" catalog="LearnRails_development" type="TABLE">
-      <column name="version" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
-      <index name="unique_schema_migrations" unique="true" columns="version"/>
-    </table>
-    <table name="users" schema="" catalog="LearnRails_development" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="encrypted_password" sqlType="VARCHAR" length="40" precision="0" nullable="true" jdbcType="12"/>
-      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="profile" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="text" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="admin" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
-      <column name="salt" sqlType="VARCHAR" length="40" precision="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="meetings" schema="" catalog="LearnRails_test" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="meets_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
-      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="presentations" schema="" catalog="LearnRails_test" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="meeting_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
-      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
-      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <index name="index_presentations_on_meeting_id" unique="false" columns="meeting_id"/>
-      <index name="index_presentations_on_user_id" unique="false" columns="user_id"/>
-    </table>
-    <table name="schema_migrations" schema="" catalog="LearnRails_test" type="TABLE">
-      <column name="version" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
-      <index name="unique_schema_migrations" unique="true" columns="version"/>
-    </table>
-    <table name="users" schema="" catalog="LearnRails_test" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
-      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="password" sqlType="VARCHAR" length="40" precision="0" nullable="true" jdbcType="12"/>
-      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
-      <column name="profile" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="text" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
-      <column name="admin" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
+    <schema name="" catalog="test"/>
     <table name="accepted_duplicates" schema="" catalog="aes2_development" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="ignore_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
@@ -536,6 +438,16 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="index_expert_expert_types_on_expert_id" unique="false" columns="expert_id"/>
       <index name="index_expert_expert_types_on_expert_type_id" unique="false" columns="expert_type_id"/>
+    </table>
+    <table name="expert_member_notes" schema="" catalog="aes2_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="note" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="expert_types" schema="" catalog="aes2_development" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1191,6 +1103,7 @@
     </table>
     <table name="profile_alternate_names" schema="" catalog="aes2_development" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
       <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
       <column name="degree_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
       <column name="alternate_name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
@@ -1253,13 +1166,13 @@
       <column name="notification_event" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <column name="notification_expert" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <column name="notification_funding" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
-      <column name="notification_job" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
-      <column name="notification_legislation" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <column name="notification_organization" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
-      <column name="notification_dsire" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <column name="notification_commercial" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <column name="notification_limit_event" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="notification_limit_job" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="notification_job" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="notification_legislation" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="notification_dsire" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="saved_searches" schema="" catalog="aes2_development" type="TABLE">
@@ -1467,9 +1380,1367 @@
       <column name="linkedin_atoken" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
       <column name="linkedin_asecret" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
       <column name="linkedin_lastaccessed" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="linkedin_autoupdate" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="linkedin_need_user_attention" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="linkedin_first_time_login" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="index_users_on_email" unique="true" columns="email"/>
       <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
+    </table>
+    <table name="academic_disciplines" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="affiliated_organizations" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="affiliate_organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="child_organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_affiliated_organizations_on_affiliate_organization_id" unique="false" columns="affiliate_organization_id"/>
+      <index name="index_affiliated_organizations_on_child_organization_id" unique="false" columns="child_organization_id"/>
+    </table>
+    <table name="announcement_frequencies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="applicable_sectors" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="applicable_sectors_dsires" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="applicable_sector_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="dsire_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="appointments" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="department_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="position_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="departmental_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="primary" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="current" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_appointments_on_expert_id" unique="false" columns="expert_id"/>
+    </table>
+    <table name="comments" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="message_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="comment" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="moderation" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="committee_memberships" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="committee_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="policy_individual_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="committees" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="committee_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="list_order" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="contact_requests" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="requester_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="new" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="request" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="degree_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="degrees" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="year_received" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="discipline" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="degree_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_degrees_on_expert_id" unique="false" columns="expert_id"/>
+    </table>
+    <table name="delayed_jobs" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="priority" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="attempts" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="handler" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="last_error" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="run_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="locked_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="failed_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="locked_by" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="queue" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="delayed_jobs_priority" unique="false" columns="priority,run_at"/>
+    </table>
+    <table name="departments" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="dsires" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="state" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="incentive_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="summary" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="amount" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="maximum_incentive" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="start_date" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="expiration_date" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="contact_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_phone_ext" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_website" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="dsire_website" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="dsires_eligible_efficiency_technologies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="eligible_efficiency_technology_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="dsire_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="dsires_eligible_renewable_other_technologies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="eligible_renewable_other_technology_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="dsire_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="eligible_efficiency_technologies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="eligible_renewable_other_technologies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="emails" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="address" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_emails_on_expert_id" unique="false" columns="expert_id"/>
+    </table>
+    <table name="event_frequencies" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="events" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sponsored_by" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sponsored_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="start_date" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="end_date" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="city" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="state" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="event_frequency_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="contact_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="academic_discipline_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="lat" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <column name="lng" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="expert_expert_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="expert_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_expert_expert_types_on_expert_id" unique="false" columns="expert_id"/>
+      <index name="index_expert_expert_types_on_expert_type_id" unique="false" columns="expert_type_id"/>
+    </table>
+    <table name="expert_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sort_by" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="parent_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="experts" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="full_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="image_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="thumbnail_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="gender" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="name_of_adviser" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sort_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_experts_on_deleted_at" unique="false" columns="deleted_at"/>
+      <index name="index_experts_on_flag_id" unique="false" columns="flag_id"/>
+      <index name="index_experts_on_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="flags" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="funding_opportunities" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="funding_agency" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="funding_opportunity_number" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="announcement_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="application_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="eligible_applicants" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="expected_number_of_awards" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="estimated_total_funding" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="award_ceiling" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="award_floor" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="category" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="posted_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="original_closed_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="notes" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="archived_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="current_closed_on" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="more_info_contact_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="more_info_contact_phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="more_info_contact_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="program_officer_contact_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="program_officer_contact_phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="program_officer_contact_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="instrument_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="groups" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="group_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="thumbnail_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="owner_last_read_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="network_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="department_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="non_member_posting" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="new_member_posting" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="notification" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="groups_users" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="group_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="last_read_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="privileges" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="notification" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="welcome_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="incentive_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="instrument_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="jobs" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="application_deadline" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="requirements" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="salary_range" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="posting_agency" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="posting_agency_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="position_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="degree_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="posted_on" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="announcement_frequency_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="contact_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="contact_phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="position_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="department_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="city" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="state" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="lat" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <column name="lng" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="congress_number" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="legislative_body" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="bill_no" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="latest_title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="congressional_record_service_summary" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="cbo_cost_estimates" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="sponsor_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="text_of_legislation" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="subjects" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_actions" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="action_text" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="action_date" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_amendments" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="amendment_text" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="amendment_date" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_co_sponsors" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="policy_individual_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_committees" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="committee_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_related_bills" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="related_bill_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislations_subcommittees" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="legislation_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="subcommittee_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="legislative_staff_individuals" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="policy_individual_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="members" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="full_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="gender" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="thumbnail_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="sort_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_staffs_on_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="messages" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="group_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="comment" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="last_comment_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="moderation" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="network_members" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="network_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="is_admin" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="networks" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="organization_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="subdomain" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="banner_background_color" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="banner_text_color" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="thumbnail_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="thumbnail_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="organizations" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="city" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="state" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="director_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="original" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="dup_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="activity_message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="administrator_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="flag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="imported_batch" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_key" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="imported_data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="import_notice" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="import_status" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="imported_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="organizations_type_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="country" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="lat" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <column name="lng" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_research_centers_on_organizations_type_id" unique="false" columns="organizations_type_id"/>
+    </table>
+    <table name="organizations_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="phones" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="number" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="ext" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="member_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_phones_on_expert_id" unique="false" columns="expert_id"/>
+    </table>
+    <table name="policy_individuals" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="full_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="congressional_homepage_url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="policy_individual_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="district_number" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="state" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="party" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="washington_address" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="position_types" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="positions" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="preferences" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="recommend_expert" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_funding" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_legislation" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_organization" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_job" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_event" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="recommend_dsire" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="recommend_message" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="show_tracking_info" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="show_recommends_info" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="related_tags" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="related_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="weight" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="request_accesses" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sector" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="new" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="resume" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="comments" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="research_groups" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="saved_items" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="item_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="item_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="action" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="why" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="tag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="shown" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="schema_migrations" schema="" catalog="aes2_test" type="TABLE">
+      <column name="version" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <index name="unique_schema_migrations" unique="true" columns="version"/>
+    </table>
+    <table name="search_histories" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="terms" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="search_requests" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="requester_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="tab" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="request" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="new" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="searches" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="query" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="count" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sessions" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="session_id" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_sessions_on_session_id" unique="false" columns="session_id"/>
+      <index name="index_sessions_on_updated_at" unique="false" columns="updated_at"/>
+    </table>
+    <table name="shared_items" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="expert_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="item_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="message" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="link" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="upload_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="upload_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="upload_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="upload_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sign_ups" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="comments" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="job_title" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="company" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="sector" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="new" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="best_time" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="notes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="subcommittee_memberships" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="subcommittee_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="committee_membership_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="subcommittees" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="committee_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="tag_taxonomy_terms" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="taxonomy_term_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="weight" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="taggings" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="taggable_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="taggable_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="tagger_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="tagger_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="context" sqlType="VARCHAR" length="128" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_taggings_on_tag_id" unique="false" columns="tag_id"/>
+      <index name="index_taggings_on_taggable_id_and_taggable_type_and_context" unique="false" columns="taggable_id,taggable_type,context"/>
+    </table>
+    <table name="tags" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="context" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="suggested" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="taxonomy_terms" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="weight" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="approved_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="users" schema="" catalog="aes2_test" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="encrypted_password" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="reset_password_token" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="reset_password_sent_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="remember_created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="sign_in_count" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="current_sign_in_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="last_sign_in_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="current_sign_in_ip" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="last_sign_in_ip" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="role" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="deleted_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="charter_member" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="verification" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="tos_agreed" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="introduction_completed" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="notification_email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="restricted_account" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7"/>
+      <column name="last_search_tab" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="lat" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <column name="lng" sqlType="DECIMAL" length="10" precision="0" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_users_on_email" unique="true" columns="email"/>
+      <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
+    </table>
+    <table name="affiliates" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="short_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url_events" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url_jobs" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url_discussions" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url_users" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url_blogs" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="live" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="open" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="visible" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="color" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="Jzc3Nzc3Nyc="/>
+      <column name="email_header" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="web_header" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="longitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="moderate_discussions" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="Mg=="/>
+      <column name="moderate_jobs" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="Mg=="/>
+      <column name="moderate_events" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="Mg=="/>
+      <column name="shared_secret" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="cpanel_user" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="cpanel_password" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="send_digest" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="logo_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="weekly" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="daily" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="events" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="jobs" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="discussions" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="event_radius" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="NTA="/>
+      <column name="job_radius" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="show_details" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="timezone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="J1BhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEpJw=="/>
+      <column name="year_founded" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="president_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="affiliates_discussions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="discussion_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="admin_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="user_broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="awaiting_edit" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="approved_versions" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_affiliates_bulletins_on_bulletin_id" unique="false" columns="discussion_id"/>
+    </table>
+    <table name="affiliates_events" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="event_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="admin_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="user_broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="awaiting_edit" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="approved_versions" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_affiliates_events_on_event_id" unique="false" columns="event_id"/>
+    </table>
+    <table name="affiliates_jobs" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="job_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="admin_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="user_broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="awaiting_edit" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="approved_versions" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_affiliates_jobs_on_job_id" unique="false" columns="job_id"/>
+    </table>
+    <table name="comment_details" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_hash" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_comment_details_on_comment_hash" unique="false" columns="comment_hash"/>
+    </table>
+    <table name="comment_subscribers" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="comment_hash" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_comment_subscribers_on_comment_hash" unique="false" columns="comment_hash"/>
+    </table>
+    <table name="comments" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="unique_hash" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="user_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_comments_on_unique_hash" unique="false" columns="unique_hash"/>
+    </table>
+    <table name="delayed_jobs" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="priority" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="attempts" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="handler" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="last_error" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="run_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="locked_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="failed_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="locked_by" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="queue" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="delayed_jobs_priority" unique="false" columns="priority,run_at"/>
+    </table>
+    <table name="discussions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="current_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="last_updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="attachment_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="attachment_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="attachment_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="attachment_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="discussions_versions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="version_number" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="attachment_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="attachment_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="attachment_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="attachment_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_bulletins_versions_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_bulletins_versions_on_version_number" unique="false" columns="version_number"/>
+    </table>
+    <table name="emails" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="entity_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="opened" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="open_date" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_emails_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_emails_on_entity_type" unique="false" columns="entity_type"/>
+      <index name="index_emails_on_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="events" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="start" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="end" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="location2" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="longitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="current_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="last_updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="synopsis" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="logo_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="timezone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="events_versions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="version_number" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="start" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="end" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="synopsis" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="location2" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="timezone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_events_versions_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_events_versions_on_version_number" unique="false" columns="version_number"/>
+    </table>
+    <table name="highlights" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="entity_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_highlights_on_affiliate_id" unique="false" columns="affiliate_id"/>
+      <index name="index_highlights_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_highlights_on_entity_type" unique="false" columns="entity_type"/>
+    </table>
+    <table name="jobs" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="expire" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="longitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="current_version" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="employer" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="how_to_apply" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="job_type" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="last_updated_by" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="jobs_versions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="version_number" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="employer" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="html" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="how_to_apply" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="job_type" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="logo_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="logo_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_jobs_versions_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_jobs_versions_on_version_number" unique="false" columns="version_number"/>
+    </table>
+    <table name="memberships" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="approved" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="admin_level" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="moderation_emails" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="reason" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="broadcast" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="schema_migrations" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="version" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <index name="unique_schema_migrations" unique="true" columns="version"/>
+    </table>
+    <table name="sessions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="session_id" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_sessions_on_session_id" unique="false" columns="session_id"/>
+      <index name="index_sessions_on_updated_at" unique="false" columns="updated_at"/>
+    </table>
+    <table name="subcomments" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="user_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="comment_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="comment" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_subcomments_on_comment_id" unique="false" columns="comment_id"/>
+    </table>
+    <table name="subscriptions" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="weekly" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="daily" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="events" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="jobs" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="discussions" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="event_radius" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="NTA="/>
+      <column name="job_radius" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_subscriptions_on_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="tags" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="count" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_tags_on_name" unique="false" columns="name"/>
+    </table>
+    <table name="tags_entities" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="entity_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="entity_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="tag_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_tags_entities_on_entity_id" unique="false" columns="entity_id"/>
+      <index name="index_tags_entities_on_entity_type" unique="false" columns="entity_type"/>
+      <index name="index_tags_entities_on_tag_id" unique="false" columns="tag_id"/>
+    </table>
+    <table name="third_party_logins" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="service" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="token" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="secret" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="user_login_hashes" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="login_hash" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_user_login_hashes_on_login_hash" unique="false" columns="login_hash"/>
+    </table>
+    <table name="users" schema="" catalog="energyfolks_development" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="updated_at" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="email" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="encrypted_password" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="encrypted_cookie" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="verified" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="password_reset" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="last_login" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="visibility" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="timezone" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="J1BhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEpJw=="/>
+      <column name="avatar_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="avatar_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="avatar_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="avatar_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="location" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="email_to_verify" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="position" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="organization" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="bio" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="interests" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="expertise" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="resume_visibility" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="resume_file_name" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="resume_content_type" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="resume_file_size" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="resume_updated_at" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="latitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="longitude" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="admin" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="active" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MQ=="/>
+      <column name="admin_emails" sqlType="BIT" length="0" precision="0" nullable="true" jdbcType="-7" def="MA=="/>
+      <column name="affiliate_id" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="linkedin_hash" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="index_users_on_email" unique="false" columns="email"/>
     </table>
     <table name="CHARACTER_SETS" schema="" catalog="information_schema" type="SYSTEM TABLE">
       <column name="CHARACTER_SET_NAME" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
@@ -2393,18 +3664,7 @@
       <column name="NAME" sqlType="VARCHAR" length="128" precision="0" nullable="false" jdbcType="12"/>
     </table>
   </data-source>
-  <data-source source="LOCAL" name="Rails energyfolks_server: production" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="6a1a598c-9b0f-4c81-903e-0055efe870cc">
-    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-    <jdbc-url>jdbc:mysql://&lt;= ENV[&apos;RDS_HOSTNAME&apos;] &gt;:&lt;= ENV[&apos;RDS_PORT&apos;] &gt;/&lt;= ENV[&apos;RDS_DB_NAME&apos;] &gt;</jdbc-url>
-    <user-name>&lt;= ENV[&apos;RDS_USERNAME&apos;] &gt;</user-name>
-    <user-password>df96df97df8adfefdfe4dffcdff1df8ddff8dfeedff9dff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf94</user-password>
-    <libraries>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-license.txt</url>
-      </library>
-      <library>
-        <url>file://$USER_HOME$/Library/Preferences/RubyMine40/jdbc-drivers/mysql-connector-java-5.1.18-bin.jar</url>
-      </library>
-    </libraries>
+  <data-source source="LOCAL" name="Rails energyfolks_server: production" uuid="3d741fc8-74de-4c69-843f-9cbd8a31aaa6">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>
