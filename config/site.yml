@@ -72,3 +72,12 @@ paperclip:
 skin:
   title_prefix: 'DEV: '
   edge: true
+
+
+##########################
+### Google access
+##########################
+google:
+  service_email: '866785659734-tbn903udgqdnh0dan9qj7rldkebqnb64@developer.gserviceaccount.com'
+  admin_email: 'energyfolks@energyfolks.com'
+  cert_relative_path: '/../google_privatekey.p12'

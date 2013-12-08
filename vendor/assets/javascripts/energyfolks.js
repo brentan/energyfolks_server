@@ -12,5 +12,6 @@
 //= require energyfolks/accounts
 //= require energyfolks/comments
 //= require energyfolks/data_display
+//= require energyfolks/widgets
 //= require energyfolks/backwards_compatible
 //= require energyfolks/leaflet

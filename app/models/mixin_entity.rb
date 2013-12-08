@@ -56,6 +56,7 @@ module MixinEntity
       has_many :tags_entities, as: :entity, :dependent => :destroy
       has_many :highlights, as: :entity, :dependent => :destroy
       has_many :tags, :through => :tags_entities
+      has_many :mark_reads, as: :entity, :dependent => :destroy
       attr_accessible :raw_tags
       attr_writer :raw_tags
     end
@@ -251,7 +252,7 @@ module MixinEntity
           all_attributes[:end_date] = item.end_date
           all_attributes[:tz] = item.tz
         end
-        all_attributes[:comments] = item.comment_count if item.instance_of?(Discussion) # TODO: || item.instance_of?(Blog)
+        all_attributes[:comments] = item.comment_count if (item.instance_of?(Discussion) || item.instance_of?(Blog))
         all_attributes[:highlighted] = item.highlighted?(affiliate)
         new_list << all_attributes
       end
@@ -397,9 +398,11 @@ module MixinEntity
     # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
     if self.affiliate_join.map{|a| a.affiliate_id}.include?(0)
       all_current = self.affiliate_join.map{|a| a.affiliate_id}
-      Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-        self.affiliate_join.create({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
-        all_current << a.id unless all_current.include?(a.id)
+      if !self.instance_of?(Blog)
+        Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+          self.affiliate_join.create({:affiliate_id => a.id, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) unless all_current.include?(a.id)
+          all_current << a.id unless all_current.include?(a.id)
+        end
       end
       # If current user is posting to 'all' but from a group that does not moderate these posts, approve immediately for this group
       # If current user is posting to 'all' but is posting from a group that they are an admin for, immediately approve for this group
@@ -453,8 +456,10 @@ module MixinEntity
       if i.affiliate_id == 0
         # Find all users, minus users in groups that do their own super moderation
         recipients = User.select(:id).where(verified: true).all.map { |r| r.id }
-        Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
-          recipients = recipients - User.find_all_by_affiliate_id(a.id).map { |r| r.id }
+        if !self.instance_of?(Blog)
+          Affiliate.where("moderate_#{self.method_name} = #{Affiliate::ALL}").each do |a|
+            recipients = recipients - User.find_all_by_affiliate_id(a.id).map { |r| r.id }
+          end
         end
       else
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
@@ -462,7 +467,12 @@ module MixinEntity
       recipients.each do |user_id|
         u = User.find_by_id_and_verified(user_id, true)
         next if u.blank?
-        next unless u.subscription.send("#{self.method_name}?")
+        if self.instance_of?(Blog)
+          next if !self.announcement? && !u.subscription.blogs?
+          next if self.announcement? && !u.subscription.announcement?
+        else
+          next unless u.subscription.send("#{self.method_name}?")
+        end
         if ((self.entity_name == 'Job') || (self.entity_name == 'Event')) && u.geocoded?
           # geocode test
           if self.geocoded?
@@ -601,7 +611,7 @@ module MixinEntity
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
         self.update_index
-        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
+        return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
     else
       if current_user.present? && current_user.admin?
@@ -617,9 +627,72 @@ module MixinEntity
         self.reload
         self.user_broadcast.delay(:run_at => 15.minutes.from_now)
         self.update_index
-        return "This item has been approved#{highlight ? 'and highlighted' : ''}"
+        return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
     end
     return "You are not authorized here"
   end
+
+  def reject_or_remove(current_user, affiliate, reason)
+    if affiliate.id.present?
+      if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
+        join_item = self.affiliate_join.where(affiliate_id: affiliate.id).first
+        return "Something went wrong" if join_item.blank?
+        if join_item.approved_version == self.current_version
+          NotificationMailer.delay.item_removed(self, reason, affiliate)
+          join_item.approved_version = 0
+          join_item.approved_versions ='0'
+          notice = "Item removed"
+        else
+          NotificationMailer.delay.item_rejected(self, reason, affiliate)
+          notice = "Item Rejected"
+        end
+        join_item.awaiting_edit = true
+        join_item.save
+        self.update_index
+        return notice
+      end
+    else
+      if current_user.present? && current_user.admin?
+        join_item = self.affiliate_join.where(affiliate_id: 0).first
+        return "Something went wrong" if join_item.blank?
+        if join_item.approved_version == self.current_version
+          NotificationMailer.delay.item_removed(self, reason, affiliate)
+          join_item.approved_version = 0
+          join_item.approved_versions ='0'
+          notice = "Item removed"
+        else
+          NotificationMailer.delay.item_rejected(self, reason, affiliate)
+          notice = "Item Rejected"
+        end
+        join_item.awaiting_edit = true
+        join_item.save
+        self.update_index
+        return notice
+      end
+    end
+    return "You are not authorized here"
+  end
+
+  def mark_read(user_id, affiliate_id, ip)
+    return if user_id == self.user_id # Don't count our own views
+    if user_id > 0
+      read = self.mark_reads.where(:user_id => user_id).first
+      if read.blank?
+        read = MarkRead.new({user_id: user_id})
+        read.entity = self
+      end
+      read.ip = ip
+      read.save!
+    else
+      read = self.mark_reads.where(:ip => ip).first
+      if read.blank?
+        read = MarkRead.new({ip: ip})
+        read.entity = self
+        read.save!
+      end
+    end
+    MarkReadAction.create(:mark_read_id => read.id, :ip => ip, :affiliate_id => affiliate_id)
+  end
+
 end

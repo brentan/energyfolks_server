@@ -89,6 +89,7 @@ EnergyFolks.$(function() {
         EnergyFolks.$(this).hide();
         EnergyFolks.$(this).prev('.ef_comment_text_wrapper').css('max-height','none');
         EnergyFolks.$(this).prev('.ef_comment_text_wrapper').css('overflow','visible');
+        return false;
     });
     EnergyFolks.$('body').on('click','.ef_comment_subscribe a', function() {
         EnergyFolks.ajax(EnergyFolks.$(this).attr('data-method'), {hash: EnergyFolks.$(this).attr('data-hash')});

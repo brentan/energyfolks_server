@@ -93,6 +93,18 @@ class AjaxController < ApplicationController
     render_ajax( {data: data, more_pages: more_pages} )
   end
 
+  def blogs
+    more_pages = false
+    if params[:moderation] == "true"
+      data = Blog.needing_moderation(current_user, current_affiliate)
+    elsif params[:my_posts] == "true"
+      data = Blog.get_mine(current_user)
+    else
+      data, more_pages = Blog.find_all_visible(current_user, current_affiliate, fix_params(params, 'blogs'))
+    end
+    render_ajax( {data: data, more_pages: more_pages} )
+  end
+
   def get_comments
     CommentDetail.update(params[:hash], params[:title], params[:url])
     output = Comment.get_all_comments(params[:hash])
@@ -127,8 +139,9 @@ class AjaxController < ApplicationController
 
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
+    @item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
     output = render_to_string :partial => "#{@item.method_name}/show", :locals => {ajax: 1}
-    if @item.instance_of?(Discussion)
+    if @item.instance_of?(Discussion) || @item.instance_of?(Blog)
       CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
       comments = Comment.get_all_comments(@item.comment_hash)
       execute = "EnergyFolks.Populate_Comments({ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{comments.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' });"
@@ -168,32 +181,46 @@ class AjaxController < ApplicationController
     render_ajax({notice: response, element_id: params[:element_id], new_item: '', remove_item: item.id})
   end
 
+  def reject
+    affiliate = Affiliate.find_by_id(params[:aid])
+    item = params[:model].constantize.find_by_id(params[:id])
+    response = item.reject_or_remove(current_user, affiliate, params[:reason])
+    render_ajax({notice: response, element_id: params[:element_id], new_item: '', remove_item: item.id})
+  end
+
   private
   def render_ajax(output = nil)
     if output.blank?
       render :js => "//Completed"
     else
       output[:width] ||= 900 unless output.is_a?(String)  # default popup window width, if needed
-      set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
-      set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
-      lat = 37.8044
-      lng = -122.2708
-      loc = 'Oakland, CA'
-      rad_e = 50
-      rad_j = 0
-      if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
-        lat = current_affiliate.latitude
-        lng = current_affiliate.longitude
-        loc = current_affiliate.location
-        rad_e = current_affiliate.event_radius
-        rad_j = current_affiliate.job_radius
-      elsif user_logged_in? && current_user.latitude.present?
-        lat = current_user.latitude
-        lng = current_user.longitude
+      if params['load_all'] == 'true'
+        set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
+        set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.url_events = '#{current_affiliate.url_events}';EnergyFolks.url_discussions = '#{current_affiliate.url_discussions}';EnergyFolks.url_users = '#{current_affiliate.url_users}';EnergyFolks.url_jobs = '#{current_affiliate.url_jobs}';EnergyFolks.url_blogs = '#{current_affiliate.url_blogs}';EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
+        lat = 37.8044
+        lng = -122.2708
+        loc = 'Oakland, CA'
+        rad_e = 50
+        rad_j = 0
+        if current_affiliate.present? && current_affiliate.id.present? && current_affiliate.latitude.present?
+          lat = current_affiliate.latitude
+          lng = current_affiliate.longitude
+          loc = current_affiliate.location
+          rad_e = current_affiliate.event_radius
+          rad_j = current_affiliate.job_radius
+        elsif user_logged_in? && current_user.latitude.present?
+          lat = current_user.latitude
+          lng = current_user.longitude
+        end
+        set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
+        set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
+      else
+        set_current_user = ''
+        set_affiliate = ''
+        set_tags = ''
+        set_latlng = ''
       end
-      set_tags = Tag.popular_tags.map { |t| "'#{t.name.capitalize.gsub("'",'')}'" }.join(',')
-      set_latlng = "if(EnergyFolks.map_lat == 0) { EnergyFolks.map_lat=#{lat};EnergyFolks.map_lng=#{lng}; } if(EnergyFolks.map_location_lat == 0) { EnergyFolks.map_location_lat=#{lat};EnergyFolks.map_location_lng=#{lng};EnergyFolks.map_location_radius=(EnergyFolks.source == 'events' ? #{rad_e} : #{rad_j});EnergyFolks.map_location_name='#{loc.gsub(/'/, "\\'")}';EnergyFolks.$('#ef_filter_location').val(EnergyFolks.map_location_name);if(EnergyFolks.map_location_radius == 0) { EnergyFolks.$('.ef_location_radio1').prop('checked', true); } else { EnergyFolks.$('.ef_location_radio2').prop('checked', true); }EnergyFolks.$('#ef_filter_radius').val(EnergyFolks.map_location_radius);EnergyFolks.UpdateFilterText(); }"
-      render :js => "if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.is_a?(String) ? output : output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;"
+      render :js => "EnergyFolks.load_all = false;if(EnergyFolks.tag_list.length == 0) { EnergyFolks.tag_list = [#{set_tags}]; EnergyFolks.tag_list.sort(); EnergyFolks.UpdateFilterText(); } #{set_current_user}#{set_affiliate}#{set_latlng}EnergyFolks.callbacks[#{params['callback']}](#{output.is_a?(String) ? output : output.to_json});EnergyFolks.callbacks[#{params['callback']}] = null;EnergyFolks.load_all = false;"
     end
   end
   def fix_params(inputs, source)
