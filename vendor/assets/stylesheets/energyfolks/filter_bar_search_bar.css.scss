@@ -220,6 +220,7 @@ div#EnfolksFilterDiv {
       text-decoration: underline;
       margin-right: 10px;
       div.ef_filter_house2 {
+        z-index: 50;
         position: absolute;
         display: none;
         white-space: nowrap;

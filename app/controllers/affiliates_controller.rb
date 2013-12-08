@@ -48,14 +48,17 @@ class AffiliatesController < ApplicationController
     @affiliate = Affiliate.new(params[:affiliate])
     return render :action => "new" if !@affiliate.save
     flash[:notice]="Affiliate successfully created"
-    redirect_to :action => 'edit', :id => @affiliate.id
+    google = GoogleClient.new
+    google.create_affiliate(@affiliate)
+    redirect_to :action => 'edit?iframe_next=1', :id => @affiliate.id
   end
 
   def delete
     @affiliate = Affiliate.find(params[:id])
+    google = GoogleClient.new
+    google.remove_affiliate(@affiliate)
     @affiliate.destroy
-    flash[:notice]="The group has been completely removed."
-    redirect_to '/'
+    render :inline => "The group has been completely removed."
   end
 
   def update
@@ -74,6 +77,7 @@ class AffiliatesController < ApplicationController
     @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
     if @membership.present? && params[:iframe_next].present?
       @membership.update_attributes!(params[:membership])
+      @user.delay.sync
       flash[:notice] = 'Rights successfully updated'
     end
   end
@@ -86,6 +90,7 @@ class AffiliatesController < ApplicationController
       @membership.approved = true
       @membership.broadcast = true
       @membership.save!
+      @user.delay.sync
       UserMailer.delay.affiliate_approved(@user,@aid, @host)
       @user.update_index
     end
@@ -104,6 +109,7 @@ class AffiliatesController < ApplicationController
       @membership.approved = false
       @membership.destroy
       @membership = nil
+      @user.delay.sync
       @user.update_index
     end
   end
