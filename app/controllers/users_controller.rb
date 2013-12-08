@@ -177,6 +177,7 @@ class UsersController < ApplicationController
         Tag.update_tags(@user.raw_tags, @user)
         UserMailer.delay.email_verification_request(@user, @aid, @host) if (old_email != @user.email_to_verify) && @user.email_to_verify.present?
         UserMailer.delay.reset_password_2(@user, @aid, @host) if params[:user][:password_old].present? && params[:user][:password].present?
+        @user.delay.sync
         @user.update_index
         flash[:notice]="Your account has been updated"
       else
@@ -298,8 +299,35 @@ class UsersController < ApplicationController
         @user.send("#{key}=",params[:user][key])
       end
       @user.save!(:validate => false)
+      @user.delay.sync
       flash[:notice] = "Settings saved"
     end
+  end
+
+  def memberships
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    @status = []
+    @user.memberships.each do |m|
+      @status[m.affiliate_id] = {mid: m.id, admin: m.admin_level, approved: m.approved? }
+    end
+    @memberships = @user.memberships.map {|m| m.affiliate_id }
+  end
+
+  def memberships_add
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    Membership.create({affiliate_id: params[:aid], user_id: params[:id], approved: true})
+    @user.delay.sync
+    redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User added to group'
+  end
+
+  def memberships_remove
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    Membership.find_by_id(params[:mid]).destroy
+    @user.delay.sync
+    redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User removed from group'
   end
 
   def privacy
@@ -363,6 +391,7 @@ class UsersController < ApplicationController
         ThirdPartyLogin.update(user, 'linkedin', hash.credentials.token, hash.credentials.secret)
         user.update_by_linkedin
         user.update_index
+        user.delay.sync
         session[:userid] = user.id
         cookies[:cookieID] = user.cookie
         render 'common/refresh_parent', layout: "iframe"

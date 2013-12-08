@@ -20,6 +20,9 @@ EnergyfolksServer::Application.routes.draw do
 
   get "users/rights"
   put "users/rights"
+  get "users/memberships"
+  get "users/memberships_add"
+  get "users/memberships_remove"
   get "users/manual_verify"
   get "users/freeze_account"
   post "users/freeze_account"

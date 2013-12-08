@@ -1,0 +1,42 @@
+<h1>User Memberships:</h1>
+<table border=1>
+  <tr>
+    <th>Affiliate Name</th>
+    <th>Member?</th>
+    <th>Add/Remove</th>
+  </tr>
+<% Affiliate.all.each do |a| %>
+  <tr>
+    <td>
+      <%= a.name %>
+    </td>
+    <td>
+      <%
+          if @memberships.include?(a.id)
+            if @status[a.id][:approved]
+              if @status[a.id][:admin] == Membership::USER
+                status = 'Member'
+              elsif @status[a.id][:admin] == Membership::AUTHOR
+                status = 'Author'
+              elsif @status[a.id][:admin] == Membership::CONTRIBUTOR
+                status = 'Contributor'
+              elsif @status[a.id][:admin] == Membership::EDITOR
+                status = 'Editor'
+              elsif @status[a.id][:admin] == Membership::ADMINISTRATOR
+                status = 'Admin'
+              end
+            else
+              status = 'In Moderation'
+            end
+          else
+            status = 'Not a Member'
+          end
+       %>
+      <%= status %>
+    </td>
+    <td>
+      <%= @memberships.include?(a.id) ? link_to('Remove', "/users/memberships_remove?id=#{@user.id}&mid=#{@status[a.id][:mid]}") : link_to('Add', "/users/memberships_add?id=#{@user.id}&aid=#{a.id}") %>
+    </td>
+  </tr>
+<% end %>
+</table>

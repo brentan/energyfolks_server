@@ -305,6 +305,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def sync
+    google = GoogleClient.new
+    google.sync_user(self)
+  end
+
   protected
   # Used in validation to throw error if password do not match
   def password_entered?

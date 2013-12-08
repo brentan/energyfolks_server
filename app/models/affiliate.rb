@@ -8,13 +8,14 @@ class Affiliate < ActiveRecord::Base
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
-  has_many :blog_posts, :class_name => 'Blogs', :dependent => :destroy
+  has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
-                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement
+                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded
+
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
@@ -114,7 +115,7 @@ class Affiliate < ActiveRecord::Base
 
   def remove_all_primary_references
     # TODO: Add email notice to user informing them that thier primary group has left EF
-    User.find_by_affiliate_id(self.id).all.each do |u|
+     User.where(affiliate_id: self.id).all.each do |u|
       u.affiliate_id = 0
       u.save(:validate => false)
     end

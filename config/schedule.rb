@@ -27,5 +27,6 @@ every 24.hours do
   rake "clean_up:user_login_hash"
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
-  rake "wordpress:nightly_sync"
+  rake "nightly:wordpress"
+  rake "nightly:google"
 end

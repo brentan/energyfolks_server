@@ -695,4 +695,5 @@ module MixinEntity
     MarkReadAction.create(:mark_read_id => read.id, :ip => ip, :affiliate_id => affiliate_id)
   end
 
+
 end

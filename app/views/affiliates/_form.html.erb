@@ -122,7 +122,7 @@
 <h1>Integration Information</h1>
 
 <div class='form_label'>Wordpress Shared Secret</div>
-<div class='form_entry'><%= current_user.admin? ? (f.text_field :shared_secret) : @affiliate.shared_secret %></div>
+<div class='form_entry'><%= @affiliate.shared_secret %></div>
 
 <div class='form_label'>CPanel username</div>
 <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>

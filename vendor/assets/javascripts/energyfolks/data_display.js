@@ -616,6 +616,7 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.widget = output.line_one;
         var admin_links = '';
         if(EnergyFolks.current_user.super_admin) {
+            admin_links += EnergyFolks.create_iframe_popup('Memberships','users/memberships',{id: item.id});
             admin_links += EnergyFolks.create_iframe_popup('Global Rights','users/rights',{id: item.id});
             if(item.verified)
                 admin_links += EnergyFolks.create_iframe_popup('Freeze Account','users/freeze_account',{id: item.id});
