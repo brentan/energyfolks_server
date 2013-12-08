@@ -5,7 +5,7 @@
   <% if table != 'user' %>
     <div class='form_entry'>
       <input id='send_to_all_yes' type=radio name='send_to_all' value=1 class='toggle' <%= send_to_all ? 'checked' : '' %>>
-      <label for="send_to_all_yes">Send to All <%= Affiliate.all.count() %> Energyfolks Affiliates</label><BR>
+      <label for="send_to_all_yes">Include All <%= Affiliate.all.count() %> Energyfolks Affiliates</label><BR>
       <h2>OR</h2>
       <input id='send_to_all_no' type=radio name='send_to_all' value=0 class='toggle' <%= !send_to_all ? 'checked' : '' %>>
       <label for="send_to_all_no">Choose Networks Individually</label>

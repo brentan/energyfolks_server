@@ -14,9 +14,9 @@ div.form {
   }
 
   div.progress_bar {
-    float: left;
-    clear: right;
-    margin-left: 100px;
+    float: none;
+    //clear: right;
+    margin-left: 200px;
 
     div {
       display: inline-block;
@@ -53,6 +53,15 @@ div.form {
     input[type="text"] {
       width: 300px;
     }
+
+    input[type="text"].hasDatepicker {
+      width: 80px;
+    }
+
+    .hasDatepicker + input[type="text"] {
+      width: 70px;
+    }
+
 
     input[type="radio"].toggle {
       display: none;  /* we'll show as a styled label instead of radio button */
