@@ -7,6 +7,7 @@ EnergyFolks.$ = jQuery.noConflict(true);
 //Initialize EnergyFolks constants
 EnergyFolks.server_url = '<%= SITE_HOST %>' //'http://dev.energyfolks.com:3000';
 EnergyFolks.id = 0;
+EnergyFolks.load_all = true;
 EnergyFolks.color = 'F16522';
 EnergyFolks.user_logged_in = false;
 EnergyFolks.current_user = {id: 0, super_admin: false, admin: [], affiliates: []};
@@ -16,6 +17,7 @@ EnergyFolks.iframe = false;
 EnergyFolks.minheight = 100;
 //Accounts constants:
 EnergyFolks.callbackURL = '';
+EnergyFolks.forceLogin = false;
 EnergyFolks.forwardto = '';
 EnergyFolks.customMenuItems = new Array();
 EnergyFolks.TopBarFixed = true;
@@ -30,6 +32,7 @@ EnergyFolks.affiliates[0] = {name: "EnergyFolks", url: '<%= SITE_HOST %>'};
     EnergyFolks.affiliates[<%= a.id %>] = {name: "<%= a.name.gsub('"','') %>", url: '<%= a.url %>'};
 <% end %>
 EnergyFolks.source = 'events';
+EnergyFolks.populateFilters = true;
 EnergyFolks.source_restrict = 1;
 EnergyFolks.format = 'list';
 EnergyFolks.page = 0; //0 = start
@@ -44,7 +47,7 @@ EnergyFolks.shift_later = true;
 EnergyFolks.search_terms = '';
 EnergyFolks.map_layer = 0;
 EnergyFolks.map_lat = 0;
-EnergyFolks.map_lat = 0;
+EnergyFolks.map_lng = 0;
 EnergyFolks.map_zoom = 11;
 EnergyFolks.marker_layer = 0;
 EnergyFolks.map_location_lat = 0;
@@ -56,6 +59,13 @@ EnergyFolks.tag_list = new Array();
 EnergyFolks.active_tags = new Array();
 EnergyFolks.auto_load_on_scroll = false;
 EnergyFolks.more_pages = false;
+
+//URLS
+EnergyFolks.url_users = '<%= SITE_HOST %>/users'
+EnergyFolks.url_events = '<%= SITE_HOST %>/events'
+EnergyFolks.url_jobs = '<%= SITE_HOST %>/jobs'
+EnergyFolks.url_discussions = '<%= SITE_HOST %>/discussions'
+EnergyFolks.url_blogs = '<%= SITE_HOST %>/blogs'
 
 //Initialize the Objects array
 EnergyFolks.objects = [];

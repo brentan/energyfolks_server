@@ -1,0 +1,42 @@
+<h1>Synchronize your Wordpress with EnergyFolks</h1>
+<p>
+  To finish your wordpress installation, you need to synchronize your wordpress installation with EnergyFolks.  This process
+  should only need to be completed once.
+</p>
+<% if user_logged_in? %>
+   <%
+    affiliates = current_user.memberships.where(:admin_level => Membership::ADMINISTRATOR).all
+    if affiliates.blank?
+   %>
+        <h2>We could not find any groups</h2>
+        <p>We were unable to find any groups in our system for which you are an administrator.  To create a new
+        affiliate group with energyfolks, or to link your account to a group that already exists, email us at
+        <a href='mailto:contact@energyfolks.com'>contact@energyfolks.com</a> from your user email address
+        (<%= current_user.email %>) and let us know what group you are from.</p>
+   <% else %>
+        <h2>Select the group you would like to synchronize this Wordpress install with:</h2>
+        <table border=0>
+            <% affiliates.each do |a| %>
+                <tr>
+                  <td>
+                    <script language=javascript>
+                        EnergyFolks.affiliateLogo(<%= a.affiliate_id %>, '');
+                    </script>
+                  </td>
+                  <td>
+                    <%= a.affiliate.name %>
+                  </td>
+                  <td>
+                    <a href='/developers/wordpress_sync_2?aid=<%= a.affiliate_id %>&return_url=<%= params[:return_url] %>'>Synchronize</a>
+                  </td>
+                </tr>
+            <% end %>
+        </table>
+   <% end %>
+<% else %>
+    <h2>Login to continue</h2>
+    <p>To synchronize your system with EnergyFolks, first login to your energyfolks account.</p>
+    <script language='javascript'>
+        EnergyFolks.LoginBox();
+    </script>
+<% end %>

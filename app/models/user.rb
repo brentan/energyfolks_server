@@ -9,8 +9,10 @@ class User < ActiveRecord::Base
   has_one :subscription, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :mark_reads
   has_many :comment_subscribers, :dependent => :destroy
   has_many :third_party_logins, :dependent => :destroy
+  has_many :blog_posts, :class_name => 'Blogs'
 
   EMAIL_VALIDATION = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
@@ -142,6 +144,10 @@ class User < ActiveRecord::Base
   end
   def self.join_table
     Membership
+  end
+  def wordpress_password(affiliate_id)
+    #password auto-generated and used by wordpress logins
+    Digest::MD5.hexdigest(self.id.to_s + "ENERGYFOLKS_SALT" + affiliate_id.to_s)
   end
   def is_visible?(user)
     return true if self.visibility == PUBLIC

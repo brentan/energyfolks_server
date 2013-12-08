@@ -8,12 +8,13 @@ class Affiliate < ActiveRecord::Base
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :blog_posts, :class_name => 'Blogs', :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
-                  :show_details, :timezone, :date_founded, :president_name, :description
+                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
   validates :url, :format => URI::regexp(%w(http https)), :allow_blank => true
@@ -35,6 +36,8 @@ class Affiliate < ActiveRecord::Base
   after_validation :geocode
 
   before_destroy :remove_all_primary_references
+  before_destroy :remove_from_google
+  after_create :add_to_google
 
   # 'open' codes
   OPEN = 1
@@ -75,9 +78,18 @@ class Affiliate < ActiveRecord::Base
   end
 
   def admins(type = Membership::ADMINISTRATOR, emails_only = false)
-    search = self.memberships.where("admin_level >= #{type}")
+    search = self.memberships.approved.where("admin_level >= #{type}").joins(:user)
     search = search.where("moderation_emails = 1") if emails_only
     return search.all.map{|u| u.user }
+  end
+  def approved_members
+    self.memberships.approved.joins(:user).all.map {|u| u.user }
+  end
+  def announcement_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:announcement => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+  def digest_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
 
   def email
@@ -106,6 +118,61 @@ class Affiliate < ActiveRecord::Base
       u.affiliate_id = 0
       u.save(:validate => false)
     end
+  end
+
+  def check_hash(hash, salt='worddet')
+    return false if self.shared_secret.blank?
+    return hash == Digest::MD5.hexdigest("#{self.shared_secret}#{salt}")
+  end
+
+  def create_shared_secret
+    self.update_column(:shared_secret, Digest::MD5.hexdigest("#{Time.now()}.energyfolkssalt"))
+  end
+
+  def url_users
+    url = super
+    url = "#{SITE_HOST}/users" if url.blank?
+    url
+  end
+
+  def url_events
+    url = super
+    url = "#{SITE_HOST}/events" if url.blank?
+    url
+  end
+
+  def url_jobs
+    url = super
+    url = "#{SITE_HOST}/jobs" if url.blank?
+    url
+  end
+
+  def url_discussions
+    url = super
+    url = "#{SITE_HOST}/discussions" if url.blank?
+    url
+  end
+
+  def url_blogs
+    url = super
+    url = "#{SITE_HOST}/blogs" if url.blank?
+    url
+  end
+
+  def moderate_blogs
+    Affiliate::NONE
+  end
+
+  def add_to_google
+    return unless Rails.env.production?
+    google_client = GoogleClient.new
+    google_client.create_affiliate(self)
+  end
+
+  def remove_from_google
+    return unless Rails.env.production?
+    google_client = GoogleClient.new
+    google_client.remove_affiliate(self)
   end
 
 end

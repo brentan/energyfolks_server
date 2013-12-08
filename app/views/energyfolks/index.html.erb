@@ -8,15 +8,19 @@ post your comment or idea in the comment section below.
 <h3>RECENT COMMITS</h3>
 <%
    require 'rss'
-   url = 'https://github.com/brentan/energyfolks_server/commits/master.atom'
-   open(url) do |rss|
-     feed = RSS::Parser.parse(rss)
-     feed.items.each do |item| %>
-       <%= raw(strip_tags(item.updated.content.strftime("%A, %B %-d, %Y at %l:%M %p:"))) %> -
-       <i><%= raw(strip_tags(item.author.email.to_s.gsub(/@.*/, ''))) %></i> -
-       <%= raw(strip_tags(item.content.content)) %><BR>
-     <% end
-   end
+   begin
+       url = 'https://github.com/brentan/energyfolks_server/commits/master.atom'
+       open(url) do |rss|
+         feed = RSS::Parser.parse(rss)
+         feed.items.each do |item| %>
+           <%= raw(strip_tags(item.updated.content.strftime("%A, %B %-d, %Y at %l:%M %p:"))) %> -
+           <i><%= raw(strip_tags(item.author.email.to_s.gsub(/@.*/, ''))) %></i> -
+           <%= raw(strip_tags(item.content.content)) %><BR>
+         <% end
+       end
+    rescue
+       %>Error loading commits from github repository.  Please try again later<%
+    end
 %>
 
 
@@ -24,3 +28,23 @@ post your comment or idea in the comment section below.
 <script language='javascript'>
     EnergyFolks.Comments("Energyfolks Development Update", "EF HOMEPAGE COMMENTS");
 </script>
+<h1>WIDGET TESTING</h1>
+<table border=0 style='width:100%;'>
+  <tr>
+    <td>
+      <script language='javascript'>
+          EnergyFolks.showWidget('events',{});
+      </script>
+    </td>
+    <td>
+      <script language='javascript'>
+          EnergyFolks.showWidget('jobs',{});
+      </script>
+    </td>
+    <td>
+      <script language='javascript'>
+          EnergyFolks.showWidget('discussions',{});
+      </script>
+    </td>
+  </tr>
+</table>

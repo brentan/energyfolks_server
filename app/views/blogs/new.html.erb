@@ -1,0 +1,11 @@
+<% if current_user.present? %>
+    <% if !current_user.admin? || !current_affiliate.admin?(current_user, Membership::CONTRIBUTOR) %>
+        <h1>Unauthorized Access</h1>
+        Only members designated by group administrators are allowed to post new blog items.
+    <% else %>
+        <%= render :partial => 'form', :locals => {new: true} %>
+    <% end %>
+<% else %>
+    <h1>Please login</h1>
+    In order to post a new blog post, please login to your account, or create a new account.
+<% end %>

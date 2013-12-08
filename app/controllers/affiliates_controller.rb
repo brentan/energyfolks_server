@@ -14,6 +14,12 @@ class AffiliatesController < ApplicationController
     @affiliate = Affiliate.find_by_id(params[:id])
   end
 
+  def wordpress_details
+    return render :inline => 'false' if current_affiliate.blank? || current_affiliate.id.blank?
+    return render :inline => 'badsecret' unless current_affiliate.check_hash(params[:aid_hash])
+    render :json => {color: current_affiliate.color}
+  end
+
   def logo
     affiliate = Affiliate.find_by_id(params[:id])
     if affiliate.blank? || (affiliate.present? && affiliate.id.blank?) || (affiliate.present? && affiliate.id.present? && affiliate.logo.blank?)

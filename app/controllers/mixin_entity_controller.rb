@@ -20,6 +20,7 @@ module MixinEntityController
 
   def show
     @item = model.find_by_id(params[:id])
+    @item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
     if params[:version].present? && current_user.present? && @item.is_editable?(current_user)
       @item.version_control(current_user, current_affiliate, params[:version].to_i)
     else
@@ -140,18 +141,7 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     join_item = @item.affiliate_join.where(affiliate_id: @affiliate.id.present? ? @affiliate.id : 0).first
     if join_item.present? && params[:reason].present?
-      if join_item.approved_version == @item.current_version
-        NotificationMailer.delay.item_removed(@item, params[:reason], @affiliate)
-        join_item.approved_version = 0
-        join_item.approved_versions ='0'
-        notice = "Item removed"
-      else
-        NotificationMailer.delay.item_rejected(@item, params[:reason], @affiliate)
-        notice = "Item Rejected"
-      end
-      join_item.awaiting_edit = true
-      join_item.save
-      @item.update_index
+      notice = @item.reject_or_remove(current_user, @affiliate, params[:reason])
       redirect_to :action => 'show', :id => @item.id, :iframe_next => true, :notice => notice
     else
       render 'common/reject_or_remove', locals: {join_item: join_item, aid: params[:aid]}

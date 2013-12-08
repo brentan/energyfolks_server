@@ -43,18 +43,36 @@ class UsersController < ApplicationController
   end
 
   def from_hash
-    login = UserLoginHash.find_by_login_hash(params['hash'])
-    if login.present? && ((Time.now() - login.created_at) < 10)
+    return render :inline => 'badsecret' unless current_affiliate.check_hash(params[:secret], params[:hash])
+    login = UserLoginHash.find_by_login_hash(params[:hash])
+    if login.present? && ((Time.now() - login.created_at) < 10.seconds)
+      if current_affiliate.id.present?
+        role = login.user.memberships.approved.where(:affiliate_id => current_affiliate.id).first
+        if role.present? && (role.admin_level == Membership::CONTRIBUTOR)
+          role = '1'
+        elsif role.present? && (role.admin_level == Membership::EDITOR)
+          role = '2'
+        elsif role.present? && (role.admin_level == Membership::AUTHOR)
+          role = '3'
+        elsif role.present? && (role.admin_level == Membership::ADMINISTRATOR)
+          role = '4'
+        end
+      else
+        role = '0'
+      end
       render :json => {
           user_id: login.user_id,
+          user: "Energyfolks_#{login.user_id}",
           first_name: login.user.first_name,
           last_name: login.user.last_name,
-          picture_url: "#{request.protocol}#{request.host_with_port}#{login.user.avatar.url}",
+          email: login.user.email,
+          role: role,
+          pass: login.user.wordpress_password(current_affiliate.id.present? ? current_affiliate.id : 0),
+          picture_url: login.user.avatar.present? ? login.user.avatar.url(:thumb) : "#{SITE_HOST}/assets/noimage.png",
           visibility: login.user.visibility,
           affiliates: login.user.memberships.approved.map{ |m| m.affiliate_id },
           position: login.user.position,
-          company: login.user.organization,
-          has_posts: false # TODO: update this
+          company: login.user.organization
       }
       login.destroy
     else
@@ -107,7 +125,10 @@ class UsersController < ApplicationController
         return
       end
     end
-    if user_logged_in?
+    if user_logged_in? && params[:force_login].present?
+      login_hash = UserLoginHash.create(user_id: current_user.id)
+      render :js => "EnergyFolks.login_callback('#{login_hash.login_hash}');"
+    elsif user_logged_in?
       render :js => "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};EnergyFolks.CreateTopBar();"
     else
       render :js => "EnergyFolks.CreateTopBar();"
@@ -120,7 +141,11 @@ class UsersController < ApplicationController
     session[:userid] = nil
     cookies[:cookieID] = nil
     reset_session
-    render :js => "EnergyFolks.logout_callback();"
+    if params[:no_callback].present? && current_affiliate.present? && current_affiliate.id.present?
+      redirect_to current_affiliate.url
+    else
+      render :js => "EnergyFolks.logout_callback();"
+    end
   end
 
   def login
@@ -307,6 +332,7 @@ class UsersController < ApplicationController
       user ||= current_user if user_logged_in?
       if user
         # We know who this user is...lets log them in
+        redirect_to "/", :alert => "Your account is frozen and your login is not allowed." unless user.active?
         user.last_login = Time.now
         user.linkedin_hash = hash.uid
         user.save!(validate: false)

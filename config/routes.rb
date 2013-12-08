@@ -15,7 +15,6 @@ EnergyfolksServer::Application.routes.draw do
   get "users/logout"
   get "users/activate"
   get "users/from_hash"
-  match 'accounts/external_Login_Verification/:hash' => 'users#from_hash' # Backwards compatibility
   get "users/verify"
   get "users/avatar"
 
@@ -32,6 +31,10 @@ EnergyfolksServer::Application.routes.draw do
   get "users/resend_activation"
   post "users/resend_activation"
 
+  # Google Apps SAML SSO routes
+  get '/google/saml/inbound', to: 'google#inbound'
+  get '/google/saml/logout', to: 'google#logout'
+
   # Omniauth routes
   get '/external_login', to: 'users#external_login'
   get '/auth/linkedin/callback', to: 'users#linkedin'
@@ -39,6 +42,7 @@ EnergyfolksServer::Application.routes.draw do
   # AFFILIATE ROUTES
 
   get "affiliates/new"
+  get "affiliates/wordpress_details"
   match "affiliates/:id/edit" => 'affiliates#edit'
   match "affiliates/:id/delete" => 'affiliates#delete'
   put "affiliates/update"
@@ -100,6 +104,7 @@ EnergyfolksServer::Application.routes.draw do
   match "admin" => "admins#index"
   match "users" => "affiliates#users"
   match "events" => "events#index"
+  match "blogs" => "blogs#index"
   match "calendar" => "events#index"    #backwards compatible
   match "discussions" => "discussions#index"
   match "announce" => "discussions#index" #backwards compatible

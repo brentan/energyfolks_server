@@ -26,6 +26,7 @@ EnergyFolks.ajax = function(command, parameters, callback) {
         EnergyFolks.callbacks.push(callback);
         url+="&callback="+(EnergyFolks.callbacks.length-1)
     }
+    url+="&load_all=" + EnergyFolks.load_all;
     if(url.indexOf("aid=") == -1)
         url+="&aid="+EnergyFolks.id;
     // Append to the head the javascript load request...upon addition the browser will load the external js file.
@@ -148,7 +149,9 @@ EnergyFolks.hide_popup = function() {
         window.parent.location=EnergyFolks.parent_url+'#closepopup';
     else {
         EnergyFolks.justSet = true;
+        var ss = EnergyFolks.$(window).scrollTop();
         window.location.hash = '';
+        EnergyFolks.$(window).scrollTop(ss);
         EnergyFolks.$('#energyfolks_popup').remove();
         EnergyFolks.$('#energyfolks_popup_greyout').remove();
     }
@@ -240,28 +243,28 @@ EnergyFolks.showNotice = function(notice, klass, timeout) {
     klass+=' notice';
     while(true) {
         var id = 'notice_id_'+Math.floor(10000000 * Math.random());
-        if($('#'+id).length == 0) break;
+        if(EnergyFolks.$('#'+id).length == 0) break;
     }
-    if($('.EnergyFolks_notice_holder').length == 0) {
-        var holder = $('<div class="EnergyFolks_notice_holder"></div>').hide().appendTo('body');
+    if(EnergyFolks.$('.EnergyFolks_notice_holder').length == 0) {
+        var holder = EnergyFolks.$('<div class="EnergyFolks_notice_holder"></div>').hide().appendTo('body');
         holder.show();
     }
-    var overlay = $('<div id="'+id+'" class="'+klass+'"></div>').hide().appendTo('.EnergyFolks_notice_holder');
+    var overlay = EnergyFolks.$('<div id="'+id+'" class="'+klass+'"></div>').hide().appendTo('.EnergyFolks_notice_holder');
     notice = '<div class="close">X</div>' + notice;
-    $('#'+id).html(notice);
-    $('#'+id).on('click','.close', function() {
+    EnergyFolks.$('#'+id).html(notice);
+    EnergyFolks.$('#'+id).on('click','.close', function() {
         EnergyFolks.hideNotice(id);
     });
-    $('#'+id).slideDown(400);
+    EnergyFolks.$('#'+id).slideDown(400);
     window.setTimeout(function() { EnergyFolks.hideNotice(id); }, timeout + 400);
 }
 
 // Hide a particular notice
 EnergyFolks.hideNotice = function(id) {
-    if($('#'+id).length == 0) return;
-    $('#'+id).slideUp(400, function() {
-        $('#'+id).remove();
-        if($('.EnergyFolks_notice_holder').find('.notice').length == 0) $('.EnergyFolks_notice_holder').remove();
+    if(EnergyFolks.$('#'+id).length == 0) return;
+    EnergyFolks.$('#'+id).slideUp(400, function() {
+        EnergyFolks.$('#'+id).remove();
+        if(EnergyFolks.$('.EnergyFolks_notice_holder').find('.notice').length == 0) $('.EnergyFolks_notice_holder').remove();
     });
 }
 
@@ -293,7 +296,7 @@ EnergyFolks.affiliateLogo = function(id, text) {
     if(typeof EnergyFolks.affiliates[id] === 'undefined') id = 0;
     var output = '<div class="ef_affiliate_logo">';
     output += '<img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '" class="affiliate_logo">';
-    output += '<div><table><tr><td><img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '"></td><td>' + text + '<BR><a href="' + EnergyFolks.affiliates[id].url + '" target="_blank">' + EnergyFolks.affiliates[id].name + '</a></td></tr></table></div>';
+    output += '<div><table><tr><td class="ef_a_logo"><img src="' + EnergyFolks.server_url + "/affiliates/logo?id=" + id + '"></td><td>' + text + '<BR><a href="' + EnergyFolks.affiliates[id].url + '" target="_blank">' + EnergyFolks.affiliates[id].name + '</a></td></tr></table></div>';
     output += '</div>';
     return output;
 }
@@ -308,7 +311,7 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('mouseleave','.affiliate_logo',function() {
         clearTimeout(AffiliateTimeout);
     })
-    EnergyFolks.$('body').on('mouseleave','.ef_affiliate_logo div',function() {
+    EnergyFolks.$('body').on('mouseleave','div.ef_affiliate_logo div',function() {
         EnergyFolks.$(this).hide();
     })
 });
