@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203221134) do
+ActiveRecord::Schema.define(:version => 20131206225017) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -55,6 +55,9 @@ ActiveRecord::Schema.define(:version => 20131203221134) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -338,6 +341,26 @@ ActiveRecord::Schema.define(:version => 20131203221134) do
   add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
 
+  create_table "mark_read_actions", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "ip"
+    t.integer  "mark_read_id"
+    t.integer  "affiliate_id"
+  end
+
+  add_index "mark_read_actions", ["mark_read_id"], :name => "index_mark_read_actions_on_mark_read_id"
+
+  create_table "mark_reads", :force => true do |t|
+    t.string  "ip"
+    t.integer "entity_id"
+    t.string  "entity_type"
+    t.integer "user_id"
+  end
+
+  add_index "mark_reads", ["entity_id"], :name => "index_mark_reads_on_entity_id"
+  add_index "mark_reads", ["entity_type"], :name => "index_mark_reads_on_entity_type"
+
   create_table "memberships", :force => true do |t|
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
@@ -391,6 +414,8 @@ ActiveRecord::Schema.define(:version => 20131203221134) do
     t.string  "name"
     t.integer "count", :default => 0
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"

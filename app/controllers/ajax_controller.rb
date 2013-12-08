@@ -139,6 +139,7 @@ class AjaxController < ApplicationController
 
   def show
     @item = params[:model].constantize.find_by_id(params[:id])
+    @item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
     output = render_to_string :partial => "#{@item.method_name}/show", :locals => {ajax: 1}
     if @item.instance_of?(Discussion) || @item.instance_of?(Blog)
       CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)

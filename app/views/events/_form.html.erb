@@ -16,6 +16,10 @@
           <ul class="overview">
             <li class='slide'>
 	            <h1><%= new ? 'Post an Event' : 'Edit Event Post' %></h1>
+              <%= raw(progress_bar(1,3)) %>
+              <br/><br/>
+              <hr>
+
               <%= raw(show_errors(@item)) %>
 
               <div class='form_label'>Event Title</div>
@@ -89,6 +93,10 @@
               </div>
             </li>
             <li class='slide'>
+              <%= raw(progress_bar(2,3)) %>
+              <br/><br/>
+              <hr>
+
               <div class='form_label'>Description</div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
 
@@ -109,38 +117,12 @@
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <% if current_affiliate.id.present? %>
-                  <div class='center'>
-                    <h1><%= current_affiliate.name %> is an energyfolks network</h1>
-                    <table align=center border=0 cellpadding=1 cellspacing=0>
-                      <tr>
-                        <td>
-                          <img src='<%= current_affiliate.logo.url %>' style='max-width:290px;border:1px solid black;'>
-                        </td><td>
-                        <%= image_tag('enfolksarrow.png') %>
-                      </td>
-                      </tr>
-                    </table>
-                    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
-                      Your login with <%= current_affiliate.name %> also allows you to increase the reach of your post by sending your post to other affiliates.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
-                  </div>
-              <% else %>
-                  <div class='center'>
-                    <h1>Select energyfolks networks</h1>
-                    <table align=center border=0 cellpadding=1 cellspacing=0>
-                      <tr>
-                        <td>
-                          <%= image_tag('noimage.png') %>
-                        </td><td>
-                        <%= image_tag('enfolksarrow.png') %>
-                      </td>
-                      </tr>
-                    </table>
-                    <i>Energyfolks is a network of networks connecting energy interested students and professionals around the globe. Select the affiliates that you would like to receive this post.</i>
-                  </div>
-              <% end %>
-              <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
+              <%= raw(progress_bar(3,3)) %>
+              <br/><br/>
+              <hr>
+
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'event', join_table: 'affiliates_events'} %>
+
             </li>
           </ul>
           <%= prev_next_buttons %>
