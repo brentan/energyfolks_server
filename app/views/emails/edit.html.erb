@@ -1,0 +1,25 @@
+<% if @affiliate.present? && @affiliate.id.present? %>
+    <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=right height=18>
+      <div style='color:white;text-align:left;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;letter-spacing: -0.4px;'>
+        <span style='font-size:12px;'>powered by <a href='https://www.energyfolks.com' style='color:white;text-decoration:none;'>energyfolks</a></span>
+      </div>
+    </td></tr></table>
+    <% if @affiliate.custom_header? %>
+        <%= @affiliate.email_header %>
+    <% else %>
+        <%= render :partial => '/affiliates/header' %>
+    <% end %>
+<% else %>
+    <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=center style='text-align: center;'>
+      <a href='<%= SITE_HOST %>' border=0 style='border:0px;'><img src='<%= SITE_HOST %>/assets/ef_logo.png' border=0 style='border:0px;display: inline;'></a>
+    </td></tr></table>
+<% end %>
+
+<%=	nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
+    <h1>Email Subscriptions</h1>
+    <%= f.fields_for :subscription do |s| %>
+        <%= render :partial => '/common/subscriptions', locals: {f: s, show_rad: true} %>
+    <% end %>
+    <input type=hidden name='token' value='<%= @email_settings_token.token %>'>
+    <%= f.submit 'Update Preferences' %>
+<% end %>

@@ -16,6 +16,7 @@ class GoogleClient
 
   # Connect to google to enable api calls
   def initialize
+    return unless Rails.env.production?
     key = Google::APIClient::PKCS12.load_key(SERVICE_ACCOUNT_PKCS12_FILE_PATH, 'notasecret')
     asserter = Google::APIClient::JWTAsserter.new(SERVICE_ACCOUNT_EMAIL, %w(https://www.googleapis.com/auth/apps.groups.settings https://www.googleapis.com/auth/admin.directory.user https://www.googleapis.com/auth/admin.directory.group), key)
     @client = Google::APIClient.new(:application_name => "EnergyFolks", :application_version => "v0.0.0")
@@ -25,10 +26,42 @@ class GoogleClient
     @batch_count = 0
   end
 
+  def sync_user(user)
+    return unless Rails.env.production?
+    # This will sync user with all affiliates they should be a member of
+    current_groups = get_members({ userKey: user.email.downcase },'groups.list').map { |g| g.email.downcase }
+    add_groups = ['energyfolks-users@energyfolks.com']
+    add_groups << 'energyfolks-admins@energyfolks.com' if user.admin?
+    add_admins = user.admin? ? ['energyfolks-users@energyfolks.com', 'energyfolks-admins@energyfolks.com']: []
+    user.memberships.approved.each do |m|
+      next if m.affiliate.blank?
+      next if user.subscription.blank?
+      add_groups << "#{m.affiliate.email_name}-members@energyfolks.com".downcase if user.subscription.announcement? || (m.admin_level >= Membership::EDITOR)
+      add_groups << "#{m.affiliate.email_name}-digest@energyfolks.com".downcase if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
+      add_groups << "#{m.affiliate.email_name}-contributors@energyfolks.com".downcase if m.admin_level >= Membership::AUTHOR
+      add_groups << "#{m.affiliate.email_name}-admins@energyfolks.com".downcase if m.admin_level >= Membership::EDITOR
+      if(m.admin_level >= Membership::EDITOR)
+        add_groups << 'energyfolks-admins@energyfolks.com' unless add_groups.include?('energyfolks-admins@energyfolks.com')
+        add_admins << "#{m.affiliate.email_name}-members@energyfolks.com".downcase
+        add_admins << "#{m.affiliate.email_name}-digest@energyfolks.com".downcase
+        add_admins << "#{m.affiliate.email_name}-contributors@energyfolks.com".downcase
+        add_admins << "#{m.affiliate.email_name}-admins@energyfolks.com".downcase
+      end
+    end
+    (current_groups - add_groups).each do |to_remove|
+      next if to_remove.split('-').length == 1  # These are custom email lists that should not be touched
+      batch_add({api_method: @admin.members.delete, parameters: {:groupKey => to_remove, memberKey: user.email.downcase }})
+    end
+    (add_groups - current_groups).each { |to_add| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => to_add}, body_object: {email: user.email.downcase, role: 'MEMBER', type: 'USER'}})}
+    add_admins.each { |to_admin| batch_add({api_method: @admin.members.update, parameters: {:groupKey => to_admin, memberKey: user.email.downcase}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    batch_execute
+  end
+
   def sync_affiliate(affiliate)
-    # TODO: Add this to rake task AND create_affiliate command.
-    # TODO: Make mini version of this to run in delay when a user profile is updated (or when user memberships are updated.)
+    return unless Rails.env.production?
+    # This will sync affiliate email lists with their user database.
     admins = affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
+    admins << "#{affiliate.email_name}@energyfolks.com"
 
     #members list
     emails = affiliate.announcement_members.map{ |u| u.email.downcase }
@@ -78,26 +111,46 @@ class GoogleClient
     batch_execute
   end
 
-  def get_list_members(listname)
-    # TODO: deal with longer lists (above max-results)
-    output = []
-    begin
-      output += ActiveSupport::JSON.decode(admin('members.list', {parameters: {:groupKey => "#{listname}@energyfolks.com", maxResults: 50000 }}).body)['members'].map {|m| m['email'].downcase }
-    rescue
-    end
-    output
-  end
-  def get_list_admins(listname)
-    # TODO: deal with longer lists (above max-results)
-    output = []
-    begin
-      output += ActiveSupport::JSON.decode(admin('members.list', {parameters: {:groupKey => "#{listname}@energyfolks.com", maxResults: 50000, roles:'MANAGER' }}).body)['members'].map {|m| m['email'].downcase }
-    rescue
-    end
-    output
+  def sync_global
+    return unless Rails.env.production?
+    # This will sync the energyfolks-users and energyfolks-admins lists
+
+    # all users
+    emails = User.verified.all.map{ |u| u.email.downcase }
+    admins = User.verified.where(admin: true).all.map{ |u| u.email.downcase }
+    current_members = get_list_members("energyfolks-users")
+    current_admins = get_list_admins("energyfolks-users")
+    # Re-assign admins that have been removed
+    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
+    # Remove members that have left
+    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}}) }
+    # Add in new members
+    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-users@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
+    # Update admins
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+
+    # all admins
+    emails = User.verified.joins(:memberships).where("memberships.approved = 1").where("memberships.admin_level >= ?", Membership::EDITOR).all.map{ |u| u.email.downcase }
+    emails += admins
+    emails = emails.uniq
+    current_members = get_list_members("energyfolks-admins")
+    current_admins = get_list_admins("energyfolks-admins")
+    # Re-assign admins that have been removed
+    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
+    # Remove members that have left
+    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}}) }
+    # Add in new members
+    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-admins@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
+    # Update admins
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+
+    batch_execute
   end
 
+
+
   def create_affiliate(affiliate)
+    return unless Rails.env.production?
     # New affiliate, we should update google information
     first_name = affiliate.name.split(" ")[0]
     last_name = affiliate.name.split(" ")
@@ -165,6 +218,7 @@ class GoogleClient
 
   end
   def remove_affiliate(affiliate)
+    return unless Rails.env.production?
     admin('groups.delete', {parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com"}})
     admin('groups.delete', {parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com"}})
     admin('groups.delete', {parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com"}})
@@ -179,6 +233,13 @@ class GoogleClient
   @batch = nil
   @batch_count = 0
 
+  def get_list_members(listname)
+    get_members({:groupKey => "#{listname}@energyfolks.com" }).map { |m| m.email }
+  end
+  def get_list_admins(listname)
+    get_members({:groupKey => "#{listname}@energyfolks.com" , roles:'MANAGER,OWNER'}).map { |m| m.email }
+  end
+
   def admin(input_method, options)
     method = @admin
     input_method.split('.').each { |m| method = method.send(m) }
@@ -191,6 +252,29 @@ class GoogleClient
     input_method.split('.').each { |m| method = method.send(m) }
     options[:api_method] = method
     return @client.execute(options)
+  end
+
+  def get_members(parameters, method = 'members.list')
+    # Get list members.  This is done in a loop because we may have to page through multiple results.
+    result = Array.new
+    page_token = nil
+    begin
+      parameters['pageToken'] = page_token if page_token.to_s != ''
+      parameters['maxResults'] = 900
+      api_result = admin(method, {parameters: parameters})
+      if api_result.status == 200
+        files = api_result.data
+        if method == 'members.list'
+          result.concat(files.members)
+        else
+          result.concat(files.groups)
+        end
+        page_token = files.next_page_token
+      else
+        page_token = nil
+      end
+    end while page_token.to_s != ''
+    return result
   end
 
   def batch_add(item)

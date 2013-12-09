@@ -10,6 +10,7 @@ namespace :clean_up do
   desc "Remove old sessions"
   task :sessions => :environment do
     Session.delete_all("updated_at < '#{Time.now-2.days}'")
+    EmailSettingsToken.delete_all("expires_at < '#{Time.now}'")
   end
 
   desc "Update Tag Counts"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206225017) do
+ActiveRecord::Schema.define(:version => 20131208231734) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20131206225017) do
     t.boolean  "visible",                   :default => true
     t.string   "color",                     :default => "777777"
     t.text     "email_header"
-    t.text     "web_header"
     t.string   "location"
     t.float    "latitude"
     t.float    "longitude"
@@ -55,9 +54,6 @@ ActiveRecord::Schema.define(:version => 20131206225017) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
-    t.integer  "year_founded"
-    t.string   "president_name"
-    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -65,6 +61,10 @@ ActiveRecord::Schema.define(:version => 20131206225017) do
     t.string   "wordpress_js_hash"
     t.boolean  "blogs",                     :default => false
     t.boolean  "announcement",              :default => true
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
+    t.boolean  "custom_header",             :default => false
   end
 
   create_table "affiliates_blogs", :force => true do |t|
@@ -229,6 +229,16 @@ ActiveRecord::Schema.define(:version => 20131206225017) do
   add_index "discussions_versions", ["entity_id"], :name => "index_bulletins_versions_on_entity_id"
   add_index "discussions_versions", ["version_number"], :name => "index_bulletins_versions_on_version_number"
 
+  create_table "email_settings_tokens", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "user_id"
+    t.integer  "use_count"
+    t.datetime "expires_at"
+    t.datetime "last_user_at"
+    t.string   "token"
+  end
+
   create_table "emails", :force => true do |t|
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
@@ -237,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20131206225017) do
     t.integer  "user_id"
     t.boolean  "opened",      :default => false
     t.datetime "open_date"
+    t.string   "token"
   end
 
   add_index "emails", ["entity_id"], :name => "index_emails_on_entity_id"
