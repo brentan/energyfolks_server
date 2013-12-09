@@ -137,7 +137,7 @@ module MixinEntityController
   end
 
   def reject_or_remove
-    @affiliate = Affiliate.find(params[:aid])
+    @affiliate = Affiliate.find_by_id(params[:aid])
     @item = model.find_by_id(params[:id])
     join_item = @item.affiliate_join.where(affiliate_id: @affiliate.id.present? ? @affiliate.id : 0).first
     if join_item.present? && params[:reason].present?

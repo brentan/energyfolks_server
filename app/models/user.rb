@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :comment_subscribers, :dependent => :destroy
   has_many :third_party_logins, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blogs'
+  has_many :email_settings_tokens, :dependent => :destroy
 
   EMAIL_VALIDATION = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
@@ -303,6 +304,11 @@ class User < ActiveRecord::Base
       self.save!
     rescue
     end
+  end
+
+  def sync
+    google = GoogleClient.new
+    google.sync_user(self)
   end
 
   protected

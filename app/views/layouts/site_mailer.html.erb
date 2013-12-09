@@ -6,16 +6,37 @@
    ## use with  attachments[file_name].url
    #end
 %>
-<body>
-<h1>EMAIL LAYOUT</h1>
-<%= yield %>
-
-<BR><BR>
-<% if false # TODO: Email footer with link to change email settings %>
-    &#169; Energyfolks, <%= Time.now.year %>
-    <BR><BR>
-    <% if @user.present? && @user.instance_of?(User) %>
-        Don't want to receive emails like this?  <%= link_to('Change your Email Settings', edit_email_settings_token_url(@user.email_settings_tokens.create.token), style: "color:#585858;") %>.
+<body style='padding:0px;margin:0px;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;' topmargin='0' leftmargin='0' rightmargin='0' margin='0'>
+    <% if @affiliate.present? && @affiliate.id.present? %>
+        <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=right height=18>
+          <div style='color:white;text-align:right;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;letter-spacing: -0.4px;'>
+            <span style='font-size:12px;'>powered by <a href='https://www.energyfolks.com' style='color:white;text-decoration:none;'>energyfolks</a></span>
+          </div>
+        </td></tr></table>
+        <% if @affiliate.custom_header? %>
+            <%= @affiliate.email_header %>
+        <% else %>
+            <%= render :partial => '/affiliates/header' %>
+        <% end %>
+    <% else %>
+        <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=center style='text-align: center;'>
+          <a href='<%= SITE_HOST %>' border=0 style='border:0px;'><img src='<%= SITE_HOST %>/assets/ef_logo.png' border=0 style='border:0px;display: inline;'></a>
+        </td></tr></table>
     <% end %>
-<% end %>
+    <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td>
+        <%= yield %>
+    </td></tr></table>
+
+    <BR>
+    <% if @token.present? %>
+        <img src='<%= SITE_HOST %>/emails/open?token=<%= @token %>' border=0 width=1 height=1>
+    <% end %>
+    <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#dddddd' align=center style='text-align: center;font-size:12px;'>
+        &#169; <a href='<%= SITE_HOST %>'>Energyfolks</a>, <%= Time.now.year %>
+        <BR>
+        <% if @user.present? %>
+            Don't want to receive emails like this?  <a href='<%= SITE_HOST %>/emails/edit?iframe_next=1&aid=<%= @affiliate.id %>&token=<%= @user.email_settings_tokens.create.token %>'>Change your email settings</a>.
+        <% end %>
+      <BR><BR><BR>
+    </td></tr></table>
 </body>

@@ -8,7 +8,7 @@ module MixinEntity
   # Requires the presence of constant VERSION_CONTROLLED which lists methods under version control
 
   def path
-    "/#{self.method_name}/#{self.id}"
+    "#command=show&parameters=id%3D#{self.id}%26model%3D#{self.class.name.capitalize}"
   end
 
   def method_name
@@ -32,7 +32,7 @@ module MixinEntity
   end
 
   def entity_type
-    "#{entity_name} post"
+    "#{entity_name.downcase} post"
   end
 
   def mmddyyyy
@@ -57,6 +57,7 @@ module MixinEntity
       has_many :highlights, as: :entity, :dependent => :destroy
       has_many :tags, :through => :tags_entities
       has_many :mark_reads, as: :entity, :dependent => :destroy
+      has_many :emails, as: :entity, :dependent => :destroy
       attr_accessible :raw_tags
       attr_writer :raw_tags
     end
@@ -439,7 +440,7 @@ module MixinEntity
           call_user_broadcast = true
           next
         end
-        recipients = User.find_by_admin(true)
+        recipients = User.where(admin: true).all
         affiliate = Affiliate.find_by_id(0)
       end
       NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, affiliate, self, i) if recipients.length > 0
@@ -483,10 +484,8 @@ module MixinEntity
           end
         end
         next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
-        e = Email.new(user_id: user_id)
-        e.entity = self
-        e.save!
-        NotificationMailer.entity(User.find_by_id(user_id), self).deliver()    # TODO: Create the mailer
+        token = self.emails.create(user_id: user_id).token
+        NotificationMailer.entity(User.find_by_id(user_id), self, token).deliver()
       end
       i.user_broadcast = true
       i.save(:validate => false)
@@ -694,5 +693,6 @@ module MixinEntity
     end
     MarkReadAction.create(:mark_read_id => read.id, :ip => ip, :affiliate_id => affiliate_id)
   end
+
 
 end

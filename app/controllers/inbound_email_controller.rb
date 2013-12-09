@@ -157,9 +157,9 @@ class InboundEmailsController < ApplicationController
         item.last_updated_by = sender.id
         item.attachment = attached[0] if(attached.length > 0)
         if !item.save
-          ErrorMailer.delay.error_back_to_sender(from_address, "Delivery error: invalid content", params['subject'], "Your message contained an invalid or blank subject and/or content.")
+          ErrorMailer.delay.error_back_to_sender(sender, "Delivery error: invalid content", params['subject'], "Your message contained an invalid or blank subject and/or content.")
         else
-          ErrorMailer.delay.message_back_to_sender(from_address, "Your post has been added", params['subject'], item)
+          ErrorMailer.delay.message_back_to_sender(sender, "Your post has been added", params['subject'], item)
         end
       else
         # Check if this is an email to a group from an admin

@@ -1,9 +1,9 @@
 # encoding: UTF-8
 
-namespace :wordpress do
+namespace :nightly do
 
   desc "Synchronize information with all wordpress affiliates"
-  task :nightly_sync => :environment do
+  task :wordpress => :environment do
     require 'open-uri'
     Affiliate.all.each do |affiliate|
       next if affiliate.shared_secret.blank?
@@ -19,6 +19,13 @@ namespace :wordpress do
       rescue
       end
     end
+  end
+
+  desc "Resynchronize with google"
+  task :google => :environment do
+    google = GoogleClient.new
+    google.sync_global
+    Affiliate.all.each {|a| google.sync_affiliate(a)}
   end
 
 end

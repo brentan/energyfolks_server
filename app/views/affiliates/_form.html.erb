@@ -107,10 +107,28 @@
 <div class='form_entry'>#<%= f.text_field :color, :class => 'color' %></div>
 
 <div class='form_label'>Email Header</div>
-<div class='form_entry'><%= f.text_area :email_header, :class => 'tinymce' %></div>
-
-<div class='form_label'>Webpage Header</div>
-<div class='form_entry'><%= f.text_area :web_header, :class => 'tinymce' %></div>
+<div class='form_entry'>
+  <label><%= f.radio_button :custom_header, false %> Use default header</label>
+  <label><%= f.radio_button :custom_header, true %> Use custom header</label>
+  <div id='default_header' style='display:<%= @affiliate.custom_header? ? 'none' : 'block' %>;'>
+    <%= render :partial => '/affiliates/header' %>
+  </div>
+  <div id='custom_header' style='display:<%= @affiliate.custom_header? ? 'block' : 'none' %>;'>
+    <%= f.text_area :email_header, :class => 'tinymce' %>
+  </div>
+  <script language='javascript'>
+    $(function() {
+        $('body').on('click','#affiliate_custom_header_false',function() {
+            $('#default_header').show();
+            $('#custom_header').hide();
+        });
+        $('body').on('click','#affiliate_custom_header_true',function() {
+            $('#default_header').hide();
+            $('#custom_header').show();
+        });
+    });
+  </script>
+</div>
 
 <div class='form_label'>Digest</div>
 <div class='form_entry'>
@@ -122,7 +140,7 @@
 <h1>Integration Information</h1>
 
 <div class='form_label'>Wordpress Shared Secret</div>
-<div class='form_entry'><%= current_user.admin? ? (f.text_field :shared_secret) : @affiliate.shared_secret %></div>
+<div class='form_entry'><%= @affiliate.shared_secret %></div>
 
 <div class='form_label'>CPanel username</div>
 <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>
