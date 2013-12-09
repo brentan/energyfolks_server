@@ -10,7 +10,7 @@ The showPage function is the master function to show energyfolks data.  Params i
         blogs
     format:
         list
-        calendar
+        month
         map
         stream (only blogs and discussions)
  */
@@ -19,9 +19,32 @@ EnergyFolks.showPage = function(params) {
     if(typeof params.format !== 'undefined') EnergyFolks.format = params.format
     //Backwards compatible
     if(EnergyFolks.source == 'calendar') EnergyFolks.source = 'events';
+    if(EnergyFolks.source == 'calendar-agenda') {
+        EnergyFolks.source = 'events';
+        EnergyFolks.format = 'list';
+    }
+    if(EnergyFolks.source == 'calendar-weekly') {
+        EnergyFolks.source = 'events';
+        EnergyFolks.format = 'month';
+    }
+    if(EnergyFolks.source == 'calendar-monthly') {
+        EnergyFolks.source = 'events';
+        EnergyFolks.format = 'month';
+    }
     if(EnergyFolks.source == 'bulletins') EnergyFolks.source = 'discussions';
-    if(EnergyFolks.source == 'bulletins-stream') EnergyFolks.source = 'discussions';
-    document.write("<div id='EnFolksmainbodydiv'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div><div style='display: none;'><img src='"+EnergyFolks.server_url+"/assets/loader.gif' border='0' style='display:inline;'></div>");
+    if(EnergyFolks.source == 'bulletins-stream') {
+        EnergyFolks.source = 'discussions';
+        EnergyFolks.format = 'stream';
+    }
+    if(EnergyFolks.source == 'bulletins-long') {
+        EnergyFolks.source = 'discussions';
+        EnergyFolks.format = 'stream';
+    }
+    if(EnergyFolks.source == 'bulletins-forum') {
+        EnergyFolks.source = 'discussions';
+        EnergyFolks.format = 'list';
+    }
+    document.write("<div id='EnFolksmainbodydiv' class='ef_"+EnergyFolks.source+"'><div id='moderation_box_"+EnergyFolks.source+"'></div><div id='EnfolksFilterDiv' class='ef_"+EnergyFolks.source+"'></div><div id='EnfolksResultDiv' ></div></div><div style='display: none;'><img src='"+EnergyFolks.server_url+"/assets/loader.gif' border='0' style='display:inline;'></div>");
     var command = EnergyFolks.$.bbq.getState( "command" );
     var parameters = EnergyFolks.$.bbq.getState( "parameters" );
     if(typeof command != "undefined") {

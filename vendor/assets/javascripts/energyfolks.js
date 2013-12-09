@@ -4,7 +4,7 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require energyfolks/jquery_1.9.1
+//= require energyfolks/jquery
 //= require energyfolks/initialize
 //= require energyfolks/hash_change
 //= require energyfolks/listeners
