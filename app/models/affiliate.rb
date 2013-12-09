@@ -130,9 +130,9 @@ class Affiliate < ActiveRecord::Base
     self.update_column(:shared_secret, Digest::MD5.hexdigest("#{Time.now()}.energyfolkssalt"))
   end
 
-  def url(entity = nil)
+  def entity_url(entity = nil)
     if entity.nil?
-      url = super
+      url = self.url
     else
       url = url_users if entity.instance_of?(User)
       url = url_events if entity.instance_of?(Event)
