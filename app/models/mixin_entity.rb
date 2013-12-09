@@ -674,7 +674,8 @@ module MixinEntity
   end
 
   def mark_read(user_id, affiliate_id, ip)
-    return if user_id == self.user_id # Don't count our own views
+    author_id = self.instance_of?(User) ? self.id : self.user_id
+    return if user_id == author_id # Don't count our own views
     if user_id > 0
       read = self.mark_reads.where(:user_id => user_id).first
       if read.blank?
