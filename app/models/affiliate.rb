@@ -11,7 +11,7 @@ class Affiliate < ActiveRecord::Base
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
-                  :email, :live, :open, :visible, :color, :email_header, :web_header, :location, :latitude, :longitude,
+                  :email, :live, :open, :visible, :color, :email_header, :custom_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
                   :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded
@@ -73,7 +73,7 @@ class Affiliate < ActiveRecord::Base
   def self.find_by_id(id)
     affiliate = super(id)
     if affiliate.blank?
-      affiliate = Affiliate.new(:name => 'Energyfolks', :url => 'https://www.energyfolks.com/', :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true, :timezone => 'Pacific Time (US & Canada)')
+      affiliate = Affiliate.new(:name => 'Energyfolks', :url => SITE_HOST, :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true, :timezone => 'Pacific Time (US & Canada)')
     end
     return affiliate
   end
@@ -128,6 +128,19 @@ class Affiliate < ActiveRecord::Base
 
   def create_shared_secret
     self.update_column(:shared_secret, Digest::MD5.hexdigest("#{Time.now()}.energyfolkssalt"))
+  end
+
+  def url(entity = nil)
+    if entity.nil?
+      url = super
+    else
+      url = url_users if entity.instance_of?(User)
+      url = url_events if entity.instance_of?(Event)
+      url = url_jobs if entity.instance_of?(Job)
+      url = url_discussions if entity.instance_of?(Discussion)
+      url = url_blogs if entity.instance_of?(Blog)
+    end
+    url
   end
 
   def url_users

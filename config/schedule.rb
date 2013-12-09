@@ -23,10 +23,14 @@ every 1.minute do
   command "cd /var/app/current && bundle exec ensure_one_cron_leader"
 end
 
-every 24.hours do
+every 1.day, :at => '2:00 am' do
   rake "clean_up:user_login_hash"
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
+end
+every 1.day, :at => '1:00 am' do
   rake "nightly:wordpress"
+end
+every 1.day, :at => '3:00 am' do
   rake "nightly:google"
 end

@@ -20,13 +20,20 @@ class ErrorMailer < ActionMailer::Base
   def error_back_to_sender(email, subject, original_subject, error)
     @error = error
     @original_subject = original_subject
+    if email.instance_of?(User)
+      @user = email
+      email = @user.email
+      @affiliate = @user.affiliate
+    end
     mail(to: email, subject: subject)
   end
 
-  def message_back_to_sender(email, subject, original_subject, item)
+  def message_back_to_sender(user, subject, original_subject, item)
     @item = item
+    @user = user
+    @affiliate = @user.affiliate
     @original_subject = original_subject
-    mail(to: email, subject: subject)
+    mail(to: user.email, subject: subject)
   end
 
 end

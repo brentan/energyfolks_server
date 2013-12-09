@@ -34,6 +34,10 @@ EnergyfolksServer::Application.routes.draw do
   get "users/resend_activation"
   post "users/resend_activation"
 
+  get "emails/edit"
+  put "emails/update"
+  get "emails/open"
+
   # Google Apps SAML SSO routes
   get '/google/saml/inbound', to: 'google#inbound'
   get '/google/saml/logout', to: 'google#logout'
