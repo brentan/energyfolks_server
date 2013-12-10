@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131208231734) do
+ActiveRecord::Schema.define(:version => 20131210020815) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.boolean  "digest",                  :default => false
   end
 
   create_table "blogs_versions", :force => true do |t|

@@ -3,19 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="One bug fix&#10;">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20131210020815_add_digest_option_to_blog.rb" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.rakeTasks" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/energyfolks_server.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/log/development.log" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/blogs/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/blogs/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/filter_bar_search_bar.css.scss" afterPath="$PROJECT_DIR$/vendor/assets/stylesheets/energyfolks/filter_bar_search_bar.css.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
@@ -768,7 +756,11 @@
       <created>1386641007571</created>
       <updated>1386641007571</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="remove stuff from git">
+      <created>1386642270501</created>
+      <updated>1386642270502</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -851,7 +843,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Update homepage to have more information" />
     <MESSAGE value="Add widget ability" />
     <MESSAGE value="Moderation Links" />
     <MESSAGE value="Stop ajax from loading all affiliate/user info on each hit." />
@@ -876,7 +867,8 @@
     <MESSAGE value="quick bug fix" />
     <MESSAGE value="Correct deploy config to add linkedin to omniauth on server" />
     <MESSAGE value="Solve duplicate flash notice problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="Solve duplicate flash notice problem" />
+    <MESSAGE value="remove stuff from git" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove stuff from git" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

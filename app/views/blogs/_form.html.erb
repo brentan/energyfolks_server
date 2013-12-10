@@ -39,6 +39,11 @@
               </div>
           <% end %>
 
+          <div class='form_label'>Digest Announcement</div>
+          <div class='form_entry'>
+            <label><%= f.check_box :digest %> Include the full text of this at the top of the next digest.</label>
+          </div>
+
           <div class='form_label'>Attachment</div>
           <div class='form_entry'>
             <%= link_to @item.attachment.url if @item.attachment.present? %>
