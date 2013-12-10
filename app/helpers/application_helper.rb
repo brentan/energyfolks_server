@@ -9,6 +9,8 @@ module ApplicationHelper
 
   # show alert/notices in the notice bar
   def notices(notice, alert)
+
+
     html = ['<script language="javascript">', '$(function () {']
     html << "EnergyFolks.showNotice('#{notice.gsub(/'/, "\\\\'")}');" if notice.present?
     html << "EnergyFolks.showNotice('#{alert.gsub(/'/, "\\\\'")}','red');" if alert.present?

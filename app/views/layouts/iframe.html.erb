@@ -49,7 +49,7 @@
     </script>
 <% end %>
 <%= raw(notices(params[:notice], params[:alert])) %>
-<%= raw(notices(notice, alert)) %>
+<%= raw(notices(flash.discard(:notice), flash.discard(:alert))) %>
 
 </body>
 </html>

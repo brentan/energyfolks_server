@@ -1,4 +1,5 @@
 <script language='javascript'>
+  <%= "alert('#{@alert}');" if @alert.present? %>
   window.opener.location.reload();
   window.close();
 </script>
