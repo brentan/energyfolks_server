@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210020815) do
+ActiveRecord::Schema.define(:version => 20131210025027) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -212,6 +212,8 @@ ActiveRecord::Schema.define(:version => 20131210020815) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.datetime "last_comment_at"
+    t.integer  "total_comments",          :default => 0
   end
 
   create_table "discussions_versions", :force => true do |t|

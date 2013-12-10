@@ -5,8 +5,9 @@ class Discussion < ActiveRecord::Base
   has_many :versions, :foreign_key => 'entity_id', :class_name => 'DiscussionsVersion',:dependent => :destroy
 
   after_save :update_comment_details
+  before_create :update_now
 
-  default_scope order('created_at DESC')
+  default_scope order('last_comment_at DESC')
 
   VERSION_CONTROLLED = %w(name html attachment_file_name attachment_content_type attachment_file_size attachment_updated_at)
   include MixinEntity
@@ -28,9 +29,15 @@ class Discussion < ActiveRecord::Base
 
   attr_accessible :name, :html, :attachment, :affiliates_discussions_attributes, :last_updated_by
 
+  def self.date_column
+    'last_comment_at'
+  end
   private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)
+  end
+  def update_now
+    self.last_comment_at = Time.now()
   end
 
 end
