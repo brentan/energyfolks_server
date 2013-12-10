@@ -583,16 +583,16 @@ EnergyFolks.$(function() {
 EnergyFolks.itemDetailHTML = function(item, show_links) {
 
     if(typeof show_links === 'undefined') show_links = true;
-    var output = '<table border=0 class="ef_item_details"><tr><td class="ef_affiliate_logo">';
+    var output = '<table border=0 class="ef_item_details"><tr>';
     var info = EnergyFolks.getItemInfo(item);
-    output += EnergyFolks.affiliateLogo(info.affiliate_id, EnergyFolks.source == 'users' ? 'User is a member of' : 'Posted from the website of');
     output += "</td><td class='ef_main_td'>";
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
+    output += "<table border=0 cellpadding=0 cellspacing=0><tr><td class='ef_affiliate_logo_holder'>" + EnergyFolks.affiliateLogo(info.affiliate_id, EnergyFolks.source == 'users' ? 'User is a member of' : 'Posted from the website of') + '</td><td>';
     output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
-        output += '<div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
+        output += '</td></tr></table><div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else
-        output += '<span class="line2">' + info.line_two + '</span>';
+        output += '<span class="line2">' + info.line_two + '</span></td></tr></table>';
     output += '</td>';
     if(info.logo != '')
         output += '<td class="enfolks_logo"><img src="' + info.logo + '"></td>';
@@ -684,8 +684,8 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.logo = '';
         output.title = item.name;
         output.params = {id: item.id, model: 'Discussion'};
-        output.line_one = '';
-        output.line_two = '';
+        output.line_one = item.author_name;
+        output.line_two = item.posted_at + " - " + item.total_comments + ' comment' + (item.total_comments*1 == 1 ? '' : 's');
         output.widget = output.line_one;
         output.html = item.html;
         output.hash = "Discussion_" + item.id;
@@ -695,13 +695,15 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.logo = '';
         output.title = item.name;
         output.params = {id: item.id, model: 'Blog'};
-        output.line_one = '';
-        output.line_two = '';
+        output.line_one = item.author_name;
+        output.line_two = item.posted_at;
         output.widget = output.line_one;
         output.html = item.html;
-        output.hash = "Blog_" + item.id; //TODO: FIGURE THIS ONE OUT TO MATCH WORDPRESS AND BLOG.COMMENT_HASH
+        output.hash = item.wordpress_id == "" ? ("Blog_" + item.id) : ("WORDPRESS_HASH_" + item.affiliate_id + "_" + item.wordpress_id);
         output.admin_links = EnergyFolks.adminLink(item, 'blogs');
     }
+    if(output.line_one == 'null') output.line_one = '';
+    if(output.line_two == 'null') output.line_two = '';
     return output;
 };
 EnergyFolks.adminLink = function(item, source) {

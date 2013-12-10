@@ -32,7 +32,14 @@ class Blog < ActiveRecord::Base
   attr_accessible :name, :html, :attachment, :affiliates_blogs_attributes, :digest, :last_updated_by, :latitude, :longitude, :affiliate_id, :announcement
 
   def self.comment_hash
-    self.affiliate_id.present? && self.wordpress_id.present? ? "WORDPRESS_HASH_#{self.affiliate_id}_#{self.wordpress_id}" : "#{self.affiliate_id}_#{self.wordpress_id}"
+    self.affiliate_id.present? && self.wordpress_id.present? ? "WORDPRESS_HASH_#{self.affiliate_id}_#{self.wordpress_id}" : "#{self.entity_name}_#{self.id}"
+  end
+  def author_name
+    return 'Unknown user' if self.user.blank?
+    "#{self.user.first_name} #{self.user.last_name}"
+  end
+  def posted_at
+    self.created_at.strftime( "%B %-d, %Y")
   end
 
   private
