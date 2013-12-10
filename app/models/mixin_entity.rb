@@ -246,6 +246,8 @@ module MixinEntity
         all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present?
         all_attributes[:logo_url] = item.logo.url(:thumb) if item.respond_to?(:logo) && item.logo.present?
         all_attributes[:mmddyyyy] = item.mmddyyyy if item.respond_to?(:mmddyyyy)
+        all_attributes[:posted_at] = item.posted_at if item.respond_to?(:posted_at)
+        all_attributes[:author_name] = item.author_name if item.respond_to?(:author_name)
         if item.respond_to?(:start_time)
           all_attributes[:start_time] = item.start_time
           all_attributes[:end_time] = item.end_time

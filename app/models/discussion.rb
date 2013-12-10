@@ -32,6 +32,13 @@ class Discussion < ActiveRecord::Base
   def self.date_column
     'last_comment_at'
   end
+  def author_name
+    return 'Unknown user' if self.user.blank?
+    "#{self.user.first_name} #{self.user.last_name}"
+  end
+  def posted_at
+    self.created_at.strftime( "%B %-d, %Y")
+  end
   private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)
