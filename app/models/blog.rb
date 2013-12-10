@@ -26,13 +26,13 @@ class Blog < ActiveRecord::Base
       :hash_secret => "asfAdsfmasdfaSDFsdgfsdgfsdhgsgfn23unjasdkfnakjsdfnnff-"
   }
   validates_attachment :attachment,
-                       :content_type => { :content_type => /^(text|image|application\/pdf|application\/x\-pdf|application\/ms|application\/vnd\.ms|application\/vnd\.openxmlformats|application\/x\-ms).*/ }, #TODO: More content types (pdf, word, excel)
+                       :content_type => { :content_type => /^(text|image|application\/pdf|application\/x\-pdf|application\/ms|application\/vnd\.ms|application\/vnd\.openxmlformats|application\/x\-ms).*/ },
                        :size => { :in => 0..26.megabytes }
 
-  attr_accessible :name, :html, :attachment, :affiliates_blogs_attributes, :last_updated_by, :latitude, :longitude, :affiliate_id, :announcement
+  attr_accessible :name, :html, :attachment, :affiliates_blogs_attributes, :digest, :last_updated_by, :latitude, :longitude, :affiliate_id, :announcement
 
   def self.comment_hash
-    "#{self.affiliate_id}_#{self.wordpress_id}" # TODO: UPDATE TO MATCH WORDPRESS PLUGIN
+    self.affiliate_id.present? && self.wordpress_id.present? ? "WORDPRESS_HASH_#{self.affiliate_id}_#{self.wordpress_id}" : "#{self.affiliate_id}_#{self.wordpress_id}"
   end
 
   private

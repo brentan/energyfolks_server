@@ -5,6 +5,8 @@ class Comment < ActiveRecord::Base
 
   before_save :sanitize
   before_destroy :remove_details
+  after_create :update_parent
+  before_destroy :drop_parent
 
   default_scope order('created_at DESC')
 
@@ -46,6 +48,22 @@ class Comment < ActiveRecord::Base
   end
   def comment_id
     self.id
+  end
+  def update_parent
+    if self.unique_hash.include?('Discussion_')
+      discussion = Discussion.find_by_id(self.unique_hash.gsub('Discussion_','').to_i)
+      return if discussion.blank?
+      discussion.update_column(:last_comment_at , Time.now())
+      discussion.update_column(:total_comments, discussion.total_comments + 1)
+      discussion.update_index
+    end
+  end
+  def drop_parent
+    if self.unique_hash.include?('Discussion_')
+      discussion = Discussion.find_by_id(self.unique_hash.gsub('Discussion_','').to_i)
+      return if discussion.blank?
+      discussion.update_column(:total_comments, discussion.total_comments - 1)
+    end
   end
 
   private
