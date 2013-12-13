@@ -65,6 +65,9 @@ module MixinEntity
     def date_column
       'created_at'
     end
+    def to_archive
+      self.where("created_at < ?", 2.years.ago).all
+    end
 
     def total_needing_moderation(affiliate)
       self.join_table.waiting.where(affiliate_id: affiliate.id.present? ? affiliate.id : 0, broadcast: true)
@@ -182,7 +185,7 @@ module MixinEntity
         items = items.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliates[0]}) if affiliates[0] > 0
       else
         select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
-        items = self.select("DISTINCT #{select.join(', ')}")
+        items = self.select("DISTINCT #{select.join(', ')}").where(archived: false)
         items = items.joins("affiliates_#{self.name.downcase.pluralize}".to_sym)
         items = items.where("affiliates_#{self.name.downcase.pluralize}.affiliate_id IN (#{affiliates.join(', ')})")
         items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
@@ -332,7 +335,7 @@ module MixinEntity
         Asari.mode = :production
         asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
         asari.aws_region = AMAZON_REGION
-        if destroy || (self.to_index[:affiliates] == "ssee") || (self.instance_of?(User) && !self.verified?)
+        if destroy || (self.to_index[:affiliates] == "ssee") || (self.instance_of?(User) && !self.verified?) || self.archived?
           asari.remove_item(self.search_index_id)
         else
           asari.add_item(self.search_index_id, self.to_index)
