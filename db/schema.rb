@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210025027) do
+ActiveRecord::Schema.define(:version => 20131213223640) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.boolean  "digest",                  :default => false
+    t.boolean  "archived",                :default => false
   end
 
   create_table "blogs_versions", :force => true do |t|
@@ -200,8 +201,8 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "discussions", :force => true do |t|
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "user_id"
     t.integer  "affiliate_id"
     t.integer  "current_version",         :default => 0
@@ -214,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
     t.datetime "attachment_updated_at"
     t.datetime "last_comment_at"
     t.integer  "total_comments",          :default => 0
+    t.boolean  "archived",                :default => false
   end
 
   create_table "discussions_versions", :force => true do |t|
@@ -258,8 +260,8 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
 
   create_table "events", :force => true do |t|
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.datetime "start"
     t.datetime "end"
     t.string   "location"
@@ -279,6 +281,7 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "timezone"
+    t.boolean  "archived",          :default => false
   end
 
   create_table "events_versions", :force => true do |t|
@@ -315,8 +318,8 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
   add_index "highlights", ["entity_type"], :name => "index_highlights_on_entity_type"
 
   create_table "jobs", :force => true do |t|
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.date     "expire"
     t.string   "location"
     t.float    "latitude"
@@ -334,6 +337,7 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "last_updated_by"
+    t.boolean  "archived",          :default => false
   end
 
   create_table "jobs_versions", :force => true do |t|
@@ -428,8 +432,6 @@ ActiveRecord::Schema.define(:version => 20131210025027) do
     t.string  "name"
     t.integer "count", :default => 0
   end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :mark_reads
+  has_many :digests
   has_many :comment_subscribers, :dependent => :destroy
   has_many :third_party_logins, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blogs'
@@ -143,8 +144,17 @@ class User < ActiveRecord::Base
   def extra_info(join_item)
     "The user has provided the following reason for seeking membership in your group:<BR>#{join_item.reason}"
   end
+  def archived?
+    false
+  end
+  def archived
+    false
+  end
   def self.join_table
     Membership
+  end
+  def self.to_archive
+    []
   end
   def wordpress_password(affiliate_id)
     #password auto-generated and used by wordpress logins
