@@ -30,6 +30,10 @@ class DigestMailer < ActiveRecord::Base
     output[:blogs][:all].each do |b|
       output[:announcements] << b if b.digest? && b.affiliate.present? && b.affiliate.member?(self.user)
     end
+    output[:blogs][:all] -= output[:announcements]
+    output[:blogs][:highlighted] -= output[:announcements]
+    output[:blogs][:source] -= output[:announcements]
+    output[:blogs][:all_other] -= output[:announcements]
 
     # Determine job radius settings
     if self.user.subscription.job_radius == 0
@@ -59,7 +63,13 @@ class DigestMailer < ActiveRecord::Base
     output[:jobs][:all].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
     output[:discussions][:all].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
 
-    return output
+    send_it = false
+    send_it = true if output[:announcements].present?
+    send_it = true if output[:jobs][:all].present?
+    send_it = true if output[:events][:all].present?
+    send_it = true if output[:discussions][:all].present?
+    send_it = true if output[:blogs][:all].present?
+    return output, send_it
   end
 
   private
