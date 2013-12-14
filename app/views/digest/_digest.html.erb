@@ -1,0 +1,151 @@
+TODO: Header table of contents!
+<BR><BR>
+<% if @items[:announcements].present? %>
+    <h2>Announcements</h2>
+    <% @items[:announcements].each do |a| %>
+        <div style='padding-left:50px;border-bottom: 1px solid #cccccc;'>
+          <strong><%= a.name %></strong><BR>
+          <%= a.html %>
+        </div>
+    <% end %>
+<% end %>
+
+<% if @items[:events][:all].present? %>
+    <h2>Upcoming Events</h2>
+    <% if @items[:events][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:events][:highlighted].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
+                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
+                <%= e.synopsis %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:events][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:events][:source].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
+                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
+                <%= e.synopsis %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:events][:all_other].present? %>
+        <strong>Submitted through other networks</strong>
+        <ul>
+          <% @items[:events][:all_other].each do |e| %>
+              <li>
+                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:jobs][:all].present? %>
+    <h2>Recent Job Posts</h2>
+    <% if @items[:jobs][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:jobs][:highlighted].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:jobs][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:jobs][:source].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:jobs][:all_other].present? %>
+        <strong>Submitted through other networks</strong>
+        <ul>
+          <% @items[:jobs][:all_other].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:discussions][:all].present? %>
+    <h2>Recent Discussions</h2>
+    <% if @items[:discussions][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:discussions][:highlighted].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:discussions][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:discussions][:source].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:discussions][:all_other].present? %>
+        <strong>Submitted through other networks</strong>
+        <ul>
+          <% @items[:discussions][:all_other].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:blogs][:all].present? %>
+    <h2>Recent Blog Posts and Announcements</h2>
+    <% if @items[:blogs][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:blogs][:highlighted].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:blogs][:source].present? %>
+        <strong>Posted by <%= @affiliate.name %></strong>
+        <ul>
+          <% @items[:blogs][:source].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:blogs][:all_other].present? %>
+        <strong>Posted by other networks</strong>
+        <ul>
+          <% @items[:blogs][:all_other].each do |e| %>
+              <li>
+                <a href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>

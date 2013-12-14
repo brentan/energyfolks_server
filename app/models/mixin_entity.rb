@@ -58,6 +58,7 @@ module MixinEntity
       has_many :tags, :through => :tags_entities
       has_many :mark_reads, as: :entity, :dependent => :destroy
       has_many :emails, as: :entity, :dependent => :destroy
+      has_many :digest_items, as: :entity, :dependent => :destroy
       attr_accessible :raw_tags
       attr_writer :raw_tags
     end
@@ -136,6 +137,7 @@ module MixinEntity
 
           filters = { and: { type: self.new.entity_name, affiliates: affiliates.map {|a| "ss#{a.to_s(27).tr("0-9a-q", "A-Z")}ee" }.join('|') } }
           filters[:and][:date] = (DateTime.new(py, pm, pd).to_i)..(DateTime.new(ny, nm, nd).to_i) if options[:display] == 'month'
+          filters[:and][:date] = (options[:start].to_i)..(options[:end].to_i) if options[:display] == 'dates'
           if options[:display] == 'map'
             bounds = options[:bounds].split('_')
             sw = Asari::Geography.degrees_to_int(lat: bounds[0].to_i, lng: bounds[1].to_i)
@@ -149,7 +151,7 @@ module MixinEntity
             filters[:and][:lng] = latlng[:lng]
           end
           filters[:and][:date] = 1..options[:visibility] if options[:visibility].present?  # User visibility info stored here
-          filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
+          filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (options[:display] != 'dates') && (self.name.downcase.pluralize == 'events')
           filters[:and][:highlights] = "ss#{options[:highlight].to_i.to_s(27).tr("0-9a-q", "A-Z")}ee" if options[:highlight] > 0
           filters[:and][:primary_id] = options[:source] if options[:source] > 0
           filters[:and][:secondary] = options[:tags].join('|') if options[:tags].present? && (options[:tags].length > 0)
@@ -191,7 +193,7 @@ module MixinEntity
         items = items.where("affiliates_#{self.name.downcase.pluralize}.approved_version > 0")
       end
       items = items.offset(options[:page] * options[:per_page]).limit(options[:per_page] + 1) if %w(list stream).include?(options[:display])
-      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (self.name.downcase.pluralize == 'events')
+      items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (options[:display] != 'dates') && (self.name.downcase.pluralize == 'events')
       if terms.present? && self.name.downcase.pluralize == 'users'
         items = items.where("first_name LIKE ? OR last_name LIKE ?","%#{terms}%","%#{terms}%")
       elsif terms.present?
@@ -220,6 +222,9 @@ module MixinEntity
       if options[:display] == 'month'
         items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", DateTime.new(py, pm, pd)]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", DateTime.new(ny, nm, nd)])
       end
+      if options[:display] == 'dates'
+        items = items.where(["#{self.name.downcase.pluralize}.#{self.date_column} > ?", options[:start]]).where(["#{self.name.downcase.pluralize}.#{self.date_column} < ?", options[:end]])
+      end
       items = items.all
       if %w(list stream).include?(options[:display]) && (items.length == (options[:per_page] + 1))
         items = items[0...-1]
@@ -234,16 +239,20 @@ module MixinEntity
       affiliates << 0 unless affiliate.present? && (affiliate.send("moderate_#{self.new().method_name}") == Affiliate::ALL)
       affiliates.compact!
       items, more_pages = self.search(options[:terms],affiliates, options)
-      return version_control(user, affiliate, items), more_pages
+      return version_control(user, affiliate, items, options), more_pages
     end
 
-    def version_control(user, affiliate, items)
+    def version_control(user, affiliate, items, options = {})
       # Will transform data into current version based on current user
       new_list = []
       items.each do |item|
         self.column_names.each do |cn|
           next if %w(id created_at updated_at).include?(cn)
           item.send("#{cn}=",item.get(cn, affiliate, user))
+        end
+        if options[:entity_back].present?
+          new_list << item
+          next
         end
         all_attributes = item.attributes
         all_attributes[:logo] = item.respond_to?(:logo) && item.logo.present?
