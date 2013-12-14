@@ -5,6 +5,6 @@ class ThirdPartyLogin < ActiveRecord::Base
 
   def self.update(user, service, token, secret)
     self.where({user_id: user.id, service: service}).all.each { |e| e.destroy }
-    self.create!({user_id: user.id, service: service, token: token, secret: secret })
+    self.create({user_id: user.id, service: service, token: token, secret: secret })
   end
 end

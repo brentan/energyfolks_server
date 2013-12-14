@@ -1,16 +1,21 @@
+<% if @item.archived? %>
+    <div class='admin_controls'>
+      <h2>This item has been archived and is no longer editable or available in search results.</h2>
+    </div>
+<% end %>
 <% if params[:version].blank? %>
     <% if @item.is_editable?(current_user) %>
         <div class='admin_controls'>
           <%= content_tag(:h3, current_user.id == @item.user_id ? 'This is your post' : 'Content Management') %>
           This post was submitted on <%= @item.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= current_user.id == @item.user_id ? 'you' : "#{@item.user.first_name} #{@item.user.last_name}"%>.
           This post was last updated on <%= @item.last_updated_at(current_affiliate, current_user).strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= current_user.id == @item.last_updated_by ? 'you' : "#{@item.last_update.first_name} #{@item.last_update.last_name}"%>.<BR>
-          <%= popup 'Edit this post', "#{@item.method_name}/edit", true, {id: @item.id} %> <BR>
+          <%= popup 'Edit this post', "#{@item.method_name}/edit", true, {id: @item.id} unless @item.archived? %> <BR>
           <%= ajax_link 'Delete this post', "delete", {model: @item.entity_name, id: @item.id}, true if (current_user.id == @item.user_id) || current_user.admin? %>
           <% if @item.versions.length > 1 %>
               <h4>Previous Versions</h4>
               <% @item.versions.each do |v| %>
                   <% next if v.version_number == @item.current_version %>
-                  - <span class='inline'>V<%= v.version_number %>: created <%= v.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>. <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= v.version_number %>&aid=<%= current_affiliate.present? ? current_affiliate.id : 0 %>' target='_blank'>View</a> | <%= popup 'Restore', "#{@item.method_name}/restore", true, {id: @item.id, version: v.version_number}, current_user.id == @item.user_id ? "Are you sure?  Restoring to an earlier version will destroy later versions." : "Are you sure?  Restoring to an earlier version may require re-approving this post to bring it back to the latest version." %></span><BR>
+                  - <span class='inline'>V<%= v.version_number %>: created <%= v.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>. <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= v.version_number %>&aid=<%= current_affiliate.present? ? current_affiliate.id : 0 %>' target='_blank'>View</a> | <%= popup 'Restore', "#{@item.method_name}/restore", true, {id: @item.id, version: v.version_number}, current_user.id == @item.user_id ? "Are you sure?  Restoring to an earlier version will destroy later versions." : "Are you sure?  Restoring to an earlier version may require re-approving this post to bring it back to the latest version."  unless @item.archived? %></span><BR>
               <% end %>
           <% end %>
           <% if current_user.admin? || (current_user.id == @item.user_id) %>
@@ -27,7 +32,7 @@
     <%
     @item.affiliate_join.each do |m|
        affiliate = Affiliate.find_by_id(m.affiliate_id)
-       if affiliate.admin?(current_user, Membership::EDITOR) %>
+       if affiliate.admin?(current_user, Membership::EDITOR) && !@item.archived? %>
             <% if m.approved? %>
                 <div class='admin_controls'>
                   <h3>Post management for <%= affiliate.name %></h3>
@@ -91,7 +96,7 @@
     <%
        if @item.affiliate_join.map { |a| a.affiliate_id }.include?(0) && !@item.instance_of?(Blog)
          current_user.memberships.approved.each do |m|
-           if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) %>
+           if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) && !@item.archived? %>
              <div class='admin_controls'>
              <h3>Post management for <%= m.affiliate.name %></h3>
                     Post was sent to all energyfolks users, and therefore moderation is completed by energyfolks.  Change your group settings to moderate all posts, or <a href='mailto:contact@energyfolks.com'>contact energyfolks</a> with

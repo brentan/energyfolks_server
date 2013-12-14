@@ -1,5 +1,7 @@
 #energyfolks_popup .Enfolks_comments, #EnFolksmainbodydiv .Enfolks_comments, .Enfolks_comments {
 
+    margin-right: 150px;
+    margin-left: 80px;
     .ef_comment_item, .ef_comments_loading, .ef_add_comment, .ef_no_comment, .ef_hidden_comments, .ef_comment_subscribe {
       background-color: #eeeeee;
       border: 0px solid black;
@@ -58,6 +60,7 @@
 
         div.ef_affiliate_logo {
           position: relative;
+          top: 5px;
           display: inline-block;
           img.affiliate_logo {
             border: 1px solid #cccccc;

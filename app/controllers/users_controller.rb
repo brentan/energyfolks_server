@@ -336,6 +336,19 @@ class UsersController < ApplicationController
   def terms
   end
 
+  def digest
+    return redirect_to "/", :notice => 'Must be logged in' unless user_logged_in?
+    digest = DigestMailer.create(user: current_user, weekly: true)
+    items, send_it = digest.items
+    @user = current_user
+    @token = digest.token
+    @items = items
+    @affiliate = current_user.affiliate
+    @weekly = true
+    digest.destroy
+    render 'digest/digest', :layout => 'site_mailer'
+  end
+
   def external_login
     # Use an external service to login the user
     cookies[:aid] = current_affiliate.id.present? ? current_affiliate.id : 0
@@ -358,7 +371,11 @@ class UsersController < ApplicationController
       user = User.find_by_linkedin_hash(hash.uid)
       user ||= User.find_by_email(email)
       user ||= current_user if user_logged_in?
-      if user
+      if user && user_logged_in? && (current_user.id != user.id)
+        # Linkedin is linked to another user account
+        @alert = 'This linkedin account is associated with a different EnergyFolks account.  You can delete this account, or you can delete the other account and synchronize this account with linkedin (first logout, then use the "login with linkedin" button, then delete that account, then login with this account, and then associate this account with linkedin).'
+        render 'common/refresh_parent', layout: "iframe"
+      elsif user
         # We know who this user is...lets log them in
         redirect_to "/", :alert => "Your account is frozen and your login is not allowed." unless user.active?
         user.last_login = Time.now

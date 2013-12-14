@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131208231734) do
+ActiveRecord::Schema.define(:version => 20131213232524) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -137,6 +137,8 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.boolean  "digest",                  :default => false
+    t.boolean  "archived",                :default => false
   end
 
   create_table "blogs_versions", :force => true do |t|
@@ -198,9 +200,32 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "digest_items", :force => true do |t|
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.boolean  "weekly",           :default => true
+    t.integer  "digest_mailer_id"
+    t.boolean  "opened",           :default => false
+    t.datetime "open_date"
+  end
+
+  add_index "digest_items", ["entity_id"], :name => "index_digest_items_on_entity_id"
+  add_index "digest_items", ["entity_type"], :name => "index_digest_items_on_entity_type"
+  add_index "digest_items", ["opened"], :name => "index_digest_items_on_opened"
+  add_index "digest_items", ["weekly"], :name => "index_digest_items_on_weekly"
+
+  create_table "digest_mailers", :force => true do |t|
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.integer  "user_id"
+    t.boolean  "opened",     :default => false
+    t.boolean  "weekly",     :default => true
+    t.datetime "open_date"
+  end
+
   create_table "discussions", :force => true do |t|
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "user_id"
     t.integer  "affiliate_id"
     t.integer  "current_version",         :default => 0
@@ -211,6 +236,9 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.datetime "last_comment_at"
+    t.integer  "total_comments",          :default => 0
+    t.boolean  "archived",                :default => false
   end
 
   create_table "discussions_versions", :force => true do |t|
@@ -255,8 +283,8 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
 
   create_table "events", :force => true do |t|
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.datetime "start"
     t.datetime "end"
     t.string   "location"
@@ -276,6 +304,7 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "timezone"
+    t.boolean  "archived",          :default => false
   end
 
   create_table "events_versions", :force => true do |t|
@@ -312,8 +341,8 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
   add_index "highlights", ["entity_type"], :name => "index_highlights_on_entity_type"
 
   create_table "jobs", :force => true do |t|
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.date     "expire"
     t.string   "location"
     t.float    "latitude"
@@ -331,6 +360,7 @@ ActiveRecord::Schema.define(:version => 20131208231734) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.integer  "last_updated_by"
+    t.boolean  "archived",          :default => false
   end
 
   create_table "jobs_versions", :force => true do |t|

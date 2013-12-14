@@ -69,8 +69,12 @@
         background-color: transparent;
       }
       div.html {
-        margin: 4px 2px;
+        margin: 4px 2px 4px 30px;
         padding: 0px;
+        div.Enfolks_comments {
+          margin-right: 50px;
+          margin-left: 0px;
+        }
       }
     }
 
@@ -84,18 +88,18 @@
       }
       vertical-align: top;
     }
-    td.ef_affiliate_logo, div.ef_affiliate_logo {
-      width:40px;
-      padding-right: 5px;
+    td.ef_affiliate_logo_holder {
+      width:22px;
+      padding-right: 4px;
       vertical-align: top;
       img {
-        width:40px;
-        height: 40px;
+        width:22px;
+        height: 22px;
       }
     }
     h1.title {
       margin:0px;
-      padding:0px 0px 3px 0px;
+      padding:0px 0px 3px 2px;
       font-size: 15px;
     }
     h3.line1 {
@@ -145,7 +149,7 @@
       margin: 0px;
       padding: 0px;
     }
-    td {
+    td.enfolks_day, td.enfolks_day_header {
       margin: 0px;
       border: 0px solid #444444;
       border-bottom-width: 1px;
@@ -277,13 +281,13 @@
           }
           vertical-align: top;
         }
-        td.ef_affiliate_logo {
-          width:40px;
-          padding-right: 5px;
+        td.ef_affiliate_logo_holder {
+          width:22px;
+          padding-right: 4px;
           vertical-align: top;
           img {
-            width:40px;
-            height: 40px;
+            width:22px;
+            height: 22px;
           }
         }
         h1.title {
@@ -319,13 +323,13 @@
       }
       vertical-align: top;
     }
-    td.ef_affiliate_logo {
-      width:40px;
-      padding-right: 5px;
+    td.ef_affiliate_logo_holder {
+      width:22px;
+      padding-right: 4px;
       vertical-align: top;
       img {
-        width:40px;
-        height: 40px;
+        width:22px;
+        height: 22px;
       }
     }
     h1.title {
@@ -380,10 +384,11 @@
     position: relative;
     padding: 0px;
     margin: 0px;
+    margin-top: 2px;
     img.affiliate_logo {
       border: 1px solid #cccccc;
-      width: 40px;
-      height: 40px;
+      width: 22px;
+      height: 22px;
     }
     div {
       display: none;
@@ -411,8 +416,8 @@
       }
       img {
         margin: 0px;
-        width: 40px;
-        height: 40px;
+        width: 22px;
+        height: 22px;
       }
 
     }

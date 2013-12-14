@@ -34,4 +34,7 @@ class Job < ActiveRecord::Base
   attr_accessible :name, :employer, :location, :html, :how_to_apply, :job_type, :logo, :affiliates_jobs_attributes, :last_updated_by
 
 
+  def self.to_archive
+    self.where("created_at < ?", 6.months.ago).all
+  end
 end

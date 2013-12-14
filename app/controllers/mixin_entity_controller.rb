@@ -32,7 +32,9 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     notice = "Not Authorized"
     # Restore a previous version...must check what user this is OK for
-    if current_user.present?
+    if @item.archived?
+      notice = "Archived items are locked from editing"
+    elsif current_user.present?
       if current_user.id == @item.user_id
         # Case 1: User is owner.  Restore all to previous version
         @item.versions.where("version_number > ?",params[:version]).each do |i|
@@ -85,7 +87,10 @@ module MixinEntityController
 
   def update
     @item = model.find_by_id(params[:id])
-    if current_user.present? && @item.is_editable?(current_user)
+    if @item.archived?
+      flash[:alert]="This item is archived and changes are not allowed."
+      render :action => :show
+    elsif current_user.present? && @item.is_editable?(current_user)
       params[@item.entity_name.downcase][:last_updated_by] = current_user.id
       if(@item.update_attributes(params[@item.entity_name.downcase]))
         Tag.update_tags(@item.raw_tags, @item)
