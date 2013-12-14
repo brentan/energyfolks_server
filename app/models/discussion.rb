@@ -6,6 +6,7 @@ class Discussion < ActiveRecord::Base
 
   after_save :update_comment_details
   before_create :update_now
+  before_destroy :remove_comments
 
   default_scope order('last_comment_at DESC')
 
@@ -45,6 +46,11 @@ class Discussion < ActiveRecord::Base
   end
   def update_now
     self.last_comment_at = Time.now()
+  end
+  def remove_comments
+    Comment.where(:unique_hash => self.comment_hash).all.each { |e| e.destroy }
+    CommentDetail.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
+    CommentSubscriber.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
   end
 
 end
