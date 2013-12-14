@@ -27,6 +27,7 @@ every 1.day, :at => '2:00 am' do
   rake "clean_up:user_login_hash"
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
+  rake "clean_up:old_analytics"
 end
 every 1.day, :at => '1:00 am' do
   rake "nightly:wordpress"
@@ -36,4 +37,11 @@ every 1.day, :at => '3:00 am' do
 end
 every 1.day, :at => '11:00 pm' do
   rake "nightly:archive"
+end
+
+every 1.day, :at => '6:00 am' do
+  rake "digest:daily"
+end
+every :monday, :at => '6:00 am' do
+  rake "digest:weekly"
 end

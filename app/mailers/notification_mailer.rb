@@ -26,6 +26,14 @@ class NotificationMailer < ActionMailer::Base
     end
   end
 
+  def digest(user, items, token, weekly)
+    @user = user
+    @token = token
+    @items = items
+    @affiliate = user.affiliate
+    mail(to: @user.email, from: 'donotreply@energyfolks.com', subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}] Your #{weekly ? 'Weekly' : 'Daily'} digest")
+  end
+
   def new_comment_or_reply(user, entity)
     @entity = entity
     @user = user

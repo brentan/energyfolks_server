@@ -1,9 +1,10 @@
-
-<div class='form_label'>Digest Emails</div>
-<div class='form_entry'>
-  <label><%= f.check_box :weekly %> Weekly Digest (Monday morning)</label>
-  <label><%= f.check_box :daily %> Daily Digest</label>
-</div>
+<% if !(@user.present? && @user.affiliate.present? && !@user.affiliate.send_digest?) %>
+    <div class='form_label'>Digest Emails</div>
+    <div class='form_entry'>
+      <label><%= f.check_box :weekly %> Weekly Digest (Monday morning)</label>
+      <label><%= f.check_box :daily %> Daily Digest</label>
+    </div>
+<% end %>
 <div class='form_label'>Notification Emails</div>
 <div class='form_entry'>
   <label><%= f.check_box :events %> New Events</label>
