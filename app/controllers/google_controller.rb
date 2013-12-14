@@ -5,7 +5,7 @@ class GoogleController < SamlIdp::IdpController
     if user_logged_in?
       admin_list = []
       admin_list << {name: 'Personal Account', email: "#{current_user.first_name}@energyfolks.com", response: idp_make_saml_response("#{current_user.first_name}@energyfolks.com")} if current_user.admin?
-      current_user.memberships.approved.where("admin_level > ?", Membership::CONTRIBUTOR).all.each do |m|
+      current_user.memberships.approved.where("admin_level > ?", Membership::AUTHOR).all.each do |m|
         next if m.affiliate.blank?
         admin_list << {name: m.affiliate.name, email: "#{m.affiliate.email_name}@energyfolks.com", response: idp_make_saml_response("#{m.affiliate.email_name}@energyfolks.com")}
       end

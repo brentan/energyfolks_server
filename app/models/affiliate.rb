@@ -114,7 +114,7 @@ class Affiliate < ActiveRecord::Base
   end
 
   def remove_all_primary_references
-    # TODO: Add email notice to user informing them that thier primary group has left EF
+    # TODO: Add email notice to user informing them that their primary group has left EF
      User.where(affiliate_id: self.id).all.each do |u|
       u.affiliate_id = 0
       u.save(:validate => false)
@@ -130,6 +130,14 @@ class Affiliate < ActiveRecord::Base
     self.update_column(:shared_secret, Digest::MD5.hexdigest("#{Time.now()}.energyfolkssalt"))
   end
 
+  def set_entity_url(url, entity)
+    self.update_column(:url_users,url) if (entity == 'users') && self.url_users(true).blank?
+    self.update_column(:url_events,url) if (entity == 'events') && self.url_events(true).blank?
+    self.update_column(:url_jobs,url) if (entity == 'jobs') && self.url_jobs(true).blank?
+    self.update_column(:url_discussions,url) if (entity == 'discussions') && self.url_discussions(true).blank?
+    self.update_column(:url_blogs,url) if (entity == 'blogs') && self.url_blogs(true).blank?
+  end
+
   def entity_url(entity = nil)
     if entity.nil?
       url = self.url
@@ -143,32 +151,37 @@ class Affiliate < ActiveRecord::Base
     url
   end
 
-  def url_users
-    url = super
+  def url_users(force = false)
+    return super() if force
+    url = super()
     url = "#{SITE_HOST}/users" if url.blank?
     url
   end
 
-  def url_events
-    url = super
+  def url_events(force = false)
+    return super() if force
+    url = super()
     url = "#{SITE_HOST}/events" if url.blank?
     url
   end
 
-  def url_jobs
-    url = super
+  def url_jobs(force = false)
+    return super() if force
+    url = super()
     url = "#{SITE_HOST}/jobs" if url.blank?
     url
   end
 
-  def url_discussions
-    url = super
+  def url_discussions(force = false)
+    return super() if force
+    url = super()
     url = "#{SITE_HOST}/discussions" if url.blank?
     url
   end
 
-  def url_blogs
-    url = super
+  def url_blogs(force = false)
+    return super() if force
+    url = super()
     url = "#{SITE_HOST}/blogs" if url.blank?
     url
   end

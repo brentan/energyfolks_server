@@ -72,6 +72,11 @@ EnergyfolksServer::Application.routes.draw do
   post "subcomments/create"
   post "inbound_emails/inbound"
 
+  # Wordpress routes
+  post "blogs/AddWordpressPost"
+  get "blogs/FreezeWordpressPost"
+  get "blogs/DeleteWordpressPost"
+
   # ENTITY ROUTES
   resources :users, only: ['show']
 
