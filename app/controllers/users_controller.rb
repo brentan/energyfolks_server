@@ -336,6 +336,19 @@ class UsersController < ApplicationController
   def terms
   end
 
+  def digest
+    return redirect_to "/", :notice => 'Must be logged in' unless user_logged_in?
+    digest = DigestMailer.create(user: current_user, weekly: true)
+    items, send_it = digest.items
+    @user = current_user
+    @token = digest.token
+    @items = items
+    @affiliate = current_user.affiliate
+    @weekly = true
+    digest.destroy
+    render 'digest/digest', :layout => 'site_mailer'
+  end
+
   def external_login
     # Use an external service to login the user
     cookies[:aid] = current_affiliate.id.present? ? current_affiliate.id : 0

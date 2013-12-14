@@ -31,6 +31,7 @@ class NotificationMailer < ActionMailer::Base
     @token = token
     @items = items
     @affiliate = user.affiliate
+    @weekly = weekly
     mail(to: @user.email, from: 'donotreply@energyfolks.com', subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}] Your #{weekly ? 'Weekly' : 'Daily'} digest")
   end
 

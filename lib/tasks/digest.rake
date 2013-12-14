@@ -6,11 +6,16 @@ namespace :digest do
   task :weekly => :environment do
     User.verified.joins(:subscription).where(subscriptions: {weekly: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
-      #begin
-      digest = DigestMailer.create(user: u, weekly: true)
-      NotificationMailer.digest(u, digest.items, digest.token, true).deliver
-      #rescue
-      #end
+      begin
+        digest = DigestMailer.create(user: u, weekly: true)
+        items, send_it = digest.items
+        if send_it
+          NotificationMailer.digest(u, items, digest.token, true).deliver
+        else
+          digest.destroy
+        end
+      rescue
+      end
     end
   end
 
@@ -18,11 +23,16 @@ namespace :digest do
   task :daily => :environment do
     User.verified.joins(:subscription).where(subscriptions: {daily: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
-      #begin
-      digest = DigestMailer.create(user: u, weekly: false)
-      NotificationMailer.digest(u, digest.items, digest.token, false).deliver
-      #rescue
-      #end
+      begin
+        digest = DigestMailer.create(user: u, weekly: false)
+        items, send_it = digest.items
+        if send_it
+          NotificationMailer.digest(u, items, digest.token, false).deliver
+        else
+          digest.destroy
+        end
+      rescue
+      end
     end
   end
 
