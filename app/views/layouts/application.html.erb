@@ -108,7 +108,6 @@
 </div>
 <BR><BR><BR>
 
-
-<%= raw(notices(notice, alert)) %>
+<%= raw(notices(flash.discard(:notice), flash.discard(:alert))) %>
 </body>
 </html>

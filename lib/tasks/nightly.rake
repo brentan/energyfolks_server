@@ -28,4 +28,14 @@ namespace :nightly do
     Affiliate.all.each {|a| google.sync_affiliate(a)}
   end
 
+  desc "Archive Old Stuff"
+  task :archive => :environment do
+    ApplicationController::ENTITIES.each do |e|
+      e.to_archive.each do |i|
+        i.update_column(:archived, true)
+        i.remove_from_index
+      end
+    end
+  end
+
 end

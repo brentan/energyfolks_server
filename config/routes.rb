@@ -25,6 +25,7 @@ EnergyfolksServer::Application.routes.draw do
   get "users/memberships_remove"
   get "users/manual_verify"
   get "users/freeze_account"
+  get "users/digest"
   post "users/freeze_account"
 
   get "users/reset_password"

@@ -32,10 +32,13 @@
         <img src='<%= SITE_HOST %>/emails/open?token=<%= @token %>' border=0 width=1 height=1>
     <% end %>
     <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#dddddd' align=center style='text-align: center;font-size:12px;'>
-        &#169; <a href='<%= SITE_HOST %>'>Energyfolks</a>, <%= Time.now.year %>
+        &#169; <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= SITE_HOST %>'>Energyfolks</a>, <%= Time.now.year %>
+        <% if @affiliate.present? && @affiliate.id.present? %>
+          on behalf of <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= @affiliate.url %>'><%= @affiliate.name %></a>.
+        <% end %>
         <BR>
         <% if @user.present? %>
-            Don't want to receive emails like this?  <a href='<%= SITE_HOST %>/emails/edit?iframe_next=1&aid=<%= @affiliate.id %>&token=<%= @user.email_settings_tokens.create.token %>'>Change your email settings</a>.
+            Don't want to receive emails like this?  <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= SITE_HOST %>/emails/edit?iframe_next=1&aid=<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.id : 0 %>&token=<%= @user.email_settings_tokens.create.token %>'>Change your email settings</a>.
         <% end %>
       <BR><BR><BR>
     </td></tr></table>

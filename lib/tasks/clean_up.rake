@@ -19,4 +19,10 @@ namespace :clean_up do
       t.refresh_count
     end
   end
+
+  desc "Clear out old analytics to control table size"
+  task :old_analytics => :environment do
+    MarkReadAction.where("created_at > ?",2.years.ago).all.each { |e| e.destroy }
+    DigestMailer.where("created_at > ?",2.years.ago).all.each { |e| e.destroy }
+  end
 end

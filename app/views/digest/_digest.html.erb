@@ -1,0 +1,173 @@
+<div style='margin:-1px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;text-align:center;font-weight:bold;font-size:100%;'><%= @weekly ? 'Weekly' : 'Daily'%> Digest for <%= Time.now().strftime( "%A, %B %-d, %Y") %></div>
+<div style='text-align: center;'>
+  <%
+     links = []
+     links << "<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' };' href='#announcements'>#{@items[:announcements].length} Announcement#{@items[:announcements].length == 1 ? '' : 's'}</a>" if @items[:announcements].length > 0
+     links << "<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' };' href='#events'>#{@items[:events][:all].length} Event#{@items[:events][:all].length == 1 ? '' : 's'}</a>" if @items[:events][:all].length > 0
+     links << "<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' };' href='#jobs'>#{@items[:jobs][:all].length} Job#{@items[:jobs][:all].length == 1 ? '' : 's'}</a>" if @items[:jobs][:all].length > 0
+     links << "<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' };' href='#discussions'>#{@items[:discussions][:all].length} Discussion#{@items[:discussions][:all].length == 1 ? '' : 's'}</a>" if @items[:discussions][:all].length > 0
+     links << "<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' };' href='#blogs'>#{@items[:blogs][:all].length} Blog#{@items[:blogs][:all].length == 1 ? '' : 's'}</a>" if @items[:blogs][:all].length > 0
+  %>
+  <%= raw(links.join(" | ")) %>
+</div>
+<% if @items[:announcements].present? %>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="announcements"></a>Announcements</div>
+    <% @items[:announcements].each do |a| %>
+        <div style='padding-left:50px;border-bottom: 1px solid #cccccc;'>
+          <strong><%= a.name %></strong><BR>
+          <%= a.html %>
+        </div>
+    <% end %>
+<% end %>
+
+<% if @items[:events][:all].present? %>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="events"></a>Upcoming Events</div>
+    <% if @items[:events][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:events][:highlighted].each do |e| %>
+              <% if e.start > 7.days.from_now %>
+                  <li>
+                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
+                  </li>
+              <% else %>
+                  <li>
+                    <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
+                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
+                    <%= e.synopsis %>
+                  </li>
+              <% end %>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:events][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:events][:source].each do |e| %>
+              <% if e.start > 7.days.from_now %>
+                  <li>
+                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
+                  </li>
+              <% else %>
+                <li>
+                    <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
+                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
+                    <%= e.synopsis %>
+                </li>
+              <% end %>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:events][:all_other].present? %>
+        <%= content_tag(:strong, 'Submitted through other networks') if @affiliate.present? && @affiliate.id.present? %>
+        <ul style='margin-top:0px;'>
+          <% @items[:events][:all_other].each do |e| %>
+              <li>
+                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:jobs][:all].present? %>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="jobs"></a>Recent Job Posts</div>
+    <% if @items[:jobs][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:jobs][:highlighted].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:jobs][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:jobs][:source].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:jobs][:all_other].present? %>
+        <%= content_tag(:strong, 'Submitted through other networks') if @affiliate.present? && @affiliate.id.present? %>
+        <ul style='margin-top:0px;'>
+          <% @items[:jobs][:all_other].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.employer %> (<%= e.location %>)
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:discussions][:all].present? %>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="discussions"></a>Recent Discussions</div>
+    <% if @items[:discussions][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:discussions][:highlighted].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:discussions][:source].present? %>
+        <strong>Submitted through <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:discussions][:source].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:discussions][:all_other].present? %>
+        <%= content_tag(:strong, 'Submitted through other networks') if @affiliate.present? && @affiliate.id.present? %>
+        <ul style='margin-top:0px;'>
+          <% @items[:discussions][:all_other].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.total_comments %> total comment<%= e.total_comments == 1 ? '' : 's' %>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
+
+<% if @items[:blogs][:all].present? %>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="blogs"></a>Recent Blog Posts and Announcements</div>
+    <% if @items[:blogs][:highlighted].present? %>
+        <strong>Highlighted by <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:blogs][:highlighted].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:blogs][:source].present? %>
+        <strong>Posted by <%= @affiliate.name %></strong>
+        <ul style='margin-top:0px;'>
+          <% @items[:blogs][:source].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @items[:blogs][:all_other].present? %>
+        <%= content_tag(:strong, 'Posted by other networks') if @affiliate.present? && @affiliate.id.present? %>
+        <ul style='margin-top:0px;'>
+          <% @items[:blogs][:all_other].each do |e| %>
+              <li>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>
+              </li>
+          <% end %>
+        </ul>
+    <% end %>
+<% end %>
