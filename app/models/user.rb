@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
 
   def to_index
     begin
+      require 'asari'
       latlng = Asari::Geography.degrees_to_int(lat: self.latitude, lng: self.longitude)
     rescue
       latlng = {lat: 0, lng: 0}
