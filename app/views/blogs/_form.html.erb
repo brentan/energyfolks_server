@@ -9,15 +9,13 @@
     <div id='ef_carousel'>
         <%= nested_form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
           <%= raw(iframe_form) %>
-          <%
-             # Blog posts are universal, they go to all users automatically.  Auto select 'send to all' and dont allow affiliate picker (hide it)
-             @item.affiliate_join << @item.class.join_table.new({affiliate_id: 0, approved_version: 1, admin_version: 1}) if @item.affiliate_join.length == 0
+          <% # Blog posts are universal, they go to all users automatically.  Auto select 'send to all' and dont allow affiliate picker (hide it)
+          @item.affiliate_join << @item.class.join_table.new({affiliate_id: 0, approved_version: 1, admin_version: 1}) if @item.affiliate_join.length == 0
           if !new %>
               <input type=hidden name='id' value=<%= @item.id %>>
           <% end %>
           <h1><%= new ? 'New Blog Post' : 'Edit Blog Post' %></h1>
           <%= raw(show_errors(@item)) %>
-
 
           <div class='form_label'>Title</div>
           <div class='form_entry'><%= f.text_field :name %></div>
@@ -47,21 +45,16 @@
           <div class='form_label'>Attachment</div>
           <div class='form_entry'>
             <%= link_to @item.attachment.url if @item.attachment.present? %>
-            <div class="file_inputs">
-              <%= f.file_field :attachment %>
-              <div class="fake_file">
-                <div class="file_input_btn">Upload</div>
-                <div class="file_name_label"></div>
-              </div>
-            </div>
+            <%= f.file_field :attachment %>
             <div class='explain'>Images and Documents, 10MB Maximum</div>
           </div>
+
           <%= tinymce %>
           <div style='display:none;'>
             <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'blog', join_table: 'affiliates_blogs'} %>
           </div>
 
-            <%= content_tag(:div, raw(link_to('Submit', '#', class: 'button submit')), class: 'buttons') %>
+          <%= content_tag(:div, raw(link_to('Submit', '#', class: 'button submit')), class: 'buttons') %>
         <% end %>
     </div>
   </div>
