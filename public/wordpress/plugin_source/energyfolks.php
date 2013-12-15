@@ -63,9 +63,9 @@ function energyfolks_display_options() {
 /*
  * Add our scripts and stylesheet to the header 
  */
-//wp_enqueue_script("EnergyFolks","http://server.energyfolks.com/assets/energyfolks-".get_option('energyfolks_js_hash').".js");
-//wp_enqueue_style("EnergyFolks","http://server.energyfolks.com/assets/energyfolks-".get_option('energyfolks_css_hash').".css");
-//TODO: UNCOMMENT THE ABOVE WHEN SWITCHING TO SERVER!!!
+wp_enqueue_script("EnergyFolks","http://server.energyfolks.com/assets/energyfolks-".get_option('energyfolks_js_hash').".js");
+wp_enqueue_style("EnergyFolks","http://server.energyfolks.com/assets/energyfolks-".get_option('energyfolks_css_hash').".css");
+
 /*
  * Function will ping energyfolks for a login if user is not currently recognized, or show top admin bar if they are logged in
  */
@@ -119,7 +119,7 @@ function energyfolks_init_check() {
     if($_GET['enfolks_hash'] != "") {
         $secret=get_option('energyfolks_secret');
         //Login hash received, check for user access rights
-        $url = "http://dev.energyfolks.com:3000/users/from_hash?hash=".$_GET['enfolks_hash']."&secret=".md5($secret.$_GET['enfolks_hash'])."&aid=".get_option('energyfolks_affiliate_id');
+        $url = "http://server.energyfolks.com/users/from_hash?hash=".$_GET['enfolks_hash']."&secret=".md5($secret.$_GET['enfolks_hash'])."&aid=".get_option('energyfolks_affiliate_id');
         $response = wp_remote_request($url, array('headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)')));
         if ( is_wp_error( $response ) )
             { header("Content-type: text/javascript"); echo "alert('There was an error contacting energyfolks: ".$response->get_error_message()."');";exit(); } 
@@ -252,34 +252,8 @@ function energyfolks_admin_notice(){
         $_SESSION['energyfolks_blog_error'] = null;
     } elseif (get_option('energyfolks_plugin_enabled') != '1') {         
         echo '<div class="error">
-             <h2>Setup the EnergyFolks plugin</h2><p>Welcome to EnergyFolks!  To finish plugin installation, please synchronize the plugin with the energyfolks server by <a href="http://dev.energyfolks.com:3000/developers/wordpress_sync?return_url=' . urlencode(get_site_url()) . '">clicking here</a>.</p>
+             <h2>Setup the EnergyFolks plugin</h2><p>Welcome to EnergyFolks!  To finish plugin installation, please synchronize the plugin with the energyfolks server by <a href="http://server.energyfolks.com/developers/wordpress_sync?return_url=' . urlencode(get_site_url()) . '">clicking here</a>.</p>
          </div>';
-    } else {
-        //TODO: REMOVE AS THIS IS LOCAL DEV ONLY
-       echo ' 
-  <link href="http://localhost:3000/assets/energyfolks.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/account_bar.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/comments.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/data_display.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/filter_bar_search_bar.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/leaflet.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/legacy.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/loginform.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/notices.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/popup.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<link href="http://localhost:3000/assets/energyfolks/widgets.css?body=1" media="all" rel="stylesheet" type="text/css" />
-<script src="http://localhost:3000/assets/energyfolks/jquery.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/initialize.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/hash_change.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/listeners.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/global.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/accounts.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/comments.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/data_display.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/widgets.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/backwards_compatible.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks/leaflet.js?body=1" type="text/javascript"></script>
-<script src="http://localhost:3000/assets/energyfolks.js?body=1" type="text/javascript"></script>';
     }
 }
 add_action('admin_notices', 'energyfolks_admin_notice');
@@ -750,7 +724,7 @@ function energyfolks_blog_integration( $post_id ) {
             $tags = wp_get_post_tags( $post_id, array( 'fields' => 'names' ) );
             $post_content = str_replace(array("src='/",'src="/',"href='/",'href="/'),array("src='".$domain."/",'src="'.$domain.'/',"href='".$domain."/",'href="'.$domain.'/'),apply_filters('the_content',do_shortcode(get_post_field('post_content',$post_id))));
             //ping energyfolks with content...it will update if already in database.
-            $response = wp_remote_post( "http://dev.energyfolks.com:3000/blogs/AddWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&hash=".md5(get_option('energyfolks_secret').$post_id), array(
+            $response = wp_remote_post( "http://server.energyfolks.com/blogs/AddWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&hash=".md5(get_option('energyfolks_secret').$post_id), array(
                     'method' => 'POST',
                     'timeout' => 45,
                     'redirection' => 5,
@@ -767,7 +741,7 @@ function energyfolks_blog_integration( $post_id ) {
                 $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
         } else {
             //post is not published.  Ping energyfolks to remove in case it was published and now has been reverted.
-            $url="http://dev.energyfolks.com:3000/blogs/FreezeWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
+            $url="http://server.energyfolks.com/blogs/FreezeWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
             $response = wp_remote_request($url, array('headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)')));
             if ( is_wp_error( $response ) )
                 $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message(); 
@@ -787,7 +761,7 @@ function energyfolks_blog_delete( $post_id) {
     if(get_option('energyfolks_plugin_enabled') != '1') return;
     if(get_post_type($post_id) != 'post') return;
     if (!wp_is_post_revision( $post_id ) ) {
-        $url="http://dev.energyfolks.com:3000/blogs/DeleteWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
+        $url="http://server.energyfolks.com/blogs/DeleteWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
         $response = wp_remote_request($url, array('headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)')));
         if ( is_wp_error( $response ) )
             $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message(); 
@@ -824,7 +798,7 @@ function energyfolks_post_box( $post ) {
   // Use nonce for verification
   wp_nonce_field( plugin_basename( __FILE__ ), 'energyfolks_nonce' );
   // The actual fields for data entry
-  echo "<img src='http://dev.energyfolks.com:3000/assets/ef_logo_white.png'><BR>";
+  echo "<img src='http://server.energyfolks.com/assets/ef_logo_white.png'><BR>";
   echo '<label><div style="float:left;height:50px;padding-right:5px;"><input type=checkbox value="1" id="energyfolks_share" name="energyfolks_share" ';
   if(get_post_meta($post->ID, '_energyfolks_share',true) != '0') echo "checked";
   echo "></div>Share this post with other groups through the Energyfolks network</label>";
@@ -844,7 +818,7 @@ function energyfolks_page_box($post) {
           <li><b>[energyfolks source='<i>display_type</i>']</b><BR>Show an energyfolks view on your site (such as 'events', 'jobs', or 'users').</li>
           <li><b>[energyfolks_sidebar]</b><BR>Create the filter bar (or use the widget and drop that onto your sidebar)</li>
           <li><b>[energyfolks_logged_in] TEXT [/energyfolks_logged_in]</b><BR>Text to show a logged in user</li>
-          <li><b>[energyfolks_logged_out] TEXT [/energyfolks_logged_out]</b><BR>Text to show a logged out user</li></ul>View the full list of shortcodes and full document on our <a href='http://dev.energyfolks.com:3000/developers/wordpress' target='_blank'>Wordpress developer page</a>.";
+          <li><b>[energyfolks_logged_out] TEXT [/energyfolks_logged_out]</b><BR>Text to show a logged out user</li></ul>View the full list of shortcodes and full document on our <a href='http://server.energyfolks.com/developers/wordpress' target='_blank'>Wordpress developer page</a>.";
 }
 
 function energyfolks_save_postdata( $post_id ) {
