@@ -5,7 +5,7 @@
 <% @affiliates.each do |affiliate| %>
     <div>
       <h3><%= affiliate.name %></h3>
-      <% if current_user.present? && (current_user.admin? || Membership.is_admin?(current_user, affiliate, Membership::ADMINISTRATOR)) %>
+      <% if current_user.present? && (current_user.admin? || affiliate.admin?(current_user, Membership::ADMINISTRATOR)) %>
           <%= link_to 'Edit', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/#{affiliate.id}/edit", iframe: 'true' } %>
           <%= link_to 'Members', "affiliates/#{affiliate.id}/users" %>
       <% end %>

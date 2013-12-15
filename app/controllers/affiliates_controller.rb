@@ -124,8 +124,8 @@ class AffiliatesController < ApplicationController
     return redirect_to '/' unless current_user.present?
     affiliate = Affiliate.find(params[:aid]) if params[:aid].present? && params[:aid].to_i > 0
     affiliate = Affiliate.find(params[:id]) if params[:id].present? && affiliate.blank?
-    if params[:id].present? && affiliate.present?
-      return redirect_to '/' unless current_user.admin? || Membership.is_admin?(current_user, affiliate, level)
+    if affiliate.present?
+      return redirect_to '/' unless (current_user.admin? || affiliate.admin?(current_user, level))
     else
       return redirect_to '/' unless current_user.admin?
     end
