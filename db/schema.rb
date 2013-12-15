@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213232524) do
+ActiveRecord::Schema.define(:version => 20131214210431) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -139,7 +139,10 @@ ActiveRecord::Schema.define(:version => 20131213232524) do
     t.datetime "attachment_updated_at"
     t.boolean  "digest",                  :default => false
     t.boolean  "archived",                :default => false
+    t.boolean  "frozen_by_wordpress",     :default => false
   end
+
+  add_index "blogs", ["frozen_by_wordpress"], :name => "index_blogs_on_frozen_by_wordpress"
 
   create_table "blogs_versions", :force => true do |t|
     t.datetime "created_at",              :null => false

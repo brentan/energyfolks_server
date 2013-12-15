@@ -46,6 +46,7 @@ class AjaxController < ApplicationController
 
   # Return a list of visible users based on input criteria
   def users
+    current_affiliate.set_entity_url(request.referrer, 'users') if current_affiliate.present? && current_affiliate.id.present?
     more_pages = false
     if params[:moderation] == "true"
       data = User.needing_moderation(current_user, current_affiliate)
@@ -58,6 +59,7 @@ class AjaxController < ApplicationController
 
   # Return a list of visible users based on input criteria
   def jobs
+    current_affiliate.set_entity_url(request.referrer, 'jobs') if current_affiliate.present? && current_affiliate.id.present?
     more_pages = false
     if params[:moderation] == "true"
       data = Job.needing_moderation(current_user, current_affiliate)
@@ -70,6 +72,7 @@ class AjaxController < ApplicationController
   end
 
   def events
+    current_affiliate.set_entity_url(request.referrer, 'events') if current_affiliate.present? && current_affiliate.id.present?
     more_pages = false
     if params[:moderation] == "true"
       data = Event.needing_moderation(current_user, current_affiliate)
@@ -82,6 +85,7 @@ class AjaxController < ApplicationController
   end
 
   def discussions
+    current_affiliate.set_entity_url(request.referrer, 'discussions') if current_affiliate.present? && current_affiliate.id.present?
     more_pages = false
     if params[:moderation] == "true"
       data = Discussion.needing_moderation(current_user, current_affiliate)
@@ -94,6 +98,7 @@ class AjaxController < ApplicationController
   end
 
   def blogs
+    current_affiliate.set_entity_url(request.referrer, 'blogs') if current_affiliate.present? && current_affiliate.id.present?
     more_pages = false
     if params[:moderation] == "true"
       data = Blog.needing_moderation(current_user, current_affiliate)
