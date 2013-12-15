@@ -50,9 +50,9 @@ class UsersController < ApplicationController
         role = login.user.memberships.approved.where(:affiliate_id => current_affiliate.id).first
         if role.present? && (role.admin_level == Membership::CONTRIBUTOR)
           role = '1'
-        elsif role.present? && (role.admin_level == Membership::EDITOR)
-          role = '2'
         elsif role.present? && (role.admin_level == Membership::AUTHOR)
+          role = '2'
+        elsif role.present? && (role.admin_level == Membership::EDITOR)
           role = '3'
         elsif role.present? && (role.admin_level == Membership::ADMINISTRATOR)
           role = '4'

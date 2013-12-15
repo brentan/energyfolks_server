@@ -1,5 +1,5 @@
 <% if current_user.present? %>
-    <% if !current_user.admin? || !current_affiliate.admin?(current_user, Membership::CONTRIBUTOR) %>
+    <% if !current_user.admin? || !current_affiliate.admin?(current_user, Membership::AUTHOR) %>
         <h1>Unauthorized Access</h1>
         Only members designated by group administrators are allowed to post new blog items.
     <% else %>

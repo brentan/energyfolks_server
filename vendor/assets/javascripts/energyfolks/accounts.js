@@ -248,7 +248,7 @@ EnergyFolks.CreateTopBar = function() {
             EnergyFolks.$("#wp-admin-bar-energyfolks0").html("<a href='#' class='ab-item'>Administrator Tools</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
             outtext = '';
             if(EnergyFolks.current_user.super_admin) outtext+= '<li><a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a></li>';
-            if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) outtext += "<li><a href='/wp-admin/admin.php?page=energyfolks' class='ab-item'>EnergyFolks Options</a></li>";
+            if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) outtext += "<li><a href='/wp-admin/admin.php?page=energyfolks' class='ab-item'>EnergyFolks Options</a></li>";
             outtext += '<li><a class="ab-item" href="/wp-admin/">Wordpress Dashboard</a></li>';
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html(outtext);
         } else if(EnergyFolks.current_user.super_admin) {

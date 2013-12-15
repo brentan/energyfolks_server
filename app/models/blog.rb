@@ -6,8 +6,9 @@ class Blog < ActiveRecord::Base
 
   after_save :update_comment_details
   before_save :update_lat_lng
+  before_destroy :remove_comments
 
-  default_scope order('created_at DESC')
+  default_scope order('created_at DESC').where(frozen_by_wordpress: false)
 
   VERSION_CONTROLLED = %w(name html attachment_file_name attachment_content_type attachment_file_size attachment_updated_at)
   include MixinEntity
@@ -29,9 +30,9 @@ class Blog < ActiveRecord::Base
                        :content_type => { :content_type => /^(text|image|application\/pdf|application\/x\-pdf|application\/ms|application\/vnd\.ms|application\/vnd\.openxmlformats|application\/x\-ms).*/ },
                        :size => { :in => 0..26.megabytes }
 
-  attr_accessible :name, :html, :attachment, :affiliates_blogs_attributes, :digest, :last_updated_by, :latitude, :longitude, :affiliate_id, :announcement
+  attr_accessible :name, :html, :attachment, :affiliates_blogs_attributes, :digest, :last_updated_by, :latitude, :longitude, :affiliate_id, :announcement, :last_updated_by, :url, :wordpress_id, :user_id, :frozen_by_wordpress
 
-  def self.comment_hash
+  def comment_hash
     self.affiliate_id.present? && self.wordpress_id.present? ? "WORDPRESS_HASH_#{self.affiliate_id}_#{self.wordpress_id}" : "#{self.entity_name}_#{self.id}"
   end
   def author_name
@@ -62,9 +63,15 @@ class Blog < ActiveRecord::Base
     begin
       user = User.find(self.user_id)
       affiliate = Affiliate.find_by_id(self.affiliate_id)
-      errors.add(:name, "You are not authorized to create new blog posts" ) if !user.admin? && !affiliate.admin?(user, Membership::CONTRIBUTOR)
+      errors.add(:name, "You are not authorized to create new blog posts" ) if !user.admin? && !affiliate.admin?(user, Membership::AUTHOR)
     rescue
       errors.add(:name, "You are not authorized to create new blog posts" )
     end
   end
+  def remove_comments
+    Comment.where(:unique_hash => self.comment_hash).all.each { |e| e.destroy }
+    CommentDetail.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
+    CommentSubscriber.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
+  end
+
 end
