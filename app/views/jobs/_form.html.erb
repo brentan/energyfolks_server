@@ -22,13 +22,7 @@
               <div class='form_label'>Employer</div>
               <div class='form_entry show_inline'>
                 <%= image_tag(@item.logo.url(:thumb), class: "logo_img") if @item.logo.present? %>
-                <div class="file_inputs">
-                  <%= f.file_field :logo %>
-                  <div class="fake_file">
-                    <div class="file_input_btn">Upload Logo</div>
-                    <div class="file_name_label"></div>
-                  </div>
-                </div>
+                <%= f.file_field :logo %>
               </div>
               <div class='form_entry'><%= f.text_field :employer %></div>
 

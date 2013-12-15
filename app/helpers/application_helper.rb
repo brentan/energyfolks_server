@@ -64,6 +64,16 @@ module ApplicationHelper
       end
 		end
 	  html += '</div>'
-	end
+  end
+
+  def styled_file_input(file_input_html, button_label)
+    # make file input transparent and show styled button underneath, a hack based on http://www.quirksmode.org/dom/inputfile.html
+    # makes it difficult to do correct cursor and hover styling, so we're not using it now.
+    # use example:   <%= raw(styled_file_input(f.file_field(:logo),"Upload Logo")) %>
+    html = "<div class='file_inputs'>#{file_input_html}<div class='fake_file'>"
+    html += "<div class='file_input_btn'>#{button_label}</div>"
+    html += "<div class='file_name_label'></div>"
+    html += "</div></div>"
+  end
 
 end
