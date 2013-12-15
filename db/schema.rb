@@ -54,9 +54,6 @@ ActiveRecord::Schema.define(:version => 20131214210431) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
-    t.integer  "year_founded"
-    t.string   "president_name"
-    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -64,6 +61,9 @@ ActiveRecord::Schema.define(:version => 20131214210431) do
     t.string   "wordpress_js_hash"
     t.boolean  "blogs",                     :default => false
     t.boolean  "announcement",              :default => true
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
     t.boolean  "custom_header",             :default => false
   end
 
