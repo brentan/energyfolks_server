@@ -15,4 +15,10 @@ $(function () {
     $(".file_inputs > input:file").change( handleFileUploadChange );
     $(".file_inputs > input:file").mouseout( handleFileUploadChange );
 
+    //limit the length of the event synopsis text field
+    $("textarea.limitLength").keypress( function () {
+        var maxLength = parseInt($(this).attr('maxlength'));
+        $(this).parent().find(".limitLength_charsRemaining").html(maxLength - this.value.length);
+        }
+    );
 });
