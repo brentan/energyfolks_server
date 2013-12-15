@@ -1,49 +1,40 @@
-<h1 style='line-height:24px;color:white;background-color:darkred;text-align:center;padding:20px;'>THIS DOCUMENTATION IS OUT OF DATE AND NO LONGER VALID! IT IS FOR EF PLATFORM V1.0!</h1>
-
-
 <h2>energyfolks wordpress plugin</h2>
 <p>energyfolks has created a wordpress plugin that can be used to bring energyfolks
   functionality to a wordpress powered website.  This is the recommended way to
   setup a fully functioning website with energyfolks content.  </p>
 <p>The wordpress plugin provides the following features:</p>
 <ul>
-  <li>Setting of important display options through a GUI settings menu accessible from the Wordpress Dashboard</li>
+  <li>Integratio of energyfolks options into the wordpress dashboard</li>
   <li>Integration of energyfolks user accounts, allowing wordpress access rights to be granted directly through energyfolks</li>
   <li>Improved administrator bar on all your pages, allowing you to simultaneously add/edit/delete page content and energyfolks content</li>
-  <li>Integration of energyfolks comment engine to allow your users to comment on post from across the network</li>
+  <li>Integration of energyfolks comment engine to allow your users to comment on posts from across the network</li>
   <li>Blog integration, allowing your blog posts from wordpress to be broadcast across the energyfolks network</li>
   <li>Integration of energyfolks content through a series of easy to use 'shortcodes' on your pages</li>
   <li>Automatic updates, so that plugin updates are automatically pushed to your site</li>
 </ul>
 <h3>Requirements</h3>
 <p>
-  This plugin is only available for energyfolks affiliate networks.  To use the plugin, you will need to input a <code>shared secret</code>, which can be provided by energyfolks.  To get your <Code>shared secret</code>, <a href='mailto:contact@energyfolks.com'>email us</a>.
+  This plugin is only available for energyfolks affiliate networks.  To use the plugin, you need to be an administrator of an energyfolks group.  To get your group setup and administrator rights, <a href='mailto:contact@energyfolks.com'>email us</a>.
 </p>
 <h3>Installation</h3>
-<p>To install this plugin, please download the plugin zip file at <a href='https://scripts.energyfolks.com/developer/wordpress/energyfolks.php'>https://scripts.energyfolks.com/developer/wordpress/energyfolks.php</a>.
-  Next, open your wordpress admin dashboard, click the 'plugins' link on the left, and select 'add new'.  On the page that appears, you will see the following message:
-  <BR><code>Plugins extend and expand the functionality of WordPress. You may automatically install plugins from the WordPress Plugin Directory or upload a plugin in .zip format via <u>this page</u>.</code>
-  Click the 'this page' link to go to the custom upload page.  Upload the zip file you just downloaded to install the plugin.  After installation, be sure to 'active' the plugin for use.
-</p>
+<p>Installation of the wordpress plugin is straightforward.  To install:</p>
+<ol>
+  <li>Ensure you have a working installation of wordpress on your server (see <a href="http://codex.wordpress.org/Installing_WordPress" target="_blank">wordpress installation instructions</a> for more information)</li>
+  <li>Download the energyfolks wordpress plugin at <a href='<%= SITE_HOST %>/developers/wordpress_zip'><%= SITE_HOST %>/developers/wordpress_zip</a></li>
+  <li>From your wordpress dashboard (http://your-site/wp-admin), click the 'plugins' link in the left-hand navigation bar, then select 'add new'.</li>
+  <li>Click the small link at the top of this page that says <code>Upload</code>.</li>
+  <li>Upload the zip file you downloaded in step 2, then click 'install plugin'.  After installation, synchronize your installation with wordpress servers using the link that will appear at the top of your page.</li>
+</ol>
 <h3>Setup</h3>
 <p>
-  After installation, click on the 'settings' menu in the wordpress dashboard and select 'Energyfolks settings'.  Fill in values for the following required options:
-<ul>
-  <li>Affiliate ID</li>
-  <li>Shared Secret</li>
-  <li>Color-Scheme</li>
-  <li>Wrapping Element ID</li>
-  <li>Login URL</li>
-</ul>
-An explanation of each of these options is included on the settings page.<BR><BR>
-With these options entered, you will be on your way!  (<i>NOTE: If your main page continually refreshes after enabling the energyfolks plugin, your <code>shared secret</code> is likely invalid.  You can login directly at www.yoursite.com/wp-login.php to update the settings.</i>)
+  After installation, you can adjust your energyfolks settings at anytime from the 'energyfolks' option that will appear in the left hand sidebar.  Make sure to keep your URLs up to date so that energyfolks knows where to send users when they want to access your site.
 </p>
 <h3>Shortcodes</h3>
 <p>
   You can utlize shortcodes on your wordpress pages to incorporate energyfolks content.  A shortcode is enclosed in square brackets and can have optional parameters included.  </p>
 <p>
-  For example, the shortcode <code>energyfolks</code> with options <code>type</code> and <code>restricttoaffiliate</code> can be inserted directly into your page content by:<BR>
-  <code>[energyfolks type='calendar' restricttoaffiliate=1]</code>
+  For example, the shortcode <code>energyfolks</code> with options <code>source</code> and <code>restricttoaffiliate</code> can be inserted directly into your page content by:<BR>
+  <code>[energyfolks source='events' restricttoaffiliate=1]</code>
 </p>
 <table summary="class Map - Methods" width="90%">
   <tbody>
@@ -55,77 +46,74 @@ With these options entered, you will be on your way!  (<i>NOTE: If your main pag
   <tr class="odd">
     <td valign="top"><code>energyfolks</code></td>
     <td>
-      <code>type*</code><BR>
-      <code>restricttothread</code><BR>
-      <code>setregion</code><BR>
+      <code>source*</code><BR>
+      <code>format</code><BR>
       <code>restricttoaffiliate</code><BR>
-      <code>customcss</code><BR>
       <code>restricttohighlighted</code><BR>
-      <code>setloginurl</code><BR>
-      <code>disablefixedsearchbar</code><BR>
-      <code>setcolor</code><BR>
-      <code>initialize</code><BR>
+      <code>latitude</code><BR>
+      <code>longitude</code><BR>
+      <code>radius</code><BR>
+      <code>color</code><BR>
 
     </td>
-    <td valign="top">Creates an energyfolks view on your page.  <BR><code>type</code> is required and must be one of the following:
+    <td valign="top">Creates an energyfolks view on your page.  <BR><code>source</code> is required and must be one of the following:
       <ul>
-        <li><code>calendar-agenda</code>: Events Calendar in agenda view
-        <li><code>calendar-weekly</code>: Events Calendar in weekly view
-        <li><code>calendar-monthly</code>: Events Calendar in monthly view
-        <li><code>calendar</code>: Events Calendar in the last selected user view (stored via cookies).
-          Defaults to monthly
+        <li><code>events</code>: Events Calendar
         <li><code>jobs</code>: The jobs database
         <li><code>users</code>: the membership database
-        <li><code>blog</code>: the blog database (other group submitted blogs)
-        <li><code>discussions</code>: the discussions database (default: forum view)
-        <li><code>discussions-stream</code>: the discussions database using a 'stream' format (similar in nature to a facebook feed)
-        <li><code>discussions-forum</code>: the discussions database using a traditional 'forum' style view
-        <li><code>discussions-long</code>: the discussions database (long format view, similar to a blog)
+        <li><code>blogs</code>: the blog database (other group submitted blogs)
+        <li><code>discussions</code>: the discussion threads
       </ul>
-      <br>The other options are described in detail on <a href='https://www.energyfolks.com/developer/documentation.php#objectmethod'>the library documentation page</a>.  The option name is the same as the method name for the EnergyFolks library.  Please note that
-      <code>initialize, setcolor, setloginurl,</code> and <code>disablefixedsearchbar</code> are automatically inserted for you based on the settings chosen on the plugin settings screen, but these defaults can be overridden directly in the shortcode.
+      <code>format</code> defines the view used to display information.  Allowed values are:
+      <ul>
+        <li><code>list</code>: list view (default)
+        <li><code>month</code>: Calendar view (not valid with users)
+        <li><code>map</code>: map view (not valid with discussions)
+        <li><code>stream</code>: stream (full text) view (only with discussions and blogs)
+      </ul>
+      <code>restricttoaffiliate</code> and <code>restricttohighlighted</code> will restrict the data shown to posts originating from your network (for user view, restricts to your users), or posts highlighted by your group administrators.
+      <BR><BR>
+      <code>latitude</code>, <code>longitude</code>, and <code>radius</code> can be used to restrict the view to posts with a certain distance of a point on the globe (miles).  This option is automatically set based on your group settings, but can be overriden here.  A radius of 0 will disable location search.
+      <BR><BR>
+      <code>color</code> sets the color of items in the view, and is automatically set based on your group settings, but can be overriden here.
     </td>
 
   </tr>
   <tr class="odd">
-    <td valign="top"><code>energyfolks_searchbar</code></td>
-    <td>
-      <code>type*</code>
-
-    </td>
-    <td valign="top">Creates the energyfolks filter bar on your page.  Can be used instead of the filter bar widget provided by the plugin.<BR><code>type<code> is required and must match the <code>type</code> used in the <code>energyfolks</code> shortcode.
-
-    </td>
-
-  </tr>
-  <tr class="odd">
-    <td valign="top"><code>energyfolks_produceloginpage</code></td>
+    <td valign="top"><code>energyfolks_sidebar</code></td>
     <td>
 
     </td>
-    <td valign="top">If the user is not logged in, it will show the login page.  Otherwise, nothing is displayed.  Often used in conjunction with <Code>energyfolks_createprofilebox</code>
-
-    </td>
-
-  </tr>
-  <tr class="odd">
-    <td valign="top"><code>energyfolks_createprofilebox</code></td>
-    <td>
-
-    </td>
-    <td valign="top">If the user is logged in, it will show basic user details.  Otherwise, nothing is displayed.  Often used in conjunction with <Code>energyfolks_produceloginpage</code>
+    <td valign="top">Creates the energyfolks filter bar on your page.  Can be used instead of the filter bar widget provided by the plugin.  If not used, the filter bar is loaded at the top of the view.
 
     </td>
 
   </tr>
   <tr class="odd">
-    <td valign="top"><code>energyfolks_small_login</code></td>
+    <td valign="top"><code>energyfolks_loginbox</code></td>
     <td>
-      <Code>show_dets</code>
-      <BR><code>big</code>
-      <BR><code>loginurl</code>
+
     </td>
-    <td valign="top">If the user is logged in, it will show small links for the user (unless <code>show_dets</code> is set to <code>0</code>).  Otherwise, links to login and create an account are shown.  Often used in the header of a page.  <code>Big</code> is enabled by default, and uses a larger text size.  <Code>loginurl</code> is set based on your plugin settings, but can be overridden here.
+    <td valign="top">Will display a login box for a user, or if already logged in, show user information (name, picture, logout link)
+
+    </td>
+
+  </tr>
+  <tr class="odd">
+    <td valign="top"><code>energyfolks_smallloginbox</code></td>
+    <td>
+
+    </td>
+    <td valign="top">Same as <code>energyfolks_loginbox</code>, but the box is smaller.
+
+    </td>
+
+  </tr>
+  <tr class="odd">
+    <td valign="top"><code>energyfolks_loginlinks</code></td>
+    <td>
+    </td>
+    <td valign="top">Shows a link to login or get account.  If logged in, will show link to update profile or logout.
 
     </td>
 
@@ -188,26 +176,6 @@ With these options entered, you will be on your way!  (<i>NOTE: If your main pag
     <td>
     </td>
     <td valign="top">Used with a closing tag, all content between the two tags will only be shown if the user is NOT logged in.  For example:<BR><code>[energyfolks_logged_out]THIS TEXT IS ONLY SHOWN WHEN LOGGED OUT![/energyfolks_logged_out]</code>
-    </td>
-  </tr>
-  <tr class="odd">
-    <td valign="top"><code>EF_eventbrite</code></td>
-    <td>
-      <code>event_id</code>
-      <code>full</code>
-      <code>height</code>
-    </td>
-    <td valign="top">This will embed an eventbrite ticket registration box on your page.  The event_id is required and is the eventbrite event id (usually found in the URL when looking at your event).  Full is optional.  When set to 0 (default), only the registration box is shown.  When set to 1, the entire eventbrite event info page, including descriptions and maps etc, is also shown.  Height specifies the height of the iframe that contains these items...it is set automatically and is not required, but can be set here to adjust the setting.  For an example, add this shortcode with no options.  The error message will provide an example shortcode.
-    </td>
-  </tr>
-  <tr class="odd">
-    <td valign="top"><code>EF_eventbrite_done</code></td>
-    <td>
-      <code>event_id</code>
-      <code>api_key</code>
-      <code>user_key</code>
-    </td>
-    <td valign="top">This will create a page useful as a custom confirmation page for eventbrite registrations.  You should change the settings on your event in eventbrite to forward confirmations to the URL on your site that uses this shortcode.  For logged in users, a simple 'thanks for registering' message will be shown.  For other users, a signup page will be embedded, with the email address, first name, and last name pre-filled based on the eventbrite registration.  Add text between inside the shortcode to add a message above this box (something like 'almonst done...sign up for an account!').  All inputs are required.  Event id is the eventbrite event id found in the URL on your event page.  api_key is your api_key.  These can be generated at developer.eventbrite.com.  User_key is your user key for the user who created the event.  This is found at developer.eventbrite.com as well.  Enter this shortcode with no options to see an example shortcode on the page.
     </td>
   </tr>
   </tbody>
