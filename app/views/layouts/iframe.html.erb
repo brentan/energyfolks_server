@@ -20,6 +20,25 @@
           body.iframe_popup .button:hover, body.iframe_popup a.button:hover {
               color: #<%= current_affiliate.color %>;
           }
+
+          body.iframe_popup div.form hr {
+            background-color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup div.form .progress_bar .current_page {
+            background-color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup div.form div.form_label {
+            color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup div.form input[type="radio"].toggle:checked + label {
+            background-color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup div.form input[type="radio"].toggle + label:hover {
+            background-color: #<%= current_affiliate.color %>;
+          }
+          body.iframe_popup div.form div.file_inputs .file_input_btn {
+            background-color: #<%= current_affiliate.color %>;
+          }
       </style>
   <% end %>
   <style>

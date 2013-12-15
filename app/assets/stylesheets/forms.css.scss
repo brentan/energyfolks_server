@@ -1,4 +1,4 @@
-$current_affiliate_color: #f16522;
+$default_affiliate_color: #f16522;
 $unselected_radio_button_color: gray;
 $progress_bar_still_to_go_color: gray;
 
@@ -8,19 +8,18 @@ div.form {
   }
 
   hr {
-    background-color: $current_affiliate_color;
+    background-color: $default_affiliate_color;
     border-width: 0px;
     height: 3px;
   }
 
-  div.progress_bar {
+  .progress_bar {
     float: none;
-    //clear: right;
     margin-left: 200px;
 
-    div {
+    a {
       display: inline-block;
-      background-color: $current_affiliate_color;
+      background-color: $progress_bar_still_to_go_color;
       color: white;
       width: 30px;
       height: 30px;
@@ -29,17 +28,22 @@ div.form {
       margin-left: 5px;
       text-align: center;
       vertical-align: middle;
+
+      &:hover {
+        color: white;
+      }
+
     }
 
-    div.still_to_go {
-      background-color: $progress_bar_still_to_go_color; /* different color for the slides user hasn't completed yet */
+    .current_page {
+      background-color: $default_affiliate_color; /* different color for the current slide number */
     }
   }
 
   div.form_label {
     font-weight: bold;
     font-size: 1.3em;
-    color: $current_affiliate_color;
+    color: $default_affiliate_color;
     float: left;
     clear: left;
   }
@@ -80,15 +84,16 @@ div.form {
       font-weight: bold;
       margin-left: 1px;
       margin-right: 0px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $default_affiliate_color;
+      }
     }
 
     input[type="radio"].toggle:checked + label {
-      background-color: $current_affiliate_color;
+      background-color: $default_affiliate_color;
       cursor: default;
-    }
-
-    input[type="radio"].toggle:checked + label.btn:hover {
-      border-color: $current_affiliate_color;
     }
 
     input[type="radio"].toggle-left + label {
@@ -138,17 +143,19 @@ div.form {
 
     input[type=file] {
       position: relative;
+      left: -80px;
       margin: 0px;
       text-align: left;
       -moz-opacity: 0;
       filter:alpha(opacity = 0);
       opacity: 0;
       z-index: 2;
+      cursor: pointer;  /* on mac Chrome, only works for the label part of the file input, not the button part. not sure about other browsers. */
     }
 
-    div.file_input_btn {
+    .file_input_btn {
       color: white;
-      background-color: $current_affiliate_color;
+      background-color: $default_affiliate_color;
       display: inline-block; /* so we can set height */
       float: left;
       clear: none;
@@ -158,9 +165,13 @@ div.form {
       padding-left: 10px;
       padding-right: 10px;
       font-weight: bold;
-      margin-left: 1px;
+      /* margin-left: 80px; /* move it to the right, because the cursor style doesn't work if it's directly below the input type=file. */
       margin-right: 0px;
       border-radius: 4px;
+
+      &:hover {
+        background-color: $unselected_radio_button_color;
+      }
     }
 
     div.file_name_label {

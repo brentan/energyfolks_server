@@ -54,14 +54,14 @@ module ApplicationHelper
 
 	def progress_bar(current_step, number_of_steps)
 		html = ''
-		html += "<div class='progress_bar'>"
+		html += "<div class='progress_bar pager'>"
 		number_of_steps.times do |index|
 			step = index + 1  #index is zero-based, we want steps to be numbered from 1
-			if step <= current_step
-				html += "<div>#{step}</div>"
-			else
-				html += "<div class='still_to_go'>#{step}</div>"
-			end
+      if step == current_step
+        html += "<a rel='#{index}' href='#' class='pagenum current_page'>#{step}</a>"
+      else
+        html += "<a rel='#{index}' href='#' class='pagenum'>#{step}</a>"
+      end
 		end
 	  html += '</div>'
 	end
