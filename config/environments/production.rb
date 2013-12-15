@@ -65,25 +65,30 @@ EnergyfolksServer::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  config_file = File.join(Rails.root, "config", "ec2.yml")
+  if File.exists?(config_file)
 
-  ec2info = YAML.load_file("#{Rails.root}/config/ec2.yml")
-  AMAZON_CLOUDSEARCH_ENDPOINT = ec2info[:cloudsearch_endpoint]
-  AMAZON_REGION = ec2info[:aws_params][:region]
-  USE_CLOUDSEARCH = true
-  config.paperclip_defaults = {
-      :url => ':s3_domain_url',
-      :s3_protocal => 'https',
-      :storage => :s3,
-      :bucket => ec2info[:s3_bucket],
-      :s3_credentials => {:access_key_id => ec2info[:aws_access_key_id], :secret_access_key => ec2info[:aws_secret_access_key]},
-      :s3_permissions => 'public-read'
-  }
+    ec2info = YAML.load_file(config_file)
+    AMAZON_CLOUDSEARCH_ENDPOINT = ec2info[:cloudsearch_endpoint]
+    AMAZON_REGION = ec2info[:aws_params][:region]
+    USE_CLOUDSEARCH = true
+    config.paperclip_defaults = {
+        :url => ':s3_domain_url',
+        :s3_protocal => 'https',
+        :storage => :s3,
+        :bucket => ec2info[:s3_bucket],
+        :s3_credentials => {:access_key_id => ec2info[:aws_access_key_id], :secret_access_key => ec2info[:aws_secret_access_key]},
+        :s3_permissions => 'public-read'
+    }
 
-  # load google cert and key for SAML
-  file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
-  SamlIdp.config.x509_certificate = file.read
-  file.close
-  file = File.open("#{Rails.root}/config/google_key.txt", "rb")
-  SamlIdp.config.secret_key = file.read
-  file.close
+    # load google cert and key for SAML
+    file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
+    SamlIdp.config.x509_certificate = file.read
+    file.close
+    file = File.open("#{Rails.root}/config/google_key.txt", "rb")
+    SamlIdp.config.secret_key = file.read
+    file.close
+  else
+    USE_CLOUDSEARCH = false
+  end
 end

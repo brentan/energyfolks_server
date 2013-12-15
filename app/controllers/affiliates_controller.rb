@@ -1,6 +1,6 @@
 class AffiliatesController < ApplicationController
 
-  before_filter :check_for_admin_rights, :except => [:index, :users, :logo]
+  before_filter :check_for_admin_rights, :except => [:index, :users, :logo, :dashboard]
 
   def index
     if current_user.present? && current_user.admin?
@@ -8,6 +8,10 @@ class AffiliatesController < ApplicationController
     else
       @affiliates = Affiliate.all_visible_affiliates(current_user)
     end
+  end
+
+  def dashboard
+    check_for_admin_rights(Membership::CONTRIBUTOR)
   end
 
   def users
@@ -116,12 +120,12 @@ class AffiliatesController < ApplicationController
 
 
   private
-  def check_for_admin_rights
+  def check_for_admin_rights(level = Membership::ADMINISTRATOR)
     return redirect_to '/' unless current_user.present?
     affiliate = Affiliate.find(params[:aid]) if params[:aid].present? && params[:aid].to_i > 0
     affiliate = Affiliate.find(params[:id]) if params[:id].present? && affiliate.blank?
     if params[:id].present? && affiliate.present?
-      return redirect_to '/' unless current_user.admin? || Membership.is_admin?(current_user, affiliate, Membership::ADMINISTRATOR)
+      return redirect_to '/' unless current_user.admin? || Membership.is_admin?(current_user, affiliate, level)
     else
       return redirect_to '/' unless current_user.admin?
     end

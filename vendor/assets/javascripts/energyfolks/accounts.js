@@ -245,15 +245,15 @@ EnergyFolks.CreateTopBar = function() {
     if((EnergyFolks.$("#wpadminbar").length > 0) && (EnergyFolks.user_logged_in)) {
         var outtext='';
         if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) {
-            EnergyFolks.$("#wp-admin-bar-energyfolks0").html("<a href='#' class='ab-item'>Administrator Tools</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
+            EnergyFolks.$("#wp-admin-bar-energyfolks0").html("<a href='#' class='ab-item'>Leadership Tools</a><div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
             outtext = '';
             if(EnergyFolks.current_user.super_admin) outtext+= '<li><a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a></li>';
-            if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) outtext += "<li><a href='/wp-admin/admin.php?page=energyfolks' class='ab-item'>EnergyFolks Options</a></li>";
+            if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) outtext += "<li><a href='/wp-admin/admin.php?page=energyfolks' class='ab-item'>EnergyFolks Dashboard</a></li>";
             outtext += '<li><a class="ab-item" href="/wp-admin/">Wordpress Dashboard</a></li>';
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html(outtext);
         } else if(EnergyFolks.current_user.super_admin) {
             EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
-            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/'+EnergyFolks.id+'/edit" data-iframe="true" data-params="">Partner Control Screen</a></li>');
+            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/dashboard" data-iframe="true" data-params="">Affiliate Dashboard</a></li>');
         } else
             EnergyFolks.$("#wp-admin-bar-energyfolks0").css('display','none');
         var tot=EnergyFolks.current_user.moderation_count.total;
@@ -311,18 +311,18 @@ EnergyFolks.CreateTopBar = function() {
         outtext+='<li><a class="ab-item EnergyFolks_popup" href="#" data-command="users/profile" data-iframe="true">Update your Profile</a></li>';
         outtext+='<li><a class="ab-item EnFolks_logout" href="#">Logout</a></li>'
         outtext+='</ul></div></li>';
-        if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) {
+        if(EnergyFolks.testAdmin(EnergyFolks.CONTRIBUTOR)) {
             outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub4\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub4\').show();">';
-            outtext+="<a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>Administrator Tools</a>";
+            outtext+="<a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/dashboard' data-iframe='true' data-params=''>Leadership Tools</a>";
             outtext+='<div id="efadminbar_sub4" class="ab-sub-wrapper"><ul class="ab-submenu">';
-            outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>EnergyFolks Dashboard</a></li>";
+            outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/dashboard' data-iframe='true' data-params=''>EnergyFolks Dashboard</a></li>";
             outtext+='</ul></div></li>';
         } else if(EnergyFolks.current_user.super_admin) {
             outtext+='<li class="menupop" onmouseout="EnergyFolks.$(\'#efadminbar_sub4\').hide();" onmouseover="EnergyFolks.$(\'#efadminbar_sub4\').show();">';
             outtext+='<a  class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>';
             outtext+='<div id="efadminbar_sub4" class="ab-sub-wrapper"><ul class="ab-submenu">';
             if(EnergyFolks.id > 0)
-                outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/"+EnergyFolks.id+"/edit' data-iframe='true' data-params=''>Affiliate Dashboard</a></li>";
+                outtext += "<li><a href='#' class='ab-item EnergyFolks_popup' data-command='affiliates/dashboard' data-iframe='true' data-params=''>Affiliate Dashboard</a></li>";
             outtext += '<li><a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a></li>'
             outtext+='</ul></div></li>';
         }

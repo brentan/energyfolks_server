@@ -64,6 +64,7 @@ EnergyfolksServer::Application.routes.draw do
   post "affiliates/reject_or_remove"
   get "affiliates/approve"
   get "affiliates/logo"
+  get "affiliates/dashboard"
 
   # Comment routes
   get "comments/new"
