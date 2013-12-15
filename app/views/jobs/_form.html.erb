@@ -6,14 +6,10 @@
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
       <div id='ef_carousel'>
+        <%= raw(carousel_slide_title_section(new ? 'Post a Job' : 'Edit Job Post',3)) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
-              <h1><%= new ? 'Post a Job' : 'Edit Job Post' %></h1>
-              <%= raw(progress_bar(1,3)) %>
-              <br/><br/>
-              <hr>
-
               <%= raw(show_errors(@item)) %>
 
 		          <div class='form_label'>Job Title</div>
@@ -46,11 +42,6 @@
 
             </li>
             <li class='slide'>
-              <h1>Job Details</h1>
-              <%= raw(progress_bar(2,3)) %>
-              <br/><br/>
-              <hr>
-
               <div class='form_label'>Add Tags</div>
               <div class='form_entry'>
                 <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
@@ -65,11 +56,6 @@
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <h1>Sharing</h1>
-              <%= raw(progress_bar(3,3)) %>
-	            <br/><br/>
-	            <hr>
-
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
 
             </li>

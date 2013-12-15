@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2423579f-47b4-4e3f-932e-9ffc442dd6cb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/blogs/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/blogs/_form.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/discussions/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/discussions/_form.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/events/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/events/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jobs/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/jobs/_form.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/forms.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/forms.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="energyfolks_server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,11 +35,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="forms.css.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss">
+      <file leaf-file-name="edit.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/users/edit.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="133" column="0" selection-start="2603" selection-end="2603" vertical-scroll-proportion="-10.208333" vertical-offset="1750" max-vertical-offset="3165">
+            <state line="47" column="10" selection-start="2520" selection-end="2520" vertical-scroll-proportion="-29.375" vertical-offset="0" max-vertical-offset="2040">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/blogs/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="92" selection-start="976" selection-end="1060" vertical-scroll-proportion="-9.333333" vertical-offset="31" max-vertical-offset="1095">
+              <folding>
+                <element signature="e#2781#2802#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,33 +59,6 @@
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/forms.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="1" column="24" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/jobs/_form.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="34" selection-start="3502" selection-end="3526" vertical-scroll-proportion="-47.5" vertical-offset="0" max-vertical-offset="1290">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/blogs/_form.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="76" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.27419356" vertical-offset="158" max-vertical-offset="990">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helper.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p327/gems/tinymce-rails-4.0.11/lib/tinymce/rails/helper.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="8" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="795">
               <folding />
             </state>
           </provider>
@@ -90,10 +73,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="carousel.css.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss">
+      <file leaf-file-name="forms.css.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="3.5416667" vertical-offset="85" max-vertical-offset="780">
+            <state line="19" column="20" selection-start="347" selection-end="347" vertical-scroll-proportion="-7.5" vertical-offset="105" max-vertical-offset="3300">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/discussions/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="14" selection-start="1752" selection-end="1752" vertical-scroll-proportion="-23.75" vertical-offset="0" max-vertical-offset="780">
               <folding />
             </state>
           </provider>
@@ -102,8 +94,65 @@
       <file leaf-file-name="application_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="4" selection-start="2895" selection-end="2895" vertical-scroll-proportion="0.0" vertical-offset="511" max-vertical-offset="1275">
+            <state line="55" column="12" selection-start="2137" selection-end="2137" vertical-scroll-proportion="0.0" vertical-offset="534" max-vertical-offset="1365">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/jobs/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="88" selection-start="481" selection-end="561" vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="1080">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="112" column="14" selection-start="5210" selection-end="5210" vertical-scroll-proportion="0.68133533" vertical-offset="1231" max-vertical-offset="1890">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="48.75" vertical-offset="1170" max-vertical-offset="1875">
+              <folding>
+                <marker date="1386567171000" expanded="true" signature="445:6304" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="577:6281" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="608:6268" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="640:6218" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="671:3592" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="889:1125" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="970:1104" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="2059:2328" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="2188:2307" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="2771:3347" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="2889:3322" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3076:3293" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3623:5712" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3715:4683" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3878:4234" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3905:4205" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="3934:4084" placeholder="..." />
+                <marker date="1386567171000" expanded="false" signature="4014:4053" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4088:4177" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4258:4658" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4747:5415" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4882:5176" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4909:5147" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="4938:5026" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="5030:5119" placeholder="..." />
+                <marker date="1386567171000" expanded="false" signature="5466:5542" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="5743:6202" placeholder="..." />
+                <marker date="1386567171000" expanded="false" signature="6000:6054" placeholder="..." />
+                <marker date="1386567171000" expanded="true" signature="6055:6184" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -146,14 +195,15 @@
         <option value="$PROJECT_DIR$/app/models/affiliate.rb" />
         <option value="$PROJECT_DIR$/db/schema.rb" />
         <option value="$PROJECT_DIR$/config/site.yml" />
-        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/carousel.js" />
-        <option value="$PROJECT_DIR$/app/views/jobs/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/forms.js" />
         <option value="$PROJECT_DIR$/app/views/layouts/iframe.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" />
         <option value="$PROJECT_DIR$/app/views/blogs/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
+        <option value="$PROJECT_DIR$/app/views/jobs/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss" />
+        <option value="$PROJECT_DIR$/app/views/discussions/_form.html.erb" />
       </list>
     </option>
   </component>
@@ -274,6 +324,10 @@
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="users" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -290,10 +344,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -337,7 +387,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
+              <option name="myItemId" value="events" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -359,7 +409,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="blogs" />
+              <option name="myItemId" value="discussions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -956,30 +1006,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/log/development.log">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/common/_show_top.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="48" selection-start="5892" selection-end="5892" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="1665">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/mark_read.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="16" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="420">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/blog.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/affiliates_blog.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="65" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
@@ -1168,13 +1194,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="21" selection-start="5651" selection-end="5651" vertical-scroll-proportion="2.8152492" vertical-offset="0" max-vertical-offset="2070">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/affiliate_picker.css.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1095">
@@ -1247,17 +1266,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="4" selection-start="2895" selection-end="2895" vertical-scroll-proportion="0.0" vertical-offset="511" max-vertical-offset="1275">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/iframe.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="10" selection-start="962" selection-end="962" vertical-scroll-proportion="0.47482014" vertical-offset="0" max-vertical-offset="1140">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="3.5416667" vertical-offset="85" max-vertical-offset="780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p327/gems/tinymce-rails-4.0.11/lib/tinymce/rails/helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="8" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="795">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/jobs/edit.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="719">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="48.75" vertical-offset="1170" max-vertical-offset="1875">
+          <folding>
+            <marker date="1386567171000" expanded="true" signature="445:6304" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="577:6281" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="608:6268" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="640:6218" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="671:3592" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="889:1125" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="970:1104" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="2059:2328" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="2188:2307" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="2771:3347" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="2889:3322" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3076:3293" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3623:5712" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3715:4683" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3878:4234" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3905:4205" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="3934:4084" placeholder="..." />
+            <marker date="1386567171000" expanded="false" signature="4014:4053" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4088:4177" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4258:4658" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4747:5415" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4882:5176" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4909:5147" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="4938:5026" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="5030:5119" placeholder="..." />
+            <marker date="1386567171000" expanded="false" signature="5466:5542" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="5743:6202" placeholder="..." />
+            <marker date="1386567171000" expanded="false" signature="6000:6054" placeholder="..." />
+            <marker date="1386567171000" expanded="true" signature="6055:6184" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1275,37 +1345,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/carousel.css.scss">
+    <entry file="file://$PROJECT_DIR$/app/views/users/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="3.5416667" vertical-offset="85" max-vertical-offset="780">
+        <state line="47" column="10" selection-start="2520" selection-end="2520" vertical-scroll-proportion="-29.375" vertical-offset="0" max-vertical-offset="2040">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss">
+    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="0" selection-start="2603" selection-end="2603" vertical-scroll-proportion="-10.208333" vertical-offset="1750" max-vertical-offset="3165">
+        <state line="55" column="12" selection-start="2137" selection-end="2137" vertical-scroll-proportion="0.0" vertical-offset="534" max-vertical-offset="1365">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/jobs/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="34" selection-start="3502" selection-end="3526" vertical-scroll-proportion="-47.5" vertical-offset="0" max-vertical-offset="1290">
+        <state line="8" column="88" selection-start="481" selection-end="561" vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="1080">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.3-p327/gems/tinymce-rails-4.0.11/lib/tinymce/rails/helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/forms.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="8" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="795">
+        <state line="19" column="20" selection-start="347" selection-end="347" vertical-scroll-proportion="-7.5" vertical-offset="105" max-vertical-offset="3300">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/blogs/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="76" selection-start="1332" selection-end="1332" vertical-scroll-proportion="0.27419356" vertical-offset="158" max-vertical-offset="990">
+        <state line="17" column="92" selection-start="976" selection-end="1060" vertical-scroll-proportion="-9.333333" vertical-offset="31" max-vertical-offset="1095">
+          <folding>
+            <element signature="e#2781#2802#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/discussions/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="14" selection-start="1752" selection-end="1752" vertical-scroll-proportion="-23.75" vertical-offset="0" max-vertical-offset="780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="14" selection-start="5210" selection-end="5210" vertical-scroll-proportion="0.68133533" vertical-offset="1231" max-vertical-offset="1890">
           <folding />
         </state>
       </provider>
