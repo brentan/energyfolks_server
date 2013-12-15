@@ -110,8 +110,9 @@
 
               <div class='form_label'>Synopsis</div>
               <div class='form_entry'>
-                <%= f.text_area :synopsis %>
-                <div class='explain'>120 characters or less.  Used in our digest emails.</div>
+                <% maxLength = 120 %>
+                <%= f.text_area :synopsis, maxlength: maxLength, class: "limitLength" %>
+                <div class='explain'>Limited to <%= maxLength %> characters so it can be used in our digest emails. <span class="limitLength_charsRemaining"><%= maxLength %></span> characters remaining.</div>
               </div>
 
               <%= tinymce %>

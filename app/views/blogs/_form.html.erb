@@ -47,7 +47,13 @@
           <div class='form_label'>Attachment</div>
           <div class='form_entry'>
             <%= link_to @item.attachment.url if @item.attachment.present? %>
-            <%= f.file_field :attachment %>
+            <div class="file_inputs">
+              <%= f.file_field :attachment %>
+              <div class="fake_file">
+                <div class="file_input_btn">Upload</div>
+                <div class="file_name_label"></div>
+              </div>
+            </div>
             <div class='explain'>Images and Documents, 10MB Maximum</div>
           </div>
           <%= tinymce %>

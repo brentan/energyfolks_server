@@ -32,7 +32,7 @@ $(function() {
             display: 1, // how many blocks do you want to move at 1 time?
             axis: 'x', // vertical or horizontal scroller? ( x || y ).
             controls: true, // show left and right navigation buttons.
-            pager: false, // is there a page number navigation present?
+            pager: true, //false, // is there a page number navigation present?
             interval: false, // move to another block on intervals.
             intervaltime: 3000, // interval time in milliseconds.
             rewind: false, // If interval is true and rewind is true it will play in reverse if the last slide is reached.
@@ -55,7 +55,7 @@ $(function() {
             ,   oBtnNext  = $('.next', root)
             ,   oBtnSub   = $('.submit', root)
             ,   oBtnPrev  = $('.prev', root)
-            ,   oPager    = $('.pager:first', root)
+            ,   oPager    = $('.pager', root)
             ,   iPageSize = 0
             ,   iSteps    = 0
             ,   iCurrent  = 0
