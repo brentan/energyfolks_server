@@ -17,20 +17,6 @@ class Membership < ActiveRecord::Base
 
   before_save :set_approval_flag
 
-  def self.is_admin?(user, affiliate, level)
-    member = self.find_by_user_id_and_affiliate_id(user.id, affiliate.id)
-    return false if member.blank?
-    return false unless member.approved?
-    return true if member.admin_level >= level
-    return false
-  end
-
-  def self.is_member?(user, affiliate)
-    member = self.find_by_user_id_and_affiliate_id(user.id, affiliate.id)
-    return false if member.blank?
-    return false unless member.approved?
-    return true
-  end
 
   def set_approval_flag
     if self.affiliate.open == 1
