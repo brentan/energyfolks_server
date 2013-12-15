@@ -1,0 +1,23 @@
+<h2>Your energyfolks dashboard</h2>
+
+<h4>Analytics? (visits etc)</h4>
+- Site visits
+- Unique visitors (plots)
+
+<h4>Member count?</h4>
+- Link to member list<BR>
+- Link to admin list
+
+<h4>Links to important functions (post message, email directly, etc)</h4>
+- Post message to group<BR>
+- Post digest message to group<BR>
+- directly email the group (email links)
+
+<h4>Group docs</h4>
+- Link to google docs for group...at some point a full featured doc service in the browser?
+
+<h4>Current settings</h4>
+- widget to show current group settings, admins get an update links<BR>
+<% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
+    <a href="/affiliates/<%= current_affiliate.id %>/edit?iframe_next=true&aid=<%= current_affiliate.id %>">Edit group settings</a>
+<% end %>
