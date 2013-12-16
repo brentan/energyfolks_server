@@ -495,10 +495,10 @@ module MixinEntity
         if ((self.entity_name == 'Job') || (self.entity_name == 'Event')) && u.geocoded?
           # geocode test
           if self.geocoded?
-            distance = u.subscription.send("#{self.class.name}_radius")
+            distance = u.subscription.send("#{self.class.name.downcase}_radius")
             next if (distance > 0) && (self.distance_from([u.latitude, u.longitude]) > distance)
           else
-            next if u.subscription.send("#{self.class.name}_radius") > 0
+            next if u.subscription.send("#{self.class.name.downcase}_radius") > 0
           end
         end
         next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
