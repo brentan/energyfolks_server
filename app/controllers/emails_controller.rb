@@ -2,7 +2,7 @@ class EmailsController < ApplicationController
 
   def edit
     @email_settings_token= EmailSettingsToken.find_by_token(params[:token])
-
+    @affiliate = current_affiliate
     if @email_settings_token
       @user = @email_settings_token.user
       @email_settings_token.update_token
