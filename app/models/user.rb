@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
 
   def to_index
     begin
+      require 'asari'
       latlng = Asari::Geography.degrees_to_int(lat: self.latitude, lng: self.longitude)
     rescue
       latlng = {lat: 0, lng: 0}
@@ -122,8 +123,8 @@ class User < ActiveRecord::Base
   def self.find_all_visible(current_user, affiliate = nil, options = {})
     visibility = User::PUBLIC
     visibility = User::LOGGED_IN if current_user.present?
-    visibility = User::NETWORKS if current_user.present? && affiliate.present? && Membership.is_member?(current_user, affiliate)
-    visibility = User::PRIVATE if current_user.present? && affiliate.present? && Membership.is_admin?(current_user, affiliate, Membership::EDITOR)
+    visibility = User::NETWORKS if current_user.present? && affiliate.present? && affiliate.member?(current_user)
+    visibility = User::PRIVATE if current_user.present? && affiliate.present? && affiliate.admin?(current_user, Membership::EDITOR)
     visibility = User::PRIVATE if current_user.present? && current_user.admin?
     affiliates = [ (affiliate.present? && affiliate.id.present?) ? affiliate.id : 0 ]
     options[:highlight] = 0

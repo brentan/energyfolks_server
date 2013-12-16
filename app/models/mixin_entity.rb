@@ -131,6 +131,7 @@ module MixinEntity
       end
       if USE_CLOUDSEARCH # Only on production do we use cloudfront, otherwise build normal SQL query
         begin
+          require 'asari'
           Asari.mode = :production
           asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
           asari.aws_region = AMAZON_REGION
@@ -286,6 +287,7 @@ module MixinEntity
     end
     def reindex_all
       return unless USE_CLOUDSEARCH
+      require 'asari'
       begin
         Asari.mode = :production
         asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
@@ -316,6 +318,7 @@ module MixinEntity
 
   def to_index
     begin
+      require 'asari'
       latlng = Asari::Geography.degrees_to_int(lat: self.latitude, lng: self.longitude)
     rescue
       latlng = {lat: 0, lng: 0}
@@ -339,6 +342,7 @@ module MixinEntity
   end
   def update_index(destroy = false)
     if USE_CLOUDSEARCH # Only on production do we use cloudfront, otherwise do nothing
+      require 'asari'
       # This method updates the cloudfront index
       begin
         Asari.mode = :production

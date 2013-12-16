@@ -201,7 +201,7 @@ class AjaxController < ApplicationController
       output[:width] ||= 900 unless output.is_a?(String)  # default popup window width, if needed
       if params['load_all'] == 'true'
         set_current_user = user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : ''
-        set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = #{current_affiliate.color};EnergyFolks.url_events = '#{current_affiliate.url_events}';EnergyFolks.url_discussions = '#{current_affiliate.url_discussions}';EnergyFolks.url_users = '#{current_affiliate.url_users}';EnergyFolks.url_jobs = '#{current_affiliate.url_jobs}';EnergyFolks.url_blogs = '#{current_affiliate.url_blogs}';EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
+        set_affiliate = current_affiliate.present? && current_affiliate.id.present? ? "EnergyFolks.color = '#{current_affiliate.color}';EnergyFolks.url_events = '#{current_affiliate.url_events}';EnergyFolks.url_discussions = '#{current_affiliate.url_discussions}';EnergyFolks.url_users = '#{current_affiliate.url_users}';EnergyFolks.url_jobs = '#{current_affiliate.url_jobs}';EnergyFolks.url_blogs = '#{current_affiliate.url_blogs}';EnergyFolks.$('.ef_a_name').html('#{current_affiliate.name.gsub(/'/, "\\'")}');" : ''
         lat = 37.8044
         lng = -122.2708
         loc = 'Oakland, CA'
