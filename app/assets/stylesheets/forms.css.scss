@@ -3,13 +3,15 @@ $unselected_radio_button_color: gray;
 $progress_bar_still_to_go_color: gray;
 
 div.form {
+
   h1 {
     float: left;
-    z-index: 2;
+    clear: left;
   }
 
   .carousel_title_section {
     h1 {
+      float: left;
       height: 30px;
       line-height: 30px;
       vertical-align: middle;
@@ -65,6 +67,10 @@ div.form {
 
     input[type="text"] {
       width: 300px;
+    }
+
+    input[type="text"].distance {
+      width: 30px;
     }
 
     input[type="text"].hasDatepicker {
@@ -129,6 +135,14 @@ div.form {
   div.explain {
     font-style: italic;
     font-size: .8em;
+  }
+
+  div.show_me a {
+    padding-left: 5px;
+  }
+
+  div.hide_me a {
+    padding-left: 5px;
   }
 
   img.logo_img {
