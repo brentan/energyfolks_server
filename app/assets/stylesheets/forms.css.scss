@@ -3,40 +3,51 @@ $unselected_radio_button_color: gray;
 $progress_bar_still_to_go_color: gray;
 
 div.form {
+
   h1 {
     float: left;
+    clear: left;
   }
 
-  hr {
-    background-color: $default_affiliate_color;
-    border-width: 0px;
-    height: 3px;
-  }
-
-  .progress_bar {
-    float: none;
-    margin-left: 200px;
-
-    a {
-      display: inline-block;
-      background-color: $progress_bar_still_to_go_color;
-      color: white;
-      width: 30px;
+  .carousel_title_section {
+    h1 {
+      float: left;
       height: 30px;
       line-height: 30px;
-      border-radius: 15px; /* shape into circles*/
-      margin-left: 5px;
-      text-align: center;
       vertical-align: middle;
-
-      &:hover {
-        color: white;
-      }
-
     }
 
-    .current_page {
-      background-color: $default_affiliate_color; /* different color for the current slide number */
+    .progress_bar {
+      float: none;
+      margin-left: 200px;
+
+      a {
+        display: inline-block;
+        background-color: $progress_bar_still_to_go_color;
+        color: white;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px; /* shape into circles*/
+        margin-left: 5px;
+        text-align: center;
+        vertical-align: middle;
+
+        &:hover {
+          color: white;
+        }
+
+      }
+
+      .active {
+        background-color: $default_affiliate_color; /* different color for the current slide number */
+      }
+    }
+
+    hr {
+      background-color: $default_affiliate_color;
+      border-width: 0px;
+      height: 3px;
     }
   }
 
@@ -56,6 +67,10 @@ div.form {
 
     input[type="text"] {
       width: 300px;
+    }
+
+    input[type="text"].distance {
+      width: 30px;
     }
 
     input[type="text"].hasDatepicker {
@@ -122,12 +137,26 @@ div.form {
     font-size: .8em;
   }
 
+  div.show_me a {
+    padding-left: 5px;
+  }
+
+  div.hide_me a {
+    padding-left: 5px;
+  }
+
   img.logo_img {
     float: left;
   }
 
+  input[type="file"] {
+    cursor: pointer;
+  }
+
+  /* file input hack, not used currently
+
   div.file_inputs {
-    /* hide the regular file input button, so we can show a custom-styled one. code from http://www.quirksmode.org/dom/inputfile.html */
+    /* hide the regular file input button, so we can show a custom-styled one. code from http://www.quirksmode.org/dom/inputfile.html /
     float: left;
     position: relative;
     margin-left: 5px;
@@ -137,7 +166,7 @@ div.form {
       position: absolute;
       top: 0px;
       left: 0px;
-      width: 400px; /* wide enough make sure file button & label show up on same line */
+      width: 400px; /* wide enough make sure file button & label show up on same line /
       z-index: 1;
     }
 
@@ -150,13 +179,13 @@ div.form {
       filter:alpha(opacity = 0);
       opacity: 0;
       z-index: 2;
-      cursor: pointer;  /* on mac Chrome, only works for the label part of the file input, not the button part. not sure about other browsers. */
+      cursor: pointer;  /* on mac Chrome, only works for the label part of the file input, not the button part. not sure about other browsers. /
     }
 
     .file_input_btn {
       color: white;
       background-color: $default_affiliate_color;
-      display: inline-block; /* so we can set height */
+      display: inline-block; /* so we can set height /
       float: left;
       clear: none;
       height: 15px;
@@ -165,7 +194,7 @@ div.form {
       padding-left: 10px;
       padding-right: 10px;
       font-weight: bold;
-      /* margin-left: 80px; /* move it to the right, because the cursor style doesn't work if it's directly below the input type=file. */
+      /* margin-left: 80px; /* move it to the right, because the cursor style doesn't work if it's directly below the input type=file. /
       margin-right: 0px;
       border-radius: 4px;
 
@@ -180,7 +209,7 @@ div.form {
       clear: right;
       margin-left: 5px;
     }
-  }
+  } */
 
   div.field_with_errors {
     background-color: #eeaaaa

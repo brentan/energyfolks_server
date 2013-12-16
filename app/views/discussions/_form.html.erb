@@ -6,14 +6,10 @@
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
       <div id='ef_carousel'>
+        <%= raw(carousel_slide_title_section(new ? 'Post a Discussion' : 'Edit Discussion Post',2)) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
-              <h1><%= new ? 'Post a Discussion' : 'Edit Discussion Post' %></h1>
-              <%= raw(progress_bar(1,2)) %>
-              <br/><br/>
-              <hr>
-
               <%= raw(show_errors(@item)) %>
 
               <div class='form_label'>Title</div>
@@ -40,10 +36,6 @@
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <%= raw(progress_bar(2,2)) %>
-              <br/><br/>
-              <hr>
-
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'discussion', join_table: 'affiliates_discussions'} %>
 
             </li>
