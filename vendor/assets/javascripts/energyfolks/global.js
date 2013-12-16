@@ -45,7 +45,7 @@ EnergyFolks.ThirdPartyLogin = function(type) {
 }
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click', '.ef_third_party_link', function() {
-        window.open(EnergyFolks.server_url + "/external_login?service=" + EnergyFolks.$(this).attr('data-type') + "&aid=" + EnergyFolks.id, "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
+        window.open(EnergyFolks.server_url + "/external_login?service=" + EnergyFolks.$(this).attr('data-type') + "&aid=" + EnergyFolks.id + "&" + EnergyFolks.urlhash(), "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
         return false;
     });
 });
@@ -95,6 +95,9 @@ EnergyFolks.$(function() {
                 EnergyFolks.$('#energyfolks_popup_loading').remove();
                 EnergyFolks.$('#energyfolks_popup_iframe').css('visibility','visible');
                 EnergyFolks.vertically_center_popup();
+            } else if(hash.substr(1,11) == 'refreshpage') {
+                window.location.hash = '';
+                window.location.reload();
             } else if(hash.substr(1,10) == 'closepopup') {
                 // This will close the popup if 'hide_popup' is called within the iframe window, as it passes back this hash
                 EnergyFolks.hide_popup();

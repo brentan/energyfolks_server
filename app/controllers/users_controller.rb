@@ -352,6 +352,7 @@ class UsersController < ApplicationController
   def external_login
     # Use an external service to login the user
     cookies[:aid] = current_affiliate.id.present? ? current_affiliate.id : 0
+    cookies[:parent_url] = @url
     return redirect_to "/auth/linkedin" if params[:service] == 'linkedin'
     redirect_to "/", :notice => "Unrecognized service"
   end
