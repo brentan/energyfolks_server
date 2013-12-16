@@ -52,18 +52,34 @@ module ApplicationHelper
     link_to text, '#', class: (delete ? 'EnergyFolks_delete' : 'EnergyFolks_ajax'), data: {command: command, params: params.to_query}
   end
 
-	def progress_bar(current_step, number_of_steps)
+  def carousel_slide_title_section(title_text, slide_count)
+    html = "<div class='carousel_title_section'><h1>#{title_text}</h1>"
+    html += progress_bar(slide_count)
+    html += "<hr></div>"
+  end
+
+	def progress_bar(number_of_steps)
 		html = ''
 		html += "<div class='progress_bar pager'>"
 		number_of_steps.times do |index|
 			step = index + 1  #index is zero-based, we want steps to be numbered from 1
-      if step == current_step
-        html += "<a rel='#{index}' href='#' class='pagenum current_page'>#{step}</a>"
-      else
+      #if step == current_step
+      #  html += "<a rel='#{index}' href='#' class='pagenum current_page'>#{step}</a>"
+      #else
         html += "<a rel='#{index}' href='#' class='pagenum'>#{step}</a>"
-      end
+      #end
 		end
 	  html += '</div>'
-	end
+  end
+
+  def styled_file_input(file_input_html, button_label)
+    # make file input transparent and show styled button underneath, a hack based on http://www.quirksmode.org/dom/inputfile.html
+    # makes it difficult to do correct cursor and hover styling, so we're not using it now.
+    # use example:   <%= raw(styled_file_input(f.file_field(:logo),"Upload Logo")) %>
+    html = "<div class='file_inputs'>#{file_input_html}<div class='fake_file'>"
+    html += "<div class='file_input_btn'>#{button_label}</div>"
+    html += "<div class='file_name_label'></div>"
+    html += "</div></div>"
+  end
 
 end

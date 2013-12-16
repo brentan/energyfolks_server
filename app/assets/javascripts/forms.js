@@ -1,4 +1,5 @@
 $(function () {
+    /* not used, for now
     //the jobs _form partial has a custom-styled file input button.
     //to make that work, the real file input is made transparent,
     //and a div styled as a button is put behind it.
@@ -14,6 +15,7 @@ $(function () {
 
     $(".file_inputs > input:file").change( handleFileUploadChange );
     $(".file_inputs > input:file").mouseout( handleFileUploadChange );
+    */
 
     //limit the length of the event synopsis text field
     $("textarea.limitLength").keypress( function () {

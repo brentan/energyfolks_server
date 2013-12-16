@@ -12,15 +12,11 @@
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
       <div id='ef_carousel'>
+        <%= raw(carousel_slide_title_section(new ? 'Post an Event' : 'Edit Event Post',3)) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
-	            <h1><%= new ? 'Post an Event' : 'Edit Event Post' %></h1>
-              <%= raw(progress_bar(1,3)) %>
-              <br/><br/>
-              <hr>
-
-              <%= raw(show_errors(@item)) %>
+	            <%= raw(show_errors(@item)) %>
 
               <div class='form_label'>Event Title</div>
               <div class='form_entry'><%= f.text_field :name %></div>
@@ -93,10 +89,6 @@
               </div>
             </li>
             <li class='slide'>
-              <%= raw(progress_bar(2,3)) %>
-              <br/><br/>
-              <hr>
-
               <div class='form_label'>Description</div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
 
@@ -111,17 +103,13 @@
               <div class='form_label'>Synopsis</div>
               <div class='form_entry'>
                 <% maxLength = 120 %>
-                <%= f.text_area :synopsis, maxlength: maxLength, class: "limitLength" %>
+                <%= f.text_area :synopsis, maxlength: maxLength, class: "limitLength", rows: 4 %>
                 <div class='explain'>Limited to <%= maxLength %> characters so it can be used in our digest emails. <span class="limitLength_charsRemaining"><%= maxLength %></span> characters remaining.</div>
               </div>
 
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <%= raw(progress_bar(3,3)) %>
-              <br/><br/>
-              <hr>
-
               <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'event', join_table: 'affiliates_events'} %>
 
             </li>
