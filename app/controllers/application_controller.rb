@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
   def check_for_iframe
     if params['iframe'].present? && (params['iframe'] == '1')
       @layout = 'iframe'
-      @url = params[:current_url].gsub("#","").gsub(/_dot_/,".").gsub(/_slash_/,"/").gsub(/_colon_/,":").gsub(/_qmark_/,"?").gsub(/_amp_/,"&").gsub(/_equals_/,"=")
     elsif params['iframe_next'].present?
       @layout = 'iframe'
     elsif request.fullpath.include?('developer')
@@ -32,6 +31,7 @@ class ApplicationController < ActionController::Base
     else
       @layout = 'application'
     end
+    @url = params[:current_url].gsub("#","").gsub(/_dot_/,".").gsub(/_slash_/,"/").gsub(/_colon_/,":").gsub(/_qmark_/,"?").gsub(/_amp_/,"&").gsub(/_equals_/,"=") if params[:current_url].present?
   end
 
   def find_aid

@@ -1,5 +1,6 @@
 <script language='javascript'>
   <%= "alert('#{@alert}');" if @alert.present? %>
-  window.opener.location.reload();
+  EnergyFolks.parent_url = '<%= cookies[:parent_url] %>';
+  window.opener.location=EnergyFolks.parent_url+'#refreshpage';
   window.close();
 </script>

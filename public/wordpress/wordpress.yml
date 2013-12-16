@@ -2,7 +2,7 @@ version: 2.01
 date: '2013-12-15'
 author: 'EnergyFolks'
 requires: '3.0.1'
-tested: '3.8.0'
+tested: '3.8'
 slug: 'energyfolks'
 homepage: 'http://server.energyfolks.com/developers/wordpress'
 downloaded: 1000
