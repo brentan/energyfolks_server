@@ -87,7 +87,7 @@ class UsersController < ApplicationController
       user.save!(validate:false)
       session[:userid]=user.id
       user.update_index
-      flash[:notice]="Your account has been activated"
+      flash[:notice]="Your account has been activated!  Please setup your profile."
       redirect_to :action => "profile"
     end
   end

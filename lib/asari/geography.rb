@@ -88,6 +88,31 @@ class Asari
         { lat: (bottom.round..top.round), lng: (left.round..right.round) }
       end
 
+      # Public: Calculates a range of integers to search within from 2 points
+      # on a map (northeast and southwest points)
+      #
+      #     options - the options hash requires:
+      #       sw: and ne: hashes, each of which have:
+      #         lat: a Float
+      #         lng: a Float
+      #
+      # Returns: a Hash containing :lat and :lng keys with Range values
+      #
+      def coordinate_bounded_box(options)
+
+        bottom = latitude_to_int(options[:sw][:lat])
+        top = latitude_to_int(options[:ne][:lat])
+        if((options[:sw][:lat]).abs < (options[:ne][:lat]).abs)
+          left = longitude_to_int(options[:sw][:lng], options[:sw][:lat])
+          right = longitude_to_int(options[:ne][:lng], options[:sw][:lat])
+        else
+          left = longitude_to_int(options[:sw][:lng], options[:ne][:lat])
+          right = longitude_to_int(options[:ne][:lng], options[:ne][:lat])
+        end
+
+        { lat: (bottom.round..top.round), lng: (left.round..right.round) }
+      end
+
 
       private
       def latitude_to_int(degrees)

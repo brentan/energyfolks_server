@@ -129,7 +129,8 @@ class User < ActiveRecord::Base
     affiliates = [ (affiliate.present? && affiliate.id.present?) ? affiliate.id : 0 ]
     options[:highlight] = 0
     options[:visibility] = visibility
-    results, more_pages = self.search(options[:terms],affiliates, options)
+    admin_user_search = options[:terms].present? && current_user.present? && current_user.admin?
+    results, more_pages = self.search(options[:terms],affiliates, options, admin_user_search)
     return results, more_pages
   end
 

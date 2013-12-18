@@ -1,4 +1,3 @@
-//TODO: Check MIT page custom CSS and ensure we use the same class names here
 
 /*
 The showPage function is the master function to show energyfolks data.  Params is a JSON array with the following options:
@@ -73,7 +72,6 @@ EnergyFolks.Sidebar = function() {
 
 // Display the filter bar and sidebar
 EnergyFolks.showFilters = function() {
-    //TODO: Hide if in 'moderation' or 'my posts' views.
     //If sidebar is not used, we add it to the filter bar instead:
     if(EnergyFolks.$('#EnFolksSidebarDiv').length == 0)
         EnergyFolks.$('#EnfolksResultDiv').before("<div id='EnFolksSidebarDiv' class='ef_top'></div>");
@@ -360,6 +358,7 @@ EnergyFolks.$(function() {
         var self = EnergyFolks.$(this);
         self.closest(".moderation_box").hide();
         EnergyFolks.get_moderated = true;
+        EnergyFolks.format = 'list';
         EnergyFolks.loadData();
     });
 });
@@ -588,10 +587,11 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     output += "</td><td class='ef_main_td'>";
     output += EnergyFolks.create_remote_popup('<h1 class="title">'+info.title+'</h1>', 'show', info.params);
     output += "<table border=0 cellpadding=0 cellspacing=0><tr><td class='ef_affiliate_logo_holder'>" + EnergyFolks.affiliateLogo(info.affiliate_id, EnergyFolks.source == 'users' ? 'User is a member of' : 'Posted from the website of') + '</td><td>';
-    output += '<h3 class="line1">' + info.line_one + '</h3>';
+    if((info.line_one != null) && (info.line_one != 'null'))
+        output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
         output += '</td></tr></table><div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
-    else
+    else if((info.line_two != null) && (info.line_two != 'null'))
         output += '<span class="line2">' + info.line_two + '</span></td></tr></table>';
     output += '</td>';
     if(info.logo != '')

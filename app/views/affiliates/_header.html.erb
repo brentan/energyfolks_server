@@ -1,3 +1,5 @@
 <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#<%= @affiliate.color %>' align=center style='text-align: center;'>
-  <a href='<%= @affiliate.url %>' border=0 style='border:0px;'><img src='<%= @affiliate.logo.url(:medium) %>' border=0 style='border:0px;display: inline;'></a>
+  <a href='<%= @affiliate.url %>' border=0 style='border:0px;'><img src='<%= @affiliate.logo.url(:medium) %>' alt='<%= @affiliate.name %> logo' border=0 style='border:0px;display: inline;'></a>
+  <BR>
+  <a href='<%= @affiliate.url %>' border="0" style="color:white;"><%= @affiliate.url %></a>
 </td></tr></table>
