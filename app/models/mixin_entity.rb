@@ -91,7 +91,7 @@ module MixinEntity
       version_control(user, Affiliate.find_by_id(0), self.where(user_id: user.id).all)
     end
 
-    def search(terms, affiliates, options)
+    def search(terms, affiliates, options, admin_user_search = false)
       if options[:display] == 'month'
         year = DateTime.now.year
         month = DateTime.now.month
@@ -129,8 +129,8 @@ module MixinEntity
           end
         end
       end
-      if USE_CLOUDSEARCH # Only on production do we use cloudfront, otherwise build normal SQL query
-        begin
+      if USE_CLOUDSEARCH && !admin_user_search # Only on production do we use cloudfront, otherwise build normal SQL query
+        #begin
           require 'asari'
           Asari.mode = :production
           asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
@@ -141,12 +141,10 @@ module MixinEntity
           filters[:and][:date] = (options[:start].to_i)..(options[:end].to_i) if options[:display] == 'dates'
           if options[:display] == 'map'
             bounds = options[:bounds].split('_')
-            sw = Asari::Geography.degrees_to_int(lat: bounds[0].to_i, lng: bounds[1].to_i)
-            ne = Asari::Geography.degrees_to_int(lat: bounds[2].to_i, lng: bounds[3].to_i)
-            filters[:and][:lat] = sw[:lat]..ne[:lat]
-            filters[:and][:lng] = sw[:lng]..ne[:lng]
+            latlng = Asari::Geography.coordinate_bounded_box(sw: {lat: bounds[0].to_f, lng: bounds[1].to_f}, ne: {lat: bounds[2].to_f, lng: bounds[3].to_f})
+            filters[:and][:lat] = latlng[:lat]
+            filters[:and][:lng] = latlng[:lng]
           elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
-            latlng = Geocoder::Calculations.bounding_box([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
             latlng = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
@@ -168,7 +166,7 @@ module MixinEntity
               page: %w(month map).include?(options[:display]) ? 1 : (options[:page]+1)
           }
           if terms.present?
-            asari_results = asari.search(terms, asari_options)
+            asari_results = asari.search("*#{terms.split(' ').join('* *')}*", asari_options)
           else
             asari_results = asari.search(asari_options)
           end
@@ -176,14 +174,15 @@ module MixinEntity
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
           return results, (asari_results.total_pages < asari_results.current_page)
-        rescue
+        #rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
-        end
+        #end
       end
       # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to name column
       more_pages = false
       if self.name.downcase.pluralize == 'users' # User search, this has different SQL syntax!
-        items = User.verified.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name')
+        items = admin_user_search ? User : User.verified
+        items = items.select([:verified, :active, 'users.id', 'users.affiliate_id',:first_name, :last_name, :position, :organization, :avatar_file_name, :avatar_updated_at]).order('last_name, first_name')
         items = items.where('visibility <= ?',options[:visibility])
         items = items.joins(:memberships).where(:memberships => {:approved => true, :affiliate_id => affiliates[0]}) if affiliates[0] > 0
       else
@@ -197,6 +196,7 @@ module MixinEntity
       items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (options[:display] != 'dates') && (self.name.downcase.pluralize == 'events')
       if terms.present? && self.name.downcase.pluralize == 'users'
         items = items.where("first_name LIKE ? OR last_name LIKE ?","%#{terms}%","%#{terms}%")
+        items = items.where("email LIKE ?", "%#{terms}%") if admin_user_search
       elsif terms.present?
         items = items.where("name LIKE ?","%#{terms}%")
       end
