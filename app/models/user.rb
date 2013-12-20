@@ -302,6 +302,7 @@ class User < ActiveRecord::Base
       info = client.profile(:fields => %w(summary picture-url public-profile-url headline specialties positions first-name last-name email-address interests))
       self.first_name = info.first_name if info.first_name.present?
       self.last_name = info.last_name if info.last_name.present?
+      self.linkedin_url = info.public_profile_url if info.public_profile_url.present?
       self.email = info.email_address.downcase if info.email_address.present?
       self.bio = info.summary if info.summary.present?
       self.expertise = info.specialties if info.specialties.present?

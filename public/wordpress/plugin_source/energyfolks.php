@@ -868,7 +868,7 @@ add_action( 'save_post', 'energyfolks_save_postdata', 9 );
  */
 add_action('admin_menu', 'energyfolks_register_custom_menu_page');
 function energyfolks_register_custom_menu_page() {
-    add_menu_page( "Energyfolks", "Energyfolks", 'administrator', 'energyfolks', 'energyfolks_display_menu_main', plugin_dir_url( __FILE__ )."icon.png", 57 );
+    add_menu_page( "Energyfolks", "Energyfolks", 'edit_posts', 'energyfolks', 'energyfolks_display_menu_main', plugin_dir_url( __FILE__ )."icon.png", 57 );
 }
 function energyfolks_display_menu_main() {
     include(dirname( __FILE__ ) . '/SettingsPage.php');

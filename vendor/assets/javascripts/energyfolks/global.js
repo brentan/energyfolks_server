@@ -45,7 +45,7 @@ EnergyFolks.ThirdPartyLogin = function(type) {
 }
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click', '.ef_third_party_link', function() {
-        window.open(EnergyFolks.server_url + "/external_login?service=" + EnergyFolks.$(this).attr('data-type') + "&aid=" + EnergyFolks.id + "&" + EnergyFolks.urlhash(), "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
+        window.open(EnergyFolks.server_url + "/external_login?service=" + EnergyFolks.$(this).attr('data-type') + "&aid=" + EnergyFolks.id + "&" + EnergyFolks.urlhash(true), "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
         return false;
     });
 });
@@ -188,7 +188,7 @@ EnergyFolks.vertically_center_popup = function() {
         var el_height = EnergyFolks.$('#energyfolks_popup_wrapper').height();
         var view_height = EnergyFolks.$(window).height();
         var scroll_location = EnergyFolks.$(document).scrollTop();
-        var offset = Math.max(Math.round((view_height - el_height)/2)-30,100);
+        var offset = Math.max(Math.round((view_height - el_height)/2)-30,30);
         EnergyFolks.$('#energyfolks_popup_wrapper').css('padding-top',(scroll_location + offset) + 'px');
     }
 }
@@ -222,17 +222,17 @@ EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','#energyfolks_popup_close img', EnergyFolks.hide_popup);
     EnergyFolks.$('body').on('click','#energyfolks_popup_back a', EnergyFolks.hide_popup);
     EnergyFolks.$('body').on('click','#energyfolks_popup_wrapper', function(event) { event.stopPropagation(); } );
-    EnergyFolks.$('body').on('click','#energyfolks_popup', EnergyFolks.hide_popup);
+    //EnergyFolks.$('body').on('click','#energyfolks_popup', EnergyFolks.hide_popup);
 });
 
 /* Returns a hash of the current url for use in a query string that requires the frame to talk with the parent through
  * hash tag changes
  */
-EnergyFolks.urlhash = function() {
-    if(EnergyFolks.iframe)
+EnergyFolks.urlhash = function(force) {
+    if(EnergyFolks.iframe && (typeof force === 'undefined'))
         var current_url = EnergyFolks.parent_url;
     else
-        var current_url=window.location.href;
+        var current_url = window.location.href;
     return "current_url="+current_url.replace(/#.*/, "").replace(/\./g,"_dot_").replace(/\//g,"_slash_").replace(/\:/g,"_colon_").replace("?","_qmark_").replace(/&/g,"_amp_").replace(/=/g,"_equals_");
 }
 

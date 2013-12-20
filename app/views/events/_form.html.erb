@@ -8,6 +8,7 @@
   <%= nested_form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
       <%= raw(iframe_form) %>
       <% @item.affiliate_join << @item.class.join_table.new({affiliate_id: current_affiliate.id, approved_version: 1, admin_version: 1}) if current_affiliate.id.present? && (@item.affiliate_join.length == 0) %>
+      <% @item.affiliate_join << @item.class.join_table.new({affiliate_id: 0, approved_version: 1, admin_version: 1}) if current_affiliate.id.blank? && (@item.affiliate_join.length == 0) %>
       <% if !new %>
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
