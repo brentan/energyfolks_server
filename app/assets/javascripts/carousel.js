@@ -1,5 +1,7 @@
 $(function() {
-    $('#ef_carousel .viewport').css('width',$('#ef_carousel').outerWidth(false) + 'px');
+    //include width of progress bar if it's on the left-hand side instead of above (e.g. if 'show_vertical' option is on)
+    var progress_bar_width = $('#ef_carousel .carousel_title_section.show_vertical').outerWidth(false);
+    $('#ef_carousel .viewport').css('width',($('#ef_carousel').outerWidth(false) - progress_bar_width) + 'px');
     $('#ef_carousel li').css('width',$('#ef_carousel').outerWidth(false) - 4 + 'px');
     $('#ef_carousel').tinycarousel();
     $('#ef_carousel .submit').on('click', function() {

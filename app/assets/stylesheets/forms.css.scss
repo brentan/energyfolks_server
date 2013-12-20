@@ -36,7 +36,6 @@ div.form {
         &:hover {
           color: white;
         }
-
       }
 
       .active {
@@ -49,6 +48,36 @@ div.form {
       border-width: 0px;
       height: 3px;
     }
+  }
+
+  .carousel_title_section.show_vertical {
+    float: left;
+    width: 110px;
+    display: inline-block;
+
+    h1 {
+      float: none;
+      height: auto;
+      line-height: normal;
+    }
+
+    .progress_bar {
+      margin-left: 0px;
+      width: 100px;
+
+      a {
+        display: block;
+        width: 80px;
+        line-height: auto;
+        margin-bottom: 2px;
+      }
+    }
+
+    & + .viewport {
+      width: 600px; /* leave room for the progress bar to be next to it */
+      display: inline-block;
+    }
+
   }
 
   div.form_label {
@@ -111,16 +140,16 @@ div.form {
       cursor: default;
     }
 
-    input[type="radio"].toggle-left + label {
+    input[type="radio"].toggle:first-of-type + label {
       border-right: 0;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
     }
 
-    input[type="radio"].toggle-right + label {
+    input[type="radio"].toggle:last-of-type + label {
       border-right: 0;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
 
   }
