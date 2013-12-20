@@ -29,13 +29,13 @@
 
               <div class='form_label'>Job Description</div>
               <div class='form_entry show_inline'>
-                <%= f.radio_button :job_type, Job::FULL_TIME, class: "toggle toggle-left", checked: "checked" %>
+                <%= f.radio_button :job_type, Job::FULL_TIME, class: "toggle", checked: "checked" %>
                 <%= f.label :job_type, 'Full Time', value: Job::FULL_TIME %>
                 <%= f.radio_button :job_type, Job::PART_TIME, class: "toggle" %>
                 <%= f.label :job_type, 'Part Time', value: Job::PART_TIME %>
                 <%= f.radio_button :job_type, Job::TEMPORARY, class: "toggle" %>
                 <%= f.label :job_type, 'Temporary (internship/fellowship)', value: Job::TEMPORARY %>
-                <%= f.radio_button :job_type, Job::ONE_TIME, class: "toggle toggle-right" %>
+                <%= f.radio_button :job_type, Job::ONE_TIME, class: "toggle" %>
                 <%= f.label :job_type, 'One Time', value: Job::ONE_TIME %>
               </div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>

@@ -6,7 +6,7 @@
       <%=	 nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
         <%= raw(iframe_form) %>
         <div id='ef_carousel'>
-          <%= raw(carousel_slide_title_section('Edit Profile',8)) %>
+          <%= raw(carousel_slide_title_section('Edit Profile',8, {show_vertical: true, slide_titles: ['Basics', 'Profile', 'Bio', 'Interests', 'Expertise', 'Affiliates', 'Preferences', 'Account'] })) %>
           <div class="viewport">
             <ul class="overview">
               <li class='slide'>
@@ -101,42 +101,43 @@
                 <h1>Privacy</h1>
                 <div class='form_label'>Profile Visibility</div>
                 <div class='form_entry'>
-                  <label><%= f.radio_button :visibility, User::PUBLIC %> Public</label>
-                  <label><%= f.radio_button :visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
-                  <label><%= f.radio_button :visibility, User::NETWORKS %> Only to logged in members in my networks</label>
-                  <label><%= f.radio_button :visibility, User::PRIVATE %> Private (administrators only)</label>
+                  <%= f.radio_button :visibility, User::PUBLIC, class: "toggle" %>
+                  <%= f.label :visibility, 'Public', value: User::PUBLIC %>
+                  <%= f.radio_button :visibility, User::LOGGED_IN, class: "toggle" %>
+                  <%= f.label :visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %>
+                  <%= f.radio_button :visibility, User::NETWORKS, class: "toggle" %>
+                  <%= f.label :visibility, 'Only to logged in members in my networks', value: User::NETWORKS %>
+                  <%= f.radio_button :visibility, User::PRIVATE, class: "toggle" %>
+                  <%= f.label :visibility, 'Private (administrators only)', value: User::PRIVATE %>
                 </div>
                 <div class='form_label'>Resume Visibility</div>
                 <div class='form_entry'>
-                  <label><%= f.radio_button :resume_visibility, User::PUBLIC %> Public</label>
-                  <label><%= f.radio_button :resume_visibility, User::LOGGED_IN %> Only to logged in members of any network</label>
-                  <label><%= f.radio_button :resume_visibility, User::NETWORKS %> Only to logged in members in my networks</label>
-                  <label><%= f.radio_button :resume_visibility, User::PRIVATE %> Private (administrators only)</label>
+                  <%= f.radio_button :resume_visibility, User::PUBLIC, class: "toggle" %>
+                  <%= f.label :resume_visibility, 'Public', value: User::PUBLIC %>
+                  <%= f.radio_button :resume_visibility, User::LOGGED_IN, class: "toggle" %>
+                  <%= f.label :resume_visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %>
+                  <%= f.radio_button :resume_visibility, User::NETWORKS, class: "toggle" %>
+                  <%= f.label :resume_visibility, 'Only to logged in members in my networks', value: User::NETWORKS %>
+                  <%= f.radio_button :resume_visibility, User::PRIVATE, class: "toggle" %>
+                  <%= f.label :resume_visibility, 'Private (administrators only)', value: User::PRIVATE %>
                 </div>
               </li>
               <li class="slide">
                 <div class="form_entry">
-                  <div class='hide_me'>
-                    <h1>Change Password</h1>
-                    <a href="#" onclick="$(this).closest('.hide_me').hide().next('.show_me').show();return false;">Show</a>
+                  <h1>Change Password</h1>
+                  <div class='form_label'>Current Password</div>
+                  <div class='form_entry'>
+                    <%= f.password_field :password_old %>
+                    <div class='explain'>Include if changing your password, otherwise leave blank</div>
                   </div>
-                  <div class='show_me' style='display:none;'>
-                    <h1>Change Password</h1>
-                    <a href="#" onclick="$(this).closest('.show_me').hide().prev('.hide_me').show();return false;">Hide</a>
-                    <div class='form_label'>Current Password</div>
-                    <div class='form_entry'>
-                      <%= f.password_field :password_old %>
-                      <div class='explain'>Include if changing your password, otherwise leave blank</div>
-                    </div>
-                    <div class='form_label'>New Password</div>
-                    <div class='form_entry'>
-                      <%= f.password_field :password %>
-                      <div class='explain'>If changing your password</div>
-                    </div>
-                    <div class='form_label'>Confirm New Password</div>
-                    <div class='form_entry'>
-                      <%= f.password_field :password_confirmation %>
-                    </div>
+                  <div class='form_label'>New Password</div>
+                  <div class='form_entry'>
+                    <%= f.password_field :password %>
+                    <div class='explain'>If changing your password</div>
+                  </div>
+                  <div class='form_label'>Confirm New Password</div>
+                  <div class='form_entry'>
+                    <%= f.password_field :password_confirmation %>
                   </div>
                 </div>
 
