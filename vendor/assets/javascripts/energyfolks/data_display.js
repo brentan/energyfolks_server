@@ -88,7 +88,7 @@ EnergyFolks.showFilters = function() {
     EnergyFolks.$('#EnfolksFilterDiv').html(searchbar);
     var filterbar = '';
     if(EnergyFolks.source == 'blogs') {
-        if(EnergyFolks.current_user.super_admin || EnergyFolks.testAdmin(EnergyFolks.AUTHOR))
+        if(EnergyFolks.current_user.super_admin || (EnergyFolks.testAdmin(EnergyFolks.AUTHOR)) && !EnergyFolks.affiliates[EnergyFolks.id].plugin)
             filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
     } else if(EnergyFolks.source != 'users')
         filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
@@ -126,6 +126,9 @@ EnergyFolks.UpdateFilterText = function() {
             var checked = false;
         tag_text += '<label><input type=checkbox value="'+v+'" ' + (checked ? 'checked' : '') + '>' + v + '</label>';
     });
+    var val = EnergyFolks.$('#ef_filter_radius').val()*1;
+    if(val == 0)
+        EnergyFolks.$('.ef_location_radio1').prop("checked", true);
     EnergyFolks.$('#ef_tags_list').html(tag_text);
 }
 EnergyFolks.HighlightUpdateButton = function() {
@@ -455,9 +458,9 @@ EnergyFolks.showMonth = function() {
     var output = "<table cellpadding=0 cellspacing=0 class='enfolks_calendar' style='width:"+(7*wide)+"px;'><tr>";
     output += "<td class='enfolks_prev'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source == 'events'))
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + EnergyFolks.current_month + "'>< Previous</a>"; //due to shift, previous is just start of current month
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + EnergyFolks.current_month + "'><&nbsp;Previous</a>"; //due to shift, previous is just start of current month
     else
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month-1) + "'>< Previous</a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month-1) + "'><&nbsp;Previous</a>";
     output += "</td><td colspan=5 class='enfolks_calendar_title'>";
     if(EnergyFolks.shift_later) {
         if(EnergyFolks.source == 'events')
@@ -468,9 +471,9 @@ EnergyFolks.showMonth = function() {
         output += EnergyFolks.date("F Y",EnergyFolks.mktime(0,0,1,month,1,year));
     output += "</td><td class='enfolks_next'>";
     if(EnergyFolks.shift_later && (EnergyFolks.source != 'events'))
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month) + "'>Next ></a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month) + "'>Next&nbsp;></a>";
     else
-        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month+1) + "'>Next ></a>";
+        output += "<a href='#' class='enfolks_prev_next' data-value='" + (EnergyFolks.current_month+1) + "'>Next&nbsp;></a>";
     output += "</td></tr><tr>";
     var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     for(var i=0;i<7;i++) {

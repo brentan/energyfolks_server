@@ -80,7 +80,7 @@ EnergyfolksServer::Application.routes.draw do
 
   # ENTITY ROUTES
   resources :users, only: ['show']
-
+  get "energyfolks/locate"
   begin
     ApplicationController::ENTITIES.each { |type|
       if type.new.entity_name != 'User'
@@ -124,6 +124,7 @@ EnergyfolksServer::Application.routes.draw do
   match "announce" => "discussions#index" #backwards compatible
   match "welcome/privacy" => "energyfolks#privacy"
   match "welcome/terms" => "energyfolks#terms"
+  match "feedback/new" => "energyfolks#new"
   match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes
   match ':controller(/:action(/:id))(.:format)', controller: /admins/ #expose admin routes
 

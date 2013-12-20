@@ -14,7 +14,7 @@ EnergyFolks.current_user = {id: 0, super_admin: false, admin: [], affiliates: []
 //Used by iframes to keep track of the parent URL
 EnergyFolks.parent_url = '';
 EnergyFolks.iframe = false;
-EnergyFolks.minheight = 100;
+EnergyFolks.minheight = 400;
 //Accounts constants:
 EnergyFolks.callbackURL = '';
 EnergyFolks.forceLogin = false;
@@ -27,9 +27,9 @@ EnergyFolks.comment_id_count = 0;
 EnergyFolks.max_comment_before_collapse = 5;
 EnergyFolks.max_replies_before_collapse = 3;
 EnergyFolks.affiliates = new Array();
-EnergyFolks.affiliates[0] = {name: "EnergyFolks", url: '<%= SITE_HOST %>'};
+EnergyFolks.affiliates[0] = {name: "EnergyFolks", url: '<%= SITE_HOST %>', plugin: false};
 <% Affiliate.all.each do |a| %>
-    EnergyFolks.affiliates[<%= a.id %>] = {name: "<%= a.name.gsub('"','') %>", url: '<%= a.url %>'};
+    EnergyFolks.affiliates[<%= a.id %>] = {name: "<%= a.name.gsub('"','') %>", url: '<%= a.url %>', plugin: <%= a.shared_secret.present? ? 'true' : 'false' %>};
 <% end %>
 EnergyFolks.source = 'events';
 EnergyFolks.populateFilters = true;

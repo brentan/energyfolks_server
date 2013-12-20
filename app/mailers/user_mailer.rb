@@ -6,7 +6,8 @@ class UserMailer < ActionMailer::Base
     @host = host
     @aid = aid
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Confirm your #{@affiliate.name} account")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Confirm your #{@affiliate.name} account")
   end
 
   def email_verification_request(user, aid, host)
@@ -14,7 +15,8 @@ class UserMailer < ActionMailer::Base
     @host = host
     @aid = aid
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: [@user.email, @user.email_to_verify], from: 'accounts@energyfolks.com', subject: "Confirm your #{@affiliate.name} account email change")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: [@user.email, @user.email_to_verify], from: from, subject: "Confirm your #{@affiliate.name} account email change")
   end
 
   def email_verification_request_2(user, aid, host)
@@ -22,7 +24,8 @@ class UserMailer < ActionMailer::Base
     @host = host
     @aid = aid
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: [@user.email, @user.email_to_verify], from: 'accounts@energyfolks.com', subject: "Your #{@affiliate.name} account email has been changed")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: [@user.email, @user.email_to_verify], from: from, subject: "Your #{@affiliate.name} account email has been changed")
   end
 
   def reset_password(user, aid, host)
@@ -31,7 +34,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @token = user.password_reset_token
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Reset your #{@affiliate.name} password")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Reset your #{@affiliate.name} password")
   end
 
   def reset_password_2(user, aid, host)
@@ -39,7 +43,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @user = user
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Your #{@affiliate.name} password has been changed")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Your #{@affiliate.name} password has been changed")
   end
 
   def account_frozen(user, reason, aid, host)
@@ -48,7 +53,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @user = user
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Your #{@affiliate.name} account was frozen")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Your #{@affiliate.name} account was frozen")
   end
 
   def affiliate_approved(user, aid, host)
@@ -56,7 +62,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @user = user
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Your request to join #{@affiliate.name} was approved")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Your request to join #{@affiliate.name} was approved")
   end
 
   def affiliate_removed(user, reason, aid, host)
@@ -65,7 +72,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @user = user
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Your membership with #{@affiliate.name} has been revoked")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Your membership with #{@affiliate.name} has been revoked")
   end
 
   def affiliate_rejected(user, reason, aid, host)
@@ -74,7 +82,8 @@ class UserMailer < ActionMailer::Base
     @aid = aid
     @user = user
     @affiliate = Affiliate.find_by_id(@aid)
-    mail(to: @user.email, from: 'accounts@energyfolks.com', subject: "Your request to join #{@affiliate.name} was approved")
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Your request to join #{@affiliate.name} was approved")
   end
 
 end
