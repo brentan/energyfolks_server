@@ -1,4 +1,4 @@
-<% if current_user.present? && @item.is_editable?(current_user) %>
+<% if current_user.present? && @item.present? && @item.is_editable?(current_user) %>
     <%= render :partial => 'form', :locals => {new: false} %>
 <% elsif current_user.present? %>
     <h1>Access Denied</h1>
