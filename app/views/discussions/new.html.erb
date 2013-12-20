@@ -1,6 +1,7 @@
 <% if current_user.present? %>
     <%= render :partial => 'form', :locals => {new: true} %>
 <% else %>
-    <h1>Please login</h1>
-    In order to post a new discussion, please login to your account, or create a new account.
+    <h2>In order to post a new discussion, please login to your account, or create a new account.</h2>
+    <%= render :partial => '/users/login' %>
+
 <% end %>

@@ -71,7 +71,7 @@ class Affiliate < ActiveRecord::Base
   end
 
   def self.find_by_id(id)
-    affiliate = super(id)
+    affiliate = super(id.present? ? id : 0)
     if affiliate.blank?
       affiliate = Affiliate.new(:name => 'Energyfolks', :url => SITE_HOST, :location => 'Oakland, CA', :short_name => 'energyfolks', :show_details => true, :timezone => 'Pacific Time (US & Canada)')
     end

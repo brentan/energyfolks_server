@@ -19,29 +19,31 @@
 
 # Learn more: http://github.com/javan/whenever
 
+# NOTE SERVER TIME IS UTC!  THAT IS 8/9 HOURS FROM PST/PDT
+
 every 1.minute do
   command "cd /var/app/current && bundle exec ensure_one_cron_leader"
 end
 
-every 1.day, :at => '2:00 am' do
+every 1.day, :at => '10:00 am' do
   rake "clean_up:user_login_hash"
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
   rake "clean_up:old_analytics"
 end
-every 1.day, :at => '1:00 am' do
+every 1.day, :at => '9:00 am' do
   rake "nightly:wordpress"
 end
-every 1.day, :at => '3:00 am' do
+every 1.day, :at => '11:00 am' do
   rake "nightly:google"
 end
-every 1.day, :at => '11:00 pm' do
+every 1.day, :at => '7:00 pm' do
   rake "nightly:archive"
 end
 
-every 1.day, :at => '6:00 am' do
+every 1.hour do
   rake "digest:daily"
 end
-every :monday, :at => '6:00 am' do
+every 1.hour do
   rake "digest:weekly"
 end
