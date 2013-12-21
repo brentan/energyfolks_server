@@ -73,7 +73,10 @@ $(function() {
             {
                 oBtnPrev.toggleClass('disable', iCurrent <= 0 );
                 oBtnNext.toggleClass('disable', !(iCurrent +1 < iSteps));
-                oBtnSub.toggleClass('disable', (iCurrent +1 < iSteps));
+                if (!oBtnSub.hasClass('do_not_hide'))
+                {
+                    oBtnSub.toggleClass('disable', (iCurrent +1 < iSteps)) ;
+                }
             }
 
             if(options.pager)
@@ -151,6 +154,7 @@ $(function() {
         };
 
         function initialize () {
+            if ($('#ef_carousel').hasClass('no_animation')) options.animation = false;
             iPageSize = bAxis ? $(oPages[0]).outerWidth(true) : $(oPages[0]).outerHeight(true);
             var iLeftover = Math.ceil(((bAxis ? oViewport.outerWidth(false) : oViewport.outerHeight(false)) / (iPageSize * options.display)) -1);
             iSteps = Math.max(1, Math.ceil(oPages.length / options.display) - iLeftover);

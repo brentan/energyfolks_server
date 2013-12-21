@@ -15,7 +15,7 @@
       <% end %>
 
       <div id='ef_carousel'>
-        <%= raw(carousel_slide_title_section(new ? 'New Blog Post' : 'Edit Blog Post',2)) %>
+        <%= raw(carousel_slide_title_section(new ? 'New Blog Post' : 'Edit Blog Post',2, {show_vertical: false, use_slide_titles: !new, slide_titles: ['Basics', 'Tags']})) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
@@ -60,7 +60,7 @@
               </div>
             </li>
           </ul>
-          <%= prev_next_buttons %>
+          <%= prev_next_buttons(new) %>
         </div>
       </div>
     <% end %>

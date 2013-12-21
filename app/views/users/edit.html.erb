@@ -5,8 +5,8 @@
       </div>
       <%=	 nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
         <%= raw(iframe_form) %>
-        <div id='ef_carousel'>
-          <%= raw(carousel_slide_title_section('Edit Profile',8, {show_vertical: true, slide_titles: ['Basics', 'Profile', 'Bio', 'Interests', 'Expertise', 'Affiliates', 'Preferences', 'Account'] })) %>
+        <div id='ef_carousel' class='no_animation'>
+          <%= raw(carousel_slide_title_section('Edit Profile',8, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Profile', 'Bio', 'Interests', 'Expertise', 'Affiliates', 'Preferences', 'Account'] })) %>
           <div class="viewport">
             <ul class="overview">
               <li class='slide'>
@@ -149,7 +149,7 @@
                 <%= tinymce %>
               </li>
             </ul>
-            <%= prev_next_buttons %>
+            <%= prev_next_buttons(false) %>
           </div>
         </div>
       <% end %>

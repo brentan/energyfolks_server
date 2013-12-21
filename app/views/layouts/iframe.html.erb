@@ -9,10 +9,10 @@
   <% if current_affiliate.id.present? %>
       <style>
           body.iframe_popup h1, body.iframe_popup h2, body.iframe_popup h3, body.iframe_popup h4, body.iframe_popup h5, body.iframe_popup h6 {
-            color: #<%= current_affiliate.color %>;
+              color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup a:link, body.iframe_popup a:visited {
-            color: #<%= current_affiliate.color %>;
+              color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup .button, body.iframe_popup a.button  {
               background-color: #<%= current_affiliate.color %>;
@@ -21,19 +21,19 @@
               color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup div.form hr {
-            background-color: #<%= current_affiliate.color %>;
+              background-color: #<%= current_affiliate.color %>;
           }
-          body.iframe_popup div.form .progress_bar .current_page {
-            background-color: #<%= current_affiliate.color %>;
+          body.iframe_popup div.form .progress_bar .active {
+              background-color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup div.form div.form_label {
-            color: #<%= current_affiliate.color %>;
+              color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup div.form input[type="radio"].toggle:checked + label {
-            background-color: #<%= current_affiliate.color %>;
+              background-color: #<%= current_affiliate.color %>;
           }
           body.iframe_popup div.form input[type="radio"].toggle + label:hover {
-            background-color: #<%= current_affiliate.color %>;
+              background-color: #<%= current_affiliate.color %>;
           }
       </style>
   <% end %>
