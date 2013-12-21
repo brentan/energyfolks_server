@@ -42,5 +42,8 @@
     .next, .submit {
       float: right;
     }
+    .submit.do_not_hide {
+      margin-left: 5px; /* next and submit will both show, so put some space between them  */
+    }
   }
 }

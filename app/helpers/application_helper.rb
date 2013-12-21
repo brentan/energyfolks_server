@@ -20,11 +20,11 @@ module ApplicationHelper
     return html.join("\n")
   end
 
-  def prev_next_buttons
+  def prev_next_buttons(hide_submit_until_last_page=true)
     html = ''
     html += link_to('Previous', '#', class: 'button prev')
+    html += link_to('Submit', '#', class: "button submit#{ ' do_not_hide' unless hide_submit_until_last_page}")
     html += link_to('Next', '#', class: 'button next')
-    html += link_to('Submit', '#', class: 'button submit disable')
     return content_tag(:div, raw(html), class: 'buttons')
   end
 
@@ -54,14 +54,15 @@ module ApplicationHelper
 
   def carousel_slide_title_section(title_text, slide_count, options = {})
     html = "<div class='carousel_title_section#{" show_vertical" if options[:show_vertical] }'><h1>#{title_text}</h1>"
-    html += progress_bar(slide_count, options[:slide_titles])
+    slide_titles = options[:use_slide_titles] ? options[:slide_titles] : nil
+    html += progress_bar(slide_count, slide_titles)
     html += "<hr>" unless options[:show_vertical]
     html += "</div>"
   end
 
 	def progress_bar(number_of_steps, slide_titles)
 		html = ''
-		html += "<div class='progress_bar pager'>"
+		html += "<div class='progress_bar pager#{" use_slide_titles" unless slide_titles.nil? }'>"
 		number_of_steps.times do |index|
 			step = index + 1  #index is zero-based, we want steps to be numbered from 1
       if slide_titles.nil? || slide_titles[index].nil?

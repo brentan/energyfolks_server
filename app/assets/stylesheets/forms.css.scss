@@ -43,6 +43,11 @@ div.form {
       }
     }
 
+    .progress_bar.use_slide_titles a {
+      width: 80px;
+      line-height: auto;
+    }
+
     hr {
       background-color: $default_affiliate_color;
       border-width: 0px;
@@ -67,8 +72,6 @@ div.form {
 
       a {
         display: block;
-        width: 80px;
-        line-height: auto;
         margin-bottom: 2px;
       }
     }

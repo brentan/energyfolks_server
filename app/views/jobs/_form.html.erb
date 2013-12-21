@@ -7,7 +7,7 @@
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
       <div id='ef_carousel'>
-        <%= raw(carousel_slide_title_section(new ? 'Post a Job' : 'Edit Job Post',3)) %>
+        <%= raw(carousel_slide_title_section(new ? 'Post a Job' : 'Edit Job Post',3, {show_vertical: false, use_slide_titles: !new, slide_titles: ['Basics', 'Tags', 'Affiliates']})) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
@@ -61,7 +61,7 @@
 
             </li>
           </ul>
-          <%= prev_next_buttons %>
+          <%= prev_next_buttons(new) %>
         </div>
       </div>
   <% end %>
