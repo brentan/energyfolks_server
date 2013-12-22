@@ -6,7 +6,7 @@
     Membership in this group is by invitation only.  If you would like to join, please contact the group
     administrators at <%= mail_to current_affiliate.email %>.
 <% else %>
-  <div class='form'>
+  <div class='form new_user_signup_popup'>
     <%=	nested_form_for @user, :url => { :action => "create"} do |f| %>
       <%= raw(iframe_form) %>
       <div id='ef_carousel'>
@@ -67,12 +67,15 @@
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
             </li>
             <li class='slide'>
+              <p>...show affiliate picker...</p>
               <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
             </li>
             <li class='slide'>
               <h1>The legal stuff</h1>
-              <div class='form_entry'>
-                By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
+              <div class="form_entry">
+                <p>
+                  By registering, you agree to the energyfolks <%= link_to('terms of use', '/terms', {target: '_blank'}) %> and <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %>.
+                </p>
                 <div class='legal'>
                   <%= render partial: 'users/terms' %>
                 </div>

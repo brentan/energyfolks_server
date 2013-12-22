@@ -261,12 +261,24 @@ div.form {
       font-wieght: bold;
     }
   }
+}
+
+div.form.new_user_signup_popup {
+  padding: 20px;
 
   div.legal {
+    /*float: left;
+    clear: both; */
     border: 1px #999999 solid;
-    margin: 5px;
-    padding: 5px;
-    height: 100px;
+    margin: 10px 0px;
+    padding: 0px 10px;
+    height: 150px;
     overflow-y: auto;
+
   }
+
+  .buttons {
+    padding: 0px 20px;
+  }
+
 }
