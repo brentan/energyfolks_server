@@ -67,7 +67,12 @@
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
             </li>
             <li class='slide'>
-              <p>...show affiliate picker...</p>
+              <h1>Join Networks</h1><BR>
+              <% if current_affiliate.id.present? %>
+                <p><%= current_affiliate.name %> is an affiliated network of EnergyFolks, the network of networks in energy.  Select any other EnergyFolks affiliate groups you would like to join.</p>
+              <% else %>
+                <p>EnergyFolks is a network of networks.  Select any affiliate networks you would like to join.</p>
+              <% end %>
               <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
             </li>
             <li class='slide'>

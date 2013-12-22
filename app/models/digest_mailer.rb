@@ -2,7 +2,7 @@ class DigestMailer < ActiveRecord::Base
   belongs_to :user
   has_many :emails, as: :entity, :dependent => :destroy
   has_many :digest_items, :dependent => :destroy
-  has_many :email, as: :entity, :dependent => :destroy
+  has_many :emails, as: :entity, :dependent => :destroy
 
   attr_accessible :user, :user_id, :weekly
 
@@ -16,14 +16,14 @@ class DigestMailer < ActiveRecord::Base
   end
 
   def token
-    return self.email.token if self.email.present?
+    return self.emails[0].token if self.emails.length > 0
     return Email.create(user_id: self.user_id, entity: self).token
   end
 
   def items
     # A digest has five major components:
     # Announcements, events, jobs, discussions, blog posts
-
+                         ``
     output = { :announcements => [] }
     # Get all blog posts, and split out the digest announcements:
     output[:blogs] = get_items(Blog)

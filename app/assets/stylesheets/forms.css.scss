@@ -8,7 +8,10 @@ div.form {
     float: left;
     clear: left;
   }
-
+  #primary_id {
+    width: 300px;
+    margin-bottom: 6px;
+  }
   .carousel_title_section {
     h1 {
       float: none;
@@ -34,14 +37,20 @@ div.form {
         margin-left: 5px;
         text-align: center;
         vertical-align: middle;
+        border: 1px solid white;
 
         &:hover {
-          color: white;
+          color: #555555;
+          border-color: #333333;
+          background-color: white;
         }
       }
 
       .active {
         background-color: $default_affiliate_color; /* different color for the current slide number */
+        &:hover {
+          background-color: white;
+        }
       }
     }
 

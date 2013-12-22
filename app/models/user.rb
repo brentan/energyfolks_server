@@ -158,6 +158,60 @@ class User < ActiveRecord::Base
   def self.to_archive
     []
   end
+
+
+  def approve(current_user, affiliate, highlight = false)
+    if affiliate.id.present?
+      if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
+        @affiliate = affiliate
+        @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, self.id)
+        if @membership.present?
+          @membership.approved = true
+          @membership.broadcast = true
+          @membership.save!
+          self.delay.sync
+          @user = self
+          UserMailer.delay.affiliate_approved(self,@aid, @host)
+          self.update_index
+          return "User has been added to your group"
+        else
+          return "This user no longer exists or is no longer requesting membership"
+        end
+      end
+    end
+    return "Not Authorized"
+  end
+
+  def reject_or_remove(current_user, affiliate, reason)
+    if affiliate.id.present?
+      if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR)
+        @affiliate = affiliate
+        @user = self
+        @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
+        if @membership.present? && reason.present?
+          if @membership.approved?
+            UserMailer.delay.affiliate_removed(@user, reason, @aid, @host)
+            message = "User has been removed from your group"
+          else
+            UserMailer.delay.affiliate_rejected(@user, reason, @aid, @host)
+            message = "User request to join group has been rejected"
+          end
+          @membership.approved = false
+          @membership.destroy
+          @membership = nil
+          @user.update_column(:affiliate_id, 0) if @user.affiliate_id == affiliate.id
+          @user.delay.sync
+          @user.update_index
+          return message
+        else
+          return "This user no longer exists or is no longer in your group"
+        end
+      end
+    end
+    return "Not Authorized"
+
+  end
+
   def wordpress_password(affiliate_id)
     #password auto-generated and used by wordpress logins
     Digest::MD5.hexdigest(self.id.to_s + "ENERGYFOLKS_SALT" + affiliate_id.to_s)
@@ -201,6 +255,19 @@ class User < ActiveRecord::Base
       end
     end
     return { total: total, values: values }
+  end
+
+  def self.needing_moderation(user, affiliate)
+    moderation = []
+    if affiliate.id.present?
+      user.memberships.approved.each do |a|
+        moderation += self.total_needing_moderation(a.affiliate).all if (a.affiliate_id == affiliate.id) && a.affiliate.admin?(user, Membership::EDITOR)
+      end
+    else
+      moderation += self.total_needing_moderation(affiliate).all if user.admin?
+    end
+    moderation = moderation.map { |m| m.user_id }.compact
+    return self.where(id: moderation).all
   end
 
   def user_posts

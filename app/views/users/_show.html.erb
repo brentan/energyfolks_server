@@ -15,11 +15,11 @@
     <!-- Administrator links etc -->
     <% if current_user.present?
          @item.memberships.each do |m|
-           if m.affiliate.admin?(current_user) %>
+           if m.affiliate.admin?(current_user, Membership::EDITOR) %>
                 <% if m.approved? %>
                     <div class='admin_controls'>
                       <h3>Membership management for <%= m.affiliate.name %></h3>
-                      <%= popup 'Admin Rights', 'affiliates/rights', true, {id: @item.id, aid: m.affiliate_id} %>
+                      <%= popup 'Admin Rights', 'affiliates/rights', true, {id: @item.id, aid: m.affiliate_id} if m.affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
                       <%= popup 'Remove From Group', 'affiliates/reject_or_remove', true, {id: @item.id, aid: m.affiliate_id} %>
                     </div>
                 <% else %>

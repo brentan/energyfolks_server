@@ -1,18 +1,62 @@
 <div id='EnergyFolksAffiliatePicker'>
+  <% new ||= false %>
+  <% if new && @item.present? && !@item.errors.any? %>
+    <div class="new_chooser">
+      <h1>Share</h1>
+      <% if current_affiliate.id.present? %>
+          <p><%= current_affiliate.name %> is an affiliated network of EnergyFolks, the network of networks in energy.  You can share this post with other groups in the EnergyFolks network to increase exposure.</p>
+      <% else %>
+          <p>What networks would you like to share this with?</p>
+      <% end %>
+      <div class="chooser" id="chooser_send_to_all">
+        <div class="image" style="background-color:#1D272F;">
+          <%= image_tag('ef_logo.png') %>
+        </div>
+        <h3>Share with all of EnergyFolks</h3>
+        <strong><%= User.verified.count %> users across <%= Affiliate.all.count %> networks.</strong>
+      </div>
+      <% if current_affiliate.id.present? %>
+          <div class="chooser" id="chooser_send_to_one">
+            <% if current_affiliate.logo.present? %>
+                <div class="image">
+                  <img src='<%= current_affiliate.logo.url %>'>
+                </div>
+            <% end %>
+            <h3>Target <%= current_affiliate.name %></h3>
+            <strong>Target this post to the <%= Membership.approved.where(affiliate_id: current_affiliate.id).count %> members of <%= current_affiliate.name %></strong>
+          </div>
+      <% end %>
+      <div class="chooser" id="customize">
+        <h3>Select Networks Individually</h3>
+        <strong>Manually select the groups to share this post with.</strong>
+      </div>
+    </div>
+    <div class="customize">
+  <% end %>
+
   <%
      send_to_all = current.map { |a| a.affiliate_id }.include?(0)
   %>
   <% if table != 'user' %>
+    <h1>Send to</h1>
     <div class='form_entry'>
       <input id='send_to_all_yes' type=radio name='send_to_all' value=1 class='toggle' <%= send_to_all ? 'checked' : '' %>>
-      <label for="send_to_all_yes">Include All <%= Affiliate.all.count() %> Energyfolks Affiliates</label><BR>
-      <h2>OR</h2>
+      <label for="send_to_all_yes">All <%= Affiliate.all.count() %> Energyfolks Affiliates</label>
       <input id='send_to_all_no' type=radio name='send_to_all' value=0 class='toggle' <%= !send_to_all ? 'checked' : '' %>>
-      <label for="send_to_all_no">Choose Networks Individually</label>
+      <label for="send_to_all_no">Target Networks Individually</label>
     </div>
   <% end %>
 
-  <div id='choose_affiliates' class='form_entry' <%= send_to_all ? 'style="display:none;"' : '' %>>
+  <%= raw(table == 'user' ? f.hidden_field(:affiliate_id) : '<input type=hidden value=0 id=user_affiliate_id>') %>
+  <div id='primary_affiliate' <%= table != 'user' ? 'style=display:none;' : '' %>>
+  </div>
+
+  <div id="sending_to_all" class='form_entry' <%= send_to_all ? '' : 'style=display:none;' %>>
+    <h3>Shared with <%= User.verified.count %> users across all <%= Affiliate.all.count() %> Energyfolks networks.</h3>
+
+  </div>
+
+  <div id='choose_affiliates' class='form_entry' <%= send_to_all ? 'style=display:none;' : '' %>>
       <%= content_tag(:h1, "Current Networks") if (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) %>
       <% count = 0
          completed = current.map{|c| c.affiliate_id }
@@ -24,17 +68,15 @@
                 <%= a.affiliate.name %>
                 <div class="affiliate-details">
                   <div class="affiliate-FAQs">
+                    <%= raw(" <div class='descriptor'>#{a.approved? ? '' : "Approval Pending#{a.reason.present? ? ", #{a.reason}" : ''}"}</div>") %>
                     <div class="affiliate-FAQs-title">Quick FAQs</div>
-                    <div class="affiliate-FAQs-label">Date Founded</div>
-                    <div><%= a.affiliate.year_founded %></div>
-                    <div class="affiliate-FAQs-label">Total Members</div>
-                    <div><%= Membership.find_all_by_affiliate_id(a.affiliate.id).count %></div>
-                    <div class="affiliate-FAQs-label">President</div>
-                    <div><%= a.affiliate.president_name %></div>
+                    <div><%= Membership.approved.where(affiliate_id: a.affiliate.id).count %> Total Members</div>
+                    <% if a.affiliate.year_founded.present? %>
+                        <div>Founded in <%= a.affiliate.year_founded %></div>
+                    <% end %>
                   </div>
                   <%= a.affiliate.description %>
                 </div>
-                <%= raw(" <span class='descriptor'>#{a.approved? ? '' : "(Pending#{a.reason.present? ? ", #{a.reason}" : ''})"}</span>") %>
               </div>
           <% end %>
           <% count += 1 %>
@@ -43,6 +85,7 @@
         <div class='affiliate_0' <%= "data-name='Energyfolks' data-tid=0 data-table=#{table} data-join-table=#{join_table} data-id=0 data-jid=#{count} data-reason=#{false}"%> style='display:none;'></div>
       <% end %>
       <% if (current.length - (completed.include?(0) ? 1 : 0) - Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').length) < 0 %>
+          <%= content_tag(:h1, (current.length > 0) && !((current.length == 1) && (current[0].affiliate_id == 0)) ? "More Networks" : "Choose Networks")  %>
         <%
           completed = current.map{|c| c.affiliate_id }
           Affiliate.all_visible_affiliates(current_user, current_affiliate, table == 'user').each do |a|
@@ -51,24 +94,23 @@
               <%= a.name %>
               <div class="affiliate-details">
                 <div class="affiliate-FAQs">
+                  <div class='descriptor'></div>
                   <div class="affiliate-FAQs-title">Quick FAQs</div>
-                  <div class="affiliate-FAQs-label">Date Founded</div>
-                  <div><%= a.year_founded %></div>
-                  <div class="affiliate-FAQs-label">Total Members</div>
-                  <div><%= Membership.find_all_by_affiliate_id(a.id).count %></div>
-                  <div class="affiliate-FAQs-label">President</div>
-                  <div><%= a.president_name %></div>
+                  <div><%= Membership.approved.where(affiliate_id: a.id).count %> Total Members</div>
+                  <% if a.year_founded.present? %>
+                      <div>Founded in <%= a.year_founded %></div>
+                  <% end %>
                 </div>
                 <%= a.description %>
               </div>
-              <span class='descriptor'></span>
               <% count += 1 %>
             </div>
           <% end %>
       <% end %>
   </div>
-  <%= raw(table == 'user' ? f.hidden_field(:affiliate_id) : '<input type=hidden value=0 id=user_affiliate_id>') %>
-  <div id='primary_affiliate' <%= table != 'user' ? 'style=display:none;' : '' %>>
-  </div>
   <div id='form_elements' style='display:none;'></div>
+
+  <% if new %>
+    </div>
+  <% end %>
 </div>

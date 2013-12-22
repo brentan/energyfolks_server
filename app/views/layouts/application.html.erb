@@ -1,29 +1,13 @@
 <!DOCTYPE html>
 <html style='background-color:#1D272F;'>
-<head>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "energyfolks" %>
-  <%= csrf_meta_tags %>
-</head>
-<% if current_affiliate.present? && current_affiliate.id.present? && (current_affiliate.id > 0) %>
+    <head>
+      <%= stylesheet_link_tag    "application", :media => "all" %>
+      <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
+      <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag "energyfolks" %>
+      <%= csrf_meta_tags %>
+    </head>
 
-    <% if current_affiliate.custom_header? %>
-        <%= current_affiliate.email_header %>
-    <% else
-        @affiliate = current_affiliate
-        %>
-        <%= render :partial => '/affiliates/header' %>
-    <% end %>
-    <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td>
-      <%= yield %>
-    </td></tr></table>
-
-    <BR><BR><BR>
-
-    <%= raw(notices(flash.discard(:notice), flash.discard(:alert))) %>
-<% else %>
     <body class='energyfolks'>
        <div class='HomeTop' align=center style="align:center;padding:0px;margin:0px;">
           <div style='z-index:69;width:950px;height:85px;border-style:solid;border-color:#F16522;border-width:0px 0px 5px 0px;text-align:left;position:relative;color:white;align:center'>
@@ -127,5 +111,4 @@
 
     <%= raw(notices(flash.discard(:notice), flash.discard(:alert))) %>
     </body>
-<% end %>
 </html>
