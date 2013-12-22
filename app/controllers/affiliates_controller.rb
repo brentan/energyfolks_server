@@ -1,6 +1,6 @@
 class AffiliatesController < ApplicationController
 
-  before_filter :check_for_admin_rights, :except => [:index, :users, :logo, :dashboard]
+  before_filter :check_for_admin_rights, :except => [:index, :users, :logo, :dashboard, :approve, :reject_or_remove]
 
   def index
     if current_user.present? && current_user.admin?
@@ -87,35 +87,15 @@ class AffiliatesController < ApplicationController
   end
 
   def approve
-    @affiliate = Affiliate.find(params[:aid])
-    @user = User.find_by_id(params[:id])
-    @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
-    if @membership.present?
-      @membership.approved = true
-      @membership.broadcast = true
-      @membership.save!
-      @user.delay.sync
-      UserMailer.delay.affiliate_approved(@user,@aid, @host)
-      @user.update_index
-    end
+    check_for_admin_rights(Membership::EDITOR)
+    user = User.find_by_id(params[:id])
+    @result = user.approve(current_user, current_affiliate) if user.present?
   end
 
   def reject_or_remove
-    @affiliate = Affiliate.find(params[:aid])
-    @user = User.find_by_id(params[:id])
-    @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
-    if @membership.present? && params[:reason].present?
-      if @membership.approved?
-        UserMailer.delay.affiliate_removed(@user, params[:reason], @aid, @host)
-      else
-        UserMailer.delay.affiliate_rejected(@user, params[:reason], @aid, @host)
-      end
-      @membership.approved = false
-      @membership.destroy
-      @membership = nil
-      @user.delay.sync
-      @user.update_index
-    end
+    check_for_admin_rights(Membership::EDITOR)
+    user = User.find_by_id(params[:id])
+    @result = user.reject_or_remove(current_user, current_affiliate, params[:reason])
   end
 
 

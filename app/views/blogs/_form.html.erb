@@ -56,7 +56,7 @@
 
               <%= tinymce %>
               <div style='display:none;'>
-                <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'blog', join_table: 'affiliates_blogs'} %>
+                <%= render partial: '/common/affiliate_picker', locals: {new: new, current: @item.affiliate_join, table: 'blog', join_table: 'affiliates_blogs'} %>
               </div>
             </li>
           </ul>

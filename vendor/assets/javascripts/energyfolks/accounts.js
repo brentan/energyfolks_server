@@ -2,41 +2,7 @@
  * energyfolks.com cross-domain login library
  * Library allows external sites to verify users based on energyfolks logins.
  *
- * Two Login scenarios are allowed:
- * - Basic Client-Side: The external site never knows any information about the state of visiting user.  All interactions
- *   are taken care of by the energyfolks servers, and as a result the external site does not know whether the visitor
- *   is logged in, a member, etc.  energyfolks delivered content on the site, however, will be displayed with visitor
- *   information in mind.  Requires a single server side function on the client site to act as a proxy.
- * - Server Side: the external site server communicates with the energyfolks server directly, allowing the
- *   external site to learn the logged state of the visitor.  This allows the site to taylor displays to the user, show
- *   specific information based on status, etc.  This requires server side scripting functionality, and a PHP library is
- *   available to provide this functionality.  Learn more at https://www.energyfolks.com/developer/documentation.php#login
- *   PLEASE NOTE: If you use this scenario, then the PHP library provides functions that output the necessary javascript
- *   code to call the correct functions from this file.  Please refer to the PHP library for usage instructions (you should
- *   not have to use any javascript code directly)
- *
- * Client Side login works as follows:
- * 1-Login checks for a current login.  If one is found, then the requested view is displayed (either nothing, or a box
- *   showing basic user information
- * 2-Display login screen (if user not logged) for user (inline, not iframe)
- * 3-Upon submittal with AJAX, return error if unsuccessful, or refresh page if successful (or forward to forwardURL)
- *
- * Server Side login works as follows:
- * 0 (not performed here): Check session for valid login.  If NOT found, load this script
- * 1-Login checks energyfolks for current login.  If one is found, a hash key is returned and we continue at step 4
- * 2-Display login screen for user (inline, not in iframe)
- * 3-Upon submittal with ajax, return error if unsuccessful, or hash key if successful
- * 4-Launch the callback URL defined by the client in the constructor.
- *      This URL is a server side page on your site which takes the hash key, asks energyfolks what user is associated
- *      with the hash, and then receives the response from the energyfolks server.  The response is a JSON array whose
- *      details are described at https://www.energyfolks.com/developer/documentation.php#login.
- *      PLEASE store this information in a server session to avoid pinging energyfolks for login information on each
- *      pageload of your site (this will drastically improve usability of your site)
- * 5-Your callback script can then load content or forward to the correct page based on user status.  Your site maintains
- *      user session internally and should not re-load this library.
- *      NOTE: repeated logins from an external site in a small matter of time using this script will result in a freeze
- *      on the specific account.  Use local sessions on your server to store user information and avoid freezing out
- *      your users.
+ * Instructions at energyfolks.com/developer/documentation#login
  */
 
 /*
@@ -190,6 +156,17 @@ EnergyFolks.$(function() {
                 EnergyFolks.login_callback(hash.substr(15,40));
         }
     });
+    //Check for activation/email change hash
+    var hash = location.hash;
+    if(hash.substr(1,17) == 'ef_activate_token') {
+        var token = hash.replace('#','').replace('ef_activate_token','')
+        EnergyFolks.iframe_popup('users/activate',{token: token});
+
+    } else if(hash.substr(1,14) == 'ef_email_token') {
+        var token = hash.replace('#','').replace('ef_email_token','')
+        EnergyFolks.iframe_popup('users/verify',{token: token});
+
+    }
 
     // Attach listener to all logout links
     EnergyFolks.$('body').on('click','.EnFolks_logout', function() {

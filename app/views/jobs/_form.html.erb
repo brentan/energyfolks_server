@@ -57,7 +57,7 @@
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
+              <%= render partial: '/common/affiliate_picker', locals: {new: new, current: @item.affiliate_join, table: 'job', join_table: 'affiliates_jobs'} %>
 
             </li>
           </ul>

@@ -88,7 +88,10 @@ class UsersController < ApplicationController
       session[:userid]=user.id
       user.update_index
       flash[:notice]="Your account has been activated!  Please setup your profile."
-      redirect_to :action => "profile"
+      redirect_to "/users/profile?iframe=1&current_url=#{params[:current_url]}&aid=#{params[:aid]}"
+    else
+      @message = "Invalid validation URL"
+      render 'common/blank'
     end
   end
 
@@ -101,11 +104,13 @@ class UsersController < ApplicationController
       user.email_to_verify = nil
       user.save!(validate:false)
       user.update_index
+      session[:userid]=user.id
       flash[:notice]="Your email address has been changed"
+      redirect_to "/users/profile?iframe=1&current_url=#{params[:current_url]}&aid=#{params[:aid]}"
     else
-      flash[:alert]="Invalid email change URL"
+      @message = "Invalid email change URL"
+      render 'common/blank'
     end
-    redirect_to :action => :login
   end
 
   def moderation

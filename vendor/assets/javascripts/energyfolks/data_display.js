@@ -649,7 +649,8 @@ EnergyFolks.getItemInfo = function(item, source) {
             else
                 admin_links += EnergyFolks.create_iframe_popup('Manually Verify','users/manual_verify',{id: item.id});
         }
-        if(EnergyFolks.testAdmin(EnergyFolks.ADMIN)) {
+        if(EnergyFolks.testAdmin(EnergyFolks.EDITOR)) {
+            if(EnergyFolks.testAdmin(EnergyFolks.ADMIN))
             admin_links += EnergyFolks.create_iframe_popup('Admin Rights','affiliates/rights',{id: item.id});
             var approved = false;
             EnergyFolks.$.each(item.affiliates, function(k,v) {
@@ -657,10 +658,10 @@ EnergyFolks.getItemInfo = function(item, source) {
                     approved = true;
             });
             if(approved)
-                admin_links += EnergyFolks.create_iframe_popup('Remove From Group','affiliates/reject_or_remove',{id: item.id});
+                admin_links += "<a href='#' class='ef_reject_link' data-model='User' data-id='" + item.id + "'>Revoke Membership</a>";
             else {
-                admin_links += EnergyFolks.create_iframe_popup('Approve Membership','affiliates/approve',{id: item.id});
-                admin_links += EnergyFolks.create_iframe_popup('Reject Membership','affiliates/reject_or_remove',{id: item.id});
+                admin_links += "<a href='#' class='ef_approve_link' data-params='" + EnergyFolks.$.param({model: 'User', id: item.id, highlight: false}) + "'>Approve Membership</a>";
+                admin_links += "<a href='#' class='ef_reject_link' data-model='User' data-id='" + item.id + "'>Reject Membership</a>";
             }
         }
         output.admin_links = admin_links;

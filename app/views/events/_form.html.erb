@@ -111,7 +111,7 @@
               <%= tinymce %>
             </li>
             <li class='slide'>
-              <%= render partial: '/common/affiliate_picker', locals: {current: @item.affiliate_join, table: 'event', join_table: 'affiliates_events'} %>
+              <%= render partial: '/common/affiliate_picker', new: new, locals: {current: @item.affiliate_join, table: 'event', join_table: 'affiliates_events'} %>
 
             </li>
           </ul>
