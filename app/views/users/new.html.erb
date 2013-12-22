@@ -6,16 +6,14 @@
     Membership in this group is by invitation only.  If you would like to join, please contact the group
     administrators at <%= mail_to current_affiliate.email %>.
 <% else %>
-
   <div class='form'>
     <%=	nested_form_for @user, :url => { :action => "create"} do |f| %>
       <%= raw(iframe_form) %>
-
       <div id='ef_carousel'>
+        <%= raw(carousel_slide_title_section("Sign up for an #{current_affiliate.name} account",3, {show_vertical: false, use_slide_titles: false, slide_titles: ['Basics', 'Affiliates', 'Legal'] })) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
-              <h1>Signup for an <%= current_affiliate.name %> account</h1>
               <%= raw(show_errors(@user)) %>
 
               <div class='form_label'>Email Address</div>
@@ -35,10 +33,10 @@
               <div class='form_entry'><%= f.text_field :location %></div>
 
               <% if current_affiliate.id.present? %>
-                  <%= f.hidden_field :timezone, :value => current_affiliate.timezone %>
+                <%= f.hidden_field :timezone, :value => current_affiliate.timezone %>
               <% else %>
-                  <div class='form_label'>Timezone</div>
-                  <div class='form_entry'><%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => "Pacific Time (US & Canada)"}, {class: 'list_all'} ) %></div>
+                <div class='form_label'>Timezone</div>
+                <div class='form_entry'><%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => "Pacific Time (US & Canada)"}, {class: 'list_all'} ) %></div>
               <% end %>
 
               <div class='form_label'>Tag Yourself</div>
@@ -56,59 +54,31 @@
               <div class='form_entry'><%= f.password_field :password_confirmation %></div>
 
               <% if (current_affiliate.open == 2) && (@user.memberships.length == 0)%>
-                  <div id='user_memberships_attributes_0_reason_div'>
-                      <div class='form_label'>Reason for Joining</div>
-                      <div class='form_entry'>
-                        <input type='text' name='user[memberships_attributes][0][reason]' id='user_memberships_attributes_0_reason' size=30>
-                        <div class='explain'>
-                          <%= current_affiliate.name %> administrators manually approve all membership requests.  Please include a brief sentence clarifying your request for membership.
-                        </div>
-                      </div>
+                <div id='user_memberships_attributes_0_reason_div'>
+                  <div class='form_label'>Reason for Joining</div>
+                  <div class='form_entry'>
+                    <input type='text' name='user[memberships_attributes][0][reason]' id='user_memberships_attributes_0_reason' size=30>
+                    <div class='explain'>
+                      <%= current_affiliate.name %> administrators manually approve all membership requests.  Please include a brief sentence clarifying your request for membership.
+                    </div>
                   </div>
+                </div>
               <% end %>
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
             </li>
             <li class='slide'>
-              <% if current_affiliate.id.present? %>
-                  <div class='center'>
-                    <h1><%= current_affiliate.name %> is an energyfolks network</h1>
-                    <table align=center border=0 cellpadding=1 cellspacing=0>
-                      <tr>
-                        <td>
-                          <img src='<%= current_affiliate.logo.url %>' style='max-width:290px;border:1px solid black;'>
-                        </td><td>
-                        <%= image_tag('enfolksarrow.png') %>
-                      </td>
-                      </tr>
-                    </table>
-                    <i>energyfolks is a network of networks connecting energy interested students and professionals around the globe.
-                      An energyfolks account gives you access with a single login to <%= current_affiliate.name %> as well as other networks on the
-                      energyfolks platform.  Learn more at <a href='https://www.energyfolks.com' target='_blank'>www.energyfolks.com</a>.</i>
-                  </div>
-              <% else %>
-                  <div class='center'>
-                    <h1>Join an energyfolks network</h1>
-                    <table align=center border=0 cellpadding=1 cellspacing=0>
-                      <tr>
-                        <td>
-                          <%= image_tag('noimage.png') %>
-                        </td><td>
-                        <%= image_tag('enfolksarrow.png') %>
-                      </td>
-                      </tr>
-                    </table>
-                    <i>Energyfolks is a network of networks connecting energy interested students and professionals around the globe. Gain access to other networks on the energyfolks platform for more content.</i>
-                  </div>
-              <% end %>
-              <hr style='height:1px;padding:0px;margin:4px;background-color:#cccccc;border-width:0px;'/>
               <%= render partial: '/common/affiliate_picker', locals: {f: f, current: @user.memberships, table: 'user', join_table: 'memberships'} %>
             </li>
             <li class='slide'>
               <h1>The legal stuff</h1>
-              By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
-              <div style='border:1px solid #999999;height:300px;overflow-y:auto;'>
-                <%= render partial: 'users/terms' %>
-                <%= render partial: 'users/privacy' %>
+              <div class='form_entry'>
+                By registering, you agree to the energyfolks <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %> and <%= link_to('terms of use', '/terms', {target: '_blank'}) %>.
+                <div class='legal'>
+                  <%= render partial: 'users/terms' %>
+                </div>
+                <div class='legal'>
+                  <%= render partial: 'users/privacy' %>
+                </div>
               </div>
             </li>
           </ul>
@@ -117,4 +87,5 @@
       </div>
     <% end %>
   </div>
+
 <% end %>
