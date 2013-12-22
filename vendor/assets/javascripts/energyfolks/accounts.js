@@ -219,7 +219,7 @@ EnergyFolks.$(function() {
     // Attach listener to all 'create account' links
     var NewAccount = function() {
         var url=EnergyFolks.server_url + "/users/new?iframe_next=1&aid="+EnergyFolks.id;
-        window.open (url, "EnergyFolks_NewAccount_Window","location=0,status=0,scrollbars=0, width=900,height=650");
+        window.open (url, "EnergyFolks_NewAccount_Window","location=0,status=0,scrollbars=0, width=940,height=690"); //need to have iframe be 900x650 to match other carousel windows. Plus, margin of 20px all around.
         return false;
     };
     EnergyFolks.$('body').on('click', '#EnFolksCreateAccount', NewAccount); //LEGACY
