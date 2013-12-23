@@ -2,7 +2,7 @@ class CommentEmailHash < ActiveRecord::Base
   before_create :generate_hash
 
   def self.get_hash(comment_string)
-    hash = self.create_or_find_by_comment_hash(comment_string)
+    hash = self.find_or_create_by_comment_hash(comment_string)
     hash.unique_hash
   end
   def self.check_hash(unique_hash)

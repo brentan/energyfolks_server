@@ -25,7 +25,7 @@ class NotificationMailer < ActionMailer::Base
       reply_to = CommentEmailHash.get_hash("comment_0_#{entity.comment_hash}")
       mail(to: @user.email, reply_to: "comment_#{reply_to}@reply.energyfolks.com", from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:#{entity.entity_type}] #{entity.name}")
     else
-      mail(to: @user.email, from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:#{entity.entity_type}] #{entity.name}")
+      mail(to: @user.email, from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}: #{entity.entity_type(true)}] #{entity.name}")
     end
   end
 
