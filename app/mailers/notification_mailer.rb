@@ -6,7 +6,7 @@ class NotificationMailer < ActionMailer::Base
     @item = item
     @join_item = join_item
     @affiliate = Affiliate.find_by_id(aid)
-    @host = affiliate.entity_url(item)
+    @host = @affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     recipients.each do |user|
       @user = user
@@ -54,7 +54,7 @@ class NotificationMailer < ActionMailer::Base
     @item = item
     @reason = reason
     @affiliate = Affiliate.find_by_id(aid)
-    @host = affiliate.entity_url(item)
+    @host = @affiliate.entity_url(item)
     @user = @item.user
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been removed")
@@ -67,7 +67,7 @@ class NotificationMailer < ActionMailer::Base
     @user = @item.user
     @reason = reason
     @affiliate = Affiliate.find_by_id(aid)
-    @host = affiliate.entity_url(item)
+    @host = @affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been rejected")
   end
@@ -77,7 +77,7 @@ class NotificationMailer < ActionMailer::Base
     @item = item
     @user = @item.user
     @affiliate = Affiliate.find_by_id(aid)
-    @host = affiliate.entity_url(item)
+    @host = @affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been approved")
   end
