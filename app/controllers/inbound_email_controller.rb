@@ -154,6 +154,8 @@ class InboundEmailsController < ApplicationController
           c.affiliate_id = sender.affiliate_id.present? ? c.affiliate_id : 0
           c.user_name = "#{sender.first_name} #{sender.last_name}"
           c.save!
+          c.subscribe(sender)
+          c.broadcast(sender)
         else
           log_it("Invalid email comment hash: #{to_address.split('_')[1]}",params)
         end
@@ -164,6 +166,7 @@ class InboundEmailsController < ApplicationController
         item.html = email_html.present? ? email_html : email_text
         item.user = sender
         item.affiliate_id = sender.affiliate.present? ? sender.affiliate_id : 0
+        item.affiliates_discussions.build({affiliate_id: (sender.affiliate.present? ? sender.affiliate_id : 0)})
         item.last_updated_by = sender.id
         item.attachment = attached[0] if(attached.length > 0)
         if !item.save
