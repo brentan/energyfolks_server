@@ -45,7 +45,7 @@ class Event < ActiveRecord::Base
     end_time = self.end.strftime("%l:%M %p")
     start = "#{start_date} #{start_time}"
     end_string = start_date != end_date ? "#{end_date} #{end_time}" : end_time
-    return "#{start} #{end_string}"
+    return "#{start} to #{end_string}"
   end
 
   def mmddyyyy
