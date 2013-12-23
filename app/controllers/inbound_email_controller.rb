@@ -39,12 +39,17 @@ class InboundEmailsController < ApplicationController
     email_html = nil
     begin
       email_text_base = params['text'].force_encoding(charsets['text']).encode("UTF-8", {:invalid => :replace, :undef => :replace, :replace => '?'})
-      email_html = params['html'].force_encoding(charsets['text']).encode("UTF-8", {:invalid => :replace, :undef => :replace, :replace => '?'}) if params['html'].present?
-    rescue
-      log_it("Error Encoding the email text!",params)
+    rescue Exception => e
+      log_it("Error Encoding the email text! #{e.message}",params)
       render :json => { "message" => "OK" }, :status => 200
       return
     end
+    begin
+      email_html = params['html'].force_encoding(charsets['text']).encode("UTF-8", {:invalid => :replace, :undef => :replace, :replace => '?'})
+    rescue Exception => e
+      log_it("Error Encoding the email text! #{e.message}",params)
+    end
+
 
     # Sanitize the HTML body (or use text if HTML not available)
     if email_html.present?
@@ -133,9 +138,9 @@ class InboundEmailsController < ApplicationController
           decoded_to_address = decoded_to_address.split('_')
           if decoded_to_address[1] == '0'
             c = Comment.new()
-            c.unique_hash = decoded_to_address[2]
+            c.unique_hash = decoded_to_address[2..-1].join('_')
           else
-            prev_comment = Comment.where(unique_hash: decoded_to_address[2], id: decoded_to_address[1])
+            prev_comment = Comment.where(unique_hash: decoded_to_address[2..-1].join('_'), id: decoded_to_address[1])
             if prev_comment.blank?
               log_it("Could not find comment",params)
               render :json => { "message" => "OK" }, :status => 200
@@ -149,6 +154,8 @@ class InboundEmailsController < ApplicationController
           c.affiliate_id = sender.affiliate_id.present? ? c.affiliate_id : 0
           c.user_name = "#{sender.first_name} #{sender.last_name}"
           c.save!
+        else
+          log_it("Invalid email comment hash: #{to_address.split('_')[1]}",params)
         end
       elsif to_address.downcase.include?('discussion')
         # This is a new discussion post
