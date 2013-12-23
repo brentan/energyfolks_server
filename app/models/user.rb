@@ -7,13 +7,13 @@ class User < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
-  has_many :user_comments, :class_name => 'Comments', :dependent => :destroy
+  has_many :user_comments, :class_name => 'Comment', :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :mark_reads
   has_many :digest_mailers
   has_many :comment_subscribers, :dependent => :destroy
   has_many :third_party_logins, :dependent => :destroy
-  has_many :blog_posts, :class_name => 'Blogs'
+  has_many :blog_posts, :class_name => 'Blog'
   has_many :email_settings_tokens, :dependent => :destroy
 
   EMAIL_VALIDATION = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
