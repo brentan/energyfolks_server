@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :discussions, :dependent => :destroy
   has_one :subscription, :dependent => :destroy
-  has_many :comments, :dependent => :destroy
+  has_many :user_comments, :class_name => 'Comments', :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :mark_reads
   has_many :digest_mailers
