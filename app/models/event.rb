@@ -39,9 +39,12 @@ class Event < ActiveRecord::Base
   end
 
   def date_string
-    start = self.start_date + ' ' + self.start.time
-    end_string = self.start_date != self.end_date ? "#{self.end_date} " : ''
-    end_string += self.end_time
+    start_date = self.start.strftime( "%A, %B %-d, %Y")
+    end_date = self.end.strftime( "%A, %B %-d, %Y")
+    start_time = self.start.strftime("%l:%M %p")
+    end_time = self.end.strftime("%l:%M %p")
+    start = "#{start_date} #{start_time}"
+    end_string = start_date != end_date ? "#{end_date} #{end_time}" : end_time
     return "#{start} #{end_string}"
   end
 
