@@ -31,8 +31,8 @@ module MixinEntity
 
   end
 
-  def entity_type
-    "#{entity_name.downcase} post"
+  def entity_type(capitalize = false)
+    capitalize ? "#{entity_name.downcase.capitalize} post" : "#{entity_name.downcase} post"
   end
 
   def mmddyyyy
@@ -130,7 +130,7 @@ module MixinEntity
         end
       end
       if USE_CLOUDSEARCH && !admin_user_search # Only on production do we use cloudfront, otherwise build normal SQL query
-        #begin
+        begin
           require 'asari'
           Asari.mode = :production
           asari = Asari.new(AMAZON_CLOUDSEARCH_ENDPOINT)
@@ -174,9 +174,9 @@ module MixinEntity
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
           return results, (asari_results.total_pages < asari_results.current_page)
-        #rescue
+        rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
-        #end
+        end
       end
       # no cloudsearch server, so use local search on SQL database.  Note 'terms' search is limited to name column
       more_pages = false
