@@ -6,5 +6,5 @@
     <%= content_tag(:h3, @item.location2) if @item.location2.present? %>
     <%= content_tag(:h3, @item.host) if @item.host.present? %>
     <%= raw(@item.html) %>
-  <%= raw(posted_from(@item)) %>
+  <%= raw(@item.posted_from) %>
 </div>

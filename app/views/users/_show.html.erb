@@ -52,7 +52,7 @@
             <%= content_tag(:h3, @item.organization) if @item.organization.present? %>
             <%= content_tag(:h3, link_to('LinkedIn Profile', @item.linkedin_url)) if @item.linkedin_url.present? %>
             <%= content_tag(:h3, link_to('Resume', @item.resume.url)) if @item.resume_visible?(current_user) && @item.resume.present? %>
-            <%= raw(posted_from(@item, 'Primary Membership: ')) %>
+            <%= raw(@item.posted_from('Primary Membership: ')) %>
             <%= raw(@item.bio) %>
             <% if @item.interests.present? %>
                 <h4>Interests</h4>

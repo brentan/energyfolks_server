@@ -4,5 +4,5 @@
     <h3>Posted by <%= @item.user.present? ? @item.user.full_name : 'Unknown User' %></h3>
     <%= content_tag(:h3, link_to("Attachment: #{@item.attachment_file_name}", @item.attachment.url) ) if @item.attachment.present? %>
     <%= raw(@item.html) %>
-    <%= raw(posted_from(@item)) %>
+  <%= raw(@item.posted_from) %>
 </div>
