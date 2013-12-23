@@ -5,6 +5,7 @@ class Discussion < ActiveRecord::Base
   has_many :versions, :foreign_key => 'entity_id', :class_name => 'DiscussionsVersion',:dependent => :destroy
 
   after_save :update_comment_details
+  after_create :subscribe_author
   before_create :update_now
   before_destroy :remove_comments
 
@@ -40,12 +41,18 @@ class Discussion < ActiveRecord::Base
   def posted_at
     self.created_at.strftime( "%B %-d, %Y")
   end
+  def subscribe(user)
+      CommentSubscriber.subscribe(self.comment_hash, user)
+  end
   private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)
   end
   def update_now
     self.last_comment_at = Time.now()
+  end
+  def subscribe_author
+    self.subscribe(self.user)
   end
   def remove_comments
     Comment.where(:unique_hash => self.comment_hash).all.each { |e| e.destroy }

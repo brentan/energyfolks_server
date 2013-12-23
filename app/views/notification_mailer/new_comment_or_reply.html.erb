@@ -1,6 +1,6 @@
 <%= @user.first_name %>,
 <BR><BR>
-The following comment has been added to the <%= @entity.name %> thread you are following:
+The following comment has been added to a thread you are following: <%= @entity.name %>
 <BR><BR>
 <img src='<%= SITE_HOST %>/users/avatar?id=<%= @entity.user_id %>' style='width:40px;height:40px;display:block;float:left;margin:3px;border:1px solid #bbbbbb;'>
 <b><%= @entity.user_name %></b> <%= @entity.comment %>

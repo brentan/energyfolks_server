@@ -119,7 +119,7 @@
         </div>
     <% end %>
     <% if @item.is_editable?(current_user) %>
-        <div class="energyfolks_show_edit" data-url="<%= "#{SITE_HOST}/#{@item.method_name}/edit?id=#{@item.id}&aid=#{current_affiliate.id.present? ? current_affiliate.id : 0}&iframe_next=1" %>"></div>
+        <div class="energyfolks_show_edit" data-method="<%= @item.method_name %>" data-id="<%= @item.id %>" data-url="<%= "#{SITE_HOST}/#{@item.method_name}/edit?id=#{@item.id}&aid=#{current_affiliate.id.present? ? current_affiliate.id : 0}&iframe_next=1" %>"></div>
     <% end %>
 
     <%

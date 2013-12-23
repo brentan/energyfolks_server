@@ -768,10 +768,22 @@ EnergyFolks.$(function() {
         //edit is special:
         if(self.attr('data-class') == 'edit') {
             var item = parent.find('.energyfolks_show_edit');
-            item.html("<div id='energyfolks_show_loading'><h2>Loading Post Editor...Please wait</h2></div><iframe frameborder=0 border=0 style='border-width: 0px;width:100%;height:600px;' src='" + item.attr('data-url') +"'></iframe>");
-            window.setTimeout(function() {
-                EnergyFolks.$('#energyfolks_show_loading').hide(500);
-            }, 500);
+            if(EnergyFolks.$('body').find('#energyfolks_popup').length != 0) {
+                item.html("<div id='energyfolks_show_loading'><h2>Loading Post Editor...Please wait</h2></div><iframe frameborder=0 border=0 style='border-width: 0px;width:100%;height:600px;' src='" + item.attr('data-url') +"'></iframe>");
+                window.setTimeout(function() {
+                    EnergyFolks.$('#energyfolks_show_loading').hide(500);
+                }, 500);
+            } else {
+                //if not in a popup, launch in a popup
+                EnergyFolks.iframe_popup(item.attr('data-method') + '/edit',{id: item.attr('data-id')})
+                parent.find('.energyfolks_show_edit').hide();
+                self.removeClass('selected');
+                parent.find('.energyfolks_show_post_details').show();
+                tds.each(function(i, v) {
+                    if(EnergyFolks.$(v).attr('data-class') == 'post_details')
+                        EnergyFolks.$(v).addClass('selected');
+                });
+            }
         }
     });
 });
