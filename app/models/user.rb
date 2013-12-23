@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
     affiliate_list << 'A'
     affiliate_list = [] unless self.verified?
     {
-        :primary => "#{self.last_name}, #{self.first_name}",
+        :primary => "#{self.last_name},#{self.first_name}",
         :secondary => self.raw_tags,
         :full_text => HTML::FullSanitizer.new.sanitize("#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",:tags=>[]),
         :lat => latlng[:lat],
