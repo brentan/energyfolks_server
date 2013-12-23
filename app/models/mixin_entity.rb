@@ -275,15 +275,6 @@ module MixinEntity
       return new_list
     end
 
-    def posted_from(text = 'Posted from')
-      if self.affiliate_id.blank? || (self.affiliate_id == 0)
-        return content_tag(:h4, raw("#{text} #{link_to('energyfolks.com',SITE_HOST)}"))
-      elsif self.affiliate.present?
-        return content_tag(:h4, raw("#{text} #{link_to(self.affiliate.name, self.affiliate.url)}"))
-      end
-      return ''
-    end
-
     def join_table
       "Affiliates#{self.name.capitalize}".constantize
     end
@@ -344,6 +335,15 @@ module MixinEntity
         :type => self.entity_name,
         :primary_id => self.affiliate_id
     }
+  end
+
+  def posted_from(text = 'Posted from')
+    if self.affiliate_id.blank? || (self.affiliate_id == 0)
+      return content_tag(:h4, raw("#{text} #{link_to('energyfolks.com',SITE_HOST)}"))
+    elsif self.affiliate.present?
+      return content_tag(:h4, raw("#{text} #{link_to(self.affiliate.name, self.affiliate.url)}"))
+    end
+    return ''
   end
 
   def remove_from_index
