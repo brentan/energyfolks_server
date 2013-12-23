@@ -2,13 +2,7 @@
     <%=	 form_for @affiliate, :url => { :action => "update", :id => @affiliate.id }, :html => { :multipart => true } do |f| %>
       <%= raw(iframe_form) %>
       <%= render :partial => 'form', :locals => {f: f} %>
-      <% if current_user.admin? %>
-          <h1>Delete</h1>
-          <%= link_to "Delete this group", "/affiliates/#{@affiliate.id}/delete", :confirm => 'Are you sure?  Deleted groups can not be restored, and all associated information is purged.' %>
-          <BR>
-      <% end %>
 
       <%= tinymce %>
-      <%= f.submit "Update" %> &nbsp;
     <% end %>
 </div>

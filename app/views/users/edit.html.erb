@@ -102,22 +102,22 @@
                 <div class='form_label'>Profile Visibility</div>
                 <div class='form_entry'>
                   <%= f.radio_button :visibility, User::PUBLIC, class: "toggle" %>
-                  <%= f.label :visibility, 'Public', value: User::PUBLIC %>
+                  <%= f.label :visibility, 'Public', value: User::PUBLIC %><BR>
                   <%= f.radio_button :visibility, User::LOGGED_IN, class: "toggle" %>
-                  <%= f.label :visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %>
+                  <%= f.label :visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %><BR>
                   <%= f.radio_button :visibility, User::NETWORKS, class: "toggle" %>
-                  <%= f.label :visibility, 'Only to logged in members in my networks', value: User::NETWORKS %>
+                  <%= f.label :visibility, 'Only to logged in members in my networks', value: User::NETWORKS %><BR>
                   <%= f.radio_button :visibility, User::PRIVATE, class: "toggle" %>
                   <%= f.label :visibility, 'Private (administrators only)', value: User::PRIVATE %>
                 </div>
                 <div class='form_label'>Resume Visibility</div>
                 <div class='form_entry'>
                   <%= f.radio_button :resume_visibility, User::PUBLIC, class: "toggle" %>
-                  <%= f.label :resume_visibility, 'Public', value: User::PUBLIC %>
+                  <%= f.label :resume_visibility, 'Public', value: User::PUBLIC %><BR>
                   <%= f.radio_button :resume_visibility, User::LOGGED_IN, class: "toggle" %>
-                  <%= f.label :resume_visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %>
+                  <%= f.label :resume_visibility, 'Only to logged in members of any network', value: User::LOGGED_IN %><BR>
                   <%= f.radio_button :resume_visibility, User::NETWORKS, class: "toggle" %>
-                  <%= f.label :resume_visibility, 'Only to logged in members in my networks', value: User::NETWORKS %>
+                  <%= f.label :resume_visibility, 'Only to logged in members in my networks', value: User::NETWORKS %><BR>
                   <%= f.radio_button :resume_visibility, User::PRIVATE, class: "toggle" %>
                   <%= f.label :resume_visibility, 'Private (administrators only)', value: User::PRIVATE %>
                 </div>

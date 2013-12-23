@@ -1,25 +1,83 @@
 <div id="affiliate_dashboard">
-    <h2>Your energyfolks dashboard</h2>
+    <h1>Your energyfolks dashboard</h1>
+    <p>Your access level is: <%= current_affiliate.level_name(current_user) %> (<a href="<%= SITE_HOST %>/developers/admin_levels">What does this mean?</a>)</p>
+    <div class="box">
+      <h2>Stats</h2>
+      Your group currently has:<ul>
+          <li><%= Membership.approved.where(affiliate_id: current_affiliate.id).count %> Members</li>
+          <li><%= User.verified.where(affiliate_id: current_affiliate.id).count %> Members who list your group as 'primary'</li>
+          <li><%= Job.where(affiliate_id: current_affiliate.id).count %> Job Posts originating from your website</li>
+          <li><%= Event.where(affiliate_id: current_affiliate.id).count %> Event Posts originating from your website</li>
+          <li><%= Discussion.where(affiliate_id: current_affiliate.id).count %> Discussions originating from your website</li>
+          <li><%= Blog.where(affiliate_id: current_affiliate.id).count %> Blog Posts originating from your website</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Leadership Tools</h2>
+      <% if current_affiliate.admin?(current_user, Membership::EDITOR) %>
+         <h4>Email your membership</h4>
+          <ul>
+            <li>Your full membership: <a href="mailto:<%= current_affiliate.email_name %>-members@energyfolks.com"><%= current_affiliate.email_name %>-members@energyfolks.com</a></li>
+            <li>Members who receive the weekly digest: <a href="mailto:<%= current_affiliate.email_name %>-digest@energyfolks.com"><%= current_affiliate.email_name %>-digest@energyfolks.com</a></li>
+            <li>Your full leadership: <a href="mailto:<%= current_affiliate.email_name %>-contributors@energyfolks.com"><%= current_affiliate.email_name %>-contributors@energyfolks.com</a></li>
+            <li>Your Editors and Admins: <a href="mailto:<%= current_affiliate.email_name %>-admins@energyfolks.com"><%= current_affiliate.email_name %>-admins@energyfolks.com</a></li>
+          </ul>
+          <p>Emails to these lists must come from the email address of a group editor or admin in order to be successfully sent onward.  You can also send messages to your group, and add items to the top of the next digest, by writing a blog post and selecting the appropriate options from the EnergyFolks dialog.</p>
+      <% end %>
+      <h4>Group Documents</h4>
+      <ul>
+        <li><a href="https://docs.energyfolks.com/">Group Google Drive</a></li>
+        <li><a href="https://wiki.energyfolks.com/">Google 'Sites' page for your group</a></li>
+      </ul>
+    </div>
 
-    <h4>Analytics? (visits etc)</h4>
-    - Site visits
-    - Unique visitors (plots)
+  <div class="box">
+    <h2>Visit Statistics and Analytics</h2>
+    <i>This feature is coming soon!</i>
+  </div>
 
-    <h4>Member count?</h4>
-    - Link to member list<BR>
-    - Link to admin list
 
-    <h4>Links to important functions (post message, email directly, etc)</h4>
-    - Post message to group<BR>
-    - Post digest message to group<BR>
-    - directly email the group (email links)
 
-    <h4>Group docs</h4>
-    - Link to google docs for group...at some point a full featured doc service in the browser?
 
-    <h4>Current settings</h4>
-    - widget to show current group settings, admins get an update links<BR>
-    <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
-        <a href="/affiliates/<%= current_affiliate.id %>/edit?iframe_next=true&aid=<%= current_affiliate.id %>">Edit group settings</a>
+  <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
+
+      <div class="box">
+        <h2>Group Settings</h2>
+        <ul>
+          <li>Group Name: <%= current_affiliate.name %></li>
+          <li>Group Contact Email: <%= current_affiliate.email %></li>
+          <li>Group Color: <div style='width:30px;height:10px;display:inline-block;border:1px solid black;background-color:#<%= current_affiliate.color %>;'></div></li>
+        </ul>
+        <%= popup('Update your group settings', "/affiliates/#{current_affiliate.id}/edit", true, {aid: current_affiliate.id}) %>
+      </div>
+
+      <div class="box">
+          <h2>Leadership</h2>
+          <p>To add a new leader to your group, find their profile in your <a href="<%= current_affiliate.url_users %>" target="_blank">member database</a> and click the 'Admin Rights' link</p>
+          <a href="#" onclick="EnergyFolks.$(this).next('div').show();EnergyFolks.$(this).hide();return false;">View your leadership</a>
+          <div style="display:none;">
+            <p>Click on any name to view the user profile and edit their admin rights.</p>
+            <p><a href="<%= SITE_HOST %>/developers/admin_levels">Description of each Leadership level.</a></p>
+            <h4>Administrators</h4>
+            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::ADMINISTRATOR).all.each do |u| %>
+                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+            <% end %>
+            <h4>Editors</h4>
+            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::EDITOR).all.each do |u| %>
+                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+            <% end %>
+            <h4>Authors</h4>
+            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::AUTHOR).all.each do |u| %>
+                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+            <% end %>
+            <h4>Contributors</h4>
+            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::CONTRIBUTOR).all.each do |u| %>
+                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+            <% end %>
+          </div>
+        </div>
     <% end %>
 </div>
+<script language="JavaScript">
+    EnergyFolks.iframe = false;
+</script>

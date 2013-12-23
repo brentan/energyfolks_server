@@ -151,6 +151,14 @@ class Affiliate < ActiveRecord::Base
     url
   end
 
+  def level_name(user)
+    return 'Administrator' if self.admin?(user, Membership::ADMINISTRATOR)
+    return 'Editor' if self.admin?(user, Membership::EDITOR)
+    return 'Author' if self.admin?(user, Membership::AUTHOR)
+    return 'Contributor' if self.admin?(user, Membership::CONTRIBUTOR)
+    return 'no rights'
+  end
+
   def url_users(force = false)
     return super() if force
     url = super()

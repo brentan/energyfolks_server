@@ -9,6 +9,9 @@ class DevelopersController < ApplicationController
   end
   def wordpress
   end
+  def admin_levels
+
+  end
 
   # Function is used to setup a new wordpress system for a particular affiliate.  Note that 1 wordpress install is allowed per affiliate!
   def wordpress_sync
