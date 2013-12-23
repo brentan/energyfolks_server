@@ -3,7 +3,7 @@
 The following comment has been added to a thread you are following: <%= @entity.name %>
 <BR><BR>
 <img src='<%= SITE_HOST %>/users/avatar?id=<%= @entity.user_id %>' style='width:40px;height:40px;display:block;float:left;margin:3px;border:1px solid #bbbbbb;'>
-<b><%= @entity.user_name %></b> <%= @entity.comment %>
-<BR><BR>
+<b><%= @entity.user_name %></b><BR><%= @entity.comment %>
+<BR><BR><BR><BR>
 View the full thread at <a href='<%= @entity.url %>'><%= @entity.url %></a><BR>
 Reply to this email to join the conversation!
