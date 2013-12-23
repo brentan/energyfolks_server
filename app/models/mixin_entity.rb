@@ -339,9 +339,9 @@ module MixinEntity
 
   def posted_from(text = 'Posted from')
     if self.affiliate_id.blank? || (self.affiliate_id == 0)
-      return content_tag(:h4, raw("#{text} <a href='#{SITE_HOST}'>energyfolks.com</a>"))
+      return "<h4>#{text} <a href='#{SITE_HOST}'>energyfolks.com</a></h4>"
     elsif self.affiliate.present?
-      return content_tag(:h4, raw("#{text} <a href='#{self.affiliate.url}'>#{self.affiliate.name}</a>"))
+      return "<h4>#{text} <a href='#{self.affiliate.url}'>#{self.affiliate.name}</a></h4>"
     end
     return ''
   end
