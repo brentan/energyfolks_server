@@ -7,21 +7,38 @@
    #end
 %>
 <body style='padding:0px;margin:0px;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;' topmargin='0' leftmargin='0' rightmargin='0' margin='0'>
-    <% if @affiliate.present? && @affiliate.id.present? %>
-        <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=right height=18>
+    <% if @condensed_header.present? && @condensed_header %>
+        <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr>
+          <% if @affiliate.present? && @affiliate.id.present? %>
+              <td bgcolor='#<%= @affiliate.color %>' align=left height=18>
+              <div style='color:white;text-align:left;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;letter-spacing: -0.4px;'>
+                <span style='font-size:12px;'><a href='<%= @affiliate.url %>' style='color:white;text-decoration:none;'><%= @affiliate.name %></a></span>
+              </div>
+              </td>
+          <% end %>
+          <td bgcolor='#<%= @affiliate.color %>' align=right height=18>
           <div style='color:white;text-align:right;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;letter-spacing: -0.4px;'>
             <span style='font-size:12px;'>powered by <a href='https://www.energyfolks.com' style='color:white;text-decoration:none;'>energyfolks</a></span>
           </div>
         </td></tr></table>
-        <% if @affiliate.custom_header? %>
-            <%= @affiliate.email_header %>
-        <% else %>
-            <%= render :partial => '/affiliates/header' %>
-        <% end %>
     <% else %>
-        <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=center style='text-align: center;'>
-          <a href='<%= SITE_HOST %>' border=0 style='border:0px;'><img src='<%= SITE_HOST %>/assets/ef_logo.png' border=0 style='border:0px;display: inline;'></a>
-        </td></tr></table>
+
+        <% if @affiliate.present? && @affiliate.id.present? %>
+            <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=right height=18>
+              <div style='color:white;text-align:right;font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;letter-spacing: -0.4px;'>
+                <span style='font-size:12px;'>powered by <a href='https://www.energyfolks.com' style='color:white;text-decoration:none;'>energyfolks</a></span>
+              </div>
+            </td></tr></table>
+            <% if @affiliate.custom_header? %>
+                <%= @affiliate.email_header %>
+            <% else %>
+                <%= render :partial => '/affiliates/header' %>
+            <% end %>
+        <% else %>
+            <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td bgcolor='#1D272F' align=center style='text-align: center;'>
+              <a href='<%= SITE_HOST %>' border=0 style='border:0px;'><img src='<%= SITE_HOST %>/assets/ef_logo.png' border=0 style='border:0px;display: inline;'></a>
+            </td></tr></table>
+        <% end %>
     <% end %>
     <table border=0 cellspacing=0 cellpadding=2 width='100%'><tr><td>
         <%= yield %>
