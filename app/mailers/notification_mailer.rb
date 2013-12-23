@@ -43,6 +43,7 @@ class NotificationMailer < ActionMailer::Base
     @entity = entity
     @user = user
     @affiliate = Affiliate.find_by_id(user.affiliate_id)
+    @condensed_header = true
     reply_to = CommentEmailHash.get_hash("comment_#{entity.comment_id}_#{entity.unique_hash}")
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, reply_to: "comment_#{reply_to}@reply.energyfolks.com", subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}: New Comment] #{entity.name}")
