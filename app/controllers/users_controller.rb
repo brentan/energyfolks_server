@@ -169,8 +169,8 @@ class UsersController < ApplicationController
   def delete
     @user = User.find(session[:userid])
     @user.destroy
-    flash[:notice]="Your account has been completely removed."
-    redirect_to '/'
+    @alert="Your account has been completely removed."
+    render 'common/refresh_parent'
   end
 
   def update
