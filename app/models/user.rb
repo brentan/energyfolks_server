@@ -250,7 +250,7 @@ class User < ActiveRecord::Base
     return unless self.verified?
     self.memberships.where(broadcast: false).each do |i|
       recipients = i.affiliate.admins(Membership::EDITOR, true)
-      NotificationMailer.delay.awaiting_moderation(recipients, i.affiliate, self, i) if recipients.length > 0
+      NotificationMailer.delay.awaiting_moderation(recipients, i.affiliate_id, self, i) if recipients.length > 0
       i.broadcast = true
       i.save(:validate => false)
     end

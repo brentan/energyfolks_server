@@ -143,13 +143,15 @@ class AjaxController < ApplicationController
   end
 
   def show
-    @item = params[:model].constantize.find_by_id(params[:id])
-    @item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
+    item = params[:model].constantize.find_by_id(params[:id])
+    item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
+    @item = item
+    @item.version_control(current_user, current_affiliate)
     output = render_to_string :partial => "#{@item.method_name}/show", :locals => {ajax: 1}
-    if @item.instance_of?(Discussion) || @item.instance_of?(Blog)
-      CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
-      comments = Comment.get_all_comments(@item.comment_hash)
-      execute = "EnergyFolks.Populate_Comments({ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{comments.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' });"
+    if item.instance_of?(Discussion) || item.instance_of?(Blog)
+      CommentDetail.update(item.comment_hash, item.name, item.static_url)
+      comments = Comment.get_all_comments(item.comment_hash)
+      execute = "EnergyFolks.Populate_Comments({ title: \"#{item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(item.comment_hash, current_user) ? 'true' : 'false'}, data: #{comments.to_json(:include => :subcomments)}, hash: '#{item.comment_hash}' });"
       render_ajax( {html: output, execute: execute} )
     else
       render_ajax( {html: output} )
