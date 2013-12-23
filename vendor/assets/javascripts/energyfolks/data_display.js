@@ -595,7 +595,8 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     if(EnergyFolks.format == 'stream')
         output += '</td></tr></table><div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else if((info.line_two != null) && (info.line_two != 'null'))
-        output += '<span class="line2">' + info.line_two + '</span></td></tr></table>';
+        output += '<span class="line2">' + info.line_two + '</span>';
+    output += '</td></tr></table>';
     output += '</td>';
     if(info.logo != '')
         output += '<td class="enfolks_logo"><img src="' + info.logo + '"></td>';

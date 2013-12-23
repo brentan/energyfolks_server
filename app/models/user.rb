@@ -268,6 +268,12 @@ class User < ActiveRecord::Base
           values << {title: "#{e.new().entity_type.capitalize.pluralize(tot)} - #{a.affiliate.short_name}", aid: a.affiliate_id, method: e.new().method_name, count: tot}
         end
       end
+      if self.admin?
+        tot = 0
+        tot = e.total_needing_moderation(Affiliate.find_by_id(0)).count
+        total += tot
+        values << {title: "#{e.new().entity_type.capitalize.pluralize(tot)} - energyfolks", aid: 0, method:e.new().method_name, count: tot}
+      end
     end
     return { total: total, values: values }
   end
