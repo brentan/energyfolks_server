@@ -84,4 +84,13 @@ module ApplicationHelper
     html += "</div></div>"
   end
 
+  def posted_from(item, text = 'Posted from')
+    if item.affiliate_id.blank? || (item.affiliate_id == 0)
+      return content_tag(:h4, raw("#{text} #{link_to('energyfolks.com',SITE_HOST)}"))
+    elsif item.affiliate.present?
+      return content_tag(:h4, raw("#{text} #{link_to(item.affiliate.name, item.affiliate.url)}"))
+    end
+    return ''
+  end
+
 end

@@ -1,7 +1,8 @@
 #EnFolksmainbodydiv {
   .moderation_box {
-    border: 5px solid #aa0000;
+    border: 1px solid #aa0000;
     background-color: #ffdddd;
+    padding: 3px;
     a {
       display: block;
     }
@@ -424,16 +425,78 @@
 
   }
 }
-#EnFolksmainbodydiv, #energyfolks_popup {
-
-  .admin_controls {
-    padding: 4px;
-    border: 1px solid #999999;
+#ef_show {
+  h1 {
+    font-size: 180%;
+    margin: 3px 0px 6px 0px;
+  }
+  h2 { font-size: 150%; }
+  h3 { font-size: 130%; }
+  h4 { font-size: 110%; }
+  h5 { font-size: 100%; }
+  h6 { font-size: 100%; }
+  h1, h2, h3, h4, h5 ,h6 {
+    margin: 2px 0px 4px 0px;
+    padding: 0px;
+    clear: none;
+  }
+  .ef_post_logo {
+    display: block;
+    float: right;
+  }
+}
+#EnFolksmainbodydiv, #energyfolks_popup, #ef_show {
+  .energyfolks_show_admin_controls {
+    padding: 2px;
+    border: 1px solid #bbbbbb;
     background-color: #f9f9f9;
+    font-size: 12px;
+    h3 { font-size: 14px; }
   }
-  .urgent {
-    border: 5px solid #aa0000;
+  .energyfolks_show_urgent {
+    border: 1px solid #aa0000;
     background-color: #ffdddd;
+    font-size: 14px;
+    h3 { font-size: 16px; }
   }
-
+  .energyfolks_show_versioning {
+    display: none;
+  }
+  .energyfolks_show_edit {
+    display: none;
+  }
+  .energyfolks_show_analytics {
+    display: none;
+  }
+  .energyfolks_show_post_top {
+    border-bottom: 1px solid #999999;
+    margin-bottom: 5px;
+  }
+  table.energyfolks_show_top {
+    width: 100%;
+    border-width: 0px;
+    border-bottom: 1px solid #666666;
+    padding: 0px;
+    margin: 10px 2px 7px 2px;
+    td.energyfolks_spacer {
+      width: 10px;
+    }
+    td.energyfolks_show_top {
+      margin: 0px 0px -1px 0px;
+      padding: 2px;
+      text-align:center;
+      border: 1px solid #666666;
+      background-color: #f4f4f4;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 2;
+      &:hover {
+        background-color: #c6c6c6;
+      }
+      &.selected {
+        border-bottom: 1px solid white;
+        background-color: white;
+      }
+    }
+  }
 }

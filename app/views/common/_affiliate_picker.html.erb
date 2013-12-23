@@ -69,7 +69,7 @@
                 <div class="affiliate-details">
                   <div class="affiliate-FAQs">
                     <%= raw(" <div class='descriptor'>#{a.approved? ? '' : "Approval Pending#{a.reason.present? ? ", #{a.reason}" : ''}"}</div>") %>
-                    <div class="affiliate-FAQs-title">Quick FAQs</div>
+                    <div class="affiliate-FAQs-title"><%= a.affiliate.name %></div>
                     <div><%= Membership.approved.where(affiliate_id: a.affiliate.id).count %> Total Members</div>
                     <% if a.affiliate.year_founded.present? %>
                         <div>Founded in <%= a.affiliate.year_founded %></div>
@@ -95,7 +95,7 @@
               <div class="affiliate-details">
                 <div class="affiliate-FAQs">
                   <div class='descriptor'></div>
-                  <div class="affiliate-FAQs-title">Quick FAQs</div>
+                  <div class="affiliate-FAQs-title"><%= a.name %></div>
                   <div><%= Membership.approved.where(affiliate_id: a.id).count %> Total Members</div>
                   <% if a.year_founded.present? %>
                       <div>Founded in <%= a.year_founded %></div>

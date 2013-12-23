@@ -89,7 +89,7 @@ module MixinEntityController
     @item = model.find_by_id(params[:id])
     if @item.archived?
       flash[:alert]="This item is archived and changes are not allowed."
-      render :action => :show
+      render :action => :edit
     elsif current_user.present? && @item.is_editable?(current_user)
       params[@item.entity_name.downcase][:last_updated_by] = current_user.id
       if(@item.update_attributes(params[@item.entity_name.downcase]))
@@ -106,7 +106,7 @@ module MixinEntityController
           @item.update_index
         end
         flash[:notice]="Changes have been saved"
-        render :action => :show
+        render :action => :edit
       else
         flash[:alert]="There are errors in your update.  Please correct and resubmit."
         render :action => :edit

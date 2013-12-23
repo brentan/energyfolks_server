@@ -754,5 +754,24 @@ EnergyFolks.$(function() {
         });
         return false;
     });
+    EnergyFolks.$('body').on('click', 'td.energyfolks_show_top', function() {
+        var self = EnergyFolks.$(this);
+        var parent = EnergyFolks.$(this).closest('#ef_show');
+        var tds = EnergyFolks.$(this).closest('table').find('.energyfolks_show_top');
+        tds.each(function(i, v) {
+            parent.find('.energyfolks_show_' + EnergyFolks.$(v).attr('data-class')).hide();
+            EnergyFolks.$(v).removeClass('selected');
+        });
+        parent.find('.energyfolks_show_' + self.attr('data-class')).show();
+        self.addClass('selected');
+        //edit is special:
+        if(self.attr('data-class') == 'edit') {
+            var item = parent.find('.energyfolks_show_edit');
+            item.html("<div id='energyfolks_show_loading'><h2>Loading Post Editor...Please wait</h2></div><iframe frameborder=0 border=0 style='border-width: 0px;width:100%;height:600px;' src='" + item.attr('data-url') +"'></iframe>");
+            window.setTimeout(function() {
+                EnergyFolks.$('#energyfolks_show_loading').hide(500);
+            }, 500);
+        }
+    });
 });
 

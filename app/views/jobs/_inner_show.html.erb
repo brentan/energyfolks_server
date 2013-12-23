@@ -1,9 +1,11 @@
-
-<h1><%= @item.name %></h1>
-<%= image_tag(@item.logo.url(:thumb_big), :align => 'right') if @item.logo.present? %>
-<%= content_tag(:div, @item.employer) %>
-<%= content_tag(:div, @item.location) %>
-<%= raw(@item.html) %>
-<%
-   # TODO: Expand the job profile to show relevant information
-%>
+<div class="energyfolks_show_post_details">
+  <%= image_tag(@item.logo.url(:thumb_big), :class => 'ef_post_logo', :align => 'right') if @item.logo.present? %>
+    <h1><%= @item.name %></h1>
+    <%= content_tag(:h3, @item.employer) if @item.employer.present? %>
+    <%= content_tag(:h3, @item.location) if @item.location.present? %>
+    <%= content_tag(:h3, "Job Type: #{@item.job_type_string}") if @item.job_type.present? %>
+    <%= raw(@item.html) %>
+    <h3>How to Apply</h3>
+    <%= raw(@item.how_to_apply) %>
+  <%= raw(posted_from(@item)) %>
+</div>
