@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
   def confirmation_request(user, aid, host)
