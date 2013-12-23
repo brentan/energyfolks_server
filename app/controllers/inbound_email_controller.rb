@@ -95,7 +95,7 @@ class InboundEmailsController < ApplicationController
       return
     end
 
-    # Create a nice list of the to addresses without the @mail.energysociety.org
+    # Create a nice list of the to addresses
     if params['to'].blank? && params['cc'].blank?
       log_it("No To Address",params)
       render :json => { "message" => "OK" }, :status => 200
@@ -128,26 +128,29 @@ class InboundEmailsController < ApplicationController
         # Get the reply portion for comments (strip HTML as this really messes it up)
         email_text = email_text_base.gsub(/^[ \-]\-\-/,"\n ---") # ensure lines starting with "---" or " --" are preceded by a newline, as required by the parser gem to recognize them as section separators
         comment = EmailReplyParser.parse_reply(email_text).gsub(/(?:\n\r?|\r\n?)/, '<br>')
-        to_address = to_address.split('_')
-        if to_address[1] == '0'
-          c = Comment.new()
-          c.unique_hash = to_address[2]
-        else
-          prev_comment = Comment.where(unique_hash: to_address[2], id: to_address[1])
-          if prev_comment.blank?
-            log_it("Could not find comment",params)
-            render :json => { "message" => "OK" }, :status => 200
-            return
+        decoded_to_address = CommentEmailHash.check_hash(to_address.split('_')[1])
+        if decoded_to_address != ''
+          decoded_to_address = decoded_to_address.split('_')
+          if decoded_to_address[1] == '0'
+            c = Comment.new()
+            c.unique_hash = decoded_to_address[2]
+          else
+            prev_comment = Comment.where(unique_hash: decoded_to_address[2], id: decoded_to_address[1])
+            if prev_comment.blank?
+              log_it("Could not find comment",params)
+              render :json => { "message" => "OK" }, :status => 200
+              return
+            end
+            c = Subcomment.new()
+            c.comment_id = decoded_to_address[1].to_i
           end
-          c = Subcomment.new()
-          c.comment_id = to_address[1].to_i
+          c.user_id = sender.id
+          c.comment = comment
+          c.affiliate_id = sender.affiliate_id.present? ? c.affiliate_id : 0
+          c.user_name = "#{sender.first_name} #{sender.last_name}"
+          c.save!
         end
-        c.user_id = sender.id
-        c.comment = comment
-        c.affiliate_id = sender.affiliate_id.present? ? c.affiliate_id : 0
-        c.user_name = "#{sender.first_name} #{sender.last_name}"
-        c.save!
-      elsif to_address.include?('discussion')
+      elsif to_address.downcase.include?('discussion')
         # This is a new discussion post
         item = Discussion.new()
         item.name = params['subject']

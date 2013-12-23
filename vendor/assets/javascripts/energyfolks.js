@@ -6,6 +6,7 @@
 //
 //= require energyfolks/jquery
 //= require energyfolks/initialize
+//= require energyfolks/scrollTo
 //= require energyfolks/hash_change
 //= require energyfolks/listeners
 //= require energyfolks/global
