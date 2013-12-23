@@ -120,11 +120,21 @@ $(function() {
     $("#chooser_send_to_all").on("click", function() {
         $("#send_to_all_yes").prop("checked", true);
         SelectAll();
-        $(this).closest('form').submit();
+        $("#chooser_send_to_all").addClass('selected');
+        $("#chooser_send_to_one").removeClass('selected');
+        //$(this).closest('form').submit();
     });
     $("#chooser_send_to_one").on("click", function() {
         $("#send_to_all_no").prop("checked", true);
-        $(this).closest('form').submit();
+        var self = $(this);
+        SelectNone();
+        $("#chooser_send_to_one").addClass('selected');
+        $("#chooser_send_to_all").removeClass('selected');
+        $('div.affiliate').each(function(i, v) {
+            if($(v).attr('data-id') == self.attr('data-id'))
+                ToggleItem($(v));
+        });
+        //$(this).closest('form').submit();
     });
     $(".chooser#customize").on("click", function() {
         $("#send_to_all_no").prop("checked", true);

@@ -16,7 +16,7 @@
         <strong><%= User.verified.count %> users across <%= Affiliate.all.count %> networks.</strong>
       </div>
       <% if current_affiliate.id.present? %>
-          <div class="chooser" id="chooser_send_to_one">
+          <div class="chooser" id="chooser_send_to_one" data-id="<%= current_affiliate.id %>">
             <% if current_affiliate.logo.present? %>
                 <div class="image">
                   <img src='<%= current_affiliate.logo.url %>'>

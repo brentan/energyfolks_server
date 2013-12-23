@@ -67,7 +67,7 @@
       tabs << {text: 'Edit', class: 'edit'} if @item.is_editable?(current_user) && !@item.archived?
       tabs << {text: 'Analytics', class: 'analytics'} if @item.is_editable?(current_user) || (current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR))
       if tabs.length > 1 %>
-          <table class='energyfolks_show_top'>
+          <table class='energyfolks_show_top' cellspacing="0">
             <tr><td class="energyfolks_spacer"></td>
               <% tabs.each do |t| %>
                 <td data-class="<%= t[:class] %>" class="energyfolks_show_top<%= t[:text] == 'Details' ? ' selected' : '' %>">
