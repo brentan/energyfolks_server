@@ -1,4 +1,5 @@
 class ErrorMailer < ActionMailer::Base
+  helper ActionView::Helpers::UrlHelper
   def experror(e, u, a, r)
     @err=e
     @user = u

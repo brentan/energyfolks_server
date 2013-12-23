@@ -1,4 +1,5 @@
 class NotificationMailer < ActionMailer::Base
+  helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
   def awaiting_moderation(recipients, affiliate, item, join_item)
