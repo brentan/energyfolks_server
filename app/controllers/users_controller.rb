@@ -323,6 +323,7 @@ class UsersController < ApplicationController
     return redirect_to "/" unless current_user.admin?
     @user = User.find_by_id(params[:id])
     Membership.create({affiliate_id: params[:aid], user_id: params[:id], approved: true})
+    @user.reload
     @user.delay.sync
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User added to group'
   end
@@ -331,6 +332,7 @@ class UsersController < ApplicationController
     return redirect_to "/" unless current_user.admin?
     @user = User.find_by_id(params[:id])
     Membership.find_by_id(params[:mid]).destroy
+    @user.reload
     @user.delay.sync
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User removed from group'
   end

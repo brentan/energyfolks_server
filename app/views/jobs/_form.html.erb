@@ -17,16 +17,21 @@
               <div class='form_entry'><%= f.text_field :name %></div>
 
               <div class='form_label'>Employer</div>
-              <div class='form_entry show_inline'>
-                <%= image_tag(@item.logo.url(:thumb), class: "logo_img") if @item.logo.present? %>
+              <div class='form_entry'><%= f.text_field :employer %></div>
+
+
+              <div class='form_label'>Logo</div>
+              <div class='form_entry'>
+                <%= image_tag @item.logo.url(:thumb_big) if @item.logo.present? %>
                 <%= f.file_field :logo %>
               </div>
-              <div class='form_entry'><%= f.text_field :employer %></div>
 
               <div class='form_label'>City and State/Country</div>
               <div class='form_entry'><%= f.text_field :location %>
                 <div class='explain'>Please post multiple jobs if job is available in more than one location.</div>
               </div>
+            </li>
+            <li class='slide'>
 
               <div class='form_label'>Job Description</div>
               <div class='form_entry show_inline'>
@@ -41,8 +46,6 @@
               </div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
 
-            </li>
-            <li class='slide'>
               <div class='form_label'>Add Tags</div>
               <div class='form_entry'>
                 <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>

@@ -24,6 +24,9 @@ $affiliate_height: 30px;
       &:hover {
         background-color: #e5e5e5;
       }
+      &.selected {
+        background-color: #ffffcc;
+      }
     }
     div.image {
       float: left;
