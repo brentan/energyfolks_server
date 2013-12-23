@@ -370,6 +370,8 @@ module MixinEntity
   def comment_hash
     "#{self.entity_name}_#{self.id}"
   end
+
+
   def comments
     Comment.get_all_comments(self.comment_hash)
   end

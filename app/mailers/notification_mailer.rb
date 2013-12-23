@@ -21,8 +21,8 @@ class NotificationMailer < ActionMailer::Base
     @host = @affiliate.entity_url(entity)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     if(entity.instance_of?(Discussion))
-      reply_to = "comment_0_#{entity.comment_hash}"
-      mail(to: @user.email, reply_to: "#{reply_to}@reply.energyfolks.com", from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:#{entity.entity_type}] #{entity.name}")
+      reply_to = CommentEmailHash.get_hash("comment_0_#{entity.comment_hash}")
+      mail(to: @user.email, reply_to: "comment_#{reply_to}@reply.energyfolks.com", from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:#{entity.entity_type}] #{entity.name}")
     else
       mail(to: @user.email, from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:#{entity.entity_type}] #{entity.name}")
     end
@@ -42,9 +42,9 @@ class NotificationMailer < ActionMailer::Base
     @entity = entity
     @user = user
     @affiliate = Affiliate.find_by_id(user.affiliate_id)
-    reply_to = "comment_#{entity.comment_id}_#{entity.unique_hash}"
+    reply_to = CommentEmailHash.get_hash("comment_#{entity.comment_id}_#{entity.unique_hash}")
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
-    mail(to: @user.email, from: from, reply_to: "#{reply_to}@reply.energyfolks.com", subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:New Comment] #{entity.name}")
+    mail(to: @user.email, from: from, reply_to: "comment_#{reply_to}@reply.energyfolks.com", subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}:New Comment] #{entity.name}")
   end
 
   def item_removed(item, reason, affiliate)

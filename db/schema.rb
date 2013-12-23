@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131220014522) do
+ActiveRecord::Schema.define(:version => 20131223001826) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -167,6 +167,13 @@ ActiveRecord::Schema.define(:version => 20131220014522) do
   end
 
   add_index "comment_details", ["comment_hash"], :name => "index_comment_details_on_comment_hash"
+
+  create_table "comment_email_hashes", :force => true do |t|
+    t.string "unique_hash"
+    t.string "comment_hash"
+  end
+
+  add_index "comment_email_hashes", ["unique_hash"], :name => "index_comment_email_hashes_on_unique_hash"
 
   create_table "comment_subscribers", :force => true do |t|
     t.integer "user_id"
