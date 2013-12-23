@@ -1,166 +1,189 @@
 
-<h1>Basic Information</h1>
-<div class='form_label'>Group Name</div>
-<div class='form_entry'><%= f.text_field :name %></div>
+<div id='ef_carousel' class='no_animation'>
+  <%= raw(carousel_slide_title_section('Settings',8, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration'] })) %>
+  <div class="viewport">
+    <ul class="overview">
+      <li class='slide'>
+            <h1>Basic Information</h1>
+            <div class='form_label'>Group Name</div>
+            <div class='form_entry'><%= f.text_field :name %></div>
 
-<div class='form_label'>Short Name / Abbreviation</div>
-<div class='form_entry'><%= f.text_field :short_name %></div>
+            <div class='form_label'>Short Name / Abbreviation</div>
+            <div class='form_entry'><%= f.text_field :short_name %></div>
 
-<div class='form_label'>Logo</div>
-<div class='form_entry'>
-  <%= image_tag @affiliate.logo.url(:thumb_big) if @affiliate.logo.present? %>
-  <%= f.file_field :logo %>
-</div>
+            <div class='form_label'>Logo</div>
+            <div class='form_entry'>
+              <%= image_tag @affiliate.logo.url(:thumb_big) if @affiliate.logo.present? %>
+              <%= f.file_field :logo %>
+            </div>
 
-<div class='form_label'>Location</div>
-<div class='form_entry'><%= f.text_field :location %></div>
+            <div class='form_label'>Color</div>
+            <div class='form_entry'>#<%= f.text_field :color, :class => 'color' %></div>
 
-<div class='form_label'>Default Timezone</div>
-<div class='form_entry'>
-  <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => ActiveSupport::TimeZone::MAPPING.invert[current_user.timezone]}, {class: 'list_all'} ) %>
-</div>
+            <div class='form_label'>Contact Email Address</div>
+            <div class='form_entry'><%= f.text_field :email %></div>
 
-<div class='form_label'>Date Founded</div>
-<div class='form_entry'><%= f.text_field :year_founded %></div>
+            <div class='form_label'>Location</div>
+            <div class='form_entry'><%= f.text_field :location %></div>
 
-<div class='form_label'>Current President</div>
-<div class='form_entry'><%= f.text_field :president_name %></div>
+            <div class='form_label'>Default Timezone</div>
+            <div class='form_entry'>
+              <%= f.time_zone_select(:timezone,  ActiveSupport::TimeZone.us_zones, {:default => ActiveSupport::TimeZone::MAPPING.invert[current_user.timezone]}, {class: 'list_all'} ) %>
+            </div>
+      </li>
+      <li class='slide'>
+            <h1>Details</h1>
+            <div class='form_label'>Date Founded</div>
+            <div class='form_entry'><%= f.text_field :year_founded %></div>
 
-<div class='form_label'>Description (to introduce your group)</div>
-<div class='form_entry'><%= f.text_field :description %></div>
+            <div class='form_label'>Current President</div>
+            <div class='form_entry'><%= f.text_field :president_name %></div>
 
-<div class='form_label'>Event Radius</div>
-<div class='form_entry'><%= f.text_field :event_radius %>
-  <div class='explain'>When showing events on your calendar, include events with above miles of group location</div>
-</div>
-<div class='form_label'>Jobs Radius</div>
-<div class='form_entry'><%= f.text_field :job_radius %>
-  <div class='explain'>When showing jobs on your website, include jobs with above miles of group location (use 0 for all jobs everywhere)</div>
-</div>
+            <div class='form_label'>Description (to introduce your group)</div>
+            <div class='form_entry'><%= f.text_field :description %></div>
+      </li>
+      <li class='slide'>
+            <h1>Default Views on Your Webpage</h1>
+            <div class='form_label'>Event Radius</div>
+            <div class='form_entry'><%= f.text_field :event_radius %>
+              <div class='explain'>When showing events on your calendar, include events with above miles of group location</div>
+            </div>
+            <div class='form_label'>Jobs Radius</div>
+            <div class='form_entry'><%= f.text_field :job_radius %>
+              <div class='explain'>When showing jobs on your website, include jobs with above miles of group location (use 0 for all jobs everywhere)</div>
+            </div>
+            <div class='form_label'>Details for Anonymous Users:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :show_details, true %> Logged out users can still view post details</label><BR>
+              <label><%= f.radio_button :show_details, false %> Users must login to view post details</label>
+            </div>
 
-<div class='form_label'>Contact Email Address</div>
-<div class='form_entry'><%= f.text_field :email %></div>
+      </li>
+      <li class='slide'>
 
 
+            <h1>Website URLs</h1>
+            <div class='explain'>
+              Leave any options that you do not utilize blank.  Include the 'http://' portion of the url.
+            </div>
+            <div class='form_label'>Homepage URL:</div>
+            <div class='form_entry'><%= f.text_field :url %></div>
+            <div class='form_label'>Calendar URL:</div>
+            <div class='form_entry'><%= f.text_field :url_events %></div>
+            <div class='form_label'>Jobs URL:</div>
+            <div class='form_entry'><%= f.text_field :url_jobs %></div>
+            <div class='form_label'>Discussions URL:</div>
+            <div class='form_entry'><%= f.text_field :url_discussions %></div>
+            <div class='form_label'>Member Directory URL:</div>
+            <div class='form_entry'><%= f.text_field :url_users %></div>
+            <div class='form_label'>Blog URL:</div>
+            <div class='form_entry'><%= f.text_field :url_blogs %></div>
+        </li>
+        <li class="slide">
+            <h1>Membership Settings</h1>
+            <div class='form_label'>Group Visibility:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :visible, true %> Listed on energyfolks.com and other energyfolks networks</label><BR>
+              <label><%= f.radio_button :visible, false %> Hidden and only found through your website</label>
+            </div>
+            <div class='form_label'>Group Type:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :open, Affiliate::OPEN %> Anyone can join the group</label><BR>
+              <label><%= f.radio_button :open, Affiliate::MODERATED %> Anyone can request access to the group</label><BR>
+              <label><%= f.radio_button :open, Affiliate::INVITE_ONLY %> Group members must be invited</label>
+            </div>
 
-<h1>Website Settings</h1>
-<div class='explain'>
-  Leave any options that you do not utilize blank.  Include the 'http://' portion of the url.
-</div>
-<div class='form_label'>Homepage URL:</div>
-<div class='form_entry'><%= f.text_field :url %></div>
-<div class='form_label'>Calendar URL:</div>
-<div class='form_entry'><%= f.text_field :url_events %></div>
-<div class='form_label'>Jobs URL:</div>
-<div class='form_entry'><%= f.text_field :url_jobs %></div>
-<div class='form_label'>Discussions URL:</div>
-<div class='form_entry'><%= f.text_field :url_discussions %></div>
-<div class='form_label'>Member Directory URL:</div>
-<div class='form_entry'><%= f.text_field :url_users %></div>
-<div class='form_label'>Blog URL:</div>
-<div class='form_entry'><%= f.text_field :url_blogs %></div>
+              <div class='form_label'>Digest</div>
+              <div class='form_entry'>
+                <label><%= f.radio_button :send_digest, true %> Send automated digest</label><BR>
+                <label><%= f.radio_button :send_digest, false %> Do not send digest</label>
+                <div class='explain'>Send members automated energyfolks weekly digest?</div>
+              </div>
 
-<h1>Membership Settings</h1>
-<div class='form_label'>Group Visibility:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :visible, true %> Listed on energyfolks.com and other energyfolks networks</label>
-  <label><%= f.radio_button :visible, false %> Hidden and only found through your website</label>
-</div>
-<div class='form_label'>Group Type:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :open, Affiliate::OPEN %> Anyone can join the group</label>
-  <label><%= f.radio_button :open, Affiliate::MODERATED %> Anyone can request access to the group</label>
-  <label><%= f.radio_button :open, Affiliate::INVITE_ONLY %> Group members must be invited</label>
-</div>
-<div class='form_label'>Post Details:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :show_details, true %> Logged out users can still view post details</label>
-  <label><%= f.radio_button :show_details, false %> Require users to login to view post details</label>
-</div>
+            <h1>Default Email Subscriptions for new members:</h1>
+            <%= render :partial => '/common/subscriptions', :locals => { f: f, show_rad: false} %>
+        </li>
+        <li class="slide">
 
-<h1>Default Email Subscriptions for new members:</h1>
-<%= render :partial => '/common/subscriptions', :locals => { f: f, show_rad: false} %>
+            <h1>Moderation Settings</h1>
+            <div class='form_label'>Events Moderation Settings:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :moderate_events, Affiliate::NONE %> No moderation, anyone can post</label><BR>
+              <label><%= f.radio_button :moderate_events, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label><BR>
+              <label><%= f.radio_button :moderate_events, Affiliate::ALL %> moderate all posts</label>
+            </div>
+            <div class='form_label'>Jobs Moderation Settings:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :moderate_jobs, Affiliate::NONE %> No moderation, anyone can post</label><BR>
+              <label><%= f.radio_button :moderate_jobs, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label><BR>
+              <label><%= f.radio_button :moderate_jobs, Affiliate::ALL %> moderate all posts</label>
+            </div>
+            <div class='form_label'>Discussions Moderation Settings:</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :moderate_discussions, Affiliate::NONE %> No moderation, anyone can post</label><BR>
+              <label><%= f.radio_button :moderate_discussions, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label><BR>
+              <label><%= f.radio_button :moderate_discussions, Affiliate::ALL %> moderate all posts</label>
+            </div>
+        </li>
+        <li class="slide">
+          <h1>Email Display Settings</h1>
+            <div class='form_label'>Email Header</div>
+            <div class='form_entry'>
+              <label><%= f.radio_button :custom_header, false %> Use default header</label><BR>
+              <label><%= f.radio_button :custom_header, true %> Use custom header</label>
+              <div id='default_header' style='display:<%= @affiliate.custom_header? ? 'none' : 'block' %>;'>
+                <%= render :partial => '/affiliates/header' %>
+              </div>
+              <div id='custom_header' style='display:<%= @affiliate.custom_header? ? 'block' : 'none' %>;'>
+                <%= f.text_area :email_header, :class => 'tinymce' %>
+              </div>
+              <script language='javascript'>
+                $(function() {
+                    $('body').on('click','#affiliate_custom_header_false',function() {
+                        $('#default_header').show();
+                        $('#custom_header').hide();
+                    });
+                    $('body').on('click','#affiliate_custom_header_true',function() {
+                        $('#default_header').hide();
+                        $('#custom_header').show();
+                    });
+                });
+              </script>
+            </div>
+      </li>
+      <li class="slide">
+            <h1>Integration Information</h1>
 
-<h1>Moderation Settings</h1>
-<div class='form_label'>Events Moderation Settings:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :moderate_events, Affiliate::NONE %> No moderation, anyone can post</label>
-  <label><%= f.radio_button :moderate_events, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
-  <label><%= f.radio_button :moderate_events, Affiliate::ALL %> moderate all posts</label>
-</div>
-<div class='form_label'>Jobs Moderation Settings:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :moderate_jobs, Affiliate::NONE %> No moderation, anyone can post</label>
-  <label><%= f.radio_button :moderate_jobs, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
-  <label><%= f.radio_button :moderate_jobs, Affiliate::ALL %> moderate all posts</label>
-</div>
-<div class='form_label'>Discussions Moderation Settings:</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :moderate_discussions, Affiliate::NONE %> No moderation, anyone can post</label>
-  <label><%= f.radio_button :moderate_discussions, Affiliate::DIRECT %> Only moderate local posts (accept EF moderation decisions on posts sent to multiple networks)</label>
-  <label><%= f.radio_button :moderate_discussions, Affiliate::ALL %> moderate all posts</label>
-</div>
+            <div class='form_label'>Wordpress Shared Secret</div>
+            <div class='form_entry'><%= @affiliate.shared_secret %></div>
 
-<h1>Look and Feel</h1>
+            <div class='form_label'>CPanel username</div>
+            <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>
 
-<div class='form_label'>Color</div>
-<div class='form_entry'>#<%= f.text_field :color, :class => 'color' %></div>
+            <div class='form_label'>CPanel Password</div>
+            <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_password) : @affiliate.cpanel_password %></div>
 
-<div class='form_label'>Email Header</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :custom_header, false %> Use default header</label>
-  <label><%= f.radio_button :custom_header, true %> Use custom header</label>
-  <div id='default_header' style='display:<%= @affiliate.custom_header? ? 'none' : 'block' %>;'>
-    <%= render :partial => '/affiliates/header' %>
+            <% if current_user.admin? %>
+                <h1>Admin options</h1>
+                <div class='form_label'>Email Name</div>
+                <% if @affiliate.email_name.blank? %>
+                    <div class='form_entry'><%= f.text_field :email_name %></div>
+                <% else %>
+                    <div class='form_entry'><%= @affiliate.email_name %> (locked)</div>
+                <% end %>
+
+                <div class='form_label'>Live Group?</div>
+                <div class='form_entry'>
+                  <label><%= f.radio_button :live, true %> Yes</label><BR>
+                  <label><%= f.radio_button :live, false %> No</label>
+                </div>
+                <% if @affiliate.id.present? %>
+                    <h1>Delete</h1>
+                    <%= link_to "Delete this group", "/affiliates/#{@affiliate.id}/delete", :confirm => 'Are you sure?  Deleted groups can not be restored, and all associated information is purged.' %>
+                <% end %>
+            <% end %>
+        </li>
+    </ul>
+    <%= prev_next_buttons(false) %>
   </div>
-  <div id='custom_header' style='display:<%= @affiliate.custom_header? ? 'block' : 'none' %>;'>
-    <%= f.text_area :email_header, :class => 'tinymce' %>
-  </div>
-  <script language='javascript'>
-    $(function() {
-        $('body').on('click','#affiliate_custom_header_false',function() {
-            $('#default_header').show();
-            $('#custom_header').hide();
-        });
-        $('body').on('click','#affiliate_custom_header_true',function() {
-            $('#default_header').hide();
-            $('#custom_header').show();
-        });
-    });
-  </script>
 </div>
-
-<div class='form_label'>Digest</div>
-<div class='form_entry'>
-  <label><%= f.radio_button :send_digest, true %> Send automated digest</label>
-  <label><%= f.radio_button :send_digest, false %> Do not send digest</label>
-  <div class='explain'>Send members automated energyfolks weekly digest?</div>
-</div>
-
-<h1>Integration Information</h1>
-
-<div class='form_label'>Wordpress Shared Secret</div>
-<div class='form_entry'><%= @affiliate.shared_secret %></div>
-
-<div class='form_label'>CPanel username</div>
-<div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>
-
-<div class='form_label'>CPanel Password</div>
-<div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_password) : @affiliate.cpanel_password %></div>
-
-<% if current_user.admin? %>
-    <h1>Admin options</h1>
-    <div class='form_label'>Email Name</div>
-    <% if @affiliate.email_name.blank? %>
-        <div class='form_entry'><%= f.text_field :email_name %></div>
-    <% else %>
-        <div class='form_entry'><%= @affiliate.email_name %> (locked)</div>
-    <% end %>
-
-    <div class='form_label'>Live Group?</div>
-    <div class='form_entry'>
-      <label><%= f.radio_button :live, true %> Yes</label>
-      <label><%= f.radio_button :live, false %> No</label>
-    </div>
-
-<% end %>

@@ -1,7 +1,7 @@
 <% if !(@user.present? && @user.affiliate.present? && !@user.affiliate.send_digest?) %>
     <div class='form_label'>Digest Emails</div>
     <div class='form_entry'>
-      <label><%= f.check_box :weekly %> Weekly Digest (Monday morning)</label>
+      <label><%= f.check_box :weekly %> Weekly Digest (Monday morning)</label><BR>
       <label><%= f.check_box :daily %> Daily Digest</label>
     </div>
 <% end %>
@@ -19,7 +19,7 @@
       - Limit to jobs within <%= f.text_field :job_radius, :size => 4, class: "distance" %> miles (0 for no limit)
     <% end %>
   </div>
-  <label><%= f.check_box :discussions %> New Discussions</label>
-  <label><%= f.check_box :blogs %> New Blog Posts</label>
+  <label><%= f.check_box :discussions %> New Discussions</label><BR>
+  <label><%= f.check_box :blogs %> New Blog Posts</label><BR>
   <label><%= f.check_box :announcement %> Important Announcements</label>
 </div>

@@ -48,11 +48,11 @@
     <%= raw(user_logged_in? ? "EnergyFolks.user_logged_in = true;EnergyFolks.current_user = #{user_hash(current_user).to_json};" : '') %>
 </script>
 
-<%= yield %>
 <script language="javascript">
     EnergyFolks.checkCookies = false;
     EnergyFolks.iframe = true;
 </script>
+<%= yield %>
 <% if params['iframe'].present? && (params['iframe'] == '1') && @url.present? %>
     <script language="javascript">
       EnergyFolks.$(function() {
