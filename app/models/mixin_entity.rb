@@ -472,12 +472,12 @@ module MixinEntity
         recipients = User.where(admin: true).all
         affiliate = Affiliate.find_by_id(0)
       end
-      NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, affiliate, self, i) if recipients.length > 0
+      NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, affiliate.id.present? ? affiliate.id : 0, self, i) if recipients.length > 0
       i.broadcast = true
       i.save(:validate => false)
     end
     self.update_index
-    self.user_broadcast.delay(:run_at => 15.minutes.from_now) if call_user_broadcast
+    self.delay(:run_at => 15.minutes.from_now).user_broadcast if call_user_broadcast
   end
 
   def user_broadcast
@@ -634,10 +634,10 @@ module MixinEntity
         join_item.awaiting_edit = false
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
-        NotificationMailer.delay.item_approved(self, affiliate)
+        NotificationMailer.delay.item_approved(self, affiliate.id)
         Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
-        self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
         return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
@@ -650,10 +650,10 @@ module MixinEntity
         join_item.awaiting_edit = false
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
-        NotificationMailer.delay.item_approved(self, affiliate)
+        NotificationMailer.delay.item_approved(self, 0)
         Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.reload
-        self.user_broadcast.delay(:run_at => 15.minutes.from_now)
+        self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
         return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
@@ -667,12 +667,12 @@ module MixinEntity
         join_item = self.affiliate_join.where(affiliate_id: affiliate.id).first
         return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
-          NotificationMailer.delay.item_removed(self, reason, affiliate)
+          NotificationMailer.delay.item_removed(self, reason, affiliate.id)
           join_item.approved_version = 0
           join_item.approved_versions ='0'
           notice = "Item removed"
         else
-          NotificationMailer.delay.item_rejected(self, reason, affiliate)
+          NotificationMailer.delay.item_rejected(self, reason, affiliate.id)
           notice = "Item Rejected"
         end
         join_item.awaiting_edit = true
@@ -685,12 +685,12 @@ module MixinEntity
         join_item = self.affiliate_join.where(affiliate_id: 0).first
         return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
-          NotificationMailer.delay.item_removed(self, reason, affiliate)
+          NotificationMailer.delay.item_removed(self, reason, 0)
           join_item.approved_version = 0
           join_item.approved_versions ='0'
           notice = "Item removed"
         else
-          NotificationMailer.delay.item_rejected(self, reason, affiliate)
+          NotificationMailer.delay.item_rejected(self, reason, 0)
           notice = "Item Rejected"
         end
         join_item.awaiting_edit = true

@@ -2,10 +2,10 @@ class NotificationMailer < ActionMailer::Base
   helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
-  def awaiting_moderation(recipients, affiliate, item, join_item)
+  def awaiting_moderation(recipients, aid, item, join_item)
     @item = item
     @join_item = join_item
-    @affiliate = affiliate
+    @affiliate = Affiliate.find_by_id(aid)
     @host = affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     recipients.each do |user|
@@ -49,11 +49,11 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, reply_to: "comment_#{reply_to}@reply.energyfolks.com", subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}: New Comment] #{entity.name}")
   end
 
-  def item_removed(item, reason, affiliate)
+  def item_removed(item, reason, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @reason = reason
-    @affiliate = affiliate
+    @affiliate = Affiliate.find_by_id(aid)
     @host = affiliate.entity_url(item)
     @user = @item.user
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
@@ -61,22 +61,22 @@ class NotificationMailer < ActionMailer::Base
 
   end
 
-  def item_rejected(item, reason, affiliate)
+  def item_rejected(item, reason, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @user = @item.user
     @reason = reason
-    @affiliate = affiliate
+    @affiliate = Affiliate.find_by_id(aid)
     @host = affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been rejected")
   end
 
-  def item_approved(item, affiliate)
+  def item_approved(item, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
     @item = item
     @user = @item.user
-    @affiliate = affiliate
+    @affiliate = Affiliate.find_by_id(aid)
     @host = affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been approved")
