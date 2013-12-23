@@ -9,8 +9,10 @@
         %>
         <!-- Beginning of Profile -->
         <% if visible %>
-            <%= render :partial => '/common/show_top' if current_user.present? %>
-            <%= render :partial => '/events/inner_show' %>
+            <div id="ef_show">
+                <%= render :partial => '/common/show_top' if current_user.present? %>
+                <%= render :partial => '/events/inner_show' %>
+            </div>
         <% else %>
             <h1>Oops!</h1>
             <b>This event's details are restricted, or this event has not yet been approved.</b>

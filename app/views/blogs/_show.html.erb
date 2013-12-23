@@ -9,20 +9,22 @@
         %>
         <!-- Beginning of Profile -->
         <% if visible %>
-            <%= render :partial => '/common/show_top' if current_user.present? %>
-            <%= render :partial => '/blogs/inner_show' %>
-            <div id='Enfolks_comments_<%= @item.comment_hash %>' class='Enfolks_comments' data-hash='<%= @item.comment_hash %>'></div>
-            <% if defined?(ajax).nil?
-                 CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
-                 output = Comment.get_all_comments(@item.comment_hash)
-                 hash = "{ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' }"
-            %>
-                <script language='javascript'>
-                    EnergyFolks.$(function() {
-                        EnergyFolks.Populate_Comments(<%= raw(hash) %>);
-                    });
-                </script>
-            <% end %>
+            <div id="ef_show">
+                <%= render :partial => '/common/show_top' if current_user.present? %>
+                <%= render :partial => '/blogs/inner_show' %>
+                <div id='Enfolks_comments_<%= @item.comment_hash %>' class='Enfolks_comments' data-hash='<%= @item.comment_hash %>'></div>
+                <% if defined?(ajax).nil?
+                     CommentDetail.update(@item.comment_hash, @item.name, @item.static_url)
+                     output = Comment.get_all_comments(@item.comment_hash)
+                     hash = "{ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' }"
+                %>
+                    <script language='javascript'>
+                        EnergyFolks.$(function() {
+                            EnergyFolks.Populate_Comments(<%= raw(hash) %>);
+                        });
+                    </script>
+                <% end %>
+            </div>
         <% else %>
             <h1>Oops!</h1>
             <b>This blog post's details are restricted, or this post has not yet been approved.</b>

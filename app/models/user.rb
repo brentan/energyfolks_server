@@ -158,6 +158,21 @@ class User < ActiveRecord::Base
   def self.to_archive
     []
   end
+  def full_name
+    return "#{self.first_name} #{self.last_name}"
+  end
+  def resume_visible?(user)
+    return true if self.resume_visibility == PUBLIC
+    return false if user.blank?
+    return true if self.resume_visibility == LOGGED_IN
+    if self.resume_visibility == NETWORKS
+      self.memberships.each do |m|
+        return true if m.affiliate.present? && m.affiliate.member?(user)
+      end
+    end
+    return true if user.admin?
+    return false
+  end
 
 
   def approve(current_user, affiliate, highlight = false)

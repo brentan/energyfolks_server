@@ -7,7 +7,7 @@
        visible = true if current_user.present? && (current_user.id == @item.id)
     %>
     <% if current_user.present? && (current_user.id == @item.id) %>
-        <div class='admin_controls'>
+        <div class='energyfolks_show_admin_controls'>
           <h3>This is you</h3>
           <%= popup 'Edit your profile', 'users/profile', true %>
         </div>
@@ -17,13 +17,13 @@
          @item.memberships.each do |m|
            if m.affiliate.admin?(current_user, Membership::EDITOR) %>
                 <% if m.approved? %>
-                    <div class='admin_controls'>
+                    <div class='energyfolks_show_admin_controls'>
                       <h3>Membership management for <%= m.affiliate.name %></h3>
                       <%= popup 'Admin Rights', 'affiliates/rights', true, {id: @item.id, aid: m.affiliate_id} if m.affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
                       <%= popup 'Remove From Group', 'affiliates/reject_or_remove', true, {id: @item.id, aid: m.affiliate_id} %>
                     </div>
                 <% else %>
-                    <div class='admin_controls urgent'>
+                    <div class='energyfolks_show_admin_controls energyfolks_show_urgent'>
                       <h3>Membership request pending for <%= m.affiliate.name %></h3>
                       This user has requested to join your group.  Their reason was listed as:<BR>
                       <%= m.reason %>
@@ -35,7 +35,7 @@
             <% end
                end
                if current_user.admin? %>
-            <div class='admin_controls'>
+            <div class='energyfolks_show_admin_controls'>
               <h3>User Management</h3>
               <%= popup 'Global Rights', 'users/rights', true, {id: @item.id} %>
               <%= @item.verified? ? popup('Freeze Account', 'users/freeze_account', true, {id: @item.id}) : popup('Manually Verify Account', 'users/manual_verify', true, {id: @item.id}) %>
@@ -45,13 +45,24 @@
         %>
     <!-- Beginning of Profile -->
     <% if visible %>
-        <h1><%= @item.first_name %> <%= @item.last_name %></h1>
-        <%= image_tag(@item.avatar.url(:thumb_big), :align => 'right') if @item.avatar.present? %>
-        <%= content_tag(:div, @item.position) if @item.position.present? %>
-        <%= content_tag(:div, @item.organization) if @item.organization.present? %>
-        <%
-           # TODO: Expand the user profile to show relevant information
-        %>
+        <div id="ef_show">
+          <%= image_tag(@item.avatar.url(:thumb_big), :class => 'ef_post_logo', :align => 'right') if @item.avatar.present? %>
+            <h1><%= @item.first_name %> <%= @item.last_name %></h1>
+            <%= content_tag(:h3, @item.position) if @item.position.present? %>
+            <%= content_tag(:h3, @item.organization) if @item.organization.present? %>
+            <%= content_tag(:h3, link_to('LinkedIn Profile', @item.linkedin_url)) if @item.linkedin_url.present? %>
+            <%= content_tag(:h3, link_to('Resume', @item.resume.url)) if @item.resume_visible?(current_user) && @item.resume.present? %>
+            <%= raw(posted_from(@item, 'Primary Membership: ')) %>
+            <%= raw(@item.bio) %>
+            <% if @item.interests.present? %>
+                <h4>Interests</h4>
+                <%= raw(@item.interests) %>
+            <% end %>
+            <% if @item.expertise.present? %>
+                <h4>Expertise</h4>
+                <%= raw(@item.expertise) %>
+            <% end %>
+        </div>
     <% else %>
         <h1>Oops!</h1>
         <b>This user's profile is restricted, or this user's profile has not yet been approved.</b>

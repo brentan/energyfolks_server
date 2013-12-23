@@ -37,4 +37,11 @@ class Job < ActiveRecord::Base
   def self.to_archive
     self.where("created_at < ?", 6.months.ago).all
   end
+
+  def job_type_string
+    return 'Full Time' if self.job_type == FULL_TIME
+    return 'Part Time' if self.job_type == PART_TIME
+    return 'Temporary, Internship, Fellowship' if self.job_type == TEMPORARY
+    return 'One Time' if self.job_type == ONE_TIME
+  end
 end
