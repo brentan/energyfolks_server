@@ -133,7 +133,7 @@ class InboundEmailsController < ApplicationController
         # Get the reply portion for comments (strip HTML as this really messes it up)
         email_text = email_text_base.gsub(/^[ \-]\-\-/,"\n ---") # ensure lines starting with "---" or " --" are preceded by a newline, as required by the parser gem to recognize them as section separators
         comment = EmailReplyParser.parse_reply(email_text).gsub(/(?:\n\r?|\r\n?)/, '<br>')
-        decoded_to_address = CommentEmailHash.check_hash(to_address.split('_')[1])
+        decoded_to_address = CommentEmailHash.check_hash(to_address.split('_')[1..-1].join('_'))
         if decoded_to_address != ''
           decoded_to_address = decoded_to_address.split('_')
           if decoded_to_address[1] == '0'
