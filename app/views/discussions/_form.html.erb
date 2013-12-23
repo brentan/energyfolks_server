@@ -14,7 +14,13 @@
               <%= raw(show_errors(@item)) %>
 
               <div class='form_label'>Title</div>
-              <div class='form_entry'><%= f.text_field :name %></div>
+              <div class='form_entry'><%= f.text_field :name %>
+              <% if new %>
+                <div class='explain'>
+                  Did you know?  You can post a new discussion via email by sending it to <a href="mailto:discussions@inbound.energyfolks.com">discussions@inbound.energyfolks.com</a>.
+                </div>
+              <% end %>
+              </div>
 
               <div class='form_label'>Message</div>
               <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
