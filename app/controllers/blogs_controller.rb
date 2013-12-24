@@ -73,7 +73,7 @@ class BlogsController < ApplicationController
   def DeleteWordpressPost
     if check_hash
       blog = Blog.unscoped.where(affiliate_id: current_affiliate.id, wordpress_id: params[:post_id].to_i).first
-      blog.destroy
+      blog.destroy if blog.present?
       render :nothing => true
     else
       render :inline => 'Bad secret.  You should re-synchronize your wordpress installation with energyfolks.'
