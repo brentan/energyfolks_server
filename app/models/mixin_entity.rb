@@ -51,6 +51,7 @@ module MixinEntity
       belongs_to :affiliate
       after_save :broadcast
       before_destroy :remove_from_index
+      has_many :user_highlights, as: :entity, :dependent => :destroy
     end
     def acts_as_taggable
       has_many :tags_entities, as: :entity, :dependent => :destroy
