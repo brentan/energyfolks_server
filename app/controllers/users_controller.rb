@@ -18,8 +18,11 @@ class UsersController < ApplicationController
       session[:userid] = user.id
       cookies[:cookieID] = user.cookie if params[:cook]
       login_hash = UserLoginHash.create(user_id: user.id)
+      Visit.create(:page => Visit::LOGIN_TRY,:user_id => user.id, :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      UserLogin.create(:user_id => user.id, :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
       render :action => 'ajax/success', :locals => { hash: login_hash.login_hash, url: url }
     else
+      Visit.create(:page => Visit::LOGIN_TRY,:affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
       render :action => 'ajax/error', :locals => { url: url }
     end
   end
@@ -127,6 +130,8 @@ class UsersController < ApplicationController
         session[:userid] = user.id if user.present?
         login_hash = UserLoginHash.create(user_id: current_user.id)
         render :js => "EnergyFolks.login_callback('#{login_hash.login_hash}');"
+        Visit.create(:page => Visit::LOGIN_TRY,:user_id => user.id, :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+        UserLogin.create(:user_id => user.id, :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
         return
       end
     end
