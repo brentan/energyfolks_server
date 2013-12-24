@@ -496,14 +496,17 @@ module MixinEntity
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
       end
       recipients.each do |user_id|
-        u = User.find_by_id_and_verified(user_id, true)
+        u = User.where(id: user_id, verified: true).all
         next if u.blank?
+        next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
+        next if self.legacy?
         if self.instance_of?(Blog)
           next if !self.announcement? && !u.subscription.blogs?
           next if self.announcement? && !u.subscription.announcement?
         else
           next unless u.subscription.send("#{self.method_name}?")
         end
+        next if u.subscription.affiliate_only? && (self.affiliate.blank? || self.affiliate.member?(u))
         if ((self.entity_name == 'Job') || (self.entity_name == 'Event')) && u.geocoded?
           # geocode test
           if self.geocoded?
@@ -513,8 +516,6 @@ module MixinEntity
             next if u.subscription.send("#{self.class.name.downcase}_radius") > 0
           end
         end
-        next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
-        next if self.legacy?
         token = self.emails.create(user_id: user_id).token
         NotificationMailer.entity(User.find_by_id(user_id), self, token).deliver()
       end
