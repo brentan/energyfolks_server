@@ -23,4 +23,20 @@ EnergyFolks.$(function() {
         }
         return false
     });
+    //Check for activation/email change hash
+    var hash = location.hash;
+    if(hash.substr(1,17) == 'ef_activate_token') {
+        var token = hash.replace('#','').replace('ef_activate_token','');
+        EnergyFolks.iframe_popup('users/activate',{token: token});
+
+    } else if(hash.substr(1,14) == 'ef_email_token') {
+        var token = hash.replace('#','').replace('ef_email_token','');
+        EnergyFolks.iframe_popup('users/verify',{token: token});
+
+    }
 });
+//Check for activation/email change hash
+if(location.hash.substr(1,17) == 'ef_activate_token')
+    EnergyFolks.checkCookies = false;
+if(location.hash.substr(1,14) == 'ef_email_token')
+    EnergyFolks.checkCookies = false;
