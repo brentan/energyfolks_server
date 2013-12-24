@@ -79,14 +79,16 @@
               <h1>The legal stuff</h1>
               <div class="form_entry">
                 <p>
-                  By registering, you agree to the energyfolks <%= link_to('terms of use', '/terms', {target: '_blank'}) %> and <%= link_to('privacy policy', '/privacy', {target: '_blank'}) %>.
+                  By registering, you agree to the energyfolks terms of use and privacy policy.
                 </p>
                 <div class='legal'>
                   <%= render partial: 'users/terms' %>
                 </div>
+                <%= link_to('terms of use - view full screen', '/terms', {target: '_blank', class: "view_full_screen"}) %>
                 <div class='legal'>
                   <%= render partial: 'users/privacy' %>
                 </div>
+                <%= link_to('privacy policy- view full screen', '/privacy', {target: '_blank', class: "view_full_screen"}) %>
               </div>
             </li>
           </ul>
