@@ -1,3 +1,6 @@
+$progress_bar_still_to_go_color: gray;
+$default_affiliate_color: #f16522;
+
 #ef_carousel {
   overflow:hidden;
   overflow-y: auto;
@@ -46,4 +49,88 @@
       margin-left: 5px; /* next and submit will both show, so put some space between them  */
     }
   }
+
+  .carousel_title_section {
+    h1 {
+      float: none;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      vertical-align: middle;
+    }
+
+    .progress_bar {
+      float: none;
+      display: inline-block;
+      padding-left: 20px;
+
+      a {
+        display: inline-block;
+        background-color: $progress_bar_still_to_go_color;
+        color: white;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px; /* shape into circles*/
+        margin-left: 5px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid white;
+
+        &:hover {
+          color: #555555;
+          border-color: #333333;
+          background-color: white;
+        }
+      }
+
+      .active {
+        background-color: $default_affiliate_color; /* different color for the current slide number */
+        &:hover {
+          background-color: white;
+        }
+      }
+    }
+
+    .progress_bar.use_slide_titles a {
+      width: 80px;
+      line-height: auto;
+    }
+
+    hr {
+      background-color: $default_affiliate_color;
+      border-width: 0px;
+      height: 3px;
+    }
+  }
+
+  .carousel_title_section.show_vertical {
+    float: left;
+    width: 110px;
+    display: inline-block;
+
+    h1 {
+      float: none;
+      height: auto;
+      line-height: normal;
+    }
+
+    .progress_bar {
+      padding-left: 0px;
+      margin-left: 0px;
+      width: 100px;
+
+      a {
+        display: block;
+        margin-bottom: 2px;
+      }
+    }
+
+    & + .viewport {
+      width: 600px; /* leave room for the progress bar to be next to it */
+      display: inline-block;
+    }
+
+  }
+
 }
