@@ -150,6 +150,7 @@ $(function() {
                 });
                 setButtons();
                 setTimer();
+                setSlideVisibility(iCurrent);
             }
         };
 
@@ -163,6 +164,12 @@ $(function() {
             oSelf.move(1);
             setEvents();
             return oSelf;
+        }
+
+        function setSlideVisibility(newlySelected){
+            //mark the current slide as active, so we can hide off-screen slides and prevent user from tabbing to them.
+            $('.overview:first li.slide', root).removeClass("active");
+            $('.overview:first li.slide:nth-child(' + (newlySelected + 1) + ")").toggleClass("active",true); //nth-child index is 1-based, not zero-based.
         }
 
         return initialize();
