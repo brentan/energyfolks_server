@@ -7,6 +7,14 @@
 <% end %>
 <div class='form_label'>Notification Emails</div>
 <div class='form_entry'>
+  <% if @user.present? && @user.affiliate.present? %>
+    <%= f.radio_button :affiliate_only, false, class: "toggle" %>
+    <%= f.label :affiliate_only, 'Allow notifications for posts from any network', value: false %>
+    <%= f.radio_button :affiliate_only, true, class: "toggle" %>
+    <%= f.label :affiliate_only, 'Restrict notifications to posts from my networks', value: true %>
+  <% elsif @user.present? %>
+    <%= f.hidden_field :affiliate_only, :value => false %>
+  <% end %>
   <div>
     <label><%= f.check_box :events %> New Events</label>
     <% if show_rad %>

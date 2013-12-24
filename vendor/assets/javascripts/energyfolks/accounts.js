@@ -219,7 +219,7 @@ EnergyFolks.CreateTopBar = function() {
             EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html(outtext);
         } else if(EnergyFolks.current_user.super_admin) {
             EnergyFolks.$("#wp-admin-bar-energyfolks0").html('<a class="ab-item EnergyFolks_popup" href="#" data-command="admins/index" data-iframe="true" data-params="">EF Administrator Page</a>'+"<div class='ab-sub-wrapper'><ul class='ab-submenu' id='wp-admin-bar-energyfolks0-default'></ul></div>");
-            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item EnergyFolks_popup" href="#" data-command="affiliates/dashboard" data-iframe="true" data-params="">Affiliate Dashboard</a></li>');
+            EnergyFolks.$("#wp-admin-bar-energyfolks0-default").html('<li><a class="ab-item" href="/wp-admin/admin.php?page=energyfolks" >Affiliate Dashboard</a></li>');
         } else
             EnergyFolks.$("#wp-admin-bar-energyfolks0").css('display','none');
         var tot=EnergyFolks.current_user.moderation_count.total;

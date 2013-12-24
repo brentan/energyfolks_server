@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224033036) do
+ActiveRecord::Schema.define(:version => 20131224192327) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -54,9 +54,6 @@ ActiveRecord::Schema.define(:version => 20131224033036) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
-    t.integer  "year_founded"
-    t.string   "president_name"
-    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -64,6 +61,9 @@ ActiveRecord::Schema.define(:version => 20131224033036) do
     t.string   "wordpress_js_hash"
     t.boolean  "blogs",                     :default => false
     t.boolean  "announcement",              :default => true
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
     t.boolean  "custom_header",             :default => false
   end
 
@@ -452,15 +452,16 @@ ActiveRecord::Schema.define(:version => 20131224033036) do
 
   create_table "subscriptions", :force => true do |t|
     t.integer "user_id"
-    t.boolean "weekly",       :default => true
-    t.boolean "daily",        :default => false
-    t.boolean "events",       :default => false
-    t.boolean "jobs",         :default => false
-    t.boolean "discussions",  :default => false
-    t.integer "event_radius", :default => 50
-    t.integer "job_radius",   :default => 0
-    t.boolean "blogs",        :default => false
-    t.boolean "announcement", :default => true
+    t.boolean "weekly",         :default => true
+    t.boolean "daily",          :default => false
+    t.boolean "events",         :default => false
+    t.boolean "jobs",           :default => false
+    t.boolean "discussions",    :default => false
+    t.integer "event_radius",   :default => 50
+    t.integer "job_radius",     :default => 0
+    t.boolean "blogs",          :default => false
+    t.boolean "announcement",   :default => true
+    t.boolean "affiliate_only", :default => false
   end
 
   add_index "subscriptions", ["user_id"], :name => "index_subscriptions_on_user_id"

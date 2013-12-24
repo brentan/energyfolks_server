@@ -44,10 +44,10 @@ class Discussion < ActiveRecord::Base
   def subscribe(user)
       CommentSubscriber.subscribe(self.comment_hash, user)
   end
-  private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)
   end
+  private
   def update_now
     self.last_comment_at = Time.now()
   end
