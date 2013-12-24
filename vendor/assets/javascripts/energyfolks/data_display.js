@@ -765,6 +765,11 @@ EnergyFolks.$(function() {
         });
         parent.find('.energyfolks_show_' + self.attr('data-class')).show();
         self.addClass('selected');
+        //post_details sometimes have comments:
+        if(self.attr('data-class') == 'post_details')
+            parent.find('.Enfolks_comments').show();
+        else
+            parent.find('.Enfolks_comments').hide();
         //edit is special:
         if(self.attr('data-class') == 'edit') {
             var item = parent.find('.energyfolks_show_edit');

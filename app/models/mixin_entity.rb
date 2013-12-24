@@ -51,6 +51,7 @@ module MixinEntity
       belongs_to :affiliate
       after_save :broadcast
       before_destroy :remove_from_index
+      has_many :user_highlights, as: :entity, :dependent => :destroy
     end
     def acts_as_taggable
       has_many :tags_entities, as: :entity, :dependent => :destroy
@@ -155,9 +156,9 @@ module MixinEntity
           filters[:and][:primary_id] = options[:source] if options[:source] > 0
           filters[:and][:secondary] = options[:tags].join('|') if options[:tags].present? && (options[:tags].length > 0)
           sort = ["date", :desc]
+          sort = ["primary", :asc] if(self.name.downcase.pluralize == 'users')
           sort = "primary,secondary,full_text" if terms.length > 0
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
-          sort = ["primary", :asc] if(self.name.downcase.pluralize == 'users')
 
           asari_options = {
               filter: filters,
@@ -166,7 +167,7 @@ module MixinEntity
               page: %w(month map).include?(options[:display]) ? 1 : (options[:page]+1)
           }
           if terms.present?
-            asari_results = asari.search("*#{terms.split(' ').join('* *')}*", asari_options)
+            asari_results = asari.search("*#{terms.split(' ').join('*,*')}*", asari_options)
           else
             asari_results = asari.search(asari_options)
           end
@@ -196,7 +197,7 @@ module MixinEntity
       items = items.where(["#{self.name.downcase.pluralize}.start > ?", 1.day.ago]) if (options[:display] != 'month') && (options[:display] != 'dates') && (self.name.downcase.pluralize == 'events')
       if terms.present? && self.name.downcase.pluralize == 'users'
         items = items.where("first_name LIKE ? OR last_name LIKE ?","%#{terms}%","%#{terms}%")
-        items = items.where("email LIKE ?", "%#{terms}%") if admin_user_search
+        items = items.where("email LIKE ?", "%#{terms.downcase}%") if admin_user_search
       elsif terms.present?
         items = items.where("name LIKE ?","%#{terms}%")
       end
@@ -513,6 +514,7 @@ module MixinEntity
           end
         end
         next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
+        next if self.legacy?
         token = self.emails.create(user_id: user_id).token
         NotificationMailer.entity(User.find_by_id(user_id), self, token).deliver()
       end
