@@ -11,7 +11,9 @@ class Visit < ActiveRecord::Base
   DISCUSSIONS = 3
   USERS = 4
   BLOGS = 5
+  PROFILE = 6
+  GENERAL = 7
 
-  attr_accessible :ip, :user_id, :affiliate_id
+  attr_accessible :ip, :user_id, :affiliate_id, :page
 
 end

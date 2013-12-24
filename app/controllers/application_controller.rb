@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :check_for_iframe
   before_filter :find_aid
-  before_filter :analytics
   before_filter :set_timezone
   layout :choose_layout
 
@@ -35,11 +34,14 @@ class ApplicationController < ActionController::Base
   end
 
   def find_aid
-    # TODO: check for subdomain and then set AID accordingly
     @aid = 0
     @host = SITE_HOST #"http://dev.energyfolks.com:3000"
     @aid = cookies[:aid] if cookies[:aid].present?
     @aid = params[:aid] if params[:aid].present?
+    if session[:visits_general].nil?
+      Visit.create(:page => Visit::GENERAL,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_general] = true
+    end
   end
 
   def set_timezone
@@ -51,10 +53,6 @@ class ApplicationController < ActionController::Base
     @layout
   end
 
-  def analytics
-    # TODO: current_url parameter may be passed and can be used for analytics
-    # TODO: aid (affiliate id) may be passed and can be used for analytics
-  end
 
   def current_user
     User.find_by_id(session[:userid]) if session[:userid]

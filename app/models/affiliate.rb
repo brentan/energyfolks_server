@@ -9,6 +9,7 @@ class Affiliate < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :visits, :dependent => :destroy
   has_many :user_logins
+  has_many :nightly_stats, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
 

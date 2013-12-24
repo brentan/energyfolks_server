@@ -164,6 +164,10 @@ class UsersController < ApplicationController
 
   def profile
     if session[:userid]
+      if session[:visits_profile].nil?
+        Visit.create(:page => Visit::PROFILE,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+        session[:visits_profile] = true
+      end
       @user = User.find(session[:userid])
       render :action => :edit
     else
