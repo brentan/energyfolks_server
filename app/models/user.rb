@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_one :subscription, :dependent => :destroy
   has_many :user_comments, :class_name => 'Comment', :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
+  has_many :user_highlights, :dependent => :destroy
   has_many :mark_reads
   has_many :digest_mailers
   has_many :comment_subscribers, :dependent => :destroy
@@ -65,7 +66,7 @@ class User < ActiveRecord::Base
     affiliate_list << 'A'
     affiliate_list = [] unless self.verified?
     {
-        :primary => "#{self.last_name}, #{self.first_name}",
+        :primary => "#{self.last_name},#{self.first_name}",
         :secondary => self.raw_tags,
         :full_text => HTML::FullSanitizer.new.sanitize("#{self.position} #{self.organization} #{self.bio} #{self.interests} #{self.expertise}",:tags=>[]),
         :lat => latlng[:lat],
@@ -160,6 +161,9 @@ class User < ActiveRecord::Base
   end
   def full_name
     return "#{self.first_name} #{self.last_name}"
+  end
+  def legacy?
+    false
   end
   def resume_visible?(user)
     return true if self.resume_visibility == PUBLIC

@@ -18,13 +18,11 @@
                     output = Comment.get_all_comments(@item.comment_hash)
                     hash = "{ title: \"#{@item.name.gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(@item.comment_hash, current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{@item.comment_hash}' }"
                     %>
-                  <div class="energyfolks_show_post_details">
                     <script language='javascript'>
                       EnergyFolks.$(function() {
                         EnergyFolks.Populate_Comments(<%= raw(hash) %>);
                       });
                     </script>
-                  </div>
                 <% end %>
             </div>
         <% else %>
