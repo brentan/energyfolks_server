@@ -29,6 +29,15 @@ $default_affiliate_color: #f16522;
       padding: 1px 0px 0px 0px;
       overflow-y: auto;
     }
+
+    li.slide {
+      visibility: hidden; /* hide off-screen slides, so user can't tab to them */
+    }
+
+    li.slide.active {
+      visibility: visible;
+    }
+
   }
   .buttons {
     .disable {
