@@ -96,6 +96,10 @@
 
     <% if @item.is_editable?(current_user) || (current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)) %>
         <div class='energyfolks_show_analytics'>
+          <% if @item.legacy? %>
+             <h1>This is a Legacy Post</h1>
+              <p>This post was submitted prior to the rollout of EnergyFolks v2.0.  The analytics data below will not be accurate for views prior to December 24, 2013.</p>
+          <% end %>
           <h1>Analytics</h1>
           <% if !@item.instance_of?(User) %>
               <h3>Email statistics</h3>

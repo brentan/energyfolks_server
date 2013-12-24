@@ -161,6 +161,9 @@ class User < ActiveRecord::Base
   def full_name
     return "#{self.first_name} #{self.last_name}"
   end
+  def legacy?
+    false
+  end
   def resume_visible?(user)
     return true if self.resume_visibility == PUBLIC
     return false if user.blank?
