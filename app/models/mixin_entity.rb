@@ -513,6 +513,7 @@ module MixinEntity
           end
         end
         next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
+        next if self.legacy?
         token = self.emails.create(user_id: user_id).token
         NotificationMailer.entity(User.find_by_id(user_id), self, token).deliver()
       end
