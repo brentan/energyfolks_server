@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131223001826) do
+ActiveRecord::Schema.define(:version => 20131224033036) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20131223001826) do
     t.boolean  "digest",                  :default => false
     t.boolean  "archived",                :default => false
     t.boolean  "frozen_by_wordpress",     :default => false
+    t.boolean  "legacy",                  :default => false
   end
 
   add_index "blogs", ["frozen_by_wordpress"], :name => "index_blogs_on_frozen_by_wordpress"
@@ -249,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20131223001826) do
     t.datetime "last_comment_at"
     t.integer  "total_comments",          :default => 0
     t.boolean  "archived",                :default => false
+    t.boolean  "legacy",                  :default => false
   end
 
   create_table "discussions_versions", :force => true do |t|
@@ -315,6 +317,7 @@ ActiveRecord::Schema.define(:version => 20131223001826) do
     t.datetime "logo_updated_at"
     t.string   "timezone"
     t.boolean  "archived",          :default => false
+    t.boolean  "legacy",            :default => false
   end
 
   create_table "events_versions", :force => true do |t|
@@ -371,6 +374,7 @@ ActiveRecord::Schema.define(:version => 20131223001826) do
     t.datetime "logo_updated_at"
     t.integer  "last_updated_by"
     t.boolean  "archived",          :default => false
+    t.boolean  "legacy",            :default => false
   end
 
   create_table "jobs_versions", :force => true do |t|
@@ -484,6 +488,16 @@ ActiveRecord::Schema.define(:version => 20131223001826) do
     t.string  "token"
     t.string  "secret"
   end
+
+  create_table "user_highlights", :force => true do |t|
+    t.string  "entity_type"
+    t.integer "entity_id"
+    t.integer "user_id"
+  end
+
+  add_index "user_highlights", ["entity_id"], :name => "index_user_highlights_on_entity_id"
+  add_index "user_highlights", ["entity_type"], :name => "index_user_highlights_on_entity_type"
+  add_index "user_highlights", ["user_id"], :name => "index_user_highlights_on_user_id"
 
   create_table "user_login_hashes", :force => true do |t|
     t.integer  "user_id"
