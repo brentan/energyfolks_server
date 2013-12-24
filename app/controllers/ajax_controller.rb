@@ -53,6 +53,10 @@ class AjaxController < ApplicationController
     else
       data, more_pages = User.find_all_visible(current_user, current_affiliate, fix_params(params, 'users'))
     end
+    if session[:visits_user].nil?
+      Visit.create(:page => Visit::USERS,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_user] = true
+    end
     data = data.map { |i| user_hash(i) }
     render_ajax( {data: data, more_pages: more_pages} )
   end
@@ -68,6 +72,10 @@ class AjaxController < ApplicationController
     else
       data, more_pages = Job.find_all_visible(current_user, current_affiliate, fix_params(params, 'jobs'))
     end
+    if session[:visits_job].nil?
+      Visit.create(:page => Visit::JOBS,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_job] = true
+    end
     render_ajax( {data: data, more_pages: more_pages} )
   end
 
@@ -80,6 +88,10 @@ class AjaxController < ApplicationController
       data = Event.get_mine(current_user)
     else
       data, more_pages = Event.find_all_visible(current_user, current_affiliate, fix_params(params, 'events'))
+    end
+    if session[:visits_event].nil?
+      Visit.create(:page => Visit::EVENTS,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_event] = true
     end
     render_ajax( {data: data, more_pages: more_pages} )
   end
@@ -94,6 +106,10 @@ class AjaxController < ApplicationController
     else
       data, more_pages = Discussion.find_all_visible(current_user, current_affiliate, fix_params(params, 'discussions'))
     end
+    if session[:visits_discussion].nil?
+      Visit.create(:page => Visit::DISCUSSIONS,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_discussion] = true
+    end
     render_ajax( {data: data, more_pages: more_pages} )
   end
 
@@ -106,6 +122,10 @@ class AjaxController < ApplicationController
       data = Blog.get_mine(current_user)
     else
       data, more_pages = Blog.find_all_visible(current_user, current_affiliate, fix_params(params, 'blogs'))
+    end
+    if session[:visits_blog].nil?
+      Visit.create(:page => Visit::BLOGS,:user_id => (user_logged_in? ? current_user.id : nil), :affiliate_id => (current_affiliate.id.present? ? current_affiliate.id : 0), :ip => request.remote_ip)
+      session[:visits_blog] = true
     end
     render_ajax( {data: data, more_pages: more_pages} )
   end
