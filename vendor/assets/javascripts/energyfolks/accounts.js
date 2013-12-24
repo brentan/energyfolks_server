@@ -156,17 +156,6 @@ EnergyFolks.$(function() {
                 EnergyFolks.login_callback(hash.substr(15,40));
         }
     });
-    //Check for activation/email change hash
-    var hash = location.hash;
-    if(hash.substr(1,17) == 'ef_activate_token') {
-        var token = hash.replace('#','').replace('ef_activate_token','')
-        EnergyFolks.iframe_popup('users/activate',{token: token});
-
-    } else if(hash.substr(1,14) == 'ef_email_token') {
-        var token = hash.replace('#','').replace('ef_email_token','')
-        EnergyFolks.iframe_popup('users/verify',{token: token});
-
-    }
 
     // Attach listener to all logout links
     EnergyFolks.$('body').on('click','.EnFolks_logout', function() {

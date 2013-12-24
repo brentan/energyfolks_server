@@ -29,6 +29,7 @@ gem 'mysql2'
 
 gem 'nokogiri'
 gem 'sanitize'
+gem 'truncate_html'
 
 gem 'rubyzip'
 
