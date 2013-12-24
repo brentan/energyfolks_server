@@ -74,8 +74,8 @@
                     <% if a.affiliate.year_founded.present? %>
                         <div>Founded in <%= a.affiliate.year_founded %></div>
                     <% end %>
+                    <%= raw(a.affiliate.description) %>
                   </div>
-                  <%= a.affiliate.description %>
                 </div>
               </div>
           <% end %>
@@ -100,8 +100,8 @@
                   <% if a.year_founded.present? %>
                       <div>Founded in <%= a.year_founded %></div>
                   <% end %>
+                  <%= raw(a.description) %>
                 </div>
-                <%= a.description %>
               </div>
               <% count += 1 %>
             </div>

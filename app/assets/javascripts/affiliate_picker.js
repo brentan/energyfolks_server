@@ -140,6 +140,9 @@ $(function() {
         $("#send_to_all_no").prop("checked", true);
         $('#EnergyFolksAffiliatePicker .new_chooser').hide();
         $('#EnergyFolksAffiliatePicker .customize').show();
+        AllHidden = false;
+        $("#choose_affiliates").show();
+        $("#sending_to_all").hide();
     });
     $("#EnergyFolksAffiliatePicker #send_to_all_yes").on("click", function() {
         SelectAll();

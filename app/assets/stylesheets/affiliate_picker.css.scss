@@ -63,6 +63,7 @@ $affiliate_height: 30px;
     background-image: image-url('check_off.png');
     background-repeat: no-repeat;
     background-position: left;
+    white-space: nowrap;
     position: relative; /* needed to we can display the affiliate-details div alongside it */
 
     &:hover {
@@ -100,6 +101,8 @@ $affiliate_height: 30px;
     width: 370px;
     font-size: 1em;
     line-height: normal;
+    white-space: normal;
+    z-index: 9999;
 
     div.descriptor {
       background-color: #ffbbbb;

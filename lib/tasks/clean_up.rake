@@ -25,4 +25,14 @@ namespace :clean_up do
     MarkReadAction.where("created_at > ?",2.years.ago).all.each { |e| e.destroy }
     DigestMailer.where("created_at > ?",2.years.ago).all.each { |e| e.destroy }
   end
+
+  desc "IMPORT"
+  task :import => :environment do
+    #User.all.each do |u|
+    #  u.update_column(:encrypted_cookie, u.update_encrypted_cookie(u.encrypted_password))
+    #end
+    #Discussion.all.each do |u|
+    #  u.update_comment_details
+    #end
+  end
 end

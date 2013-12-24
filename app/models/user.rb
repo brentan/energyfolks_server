@@ -320,9 +320,12 @@ class User < ActiveRecord::Base
     random = self.get_random_bytes(6)
     hash = self.crypt_private(self.password, "$P$B#{self.encode64(random, 6)}")
     self.encrypted_password = hash
-    random = self.get_random_bytes(6)
-    hash = self.crypt_private(hash, "$P$B#{self.encode64(random, 6)}")
-    self.encrypted_cookie = hash
+    self.encrypted_cookie = self.update_encrypted_cookie(self.password)
+  end
+
+  def update_encrypted_cookie(hash)
+    hash = self.crypt_private(hash, "$P$B#{self.encode64(self.get_random_bytes(6), 6)}")
+    self.crypt_private(hash, "$P$B#{self.encode64(self.get_random_bytes(6), 6)}")
   end
 
   def check_password(password)

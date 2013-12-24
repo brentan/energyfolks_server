@@ -496,7 +496,7 @@ module MixinEntity
         recipients = i.affiliate.memberships.approved.map { |r| r.user_id }
       end
       recipients.each do |user_id|
-        u = User.where(id: user_id, verified: true).all
+        u = User.where(id: user_id, verified: true).first
         next if u.blank?
         next if Email.where(entity_type: self.class.name, entity_id: self.id, user_id: user_id).count > 0
         next if self.legacy?

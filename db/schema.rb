@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224192327) do
+ActiveRecord::Schema.define(:version => 20131224205516) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -428,6 +428,26 @@ ActiveRecord::Schema.define(:version => 20131224192327) do
     t.boolean  "broadcast",         :default => false
   end
 
+  create_table "nightly_stats", :force => true do |t|
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "affiliate_id"
+    t.integer  "total_users"
+    t.integer  "total_active_users"
+    t.integer  "total_users_moderation"
+    t.integer  "total_jobs"
+    t.integer  "total_jobs_moderation"
+    t.integer  "total_events"
+    t.integer  "total_events_moderation"
+    t.integer  "total_discussions"
+    t.integer  "total_discussions_moderation"
+    t.integer  "total_blogs"
+    t.integer  "total_blogs_moderation"
+    t.integer  "visits"
+  end
+
+  add_index "nightly_stats", ["affiliate_id"], :name => "index_nightly_stats_on_affiliate_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -509,6 +529,14 @@ ActiveRecord::Schema.define(:version => 20131224192327) do
 
   add_index "user_login_hashes", ["login_hash"], :name => "index_user_login_hashes_on_login_hash"
 
+  create_table "user_logins", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "user_id"
+    t.integer  "affiliate_id"
+    t.integer  "ip"
+  end
+
   create_table "users", :force => true do |t|
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
@@ -549,5 +577,14 @@ ActiveRecord::Schema.define(:version => 20131224192327) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
+
+  create_table "visits", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "user_id"
+    t.integer  "page"
+    t.integer  "affiliate_id"
+    t.string   "ip"
+  end
 
 end

@@ -178,8 +178,10 @@
                   <label><%= f.radio_button :live, false %> No</label>
                 </div>
                 <% if @affiliate.id.present? %>
-                    <h1>Delete</h1>
+                <div class='form_label'>Delete</div>
+                <div class='form_entry'>
                     <%= link_to "Delete this group", "/affiliates/#{@affiliate.id}/delete", :confirm => 'Are you sure?  Deleted groups can not be restored, and all associated information is purged.' %>
+                </div>
                 <% end %>
             <% end %>
         </li>
