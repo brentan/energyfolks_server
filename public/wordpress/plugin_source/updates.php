@@ -34,9 +34,6 @@ add_filter('pre_set_site_transient_update_plugins', 'ef_check_for_plugin_update'
 function ef_check_for_plugin_update($checked_data) {
 	global $ef_api_url, $ef_plugin_slug, $ef_plugin_file, $ef_version, $wp_version;
 
-	if (empty($checked_data->checked))
-		return $checked_data;
-
 	
 	$request_string = array(
 			'body' => array(
