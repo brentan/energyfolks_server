@@ -33,19 +33,4 @@ namespace :clean_up do
     end
   end
 
-  desc "IMPORT"
-  task :import => :environment do
-
-
-    puts '--- Fixing Discussion Files ---'
-    Discussion.all.each do |u|
-      puts u.name
-      begin
-        k = DiscussionsVersion.where(entity_id: u.id).first
-        k.update_column(:html, u.html)
-      rescue
-      end
-    end
-
-  end
 end
