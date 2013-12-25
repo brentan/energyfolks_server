@@ -11,7 +11,7 @@
 site_settings:
   domain: 'energyfolks.com'
 urls:
-  production: 'http://server.energyfolks.com'
+  production: 'https://www.energyfolks.com'
   local: 'http://dev.energyfolks.com:3000'
 
 ##########################

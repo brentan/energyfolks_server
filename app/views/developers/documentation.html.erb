@@ -297,7 +297,7 @@ most are less than 3 lines of total code to implement.</p>
     <td><code>callbackURL</code></td>
     <td><code>string</code></td>
     <td>
-      Used to enable server-side logins.  Input is a URL that is called when a successful energyfolks login occurs.  This URL is passed a 'hash' parameter as a get request.  The server location should then pass this hash parameter to energyfolks via this url: <code>http://server.energyfolks.com/users/from_hash?hash=RETURNED_HASH&aid=AFFILIATE_ID&secret=SECRET</code>
+      Used to enable server-side logins.  Input is a URL that is called when a successful energyfolks login occurs.  This URL is passed a 'hash' parameter as a get request.  The server location should then pass this hash parameter to energyfolks via this url: <code><%= SITE_HOST %>/users/from_hash?hash=RETURNED_HASH&aid=AFFILIATE_ID&secret=SECRET</code>
       <BR><BR>
       The secret is generated from the shared secret your application has with energyfolks.  It is an MD5 hash of the secret concatenated with the hash parameter.  Upon a successful request, the server will return a JSON encoded array with user information, including id, first_name, last_name, and other information.
       <BR><BR>
