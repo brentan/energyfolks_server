@@ -2,7 +2,7 @@
 <div class="wrap">
 	<h2>Energyfolks Plugin Settings</h2> 
         <p>The below settings are automatically set after synchronization with energyfolks servers.  Resynchronize with energyfolks if you believe your site has been compromised or if any of the below settings are not correct.</p>
-        <a href='http://server.energyfolks.com/developers/wordpress_sync?return_url=<?php echo urlencode(get_site_url()); ?>'>Re-synchronize your plugin with energyfolks</a>.
+        <a href='https://www.energyfolks.com/developers/wordpress_sync?return_url=<?php echo urlencode(get_site_url()); ?>'>Re-synchronize your plugin with energyfolks</a>.
         <h3>Current Configuration</h3>
         <div id="ef_settings">
             <table border="1">

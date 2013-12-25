@@ -24,7 +24,7 @@ $ef_plugin_file = plugin_basename( dirname( __FILE__ ));
 $ef_plugin_folder = get_plugins( '/' . $ef_plugin_file );
 $ef_version = $ef_plugin_folder['energyfolks.php']['Version'];
 
-$ef_api_url = 'http://server.energyfolks.com/developers/update_check';
+$ef_api_url = 'https://www.energyfolks.com/developers/update_check';
 $ef_plugin_slug = 'energyfolks';
 
 
