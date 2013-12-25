@@ -1,4 +1,28 @@
 class EnergyfolksController < ApplicationController
+  def temp_wordpress_fix
+    if user_logged_in? && (current_user.id == 1)
+      output = {
+          picture_url: '',
+          visibility: 1,
+          affiliates: [],
+          position: 'position',
+          company: 'company',
+          has_posts: false,
+          posts: [],
+          email: 'brentan@energyfolks.com',
+          first_name: 'Brentan',
+          last_name: 'Alexander',
+          user_id: 1,
+          user: 'EnergyfolksUser_1',
+          pass: Digest::MD5.hexdigest("#{params['c']}EnergyFolks1"),
+          role: 4
+      }
+    else
+      output = {}
+    end
+    render json: output
+  end
+
   def index
 
   end
