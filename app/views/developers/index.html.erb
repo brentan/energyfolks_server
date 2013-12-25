@@ -22,3 +22,20 @@
 <BR><h3>License</h3>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nd/3.0/"><img alt="Creative Commons License" style="border-width:0;display:inline;" src="http://i.creativecommons.org/l/by-nd/3.0/88x31.png" align=right /></a>The <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">energyfolks platform</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-NoDerivs 3.0 Unported License</a>.  You are free to use, copy, distribute, and transmit unaltered copies of the work; use, distribution, or transmission of derivative works is prohibited without the written consent of energyfolks.  Use of the energyfolks platform for commercial purposes is allowed as long as any and all web-sites utilizing energyfolks code are freely available.  Restricting energyfolks content in any way, including through membership in a fee-based subscription service or requirement of a user payment or access fee, is prohibited without prior written consent from energyfolks.</p>
 
+
+<h3>RECENT COMMITS</h3>
+<%
+   require 'rss'
+   begin
+     url = 'https://github.com/brentan/energyfolks_server/commits/master.atom'
+     open(url) do |rss|
+       feed = RSS::Parser.parse(rss)
+       feed.items.each do |item| %>
+            <%= raw(strip_tags(item.updated.content.strftime("%A, %B %-d, %Y at %l:%M %p:"))) %> -
+            <%= raw(strip_tags(item.content.content)) %><BR>
+        <% end
+           end
+           rescue
+        %>Error loading commits from github repository.  Please try again later<%
+   end
+%>

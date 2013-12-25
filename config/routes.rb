@@ -125,6 +125,8 @@ EnergyfolksServer::Application.routes.draw do
   match "welcome/privacy" => "energyfolks#privacy"
   match "welcome/terms" => "energyfolks#terms"
   match "feedback/new" => "energyfolks#new"
+  match "contact" => "energyfolks#contact"
+  match "add_your_group" => "energyfolks#add_your_group"
   match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes
   match ':controller(/:action(/:id))(.:format)', controller: /admins/ #expose admin routes
 

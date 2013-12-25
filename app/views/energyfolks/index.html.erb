@@ -1,50 +1,69 @@
-<h1>ENERGYFOLKS SERVER DEVELOPMENT SITE</h1>
-<p>Welcome to the development site for the energyfolks server.  Recent code repository commit messages are listed below.  In addition,
-the comment system at the bottom of this page (in addition to testing the comment engine) is where important messages and updates
-will be posted as development progresses.</p>
-<h3>FEEDBACK</h3>
-Bugs, ideas, and other feedback can be sent directly to <a href='brentan@energyfolks.com'>brentan@energyfolks.com</a>.  Alternatively,
-post your comment or idea in the comment section below.
-<h3>RECENT COMMITS</h3>
-<%
-   require 'rss'
-   begin
-       url = 'https://github.com/brentan/energyfolks_server/commits/master.atom'
-       open(url) do |rss|
-         feed = RSS::Parser.parse(rss)
-         feed.items.each do |item| %>
-           <%= raw(strip_tags(item.updated.content.strftime("%A, %B %-d, %Y at %l:%M %p:"))) %> -
-           <i><%= raw(strip_tags(item.author.email.to_s.gsub(/@.*/, ''))) %></i> -
-           <%= raw(strip_tags(item.content.content)) %><BR>
-         <% end
-       end
-    rescue
-       %>Error loading commits from github repository.  Please try again later<%
-    end
-%>
 
-
-<h1>UPDATES AND COMMENTS</h1>
-<script language='javascript'>
-    EnergyFolks.Comments("Energyfolks Development Update", "EF HOMEPAGE COMMENTS");
+<script type="text/javascript">
+    function PlayVideo() {
+        $("#vidcontainer").show()
+        $("#vidcontainerin").show();
+        $("#vidholder").width('750px');
+        $("#vidcontainerin").html('<iframe width="700" height="444" src="https://www.youtube-nocookie.com/embed/WcWzvSRZAy0?rel=0&autoplay=1&showinfo=0&controls=0&HD=1&rel=0" frameborder="0" allowfullscreen></iframe>');
+    }
+    function CloseVideo() {
+        $("#vidcontainer").hide();
+        $("#vidcontainerin").html('');
+        $("#vidcontainerin").hide();
+    }
 </script>
-<h1>WIDGET TESTING</h1>
-<table border=0 style='width:100%;'>
-  <tr>
-    <td>
-      <script language='javascript'>
-          EnergyFolks.showWidget('events',{});
-      </script>
-    </td>
-    <td>
-      <script language='javascript'>
-          EnergyFolks.showWidget('jobs',{});
-      </script>
-    </td>
-    <td>
-      <script language='javascript'>
-          EnergyFolks.showWidget('discussions',{});
-      </script>
-    </td>
-  </tr>
-</table>
+
+<div style='position:relative;height:560px;margin:-5px;'>
+  <div style='background-image:url(/assets/homepage/background.jpg);position:absolute;top:0px;left:0px;right:0px;bottom:0px;'></div>
+  <div style='top:365px;position:absolute;bottom:0px;left:0px;right:0px;background-color:white;'></div>
+  <div style='font-size:60px;line-height:50px;position:absolute;top:54px;left:250px;padding: 0px 0px 0px 0px;' class='page_title'>
+    <img src='/assets/homepage/largelogo.png' style='width:450px;border:0px solid black;'>
+  </div>
+  <div style='text-shadow: #111 1px 1px;position:absolute;line-height:20px;top:166px;left:260px;width:450px;color:#ffffff;font-size:18px;font-weight:bold;'>
+    <i>a not-for-profit network of networks dedicated to connecting energy students and professionals in their neighborhood and around the globe</i>
+  </div>
+  <div class="sidebar" style='position:absolute;top:240px;left:256px;background-color:transparent;'>
+    <button onclick="PlayVideo();" style='padding:7px 15px 7px 15px;font-size:18px;border:0px solid black;'>play the energyfolks video</button>
+  </div>
+  <div onmouseover="this.style.borderColor='#cccccc';" onmouseout="this.style.borderColor='#ffffff';" style='position:absolute;top:385px;left:18px;padding:8px;border:2px solid white;text-align:left;font-size:22px;width:280px;color:#26313B;cursor:pointer;' onclick='window.location.href="/affiliates";'>
+    Networks
+    <div style='width:280px;height:90px;margin-top:15px;background-image:url(/assets/homepage/home2.jpg);line-height:18px;letter-spacing:0px;font-size:12px;color:#515151;cursor:pointer;' onclick='ShowSuggest();'>
+    </div><div style='line-height:18px;letter-spacing:0px;font-size:15px;color:#515151;margin-top:5px;cursor:pointer;' onclick='ShowSuggest();'>
+    <img border=0 src='/assets/rightarrowb.png' style='display:inline;padding:5px 7px 1px 0px;'><a href='/affiliates'>View our Member Networks</a>
+  </div>
+  </div>
+
+  <div onmouseover="this.style.borderColor='#cccccc';" onmouseout="this.style.borderColor='#ffffff';" style='position:absolute;top:385px;left:325px;padding:8px;border:2px solid white;width:280px;font-size:22px;color:#26313B;cursor:pointer;' onclick='window.location.href="/add_your_group";'>
+    add your group
+
+    <div style='cursor:pointer;width:280px;height:90px;margin-top:15px;background-image:url(/assets/homepage/home3.jpg);line-height:18px;letter-spacing:0px;font-size:12px;color:#515151;'>
+    </div><div style='line-height:18px;letter-spacing:0px;font-size:15px;color:#515151;margin-top:5px;'>
+    <img border=0 src='/assets/rightarrowb.png' style='display:inline;padding:5px 7px 1px 0px;'><a href='/add_your_group'>empower your community for free</a>
+  </div>
+  </div>
+  <div onmouseover="this.style.borderColor='#cccccc';" onmouseout="this.style.borderColor='#ffffff';" style='cursor:pointer;position:absolute;top:385px;left:632px;padding:8px;border:2px solid white;width:280px;font-size:22px;color:#26313B;' onclick='window.location.href="/contact";'>
+    about energyfolks
+
+    <div style='width:280px;height:90px;margin-top:15px;background-image:url(/assets/homepage/home1.jpg);line-height:18px;letter-spacing:0px;font-size:12px;color:#515151;'></div>
+    <div style='line-height:18px;letter-spacing:0px;font-size:15px;color:#515151;margin-top:5px;'>
+
+      <img border=0 src='/assets/rightarrowb.png' style='display:inline;padding:5px 7px 1px 0px;'><a href='/contact'>read our story and contact us</a>
+    </div>
+  </div>
+</div>
+
+<div id='vidcontainer' style='z-index:1000;position:fixed;top:0px;left:0px;right:0px;bottom:0px;display:none;text-align:center;'>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center">
+    <div id='vidholder' style='margin-top:60px;height:494px;width:750px;text-align:center;background-color:white;border:0px solid black;' align="center">
+      <div style="padding:2px;height:21px;text-align:right;">
+        <a href="javascript:;" onclick="CloseVideo();"><img src='/assets/closegreycircle.png' style="display:inline;width:35px;height:35px;border-width:0px;position:relative;top:-10px;left:10px;"></a>
+      </div>
+      <div id="vidcontainerin" style='display:none;'>
+
+      </div>
+     </div>
+
+</td></tr></table>
+</div>
+
+
