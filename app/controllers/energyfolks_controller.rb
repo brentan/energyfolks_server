@@ -8,6 +8,12 @@ class EnergyfolksController < ApplicationController
   def terms
 
   end
+  def contact
+
+  end
+  def add_your_group
+
+  end
   def new
 
   end
