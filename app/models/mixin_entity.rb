@@ -175,7 +175,7 @@ module MixinEntity
           ids = asari_results.map { |e| self.entity_id_from_search_id(e) }
           select = self.column_names.map { |cn| "#{self.name.downcase.pluralize}.#{cn}"}
           results = ids.length > 0 ? self.select(select).where("id IN (#{ids.join(",")})").order("FIELD(id, #{ids.join(",")})").all : []
-          return results, (asari_results.total_pages < asari_results.current_page)
+          return results, (asari_results.total_pages > asari_results.current_page)
         rescue
           # Fail gracefully...just run as SQL query instead.  Possibly notify sysadmin?
         end
