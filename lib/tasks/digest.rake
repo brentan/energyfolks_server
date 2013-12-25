@@ -4,6 +4,7 @@ namespace :digest do
 
   desc "Send Weekly Digest"
   task :weekly => :environment do
+    if false
     now = Time.now()
     User.verified.joins(:subscription).where(subscriptions: {weekly: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
@@ -20,10 +21,12 @@ namespace :digest do
       rescue
       end
     end
+    end
   end
 
   desc "Send Daily Digest"
   task :daily => :environment do
+    if false
     now = Time.now()
     User.verified.joins(:subscription).where(subscriptions: {daily: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
@@ -38,6 +41,7 @@ namespace :digest do
         end
       rescue
       end
+    end
     end
   end
 
