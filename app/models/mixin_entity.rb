@@ -393,7 +393,7 @@ module MixinEntity
       affil_url = affil.send("url_#{self.method_name}")
       return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?
     end
-    if (self.affiliate_id) > 0 && self.affiliate.present?
+    if self.affiliate_id.present? && (self.affiliate_id) > 0 && self.affiliate.present?
       affil_url = self.affiliate.send("url_#{self.method_name}")
       return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?
     end
