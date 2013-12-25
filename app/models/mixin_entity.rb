@@ -48,6 +48,7 @@ module MixinEntity
       after_validation :geocode
     end
     def acts_as_moderatable
+      @skip_broadcast_callback
       belongs_to :affiliate
       after_save :broadcast
       before_destroy :remove_from_index
@@ -400,7 +401,12 @@ module MixinEntity
     return "#{SITE_HOST}/#{self.method_name}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}"
   end
 
+  def disable_broadcast_callback
+    @skip_broadcast_callback = true
+  end
+
   def broadcast(version_control =  true)
+    return if @skip_broadcast_callback
     if version_control
       # Version control: Decide if we need to increment versions or if we can just save
       if self.increment_version?
