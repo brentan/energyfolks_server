@@ -53,9 +53,9 @@ function ef_check_for_plugin_update($checked_data) {
 	if (!is_wp_error($raw_response) && ($raw_response['response']['code'] == 200))
 		$response = ef_array_to_object(json_decode($raw_response['body'],true));
 	
-	if (is_object($response) && !empty($response)) // Feed the update data into WP updater
+	if (is_object($response) && !empty($response) && property_exists($response,'new_version')) // Feed the update data into WP updater
 		$checked_data->response[$ef_plugin_file .'/'. $ef_plugin_slug .'.php'] = $response;
-        return $checked_data;
+    return $checked_data;
 }
 
 

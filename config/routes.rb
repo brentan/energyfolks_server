@@ -124,8 +124,8 @@ EnergyfolksServer::Application.routes.draw do
   match "calendar" => "events#index"    #backwards compatible
   match "discussions" => "discussions#index"
   match "announce" => "discussions#index" #backwards compatible
-  match "welcome/privacy" => "energyfolks#privacy"
-  match "welcome/terms" => "energyfolks#terms"
+  match "welcome/privacy" => "users#privacy"
+  match "welcome/terms" => "users#terms"
   match "feedback/new" => "energyfolks#new"
   match "contact" => "energyfolks#contact"
   match "add_your_group" => "energyfolks#add_your_group"
