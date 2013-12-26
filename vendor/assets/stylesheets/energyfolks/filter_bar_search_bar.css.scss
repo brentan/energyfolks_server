@@ -154,7 +154,7 @@ div#EnfolksFilterDiv {
   button{
     margin:4px;
     background-color:#454545;
-    border:1px solid #454545;
+    border:1px solid white;
     width:auto;
     overflow:visible;
     border-radius: 5px;
@@ -163,12 +163,12 @@ div#EnfolksFilterDiv {
     line-height:17px; /* Safari */
     text-decoration:none;
     font-weight:bold;
-    color:#white;
+    color:white;
     cursor:pointer;
     padding:4px 10px;
     &:hover {
       border:1px solid #000000;
-      background-color:#white;
+      background-color:white;
       color: black;
     }
   }
