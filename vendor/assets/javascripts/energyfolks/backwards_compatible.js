@@ -23,7 +23,9 @@ function EnFolks_Add_Onload(code) {
     EnergyFolks.$(code);
 }
 
-
+function EnFolks_get_object(id) {
+    return EnergyFolks.$("#" + id).get( 0 );
+}
 
 
 
