@@ -17,18 +17,19 @@
    <% else %>
         <h2>Select the group you would like to synchronize this Wordpress install with:</h2>
         <table border=0>
-            <% affiliates.each do |a| %>
+            <% affiliates.each do |m| %>
+              <% a = m.instance_of?(Affiliate) ? m : m.affiliate %>
                 <tr>
                   <td>
                     <script language=javascript>
-                        EnergyFolks.affiliateLogo(<%= a.affiliate_id %>, '');
+                        EnergyFolks.affiliateLogo(<%= a.id %>, '');
                     </script>
                   </td>
                   <td>
-                    <%= a.affiliate.name %>
+                    <%= a.name %>
                   </td>
                   <td>
-                    <a href='/developers/wordpress_sync_2?aid=<%= a.affiliate_id %>&return_url=<%= params[:return_url] %>'>Synchronize</a>
+                    <a href='/developers/wordpress_sync_2?aid=<%= a.id %>&return_url=<%= params[:return_url] %>'>Synchronize</a>
                   </td>
                 </tr>
             <% end %>
