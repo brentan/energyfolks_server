@@ -144,7 +144,7 @@ EnergyFolks.$(function() {
 
     // Attach listener to all login forms //BACKWARDS COMPATIBLE
     var login_form_submit_legacy = function() {
-        var self = EnergyFolks.$(this);
+        var self = EnergyFolks.$('#EnFolksExternalCustomLoginForm');
         if(self.find('#EnFolksCookie').prop('checked'))
             var cook=1;
         else
