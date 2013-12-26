@@ -140,7 +140,8 @@ EnergyFolks.$(function() {
             self.find('.login_loading').show();
         return false;
     };
-    EnergyFolks.$('body').on('submit','.EnFolksExternalCustomLoginForm', login_form_submit); //BACKWARDS COMPATIBLE
+    EnergyFolks.$('body').on('submit','.EnFolksExternalCustomLoginForm', function(e) { e.preventDefault(); login_form_submit() }); //BACKWARDS COMPATIBLE
+    EnergyFolks.$('.EnFolksExternalCustomLoginForm').attr('onsubmit', ''); //BACKWARDS COMPATIBLE
     EnergyFolks.$('body').on('submit','.EnFolksExternalLoginForm', login_form_submit);
 
     // Attach listener to hash for handling response of login form upon submit
