@@ -44,7 +44,7 @@ class BlogsController < ApplicationController
         blog = Blog.new(data)
         blog.affiliates_blogs.build({affiliate_id: 0})
         if blog.save!
-          Tag.update_tags(params[:tags], blog) if blog.save!
+          Tag.update_tags(params[:tags], blog)
           render :nothing => true
         else
           render :inline => 'Item could not be saved: ensure the title and body are not blank.'
