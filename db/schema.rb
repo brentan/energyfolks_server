@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224205516) do
+ActiveRecord::Schema.define(:version => 20131226070355) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20131224205516) do
     t.string   "president_name"
     t.text     "description"
     t.boolean  "custom_header",             :default => false
+    t.datetime "wordpress_server_ping"
   end
 
   create_table "affiliates_blogs", :force => true do |t|
