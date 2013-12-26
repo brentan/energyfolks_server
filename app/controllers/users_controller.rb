@@ -59,6 +59,8 @@ class UsersController < ApplicationController
           role = '3'
         elsif role.present? && (role.admin_level == Membership::ADMINISTRATOR)
           role = '4'
+        else
+          role = '0'
         end
       else
         role = '0'
