@@ -12,6 +12,9 @@
       Affiliate
     </th>
     <th>
+      Last Check
+    </th>
+    <th>
       Wordpress Version
     </th>
     <th>
@@ -34,6 +37,9 @@
     </td>
     <td>
       <%= affiliate.name %>
+    </td>
+    <td>
+      <%= affiliate.wordpress_server_ping.present? ? affiliate.wordpress_server_ping.strftime("%m/%d/%Y %l:%M %p") : 'Never' %>
     </td>
     <td>
       <%= affiliate.wordpress_version %>

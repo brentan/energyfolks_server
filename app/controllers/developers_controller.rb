@@ -36,6 +36,7 @@ class DevelopersController < ApplicationController
     output = {}
     current_affiliate.update_column(:wordpress_plugin_version, params[:version]) if current_affiliate.present? && current_affiliate.id.present?
     current_affiliate.update_column(:wordpress_version, params[:w_version]) if current_affiliate.present? && current_affiliate.id.present?
+    current_affiliate.update_column(:wordpress_server_ping, Time.now()) if current_affiliate.present? && current_affiliate.id.present?
     if params[:r_action] == 'basic_check'
       ef_data['new_version'] = ef_data['version'] if params[:version].blank? || (params[:version].to_f < ef_data['version'].to_f)
       ef_data['package'] = "#{ef_data['package']}?aid=0#{params[:aid]}"
