@@ -25,7 +25,7 @@ function EnFolksWaitForLoad() {
 
 function EnFolks_ThirdPartyLogin(type) {
     //type = 'facebook' or 'linkedin' or 'google' or 'twitter'.  This is the onclick event
-    document.write(EnergyFolks.ThirdPartyLogin(type));
+    return EnergyFolks.ThirdPartyLogin(type);
 }
 
 function EnFolks_Add_Onload(code) {
