@@ -3,12 +3,21 @@
  */
 
 function EnFolks_closemessage() {
+    EnergyFolks.hide_popup();
 }
 
 function EnFolksMessageSize(url, width, height) {
-   // https://www.energyfolks.com/accounts/forgotpassOUT/18 --> reset_password
-   // https://www.energyfolks.com/accounts/ReSendActivationOUT --> resend_activation
-   // EnFolksMessageSize('https://www.energyfolks.com/accounts/CreateAccountExternal/18',900,600);EnFolksWaitForLoad(); NEEDS TO REDIRECT CORRECTLY TO users/new?aid=
+    if(url.indexOf('accounts/forgotpass')) {
+        EnergyFolks.iframe_popup('users/reset_password',{step: 1});
+    }
+    if(url.indexOf('accounts/ReSendActivation')) {
+        EnergyFolks.iframe_popup('users/resend_activation',{step: 1});
+    }
+    if(url.indexOf('accounts/CreateAccountExternal')) {
+        var url=EnergyFolks.server_url + "/users/new?iframe_next=1&aid="+EnergyFolks.id;
+        window.open (url, "EnergyFolks_NewAccount_Window","location=0,status=0,scrollbars=0, width=940,height=690"); //need to have iframe be 900x650 to match other carousel windows. Plus, margin of 20px all around.
+    }
+    return false;
 }
 
 function EnFolksWaitForLoad() {

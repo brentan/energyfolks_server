@@ -41,7 +41,8 @@ EnergyFolks.ajax = function(command, parameters, callback) {
  * Create links to create third party login buttons
  */
 EnergyFolks.ThirdPartyLogin = function(type) {
-
+    window.open(EnergyFolks.server_url + "/external_login?service=" + type + "&aid=" + EnergyFolks.id + "&" + EnergyFolks.urlhash(true), "EnergyFolks_external_Window","location=0,status=0,scrollbars=0, width=500,height=700");
+    return false;
 }
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click', '.ef_third_party_link', function() {
