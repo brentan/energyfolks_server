@@ -6,6 +6,7 @@
 <% if user_logged_in? %>
    <%
     affiliates = current_user.memberships.where(:admin_level => Membership::ADMINISTRATOR).all
+    affiliates = Affiliate.all if current_user.admin?
     if affiliates.blank?
    %>
         <h2>We could not find any groups</h2>
