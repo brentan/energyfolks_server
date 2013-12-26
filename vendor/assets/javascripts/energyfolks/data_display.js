@@ -249,6 +249,8 @@ EnergyFolks.$(function() {
         EnergyFolks.HighlightUpdateButton();
     });
     EnergyFolks.$('body').on('click','#ef_submit_filters button', function() {
+        EnergyFolks.auto_load_on_scroll = false;
+        EnergyFolks.page = 0;
         EnergyFolks.$(this).closest('div').hide();
         EnergyFolks.loadData(); return false;
     } );
@@ -271,6 +273,8 @@ EnergyFolks.$(function() {
         EnergyFolks.resetData();
     });
     var search_function = function() {
+        EnergyFolks.auto_load_on_scroll = false;
+        EnergyFolks.page = 0;
         EnergyFolks.search_terms = EnergyFolks.$('#ef_search input').val();
         EnergyFolks.loadData();
     };
@@ -281,17 +285,13 @@ EnergyFolks.$(function() {
 });
 
 EnergyFolks.resetData = function() {
+    EnergyFolks.auto_load_on_scroll = false;
+    EnergyFolks.page = 0;
     EnergyFolks.$('#location_filter').show();
-    if(EnergyFolks.format == 'list') {
-        EnergyFolks.page = 0;
-    }
     if(EnergyFolks.format == 'map') {
         EnergyFolks.$('#location_filter').hide();
         EnergyFolks.showMap();
         EnergyFolks.moveMap(false);
-    }
-    if(EnergyFolks.format == 'stream') {
-        EnergyFolks.page = 0;
     }
     EnergyFolks.loadData();
 }
