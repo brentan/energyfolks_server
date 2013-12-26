@@ -275,6 +275,18 @@ most are less than 3 lines of total code to implement.</p>
  </ul>
 </p>
 <p>Logins are handled directly by the energyfolks library, and no methods need to be called to log a user in.  Server-side functionality requires setting some EnergyFolks properties.</p>
+<h3>Custom Login Form</h3>
+<p>If you want to code a custom login form for your website, instead of using a built-in library function, you can do so.  The requirements to make the form operate:<ul>
+  <li>Form should have the class <code>EnFolksExternalLoginForm</code></li>
+  <li>Form should have a input type=text with class <code>EnFolksUser</code></li>
+  <li>Form should have a input type=password with class <code>EnFolksPass</code></li>
+  <li>Form should have a input type=checkbox with class <code>EnFolksCookie</code> (used to select 'remember user' to set cookie beyond session)</li>
+  <li>Form should have a button element to submit the form</li>
+  <li>If you want to include a link to 'create a new account', make a link with class <Code>EnFolks_create_account</Code></li>
+  <li>If you want to include a link to 'reset your password', make a link with class <Code>EnFolks_forgot_pass</Code></li>
+  <li>If you want to include a link to 'resend activation email', make a link with class <Code>EnFolks_reactivate</Code></li>
+  <li>If you want to include a link to login with external websites, make a link with class <Code>ef_third_party_link</Code> and attribute <code>data-type</code> with the name of the external service ('linkedin' is only valid service)</li>
+</ul></p>
 <h3>Properties</h3>
 <table summary="class Map - Properties" width="90%">
   <tbody>
