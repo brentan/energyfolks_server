@@ -140,9 +140,34 @@ EnergyFolks.$(function() {
             self.find('.login_loading').show();
         return false;
     };
-    EnergyFolks.$('body').on('submit','#EnFolksExternalCustomLoginForm', function(e) { e.preventDefault(); login_form_submit() }); //BACKWARDS COMPATIBLE
-    EnergyFolks.$('#EnFolksExternalCustomLoginForm').attr('onsubmit', ''); //BACKWARDS COMPATIBLE
     EnergyFolks.$('body').on('submit','.EnFolksExternalLoginForm', login_form_submit);
+
+    // Attach listener to all login forms //BACKWARDS COMPATIBLE
+    var login_form_submit_legacy = function() {
+        var self = EnergyFolks.$(this);
+        if(self.find('#EnFolksCookie').prop('checked'))
+            var cook=1;
+        else
+            var cook=0;
+        var EscapeAll = function(str) {
+            var val=encodeURIComponent(str.replace(/%/g,"ENFOLKSPERCENT").replace(/'/g,"ENFOLKSPERCENT27").replace(/\\/g,"ENFOLKSPERCENT5C"));
+            if(val == "")
+                return "BLANK";
+            else
+                return val;
+        }
+        var url=EnergyFolks.server_url + "/users/try_login?iframe_next=1&user=" + EscapeAll(self.find('#EnFolksUser').val()) +"&pass=" +EscapeAll(self.find('#EnFolksPass').val())+"&cook="+cook+"&"+EnergyFolks.urlhash()+"&aid="+EnergyFolks.id;
+        window.open (url, "EnergyFolks_Login_Window","location=0,status=0,scrollbars=0, width=100,height=100");
+        self.find('button').hide();
+        if(self.find('.login_loading').length == 0) {
+            var holder = EnergyFolks.$('<div class="login_loading"><img src="'+EnergyFolks.server_url+'/assets/loader.gif" style="display:inline;"></div>').hide().insertAfter(self.find('button'));
+            holder.show();
+        } else
+            self.find('.login_loading').show();
+        return false;
+    };
+    EnergyFolks.$('body').on('submit','#EnFolksExternalCustomLoginForm', function(e) { e.preventDefault(); login_form_submit_legacy() }); //BACKWARDS COMPATIBLE
+    EnergyFolks.$('#EnFolksExternalCustomLoginForm').attr('onsubmit', ''); //BACKWARDS COMPATIBLE
 
     // Attach listener to hash for handling response of login form upon submit
     EnergyFolks.$(window).on('hashchange',function() {
@@ -152,7 +177,9 @@ EnergyFolks.$(function() {
             if(hash.substr(7,5) == 'error') {
                 EnergyFolks.showNotice("Invalid email address or password, or account not activated","red");
                 EnergyFolks.$('.EnFolksExternalLoginForm button').show();
+                EnergyFolks.$('#EnFolksExternalCustomLoginForm button').show(); //BACKWARDS COMPATIBLE
                 EnergyFolks.$('.EnFolksExternalLoginForm .login_loading').hide();
+                EnergyFolks.$('#EnFolksExternalCustomLoginForm .login_loading').hide(); //BACKWARDS COMPATIBLE
             } else if(hash.substr(7,8) == 'success_')
                 EnergyFolks.login_callback(hash.substr(15,40));
         }
