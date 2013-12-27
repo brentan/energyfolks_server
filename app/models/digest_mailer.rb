@@ -23,7 +23,7 @@ class DigestMailer < ActiveRecord::Base
   def items
     # A digest has five major components:
     # Announcements, events, jobs, discussions, blog posts
-                         ``
+
     output = { :announcements => [] }
     # Get all blog posts, and split out the digest announcements:
     output[:blogs] = get_items(Blog)

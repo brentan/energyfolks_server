@@ -9,7 +9,7 @@ class Email < ActiveRecord::Base
     self.opened = true
     self.open_date = Time.now()
     self.save!
-    self.entity.mark_read if self.entity.present? && self.entity.instance_of?(Digest)
+    self.entity.mark_read if self.entity.present? && self.entity.instance_of?(DigestMailer)
   end
 
   private
