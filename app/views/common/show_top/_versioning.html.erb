@@ -1,0 +1,12 @@
+
+<div class='energyfolks_show_versioning'>
+  <% if @item.versions.length > 1 %>
+      <h3>Previous Versions</h3>
+      <% @item.versions.each do |v| %>
+          <% next if v.version_number == @item.current_version %>
+          - <span class='inline'>V<%= v.version_number %>: created <%= v.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>. <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= v.version_number %>&aid=<%= current_affiliate.present? ? current_affiliate.id : 0 %>' target='_blank'>View</a> | <%= popup 'Restore', "#{@item.method_name}/restore", true, {id: @item.id, version: v.version_number}, current_user.id == @item.user_id ? "Are you sure?  Restoring to an earlier version will destroy later versions." : "Are you sure?  Restoring to an earlier version may require re-approving this post to bring it back to the latest version."  unless @item.archived? %></span><BR>
+      <% end %>
+  <% else %>
+      <h3>There are no previous versions of this post.</h3>
+  <% end %>
+</div>

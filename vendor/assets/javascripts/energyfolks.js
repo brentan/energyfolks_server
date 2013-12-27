@@ -16,3 +16,4 @@
 //= require energyfolks/widgets
 //= require energyfolks/backwards_compatible
 //= require energyfolks/leaflet
+//= require energyfolks/highcharts
