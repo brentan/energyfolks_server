@@ -790,6 +790,9 @@ EnergyFolks.$(function() {
                 });
             }
         }
+        //Analytics needs redraw
+        if(self.attr('data-class') == 'analytics')
+            EnergyFolks.$('#ef_analytics_plot').highcharts().reflow();
     });
 });
 

@@ -454,6 +454,27 @@
     font-size: 12px;
     h3 { font-size: 14px; }
   }
+  table.analytics {
+    td {
+      width: 33%;
+      text-align: center;
+      line-height: 1.2;
+    }
+  }
+  .ef_analytics_big_number {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 3px;
+    padding: 0px;
+    line-height: 1.2;
+  }
+  .ef_analytics_medium_number {
+    font-size: 35px;
+    font-weight: bold;
+    margin: 3px;
+    padding: 0px;
+    line-height: 1.2;
+  }
   .energyfolks_show_urgent {
     border: 1px solid #aa0000;
     background-color: #ffdddd;

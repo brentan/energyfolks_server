@@ -6,61 +6,7 @@
     </div>
 <% end %>
 <% if params[:version].blank? %>
-
-    <%
-       # Administrator action box that shows at the very very top.
-       @item.affiliate_join.each do |m|
-         affiliate = Affiliate.find_by_id(m.affiliate_id)
-         if affiliate.admin?(current_user, Membership::EDITOR) && !@item.archived? %>
-            <% if m.approved? %>
-                <div class='energyfolks_show_admin_controls'>
-                  <h3>Post management for <%= affiliate.name %></h3>
-                  Post is currently approved -
-                  <%= popup 'Revoke Approval', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
-                  <% if (m.affiliate_id > 0) && !@item.instance_of?(Blog) %>
-                      <BR>
-                      <%= @item.highlighted?(affiliate) ? 'Post is highlighted - ' : '' %>
-                      <%= ajax_link "#{@item.highlighted?(affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {model: @item.entity_name, id: @item.id, aid: m.affiliate_id} %>
-                  <% end %>
-                </div>
-            <% elsif m.awaiting_edit? %>
-                <div class='energyfolks_show_admin_controls'>
-                  <h3>Post management for <%= affiliate.name %></h3>
-                  Post is currently rejected -
-                  <%= popup('Approve and Highlight', "#{@item.method_name}/approve", true, {id: @item.id, highlight: true, aid: m.affiliate_id}) if m.affiliate_id > 0 %>
-                  <%= ' | ' if m.affiliate_id > 0 %>
-                  <%= popup 'Approve', "#{@item.method_name}/approve", true, {id: @item.id, highlight: false, aid: m.affiliate_id} %>
-                </div>
-            <% else %>
-                <div class='energyfolks_show_admin_controls energyfolks_show_urgent'>
-                  <h3>Post approval pending for <%= affiliate.name %></h3>
-                  Most recent updates are shown below.
-                  <% if m.approved_version > 0 %>
-                      Your group has currently approved <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= m.approved_version %>&aid=<%= m.affiliate_id %>' target='_blank'>version <%= m.approved_version %></a> of this post.  The current post shown below is version <%= @item.current_version %>.
-                  <% end %>
-                  <BR>
-                  <%= popup('Approve Request and Highlight', "#{@item.method_name}/approve", true, {id: @item.id, highlight: true, aid: m.affiliate_id}) if (m.affiliate_id > 0) && !@item.instance_of?(Blog) %> <BR>
-                  <%= popup 'Approve Request', "#{@item.method_name}/approve", true, {id: @item.id, highlight: false, aid: m.affiliate_id} %><BR>
-                  <%= popup 'Reject Request', "#{@item.method_name}/reject_or_remove", true, {id: @item.id, aid: m.affiliate_id} %>
-                </div>
-            <% end %>
-        <% end %>
-    <% end %>
-    <%
-       if @item.affiliate_join.map { |a| a.affiliate_id }.include?(0) && !@item.instance_of?(Blog)
-         current_user.memberships.approved.each do |m|
-           if m.affiliate.admin?(current_user, Membership::EDITOR) && !@item.affiliate_join.map { |a| a.affiliate_id }.include?(m.affiliate_id) && !@item.archived? %>
-                <div class='energyfolks_show_admin_controls'>
-                  <h3>Post management for <%= m.affiliate.name %></h3>
-                  Post was sent to all energyfolks users, and therefore moderation is completed by energyfolks.  Change your group settings to moderate all posts, or <a href='mailto:contact@energyfolks.com'>contact energyfolks</a> with
-                  a specific inquiry about this post (please include the post type [<%= @item.method_name %>] and id [<%= @item.id %>]) <BR>
-                  <%= @item.highlighted?(m.affiliate) ? 'Post is highlighted - ' : '' %>
-                  <%= ajax_link "#{@item.highlighted?(m.affiliate) ? 'Unhighlight' : 'Highlight'} Post", "toggle_highlight", {model: @item.entity_name, id: @item.id, aid: m.affiliate_id} %>
-                </div>
-            <% end
-
-           end
-       end %>
+    <%= render :partial => '/common/show_top/admin_controls' %>
    <%
       tabs = [{text: 'Details', class: 'post_details'}]
       tabs << {text: 'Versions', class: 'versioning'} if @item.is_editable?(current_user)
@@ -80,47 +26,12 @@
 
 
     <% if @item.is_editable?(current_user) %>
-        <div class='energyfolks_show_versioning'>
-          <% if @item.versions.length > 1 %>
-              <h3>Previous Versions</h3>
-              <% @item.versions.each do |v| %>
-                  <% next if v.version_number == @item.current_version %>
-                  - <span class='inline'>V<%= v.version_number %>: created <%= v.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>. <a href='<%= SITE_HOST %>/<%= @item.method_name %>/<%= @item.id %>?version=<%= v.version_number %>&aid=<%= current_affiliate.present? ? current_affiliate.id : 0 %>' target='_blank'>View</a> | <%= popup 'Restore', "#{@item.method_name}/restore", true, {id: @item.id, version: v.version_number}, current_user.id == @item.user_id ? "Are you sure?  Restoring to an earlier version will destroy later versions." : "Are you sure?  Restoring to an earlier version may require re-approving this post to bring it back to the latest version."  unless @item.archived? %></span><BR>
-              <% end %>
-          <% else %>
-            <h3>There are no previous versions of this post.</h3>
-          <% end %>
-        </div>
+        <%= render :partial => '/common/show_top/versioning' %>
     <% end %>
 
 
     <% if @item.is_editable?(current_user) || (current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)) %>
-        <div class='energyfolks_show_analytics'>
-          <% if @item.legacy? %>
-             <h1>This is a Legacy Post</h1>
-              <p>This post was submitted prior to the rollout of EnergyFolks v2.0.  The analytics data below will not be accurate for views prior to December 24, 2013.</p>
-          <% end %>
-          <h1>Analytics</h1>
-          <% if !@item.instance_of?(User) %>
-              <h3>Email statistics</h3>
-              COMING SOON!
-              <h3>Website Views</h3>
-          <% end %>
-          <%= @item.mark_reads.count %> user<%= @item.mark_reads.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads).count %> time<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>.
-          <div>
-            <%= @item.mark_reads.registered.count %> registered user<%= @item.mark_reads.registered.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads.registered).count %> time<%= MarkRead.total_reads(@item.mark_reads.registered).count == 1 ? '' : 's' %>.
-            <BR><%= @item.mark_reads.anonymous.count %> anonymous user<%= @item.mark_reads.anonymous.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads.anonymous).count %> time<%= MarkRead.total_reads(@item.mark_reads.registered).count == 1 ? '' : 's' %>.
-            <%
-               affiliates = Affiliate.all
-               affiliates << Affiliate.find_by_id(0)
-               affiliates.each do |a|
-                 users = @item.mark_reads.by_affiliate(a).count
-                 next if users == 0
-                 total = MarkRead.total_reads(@item.mark_reads).where(:affiliate_id => a.id).count %>
-                <BR><%= a.name %>: <%= users %> user<%= users == 1 ? '' : 's' %> viewed this <%= total %> time<%= total == 1 ? '' : 's'%>.
-            <% end %>
-          </div>
-        </div>
+        <%= render :partial => '/common/show_top/analytics' %>
     <% end %>
     <% if @item.is_editable?(current_user) %>
         <div class="energyfolks_show_edit" data-method="<%= @item.method_name %>" data-id="<%= @item.id %>" data-url="<%= "#{SITE_HOST}/#{@item.method_name}/edit?id=#{@item.id}&aid=#{current_affiliate.id.present? ? current_affiliate.id : 0}&iframe_next=1" %>"></div>
@@ -129,21 +40,7 @@
     <%
        # Box with post info that shows at top of 'post' view
        if @item.is_editable?(current_user) %>
-        <div class='energyfolks_show_post_details energyfolks_show_post_top'>
-          <%= content_tag(:h3, current_user.id == @item.user_id ? 'This is your post' : 'Content Management') %>
-          Submitted on <%= @item.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <a href='<%= current_affiliate.url_users %>#command=show&parameters=id%3D<%= @item.user_id %>%26model%3DUser' target='_blank'><%= current_user.id == @item.user_id ? 'you' : @item.user.full_name %></a>.
-          Last updated on <%= @item.last_updated_at(current_affiliate, current_user).strftime("%A, %B %-d, %Y at %-k:%M") %> by <a href='<%= current_affiliate.url_users %>#command=show&parameters=id%3D<%= @item.last_updated_by %>%26model%3DUser' target='_blank'><%= current_user.id == @item.last_updated_by ? 'you' : @item.last_update.full_name %></a>.<BR>
-          <% if current_user.admin? || (current_user.id == @item.user_id) %>
-              <h4>Moderation Status</h4>
-              <% @item.affiliate_join.each do |j| %>
-                  <% a = Affiliate.find_by_id(j.affiliate_id) %>
-                  - <%= a.name %><%= j.affiliate_id == 0 ? ' (All system users)' : ''%>
-                  <%= j.approved_version == @item.current_version ? "Approved to current version" : (j.approved_version > 0 ? "Approved to version #{j.approved_version}, current version awaiting approval" : "Not yet approved, awaiting approval") %><BR>
-              <% end %>
-          <% end %>
-
-          <%= ajax_link 'Delete this post', "delete", {model: @item.entity_name, id: @item.id}, true if (current_user.id == @item.user_id) || current_user.admin? %>
-        </div>
+        <%= render :partial => '/common/show_top/info_box' %>
     <% end
     end
 %>

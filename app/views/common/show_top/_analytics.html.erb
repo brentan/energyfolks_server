@@ -1,0 +1,203 @@
+<div class='<%= @item.instance_of?(User) ? '' : 'energyfolks_show_analytics' %>'>
+  <% if @item.legacy? %>
+      <h1>This is a Legacy Post</h1>
+      <p>This post was submitted prior to the rollout of EnergyFolks v2.0.  The analytics data below will not be accurate for views prior to December 24, 2013.</p>
+      <hr>
+  <% end %>
+  <%
+     plot_data = {}
+     created_at = @item.instance_of?(User) ? [@item.created_at, 12.months.ago].max : @item.created_at
+     plot_data[(created_at - 1.day).strftime("Date.UTC(%Y, %m-1, %d)")] = {:value => (created_at - 1.day), :web => 0, :email => 0, :digest => 0}
+     @item.mark_reads.each do |m|
+       current_dates = []
+       m.mark_read_actions.each do |a|
+         date = a.created_at.strftime("Date.UTC(%Y, %m-1, %d)")
+         next if current_dates.include?(date)
+         next if a.created_at < created_at
+         current_dates << date
+         if(plot_data.has_key?(date))
+           plot_data[date][:web] += 1
+         else
+           plot_data[date] = {:value => a.created_at, :web => 1, :email => 0, :digest => 0}
+         end
+       end
+     end
+     if !@item.instance_of?(User)
+         @item.emails.where(opened: true).all.each do |e|
+           date = e.open_date.strftime("Date.UTC(%Y, %m-1, %d)")
+           if(plot_data.has_key?(date))
+             plot_data[date][:email] += 1
+           else
+             plot_data[date] = {:value => e.open_date, :web => 0, :email => 1, :digest => 0}
+           end
+         end
+         @item.digest_items.where(opened: true).all.each do |e|
+           date = e.open_date.strftime("Date.UTC(%Y, %m-1, %d)")
+           if(plot_data.has_key?(date))
+             plot_data[date][:digest] += 1
+           else
+             plot_data[date] = {:value => e.open_date, :web => 0, :email => 0, :digest => 1}
+           end
+         end
+     end
+     plot_data = plot_data.sort_by {|k, v| v[:value]}
+     # Cumulative:
+     webs = 0
+     emails = 0
+     digests = 0
+     plot_data.each_with_index do |v,k|
+       webs += v[1][:web]
+       emails += v[1][:email]
+       digests += v[1][:digest]
+       plot_data[k][1][:web] = webs
+       plot_data[k][1][:email] = emails
+       plot_data[k][1][:digest] = digests
+     end
+     if @item.instance_of?(User)
+  %>
+      <table border="0" class="analytics">
+        <tr>
+          <td>
+            <div class="ef_analytics_big_number">
+              <%= MarkRead.total_reads(@item.mark_reads).count %>
+            </div>
+            Total Web View<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>
+          </td>
+          <td>
+            <div class="ef_analytics_big_number">
+              <%= @item.mark_reads.count %>
+            </div>
+            Unique Visit<%= @item.mark_reads.count == 1 ? '' : 's' %>
+          </td>
+        </tr>
+      </table>
+  <% else %>
+      <table border="0" class="analytics">
+        <tr>
+            <td>
+                <div class="ef_analytics_big_number">
+                  <%= MarkRead.total_reads(@item.mark_reads).count %>
+                </div>
+                Total Web View<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>
+            </td>
+            <td>
+                <div class="ef_analytics_big_number">
+                  <%= @item.emails.count %>
+                </div>
+                Email<%= @item.emails.count == 1 ? '' : 's' %> Sent
+            </td>
+            <td>
+                <div class="ef_analytics_big_number">
+                  <%= @item.digest_items.count %>
+                </div>
+                Digest<%= @item.digest_items.count == 1 ? '' : 's' %> Sent
+            </td>
+        </tr><tr>
+            <td>
+                <div class="ef_analytics_medium_number">
+                <%= @item.mark_reads.count %>
+                </div>
+                Unique Visit<%= @item.mark_reads.count == 1 ? '' : 's' %>
+            </td>
+            <td>
+                <div class="ef_analytics_medium_number">
+                <%= @item.emails.where(opened: true).count %>
+                </div>
+                Confirmed Email<%= @item.emails.where(opened: true).count == 1 ? '' : 's' %> Opened
+            </td>
+            <td>
+                <div class="ef_analytics_medium_number">
+                <%= @item.digest_items.where(opened: true).count %>
+                </div>
+                Confirmed Digest Impression<%= @item.digest_items.where(opened: true).count == 1 ? '' : 's' %>
+            </td>
+        </tr>
+      </table>
+   <% end %>
+ <div id="ef_analytics_plot">
+
+ </div>
+ <script language="javscript">
+   EnergyFolks.$(function () {
+        EnergyFolks.$('#ef_analytics_plot').highcharts({
+            chart: {
+                zoomType: 'x',
+                type: 'area'
+            },
+            title: {
+                text: 'Cumulative Impressions'
+            },
+            subtitle: {
+                text: 'Emails and Digest are confirmed opens.  Click/drag to zoom'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                },
+                maxZoom: 7 * 24 * 3600000, // seven days
+            },
+            yAxis: {
+                title: {
+                    text: 'Impressions'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                shared: true,
+                valueSuffix: ''
+            },
+            plotOptions: {
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666'
+                    }
+                }
+            },
+            series: [{
+                name: 'Unique Web Views',
+                data: [
+                    <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:web]}]"}.join(', ') %>
+                ]
+            }<% if !@item.instance_of?(User) %>,{
+                name: 'Confirmed Email Opens',
+                data: [
+                    <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:email]}]"}.join(', ') %>
+                ]
+            },{
+                name: 'Confirmed Digest Opens',
+                data: [
+                    <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:digest]}]"}.join(', ') %>
+                ]
+            }<% end %>]
+        });
+    });
+
+
+ </script>
+
+
+
+   <h3>Website View Breakdown</h3>
+
+    <%= @item.mark_reads.registered.count %> registered user<%= @item.mark_reads.registered.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads.registered).count %> time<%= MarkRead.total_reads(@item.mark_reads.registered).count == 1 ? '' : 's' %>.
+    <BR><%= @item.mark_reads.anonymous.count %> anonymous user<%= @item.mark_reads.anonymous.count == 1 ? '' : 's' %> viewed this <%= MarkRead.total_reads(@item.mark_reads.anonymous).count %> time<%= MarkRead.total_reads(@item.mark_reads.registered).count == 1 ? '' : 's' %>.
+    <%
+       affiliates = Affiliate.all
+       affiliates << Affiliate.find_by_id(0)
+       affiliates.each do |a|
+         users = @item.mark_reads.by_affiliate(a).count
+         next if users == 0
+         total = MarkRead.total_reads(@item.mark_reads).where(:affiliate_id => a.id).count %>
+        <BR><%= users %> user<%= users == 1 ? '' : 's' %> viewed this <%= total %> time<%= total == 1 ? '' : 's'%> from the website of <%= a.name %>.
+    <% end %>
+</div>

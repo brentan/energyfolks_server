@@ -41,8 +41,7 @@
               <%= @item.verified? ? popup('Freeze Account', 'users/freeze_account', true, {id: @item.id}) : popup('Manually Verify Account', 'users/manual_verify', true, {id: @item.id}) %>
             </div>
         <% end
-           end
-        %>
+           end %>
     <!-- Beginning of Profile -->
     <% if visible %>
         <div id="ef_show">
@@ -62,6 +61,10 @@
                 <h4>Expertise</h4>
                 <%= raw(@item.expertise) %>
             <% end %>
+
+          <% if current_user.present? && (current_user.admin? || (current_user.id == @item.id)) %>
+              <%= render :partial => '/common/show_top/analytics' %>
+          <% end %>
         </div>
     <% else %>
         <h1>Oops!</h1>
