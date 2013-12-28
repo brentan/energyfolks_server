@@ -243,11 +243,11 @@ class User < ActiveRecord::Base
       return true if self.visibility == LOGGED_IN
       if self.visibility == NETWORKS
         self.memberships.approved.each do |a|
-          return true if a.member?(user)
+          return true if a.affiliate.present? && a.affiliate.member?(user)
         end
       end
       self.memberships.approved.each do |a|
-        return true if a.admin?(user, Membership::EDITOR)
+        return true if a.affiliate.present? && a.affiliate.admin?(user, Membership::EDITOR)
       end
     end
     return false
