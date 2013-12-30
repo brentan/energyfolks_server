@@ -476,10 +476,12 @@ module MixinEntity
           call_user_broadcast = true
           next
         end
-        recipients = User.where(admin: true).all
+        recipients = User.where(admin: true, admin_emails: true).all
         affiliate = Affiliate.find_by_id(0)
       end
-      NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(recipients, affiliate.id.present? ? affiliate.id : 0, self, i) if recipients.length > 0
+      recipients.each do |user|
+        NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(user, affiliate.id.present? ? affiliate.id : 0, self, i)
+      end
       i.broadcast = true
       i.save(:validate => false)
     end

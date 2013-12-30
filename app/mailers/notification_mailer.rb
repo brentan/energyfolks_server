@@ -2,16 +2,14 @@ class NotificationMailer < ActionMailer::Base
   helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
-  def awaiting_moderation(recipients, aid, item, join_item)
+  def awaiting_moderation(user, aid, item, join_item)
     @item = item
     @join_item = join_item
     @affiliate = Affiliate.find_by_id(aid)
     @host = @affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
-    recipients.each do |user|
-      @user = user
-      mail(to: @user.email, from: from, subject: "A new #{item.entity_type} is awaiting moderation")
-    end
+    @user = user
+    mail(to: @user.email, from: from, subject: "A new #{item.entity_type} is awaiting moderation")
   end
 
   def entity(user, entity, token)
