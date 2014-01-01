@@ -20,6 +20,7 @@ module MixinEntityController
 
   def show
     @item = model.find_by_id(params[:id])
+    return redirect_to '/', :notice => 'This item was not found' if @item.blank?
     @item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
     if params[:version].present? && current_user.present? && @item.is_editable?(current_user)
       @item.version_control(current_user, current_affiliate, params[:version].to_i)

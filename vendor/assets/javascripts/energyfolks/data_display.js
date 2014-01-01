@@ -609,6 +609,7 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
 EnergyFolks.$(function() {
     EnergyFolks.$('body').on('click','.enfolks_item', function() {
         if(EnergyFolks.$(this).hasClass('ef_stream')) return;
+        if(EnergyFolks.$(this).hasClass('enfolks_no_popup')) return;
         var params = EnergyFolks.$(this).find('h1.title').closest("a.EnergyFolks_popup").attr("data-params");
         EnergyFolks.remote_popup('show', params);
     });
