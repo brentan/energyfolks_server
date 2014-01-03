@@ -57,7 +57,7 @@
        plot_data[k][1][:email] = emails
        plot_data[k][1][:digest] = digests
      end
-     plot_data << [Time.now.strftime("Date.UTC(%Y, %m-1, %d)"), {:web => webs, :email => emails, :digest => digests}]
+     plot_data << [Time.now.strftime("Date.UTC(%Y, %m-1, %d)"), {:web => webs, :email => emails, :digest => digests}] unless plot_data.last[0] == Time.now.strftime("Date.UTC(%Y, %m-1, %d)")
      if @item.instance_of?(User)
   %>
       <table border="0" class="analytics">

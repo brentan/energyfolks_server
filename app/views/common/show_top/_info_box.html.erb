@@ -7,7 +7,7 @@
       <h4>Moderation Status</h4>
       <% @item.affiliate_join.each do |j| %>
           <% a = Affiliate.find_by_id(j.affiliate_id) %>
-          - <%= a.name %><%= j.affiliate_id == 0 ? ' (All system users)' : ''%>
+          - <%= a.name %><%= j.affiliate_id == 0 ? ' (All system users)' : ''%>:
           <%= j.approved_version == @item.current_version ? "Approved to current version" : (j.approved_version > 0 ? "Approved to version #{j.approved_version}, current version awaiting approval" : "Not yet approved, awaiting approval") %><BR>
       <% end %>
   <% end %>
