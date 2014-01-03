@@ -85,7 +85,7 @@ $(function() {
         if(!AllHidden) {
             AllHidden = true;
             $("#EnergyFolksAffiliatePicker").find("div.selected").each(function() {
-                if($(this).attr('data-override-all') == 'false')
+                if($(this).attr('data-override-all') != 'true')
                     ToggleItem($(this));
             });
             $("#choose_affiliates").hide();
