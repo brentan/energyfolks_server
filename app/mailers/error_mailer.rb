@@ -6,8 +6,15 @@ class ErrorMailer < ActionMailer::Base
     @aff = a
     @req = r
     mail(:to => EXCEPTION_RECIPIENTS,
-        :from => EXCEPTION_SENDER,
-        :subject => "#{EXCEPTION_PREFIX}#{e.message}")
+         :from => EXCEPTION_SENDER,
+         :subject => "#{EXCEPTION_PREFIX}#{e.message}")
+  end
+  def rake_error(e, t)
+    @err=e
+    @task = t
+    mail(:to => EXCEPTION_RECIPIENTS,
+         :from => EXCEPTION_SENDER,
+         :subject => "#{EXCEPTION_PREFIX}#{e.message}")
   end
 
   def mailerror(e)

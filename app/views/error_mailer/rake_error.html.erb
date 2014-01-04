@@ -1,0 +1,6 @@
+Error Message :-<%= @err.inspect %> <BR>
+Rake Task: <%= @task %><BR><BR>
+
+Trace <BR>
+———————————————– <BR>
+<%= raw(@err.backtrace.join("\n<BR>")) %>
