@@ -22,9 +22,11 @@ namespace :clean_up do
 
   desc "Clear out old analytics to control table size"
   task :old_analytics => :environment do
-    MarkReadAction.where("created_at < ?",2.years.ago).all.each { |e| e.destroy }
-    MarkRead.all.each do |m|
-      m.destroy if m.mark_read_actions.length == 0
+    MarkReadAction.where("created_at < ?",2.years.ago).all.each do |e|
+      id = e.mark_read_id
+      e.destroy
+      m = MarkRead.find_by_id(id)
+      m.destroy if m.present? && m.mark_read_actions.length == 0
     end
     DigestMailer.where("created_at < ?",2.years.ago).all.each { |e| e.destroy }
   end
@@ -33,15 +35,6 @@ namespace :clean_up do
   task :resync => :environment do
     ApplicationController::ENTITIES.each do |e|
       e.reindex_all
-    end
-  end
-
-  desc "fix mark_read_actions"
-  task :mark_read_fix => :environment do
-    MarkRead.all.each do |m|
-      if m.mark_read_actions.length == 0
-        MarkReadAction.create(:mark_read_id => m.id, :ip => m.ip, :affiliate_id => 0)
-      end
     end
   end
 

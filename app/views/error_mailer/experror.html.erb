@@ -1,7 +1,8 @@
 Error Message :-<%= @err.inspect %> <BR>
 USER: <%= @user.present? ? "#{@user.first_name} #{@user.last_name} (#{@user.id})" : 'none' %><BR>
 AFFILIATE: <%= @aff.name %> <%= "(#{@aff.id})" if @aff.id.present? %><BR>
-URL: <%= "#{@req.protocol}#{@req.host_with_port}#{@req.fullpath}" %><BR><BR>
+URL: <%= "#{@req.protocol}#{@req.host_with_port}#{@req.fullpath}" %><BR>
+REFERER: <%= @req.referer %><BR><BR>
 
 Trace <BR>
 ———————————————– <BR>
