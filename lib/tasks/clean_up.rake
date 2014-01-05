@@ -2,6 +2,9 @@
 
 namespace :clean_up do
 
+  class Session < ActiveRecord::Base
+  end
+
   desc "Remove old login hashes"
   task :user_login_hash => :environment do
     UserLoginHash.destroy_all("created_at < '#{Time.now.utc-10.seconds}'")
