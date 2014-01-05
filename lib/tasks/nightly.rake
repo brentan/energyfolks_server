@@ -26,10 +26,10 @@ namespace :nightly do
     google = GoogleClient.new
     google.sync_global
     Affiliate.all.each { |a|
-      ErrorMailer.deliver_error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', a.name)
+      ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', a.name).deliver
       google.sync_affiliate(a)
     }
-    ErrorMailer.deliver_error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', 'COMPLETE')
+    ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', 'COMPLETE').deliver
   end
 
   desc "Archive Old Stuff"
