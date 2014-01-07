@@ -26,17 +26,11 @@
         <strong>Highlighted by <%= @affiliate.name %></strong>
         <ul style='margin-top:0px;'>
           <% @items[:events][:highlighted].each do |e| %>
-              <% if e.start > 7.days.from_now %>
-                  <li>
-                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
-                  </li>
-              <% else %>
                   <li>
                     <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
                     <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
                     <%= e.synopsis %>
                   </li>
-              <% end %>
           <% end %>
         </ul>
     <% end %>
@@ -44,17 +38,11 @@
         <strong>Submitted through <%= @affiliate.name %></strong>
         <ul style='margin-top:0px;'>
           <% @items[:events][:source].each do |e| %>
-              <% if e.start > 7.days.from_now %>
-                  <li>
-                    <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
-                  </li>
-              <% else %>
                 <li>
                     <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
                     <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
                     <%= e.synopsis %>
                 </li>
-              <% end %>
           <% end %>
         </ul>
     <% end %>
@@ -63,7 +51,9 @@
         <ul style='margin-top:0px;'>
           <% @items[:events][:all_other].each do |e| %>
               <li>
-                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %>: <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a>, <%= e.location %>
+                <a style='color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;' href='<%= e.static_url(@affiliate) %>'><%= e.name %></a><BR>
+                <%= e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p") %>, <%= e.location %><BR>
+                <%= e.synopsis %>
               </li>
           <% end %>
         </ul>
