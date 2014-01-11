@@ -423,6 +423,9 @@ class User < ActiveRecord::Base
   def sync
     google = GoogleClient.new
     google.sync_user(self)
+
+    mailchimp = MailchimpClient.new
+    mailchimp.sync_user(self)
   end
 
   protected

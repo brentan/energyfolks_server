@@ -32,6 +32,17 @@ namespace :nightly do
     ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', 'COMPLETE').deliver
   end
 
+  desc "Resynchronize with mailchimp"
+  task :mailchimp => :environment do
+    mailchimp = MailchimpClient.new
+    mailchimp.sync_global
+    Affiliate.all.each { |a|
+      ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', a.name).deliver
+      mailchimp.sync_affiliate(a)
+    }
+    ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', 'COMPLETE').deliver
+  end
+
   desc "Archive Old Stuff"
   task :archive => :environment do
     ApplicationController::ENTITIES.each do |e|
