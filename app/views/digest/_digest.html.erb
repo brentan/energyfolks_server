@@ -15,7 +15,8 @@
     <% @items[:announcements].each do |a| %>
         <div style='padding-left:50px;border-bottom: 1px solid #cccccc;'>
           <strong><%= a.name %></strong><BR>
-          <%= raw(truncate_html(ActionController::Base.helpers.sanitize(a.html, tags: %w(i b u br a img)), length: 200, omission: "...<BR><a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F'};' href='#{a.static_url(@affiliate)}'>View the full announcement</a>")) %>
+          <%= raw(truncate_html(ActionController::Base.helpers.sanitize(a.html, tags: %w(p i b u br a img)), length: 2000)) %>
+          <BR><%= raw("<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F'};' href='#{a.static_url(@affiliate)}'>View the full announcement</a>") %>
         </div>
     <% end %>
 <% end %>
