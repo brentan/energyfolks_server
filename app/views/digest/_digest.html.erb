@@ -12,10 +12,16 @@
 </div>
 <% if @items[:announcements].present? %>
     <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="announcements"></a>Announcements</div>
+    <% require 'truncate_html' %>
     <% @items[:announcements].each do |a| %>
         <div style='padding-left:50px;border-bottom: 1px solid #cccccc;'>
           <strong><%= a.name %></strong><BR>
-          <%= raw(truncate_html(ActionController::Base.helpers.sanitize(a.html, tags: %w(p i b u br a img)), length: 2000)) %>
+          <%
+             # We don't call truncate_html directly because the helper method isnt loaded in Rake
+             html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(a.html, tags: %w(p i b u br a img)))
+             truncated_string = TruncateHtml::HtmlTruncator.new(html_string, {length: 2000}).truncate.html_safe
+          %>
+          <%= raw(truncated_string) %>
           <BR><%= raw("<a style='color:##{@affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F'};' href='#{a.static_url(@affiliate)}'>View the full announcement</a>") %>
         </div>
     <% end %>
