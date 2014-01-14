@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131226070355) do
+ActiveRecord::Schema.define(:version => 20140114070808) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -448,6 +448,13 @@ ActiveRecord::Schema.define(:version => 20131226070355) do
   end
 
   add_index "nightly_stats", ["affiliate_id"], :name => "index_nightly_stats_on_affiliate_id"
+
+  create_table "scheduled_operations", :force => true do |t|
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "command"
+    t.boolean  "complete",   :default => false
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
