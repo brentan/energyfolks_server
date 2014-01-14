@@ -59,6 +59,7 @@ namespace :digest do
     User.verified.joins(:subscription).where(subscriptions: {weekly: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
       begin
+        puts u.email
         digest = DigestMailer.create(user: u, weekly: true)
         items, send_it = digest.items
         if send_it
@@ -81,6 +82,7 @@ namespace :digest do
     User.verified.joins(:subscription).where(subscriptions: {daily: true}).all.each do |u|
       next if u.affiliate.present? && !u.affiliate.send_digest?
       begin
+        puts u.email
         digest = DigestMailer.create(user: u, weekly: false)
         items, send_it = digest.items
         if send_it
