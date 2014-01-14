@@ -30,6 +30,7 @@ every 1.day, :at => '10:00 am' do
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
   rake "clean_up:old_analytics"
+  rake "clean_up:scheduled_operations"
 end
 every 1.day, :at => '9:00 am' do
   rake "nightly:wordpress"

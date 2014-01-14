@@ -41,4 +41,13 @@ namespace :clean_up do
     end
   end
 
+  desc "resync with cloudsearch"
+  task :scheduled_operations => :environment do
+    ScheduledOperation.where("created_at < ?",1.month.ago).all do |e|
+      e.destroy
+    end
+  end
+
+
+
 end
