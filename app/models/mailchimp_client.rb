@@ -1,4 +1,9 @@
 class MailchimpClient
+  belongs_to :affiliate
+
+  attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id,
+                  :author_contributor_list_id, :editor_administrator_list_id
+
   #mailchimp_client = MailchimpClient.new
   #mailchimp_client.create_affiliate(Affiliate.find_by_id(1))
   #@output = mailchimp_client.sync_affiliate(Affiliate.find_by_id(1))

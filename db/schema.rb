@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131226070355) do
+ActiveRecord::Schema.define(:version => 20140115055203) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -396,6 +396,19 @@ ActiveRecord::Schema.define(:version => 20131226070355) do
 
   add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
+
+  create_table "mailchimp_logins", :force => true do |t|
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "affiliate_id"
+    t.string   "api_key"
+    t.string   "members_list_id"
+    t.string   "daily_digest_list_id"
+    t.string   "author_contributor_list_id"
+    t.string   "editor_administrator_list_id"
+  end
+
+  add_index "mailchimp_logins", ["affiliate_id"], :name => "index_mailchimp_logins_on_affiliate_id"
 
   create_table "mark_read_actions", :force => true do |t|
     t.datetime "created_at",   :null => false
