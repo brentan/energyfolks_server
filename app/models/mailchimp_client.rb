@@ -146,6 +146,11 @@ class MailchimpClient
   @batch = nil
   @batch_count = 0
 
+  def get_lists
+    #TODO: pull in code from mailchimp example
+
+  end
+
   def get_list_members(listname)
     get_members({:groupKey => "#{listname}@energyfolks.com" }).map { |m| m.email }
   end
@@ -206,7 +211,5 @@ class MailchimpClient
     @client.execute(@batch)
     @batch = nil
   end
-
-end
 
 end
