@@ -1,11 +1,15 @@
 class MailchimpController < ApplicationController
-  before_action :setup_mailchimp_api
 
-  def setup_mailchimp_api
-    if user_logged_in?
-      api_key = ??    #a string the mailchimp list admin can find in the list settings. Example:  'b4d5cf71998106c7b8cf0f860549d348-us3'
-      @mc = Mailchimp::API.new(api_key)
+  def edit
+    @affiliate = Affiliate.find_by_id(params[:id])
+    if @affiliate.present?
+      mc = get_mailchimp_obj(@affiliate.id)
+
     end
+  end
+
+  def update
+
   end
 
   layout 'application'
@@ -36,17 +40,5 @@ class MailchimpController < ApplicationController
     reset_session
     redirect_to "/"
   end
-
-  private
-
-  def current_user
-    User.find_by_id(session[:userid]) if session[:userid]
-  end
-  helper_method :current_user
-
-  def user_logged_in?
-    current_user.present?
-  end
-  helper_method :user_logged_in?
 
 end
