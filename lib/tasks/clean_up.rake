@@ -48,6 +48,13 @@ namespace :clean_up do
     end
   end
 
+  desc "Fix Blog Post Titles"
+  task :fix_blog_titles => :environment do
+    Blog.all.each do |b|
+      b.update_column(:name, HTMLEntities.new.decode(b.name))
+    end
+  end
+
 
 
 end
