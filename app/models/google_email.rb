@@ -4,16 +4,8 @@ class GoogleEmail < ActiveRecord::Base
 
   DOMAINS = %w(energyfolks.com sparkcleanenergy.org)
 
-  def self.domains
-    out = []
-    DOMAINS.each_with_index do |v, i|
-      out << [v, i]
-    end
-    return out
-  end
-
   def email_address
-    "#{self.address}@#{DOMAINS[self.domain]}"
+    "#{self.address}@#{self.domain}"
   end
 
 end
