@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140121035146) do
+ActiveRecord::Schema.define(:version => 20140121041547) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -346,7 +346,7 @@ ActiveRecord::Schema.define(:version => 20140121035146) do
 
   create_table "google_emails", :force => true do |t|
     t.integer "user_id"
-    t.integer "domain"
+    t.string  "domain"
     t.string  "address"
   end
 
