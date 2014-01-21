@@ -593,7 +593,7 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     if((info.line_one != null) && (info.line_one != 'null'))
         output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
-        output += '</td></tr></table><div class="html">' + info.html.replace(/width=/g, 'width=300 old_width=').replace(/height=/,'old_height=') + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
+        output += '</td></tr></table><div class="html">' + info.html.replace(/width=/g, 'width=300 old_width=').replace(/height=/g,'old_height=').replace(/<script/g, '<noscript').replace(/script>/g,'noscript>') + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else if((info.line_two != null) && (info.line_two != 'null'))
         output += '<span class="line2">' + info.line_two + '</span>';
     output += '</td></tr></table>';

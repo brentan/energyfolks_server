@@ -48,10 +48,16 @@ namespace :clean_up do
     end
   end
 
-  desc "Fix Blog Post Titles"
-  task :fix_blog_titles => :environment do
-    Blog.all.each do |b|
-      b.update_column(:name, HTMLEntities.new.decode(b.name))
+  desc "Find admins for BEN"
+  task :find_admins => :environment do
+    Affiliate.all.each do |a|
+      puts '--------'
+      puts a.name.upcase
+      admins = a.admins(Membership::EDITOR).map{ |u| "#{u.first_name} #{u.last_name}: #{u.email.downcase}" }
+      admins << "Main: #{a.email_name}@energyfolks.com"
+      admins.each do |a|
+        puts a
+      end
     end
   end
 
