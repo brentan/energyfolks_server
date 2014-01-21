@@ -4,7 +4,7 @@
         EnergyFolks.LoginBox();
     </script>
 
-<% else %>
+<% elsif @admin_list.present? %>
     <h1>You are authorized for multiple accounts</h1>
     <p>Please choose the account you wish to login with below:</p>
     <% @admin_list.each do |a| %>
@@ -14,4 +14,12 @@
             <%= submit_tag "#{a[:name]} - #{a[:email]}" %>
         <% end %>
     <% end %>
+<% else %>
+    <h1>You are now logged in.  What service would you like to access?</h1>
+    <ul>
+      <li><a href="https://gmail.energyfolks.com/">Gmail</a></li>
+      <li><a href="https://docs.energyfolks.com/">Google Drive</a></li>
+      <li><a href="https://groups.energyfolks.com/">Google Groups</a></li>
+      <li><a href="https://wiki.energyfolks.com/">Google Sites</a></li>
+    </ul>
 <% end %>

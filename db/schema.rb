@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114070808) do
+ActiveRecord::Schema.define(:version => 20140121035146) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -343,6 +343,12 @@ ActiveRecord::Schema.define(:version => 20140114070808) do
 
   add_index "events_versions", ["entity_id"], :name => "index_events_versions_on_entity_id"
   add_index "events_versions", ["version_number"], :name => "index_events_versions_on_version_number"
+
+  create_table "google_emails", :force => true do |t|
+    t.integer "user_id"
+    t.integer "domain"
+    t.string  "address"
+  end
 
   create_table "highlights", :force => true do |t|
     t.string  "entity_type"

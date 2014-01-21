@@ -15,5 +15,11 @@
     <%= f.fields_for :memberships do |membership| %>
         <%= render :partial => '/affiliates/rights', :locals => { f: membership } %>
     <% end %>
+    <h1>Email Addresses</h1>
+    <%= f.fields_for :google_emails do |google_email| %>
+        <%= google_email.text_field :address %> @ <%= google_email.select_tag(:domain,options_for_select(GoogleEmail.domains))%> <%= google_email.link_to_remove "[X]" %>
+    <% end %>
+    <%= f.link_to_add "Add an email", :tasks %>
+    <BR><i>Important: You must also create/delete the email address from the <a href="https://www.google.com/a/energyfolks.com">google admin console</a></i><BR><BR>
     <%= f.submit %>
 <% end %>
