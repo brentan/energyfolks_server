@@ -12,7 +12,7 @@ class Affiliate < ActiveRecord::Base
   has_many :nightly_stats, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
-  has_one :mailchimp_login, :class_name => 'MailchimpClient', :dependent => :destroy
+  has_one :mailchimp_client, :dependent => :destroy
 
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,

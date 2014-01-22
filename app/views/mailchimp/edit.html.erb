@@ -1,0 +1,33 @@
+<div class='form'>
+  <% if @affiliate.present? %>
+    <%= nested_form_for @affiliate.mailchimp_client, :url => 'update' do |f| %>
+      <%= raw(iframe_form) %>
+        <%= raw(show_errors(@affiliate.mailchimp_client)) %>
+
+        <input type=hidden name='affiliate_id' value=<%= @affiliate.id %>>
+
+        <div class='form_label'>Mailchimp API Key</div>
+        <div class='form_entry'><%= f.text_field :api_key %></div>
+
+        <% if @affiliate.mailchimp_client.api_key.present? && @list_names.present? %>
+          <div class='form_label'>Members List</div>
+          <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => 'select a list name from your Mailchimp account'} %></div>
+
+          <div class='form_label'>Daily Digest List</div>
+          <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names %></div>
+
+          <div class='form_label'>Author / Contributor List</div>
+          <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names %></div>
+
+          <div class='form_label'>Editor / Administrator List</div>
+          <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names %></div>
+        <% else %>
+          <div class="instructions">Enter the API key for your Mailchimp account (you can create one by logging in to your <%= link_to "Mailchimp account", "www.mailchimp.com" %>, and going to Account Settings | Extras.</div>
+        <% end %>
+        <%= f.submit class: "button submit" %>
+      </div>
+    <% end %>
+  <% else %>
+    <h3>There was an error.</h3>
+  <% end %>
+</div>

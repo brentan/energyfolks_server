@@ -1,25 +1,23 @@
-class MailchimpClient
+class MailchimpClient < ActiveRecord::Base
   belongs_to :affiliate
 
   attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id,
                   :author_contributor_list_id, :editor_administrator_list_id
 
-  #mailchimp_client = MailchimpClient.new
-  #mailchimp_client.create_affiliate(Affiliate.find_by_id(1))
-  #@output = mailchimp_client.sync_affiliate(Affiliate.find_by_id(1))
-
   require 'mailchimp'
 
   def initialize
-    return unless Rails.env.production?
-    if user_logged_in?
-      #api_key is a string the mailchimp list admin can find in the list settings. Example:  'b4d5cf71998106c7b8cf0f860549d348-us3'
-      @mc = Mailchimp::API.new(api_key)
-    end
+    super
+    get_client
+  end
+
+  def get_lists
+    get_client
+    @mailchimp_api.lists
   end
 
   def sync_user(user)
-    return unless Rails.env.production?
+    return unless Rails.env.production? && api_key.present?
     # This will sync user with all affiliates they should be a member of
     current_groups = get_members({ userKey: user.email.downcase },'groups.list').map { |g| g.email.downcase }
     add_groups = ['energyfolks-users@energyfolks.com']
@@ -50,7 +48,7 @@ class MailchimpClient
   end
 
   def sync_affiliate(affiliate)
-    return unless Rails.env.production?
+    return unless Rails.env.production? && api_key.present?
     # This will sync affiliate email lists with their user database.
     admins = affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
     admins << "#{affiliate.email_name}@energyfolks.com"
@@ -104,7 +102,7 @@ class MailchimpClient
   end
 
   def sync_global
-    return unless Rails.env.production?
+    return unless Rails.env.production? && api_key.present?
     # This will sync the energyfolks-users and energyfolks-admins lists
 
     # all users
@@ -140,15 +138,11 @@ class MailchimpClient
   end
 
   private
-  @client = nil
-  @admin = nil
-  @group = nil
-  @batch = nil
-  @batch_count = 0
-
-  def get_lists
-    #TODO: pull in code from mailchimp example
-
+  def get_client
+    if @api_key.present?
+      #api_key is a string the mailchimp list admin can find in the list settings. Example:  'b4d5cf71998106c7b8cf0f860549d348-us3'
+      @mailchimp_api = Mailchimp::API.new(@api_key)
+    end
   end
 
   def get_list_members(listname)

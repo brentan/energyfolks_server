@@ -18,8 +18,9 @@
               <table border="0" class="ef_item_details">
                 <tbody><tr><td class="ef_main_td">
                   <h1 class="title"><%= affiliate.name %></h1>
-                  <% if current_user.present? && affiliate.admin?(current_user, Membership::EDITOR) %>
-                    <h3><%= link_to "Mailchimp setup", mailchimp_edit_path, class: "mailchimp_edit" %></h3>
+                  <% debug = true #debug only
+                     if debug || current_user.present? && affiliate.admin?(current_user, Membership::EDITOR) %>
+                    <div class="mailchimp_edit"><%= link_to "Mailchimp email list setup", mailchimp_edit_path + "?affiliate_id=#{affiliate.id}" %></div>
                   <% end %>
                   <h3 class="line1"><%= Membership.approved.where(affiliate_id: affiliate.id).count %> Members</h3>
                 </td>

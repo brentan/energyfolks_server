@@ -98,6 +98,11 @@ div.form {
     font-size: .8em;
   }
 
+  div.instructions {
+    float: left;
+    clear: both;
+  }
+
   div.show_me a {
     padding-left: 5px;
   }
@@ -113,64 +118,6 @@ div.form {
   input[type="file"] {
     cursor: pointer;
   }
-
-  /* file input hack, not used currently
-
-  div.file_inputs {
-    /* hide the regular file input button, so we can show a custom-styled one. code from http://www.quirksmode.org/dom/inputfile.html /
-    float: left;
-    position: relative;
-    margin-left: 5px;
-    margin-bottom: 0px;
-
-    div.fake_file {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 400px; /* wide enough make sure file button & label show up on same line /
-      z-index: 1;
-    }
-
-    input[type=file] {
-      position: relative;
-      left: -80px;
-      margin: 0px;
-      text-align: left;
-      -moz-opacity: 0;
-      filter:alpha(opacity = 0);
-      opacity: 0;
-      z-index: 2;
-      cursor: pointer;  /* on mac Chrome, only works for the label part of the file input, not the button part. not sure about other browsers. /
-    }
-
-    .file_input_btn {
-      color: white;
-      background-color: $default_affiliate_color;
-      display: inline-block; /* so we can set height /
-      float: left;
-      clear: none;
-      height: 15px;
-      line-height: 15px;
-      vertical-align: middle;
-      padding-left: 10px;
-      padding-right: 10px;
-      font-weight: bold;
-      /* margin-left: 80px; /* move it to the right, because the cursor style doesn't work if it's directly below the input type=file. /
-      margin-right: 0px;
-      border-radius: 4px;
-
-      &:hover {
-        background-color: $unselected_radio_button_color;
-      }
-    }
-
-    div.file_name_label {
-      display: inline;
-      float: left;
-      clear: right;
-      margin-left: 5px;
-    }
-  } */
 
   div.field_with_errors {
     background-color: #eeaaaa
