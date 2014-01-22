@@ -390,6 +390,7 @@ module MixinEntity
     Comment.count_comments(self.comment_hash)
   end
   def static_url(affil = nil)
+    return self.url if self.instance_of?(Blog) && self.wordpress_id.present? && self.url.present?
     if affil.present?
       affil_url = affil.send("url_#{self.method_name}")
       return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?

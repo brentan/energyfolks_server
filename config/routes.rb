@@ -1,7 +1,5 @@
 EnergyfolksServer::Application.routes.draw do
 
-  match "accounts/external_wordpress_login/:a/:b/:c" => 'energyfolks#temp_wordpress_fix'
-
   # USER ROUTES
   get "users/login"
 
