@@ -397,7 +397,7 @@ ActiveRecord::Schema.define(:version => 20140115055203) do
   add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
 
-  create_table "mailchimp_logins", :force => true do |t|
+  create_table "mailchimp_clients", :force => true do |t|
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.integer  "affiliate_id"
@@ -408,7 +408,7 @@ ActiveRecord::Schema.define(:version => 20140115055203) do
     t.string   "editor_administrator_list_id"
   end
 
-  add_index "mailchimp_logins", ["affiliate_id"], :name => "index_mailchimp_logins_on_affiliate_id"
+  add_index "mailchimp_clients", ["affiliate_id"], :name => "index_mailchimp_clients_on_affiliate_id"
 
   create_table "mark_read_actions", :force => true do |t|
     t.datetime "created_at",   :null => false

@@ -1,15 +1,28 @@
 class MailchimpController < ApplicationController
 
   def edit
-    @affiliate = Affiliate.find_by_id(params[:id])
-    if @affiliate.present?
-      mc = get_mailchimp_obj(@affiliate.id)
-
+    affiliate = Affiliate.find_by_id(params[:affiliate_id])
+    debug = true #debug only
+    if debug || affiliate.present? && affiliate.admin?(current_user, Membership::EDITOR)
+      if affiliate.mailchimp_client.nil?
+        affiliate.mailchimp_client.create
+      end
+      @list_names = affiliate.mailchimp_client.get_lists if affiliate.mailchimp_client.api_key.present?
+      @affiliate = affiliate
+    else
+      flash[:notice] = "You do not have administrative privileges for this affiliate."
     end
   end
 
   def update
+    affiliate = Affiliate.find_by_id(params[:affiliate_id])
+    debug = true #debug only
+    if debug || affiliate.present? && affiliate.admin?(current_user, Membership::EDITOR)
+      affiliate.mailchimp_client.update_attributes(params[:mailchimp_client])
+      affiliate.mailchimp_client.save
+    end
 
+    render 'edit'
   end
 
   layout 'application'
@@ -40,5 +53,7 @@ class MailchimpController < ApplicationController
     reset_session
     redirect_to "/"
   end
+
+  private
 
 end
