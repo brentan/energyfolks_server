@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :user_highlights, :dependent => :destroy
   has_many :mark_reads_reader, :class_name => 'MarkRead'
   has_many :visits
+  has_many :google_emails, :dependent => :destroy
   has_many :digest_mailers
   has_many :user_logins
   has_many :comment_subscribers, :dependent => :destroy
@@ -38,6 +39,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => EMAIL_VALIDATION
 
   accepts_nested_attributes_for :memberships, :allow_destroy => true
+  accepts_nested_attributes_for :google_emails, :allow_destroy => true
   accepts_nested_attributes_for :subscription
 
   acts_as_locatable

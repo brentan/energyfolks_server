@@ -41,4 +41,26 @@ namespace :clean_up do
     end
   end
 
+  desc "resync with cloudsearch"
+  task :scheduled_operations => :environment do
+    ScheduledOperation.where("created_at < ?",1.month.ago).all do |e|
+      e.destroy
+    end
+  end
+
+  desc "Find admins for BEN"
+  task :find_admins => :environment do
+    Affiliate.all.each do |a|
+      puts '--------'
+      puts a.name.upcase
+      admins = a.admins(Membership::EDITOR).map{ |u| "#{u.first_name} #{u.last_name}: #{u.email.downcase}" }
+      admins << "Main: #{a.email_name}@energyfolks.com"
+      admins.each do |a|
+        puts a
+      end
+    end
+  end
+
+
+
 end

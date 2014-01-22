@@ -42,7 +42,7 @@ class BlogsController < ApplicationController
             last_updated_by: params[:owner_id].to_i
         }
         blog = Blog.new(data)
-        blog.affiliates_blogs.build({affiliate_id: 0})
+        blog.affiliates_blogs.build({affiliate_id: 0, awaiting_edit: false})
         if blog.save!
           Tag.update_tags(params[:tags], blog)
           render :nothing => true

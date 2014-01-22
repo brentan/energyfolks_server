@@ -3,7 +3,7 @@ class AffiliatesBlog < ActiveRecord::Base
   belongs_to :blog
   scope :waiting, where("(admin_version > approved_version) AND awaiting_edit = 0")
 
-  attr_accessible :blog_id, :affiliate_id, :approved_version, :admin_version, :broadcast, :user_broadcast
+  attr_accessible :blog_id, :affiliate_id, :approved_version, :admin_version, :broadcast, :user_broadcast, :awaiting_edit
 
   def entity_id
     self.blog_id
