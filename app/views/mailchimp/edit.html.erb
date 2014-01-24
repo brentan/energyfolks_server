@@ -1,30 +1,47 @@
+<h1><%= @affiliate.name %> Mailchimp Integration Settings</h1>
+<br/>
 <div class='form'>
-  <% if @affiliate.present? %>
-    <%= nested_form_for @affiliate.mailchimp_client, :url => 'update' do |f| %>
+  <% if @mailchimp_client.present? %>
+    <%= form_for @mailchimp_client, url: "mailchimp/#{@mailchimp_client.affiliate_id}/update" do |f| %>
       <%= raw(iframe_form) %>
-        <%= raw(show_errors(@affiliate.mailchimp_client)) %>
-
-        <input type=hidden name='affiliate_id' value=<%= @affiliate.id %>>
+        <%= raw(show_errors(@mailchimp_client)) %>
 
         <div class='form_label'>Mailchimp API Key</div>
         <div class='form_entry'><%= f.text_field :api_key %></div>
 
-        <% if @affiliate.mailchimp_client.api_key.present? && @list_names.present? %>
-          <div class='form_label'>Members List</div>
-          <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => 'select a list name from your Mailchimp account'} %></div>
-
-          <div class='form_label'>Daily Digest List</div>
-          <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names %></div>
-
-          <div class='form_label'>Author / Contributor List</div>
-          <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names %></div>
-
-          <div class='form_label'>Editor / Administrator List</div>
-          <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names %></div>
+        <% if @mailchimp_client.api_key.nil? or @list_names.nil? %>
+          <div class="instructions">
+            Enter the API key for your Mailchimp account (you can create one by logging in to your
+            <%= link_to "Mailchimp account", "www.mailchimp.com" %>, and going to Account Settings | Extras.
+          </div>
         <% else %>
-          <div class="instructions">Enter the API key for your Mailchimp account (you can create one by logging in to your <%= link_to "Mailchimp account", "www.mailchimp.com" %>, and going to Account Settings | Extras.</div>
+          <% if @list_names.empty? %>
+            <div class="instructions">We were able to connect to Mailchimp with the API key you entered, but it looks like your Mailchimp account doesn't contain any lists.
+              Please log in to <%= link_to 'mailchimp.com' %> and add four lists
+              (the names don't have to exactly match, but you need a separate list for each of these user groups):
+              <ul>
+                <li>Members List</li>
+                <li>Daily Digest List</li>
+                <li>Author / Contributor List</li>
+                <li>Editor / Administrator List</li>
+              </ul>
+            </div>
+          <% else %>
+            <% blank_list_item = '[select a list from your Mailchimp account]' %>
+            <div class='form_label'>Members List</div>
+            <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Daily Digest List</div>
+            <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Author / Contributor List</div>
+            <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Editor / Administrator List</div>
+            <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+          <% end %>
         <% end %>
-        <%= f.submit class: "button submit" %>
+        <%= f.submit "Update", class: "popup_no_carousel button submit" %>
       </div>
     <% end %>
   <% else %>
