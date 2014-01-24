@@ -1,31 +1,34 @@
 class MailchimpController < ApplicationController
 
   def edit
-    affiliate = Affiliate.find_by_id(params[:affiliate_id])
-    debug = true #debug only
-    if debug || affiliate.present? && affiliate.admin?(current_user, Membership::EDITOR)
-      if affiliate.mailchimp_client.nil?
-        affiliate.mailchimp_client.create
+    @affiliate = Affiliate.find_by_id(params[:affiliate_id])
+    if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
+      if @affiliate.mailchimp_client.nil?
+        @affiliate.mailchimp_client = MailchimpClient.new
+        @affiliate.mailchimp_client.save
       end
-      @list_names = affiliate.mailchimp_client.get_lists if affiliate.mailchimp_client.api_key.present?
-      @affiliate = affiliate
+      @mailchimp_client = @affiliate.mailchimp_client
+      @list_names = @mailchimp_client.get_list_names
     else
       flash[:notice] = "You do not have administrative privileges for this affiliate."
     end
   end
 
   def update
-    affiliate = Affiliate.find_by_id(params[:affiliate_id])
-    debug = true #debug only
-    if debug || affiliate.present? && affiliate.admin?(current_user, Membership::EDITOR)
-      affiliate.mailchimp_client.update_attributes(params[:mailchimp_client])
-      affiliate.mailchimp_client.save
+    @affiliate = Affiliate.find_by_id(params[:affiliate_id])
+    if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
+      @affiliate.mailchimp_client.update_attributes(params[:mailchimp_client])
+      @affiliate.mailchimp_client.save
+
+      @mailchimp_client = @affiliate.mailchimp_client
+      @list_names = @mailchimp_client.get_list_names
     end
 
     render 'edit'
   end
 
-  layout 'application'
+  #layout 'application'
+
   # use the Mailchimp gem to communicate with the Mailchimp server, for the account set up for this user / affiliate
   def inbound
     if user_logged_in?

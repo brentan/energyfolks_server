@@ -1,10 +1,10 @@
+require 'mailchimp'
+
 class MailchimpClient < ActiveRecord::Base
   belongs_to :affiliate
 
   attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id,
                   :author_contributor_list_id, :editor_administrator_list_id
-
-  require 'mailchimp'
 
   def initialize
     super
@@ -13,7 +13,18 @@ class MailchimpClient < ActiveRecord::Base
 
   def get_lists
     get_client
-    @mailchimp_api.lists
+
+    if @mailchimp_api.present?
+        @mailchimp_api.lists.list["data"]
+    end
+
+  rescue Exception => exception
+      self.errors[:base] << "Unable to get list information from Mailchimp. Please check your api_key '#{api_key}' or try again later. Exception details: #{exception.message}"
+  end
+
+  def get_list_names
+    l = get_lists
+    l.map { |list| [list["name"], list["id"]] } if l.present?
   end
 
   def sync_user(user)
@@ -139,9 +150,11 @@ class MailchimpClient < ActiveRecord::Base
 
   private
   def get_client
-    if @api_key.present?
+    @mailchimp_api = nil #reset object
+
+    if self.api_key.present?
       #api_key is a string the mailchimp list admin can find in the list settings. Example:  'b4d5cf71998106c7b8cf0f860549d348-us3'
-      @mailchimp_api = Mailchimp::API.new(@api_key)
+      @mailchimp_api = Mailchimp::API.new(self.api_key)
     end
   end
 
