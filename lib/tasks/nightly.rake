@@ -34,11 +34,12 @@ namespace :nightly do
 
   desc "Resynchronize with mailchimp"
   task :mailchimp => :environment do
-    mailchimp = MailchimpClient.new
-    mailchimp.sync_global
+    mailchimp_global = MailchimpClient.where(affiliate_id: nil).first
+    mailchimp_global.sync_lists if mailchimp_global.present?
+
     Affiliate.all.each { |a|
       ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', a.name).deliver
-      mailchimp.sync_affiliate(a)
+      a.mailchimp_client.sync_lists
     }
     ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', 'COMPLETE').deliver
   end

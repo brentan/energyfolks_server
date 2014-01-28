@@ -147,8 +147,6 @@ class GoogleClient
     batch_execute
   end
 
-
-
   def create_affiliate(affiliate)
     return unless Rails.env.production?
     # New affiliate, we should update google information

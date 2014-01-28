@@ -1,5 +1,8 @@
 <% if current_user.present? && current_user.admin? %>
     <h1><%= link_to 'Create New Affiliate', '#', :class => 'EnergyFolks_popup', :data => {command: 'affiliates/new', iframe: 'true' } %></h1>
+    <div style="text-align: right;">
+      <%= popup("Mailchimp global list setup", "mailchimp/0/edit", true) %>
+    </div>
 <% end %>
 <h1>Energyfolks Affiliates</h1>
 <div id="EnFolksmainbodydiv">
