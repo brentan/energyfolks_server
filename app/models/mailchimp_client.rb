@@ -6,20 +6,28 @@ class MailchimpClient < ActiveRecord::Base
   attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id,
                   :author_contributor_list_id, :editor_administrator_list_id
 
+  # NOTE: affiliate_id can be nil, if these are the Mailchimp settings for the global Energyfolks mailing list.
+
+  # no two affiliates can have the same mailchimp api_key
+  validates :api_key, :uniqueness => {message: "This API key is already being used by another EnergyFolks affiliate. Please check your API key or notify an administrator."}
+
+  # for each affiliate, the members list ID has to be different from the daily digest list ID, and so on
+  validate :each_list_different
+
+  def each_list_different
+    errors.add(:members_list_id, "must not be same as the daily digest list") if present_and_equal(self.members_list_id, self.daily_digest_list_id)
+    errors.add(:members_list_id, "must not be same as the author contributor list") if present_and_equal(self.members_list_id, self.author_contributor_list_id)
+    errors.add(:members_list_id, "must not be same as the editor administrator list") if present_and_equal(self.members_list_id, self.editor_administrator_list_id)
+
+    errors.add(:daily_digest_list_id, "must not be same as the author contributor list") if present_and_equal(self.daily_digest_list_id, self.author_contributor_list_id)
+    errors.add(:daily_digest_list_id, "must not be same as the editor administrator list") if present_and_equal(self.daily_digest_list_id, self.editor_administrator_list_id)
+
+    errors.add(:author_contributor_list_id, "must not be same as the editor administrator list") if present_and_equal(self.author_contributor_list_id, self.editor_administrator_list_id)
+  end
+
   def initialize
     super
     get_client
-  end
-
-  def get_lists
-    get_client
-
-    if @mailchimp_api.present?
-        @mailchimp_api.lists.list["data"]
-    end
-
-  rescue Exception => exception
-      self.errors[:base] << "Unable to get list information from Mailchimp. Please check your api_key '#{api_key}' or try again later. Exception details: #{exception.message}"
   end
 
   def get_list_names
@@ -27,128 +35,95 @@ class MailchimpClient < ActiveRecord::Base
     l.map { |list| [list["name"], list["id"]] } if l.present?
   end
 
-  def sync_user(user)
-    return unless Rails.env.production? && api_key.present?
-    # This will sync user with all affiliates they should be a member of
-    current_groups = get_members({ userKey: user.email.downcase },'groups.list').map { |g| g.email.downcase }
-    add_groups = ['energyfolks-users@energyfolks.com']
-    add_groups << 'energyfolks-admins@energyfolks.com' if user.admin?
-    add_admins = user.admin? ? ['energyfolks-users@energyfolks.com', 'energyfolks-admins@energyfolks.com']: []
-    user.memberships.approved.each do |m|
-      next if m.affiliate.blank?
-      next if user.subscription.blank?
-      add_groups << "#{m.affiliate.email_name}-members@energyfolks.com".downcase if user.subscription.announcement? || (m.admin_level >= Membership::EDITOR)
-      add_groups << "#{m.affiliate.email_name}-digest@energyfolks.com".downcase if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
-      add_groups << "#{m.affiliate.email_name}-contributors@energyfolks.com".downcase if m.admin_level >= Membership::AUTHOR
-      add_groups << "#{m.affiliate.email_name}-admins@energyfolks.com".downcase if m.admin_level >= Membership::EDITOR
-      if(m.admin_level >= Membership::EDITOR)
-        add_groups << 'energyfolks-admins@energyfolks.com' unless add_groups.include?('energyfolks-admins@energyfolks.com')
-        add_admins << "#{m.affiliate.email_name}-members@energyfolks.com".downcase
-        add_admins << "#{m.affiliate.email_name}-digest@energyfolks.com".downcase
-        add_admins << "#{m.affiliate.email_name}-contributors@energyfolks.com".downcase
-        add_admins << "#{m.affiliate.email_name}-admins@energyfolks.com".downcase
+  def get_lists
+    begin
+      get_client
+
+      if @mailchimp_api.present?
+        @mailchimp_api.lists.list["data"]
       end
+
+    rescue Exception => exception
+      self.errors[:base] << "Unable to get list information from Mailchimp. Please check your Mailchimp API key entered below or try again later."
+      #Note: exception message appears not to be helpful, so don't include. Exception details: #{exception.message}"
+      return nil
     end
-    (current_groups - add_groups).each do |to_remove|
-      next if to_remove.split('-').length == 1  # These are custom email lists that should not be touched
-      batch_add({api_method: @admin.members.delete, parameters: {:groupKey => to_remove, memberKey: user.email.downcase }})
-    end
-    (add_groups - current_groups).each { |to_add| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => to_add}, body_object: {email: user.email.downcase, role: 'MEMBER', type: 'USER'}})}
-    add_admins.each { |to_admin| batch_add({api_method: @admin.members.update, parameters: {:groupKey => to_admin, memberKey: user.email.downcase}, body_object: {role: 'MANAGER', type: 'USER'}}) }
-    batch_execute
   end
 
-  def sync_affiliate(affiliate)
+  def sync_user(user)
+    # call this for each affiliate
+    # to sync the email settings for one particular user & affiliate in mailchimp with the email settings in the Energyfolks database.
     return unless Rails.env.production? && api_key.present?
-    # This will sync affiliate email lists with their user database.
-    admins = affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
-    admins << "#{affiliate.email_name}@energyfolks.com"
 
-    #members list
-    emails = affiliate.announcement_members.map{ |u| u.email.downcase }
-    current_members = get_list_members("#{affiliate.email_name}-members")
-    current_admins = get_list_admins("#{affiliate.email_name}-members")
-    # Re-assign admins that have been removed
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
-    # Remove members that have left
-    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
-    # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    lists_in_mailchimp = get_lists_for_this_user(user.email)
+    lists_in_energyfolks = []
 
-    #digest list
-    emails = affiliate.announcement_members.map{ |u| u.email.downcase }
-    current_members = get_list_members("#{affiliate.email_name}-digest")
-    current_admins = get_list_admins("#{affiliate.email_name}-digest")
-    # Re-assign admins that have been removed
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
-    # Remove members that have left
-    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
-    # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    m = user.memberships.approved.where(affilate_id == self.affiliate_id)
+    if m.present?
+      lists_in_energyfolks << self.members_list_id if user.subscription.announcement? || (m.admin_level >= Membership::EDITOR)
+      lists_in_energyfolks << self.daily_digest_list_id if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
+      lists_in_energyfolks << self.author_contributor_list_id if m.admin_level >= Membership::AUTHOR
+      lists_in_energyfolks << self.editor_administrator_list_id if m.admin_level >= Membership::EDITOR
+    end
 
-    #contributor list
-    emails = affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
-    current_members = get_list_members("#{affiliate.email_name}-contributors")
-    current_admins = get_list_admins("#{affiliate.email_name}-contributors")
-    # Re-assign admins that have been removed
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
-    # Remove members that have left
-    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
-    # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
-
-    #admin list
-    current_admins = get_list_members("#{affiliate.email_name}-admins")
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "#{affiliate.email_name}-admins@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-admins@energyfolks.com"}, body_object: {email: e, role: 'MANAGER', type: 'USER'}}) }
+    (lists_in_energyfolks - lists_in_mailchimp).each { |list_id_to_add| batch_add(list_id, user.email.downcase) }
+    (lists_in_mailchimp - lists_in_energyfolks).each { |list_id_to_remove| batch_add(list_id, user.email.downcase,true) }
 
     batch_execute
   end
 
-  def sync_global
+  def sync_lists
     return unless Rails.env.production? && api_key.present?
-    # This will sync the energyfolks-users and energyfolks-admins lists
+    # This will sync this affiliate's Mailchimp email lists with their user database.
+    # if affiliate_id is nil, that means that this Mailchimp list is for the global EnergyFolks list.
+    if affiliate_id.present?
+      # we're doing a sync for this affiliate
+      if self.members_list_id.present?
+        emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
+        sync_list(self.members_list_id, emails)
+      end
 
-    # all users
-    emails = User.verified.all.map{ |u| u.email.downcase }
-    admins = User.verified.where(admin: true).all.map{ |u| u.email.downcase }
-    current_members = get_list_members("energyfolks-users")
-    current_admins = get_list_admins("energyfolks-users")
-    # Re-assign admins that have been removed
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
-    # Remove members that have left
-    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-users@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
-    # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+      if self.daily_digest_list_id.present?
+        emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
+        sync_list(self.daily_digest_list_id, emails)
+      end
 
-    # all admins
-    emails = User.verified.joins(:memberships).where("memberships.approved = 1").where("memberships.admin_level >= ?", Membership::EDITOR).all.map{ |u| u.email.downcase }
-    emails += admins
-    emails = emails.uniq
-    current_members = get_list_members("energyfolks-admins")
-    current_admins = get_list_admins("energyfolks-admins")
-    # Re-assign admins that have been removed
-    (current_admins - admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'MEMBER'}}) }
-    # Remove members that have left
-    (current_members - emails).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}}) }
-    # Add in new members
-    (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-admins@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
-    # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+      if self.author_contributor_list_id.present?
+        emails = self.affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
+        sync_list(self.author_contributor_list_id, emails)
+      end
+
+      if self.editor_administrator_list_id.present?
+        emails = self.affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
+        sync_list(self.editor_administrator_list_id, emails)
+      end
+    else
+      # we're doing a sync for the global lists
+
+      if self.members_list_id.present?
+        emails = User.verified.all.map{ |u| u.email.downcase }
+        sync_list(self.members_list_id, emails)
+      end
+
+      # for the global lists, there is no daily digest or author/contributor list.
+
+      if self.editor_administrator_list_id.present?
+        emails = User.verified.joins(:memberships).where("memberships.approved = 1").where("memberships.admin_level >= ?", Membership::EDITOR).all.map{ |u| u.email.downcase }
+        admins = User.verified.where(admin: true).all.map{ |u| u.email.downcase }
+        emails += admins
+        sync_list(self.editor_administrator_list_id, emails)
+      end
+
+    end
 
     batch_execute
   end
 
   private
+  def present_and_equal(list1, list2)
+    return true if list1.present? && list2.present? && list1 == list2
+  end
+
   def get_client
     @mailchimp_api = nil #reset object
 
@@ -158,65 +133,69 @@ class MailchimpClient < ActiveRecord::Base
     end
   end
 
-  def get_list_members(listname)
-    get_members({:groupKey => "#{listname}@energyfolks.com" }).map { |m| m.email }
-  end
-  def get_list_admins(listname)
-    get_members({:groupKey => "#{listname}@energyfolks.com" , roles:'MANAGER,OWNER'}).map { |m| m.email }
+  def get_list_member_emails(list_id)
+    get_members(list_id).map { |m| m.email }
   end
 
-  def admin(input_method, options)
-    method = @admin
-    input_method.split('.').each { |m| method = method.send(m) }
-    options[:api_method] = method
-    return @client.execute(options)
-  end
+  def get_lists_for_this_user(email)
+    e = email.downcase
+    list_memberships = []
 
-  def groups(input_method, options)
-    method = @group
-    input_method.split('.').each { |m| method = method.send(m) }
-    options[:api_method] = method
-    return @client.execute(options)
-  end
-
-  def get_members(parameters, method = 'members.list')
-    # Get list members.  This is done in a loop because we may have to page through multiple results.
-    result = Array.new
-    page_token = nil
-    begin
-      parameters['pageToken'] = page_token if page_token.to_s != ''
-      parameters['maxResults'] = 900
-      api_result = admin(method, {parameters: parameters})
-      if api_result.status == 200
-        files = api_result.data
-        if method == 'members.list'
-          result.concat(files.members)
-        else
-          result.concat(files.groups)
-        end
-        page_token = files.next_page_token
-      else
-        page_token = nil
-      end
-    end while page_token.to_s != ''
-    return result
-  end
-
-  def batch_add(item)
-    if @batch.nil?
-      @batch = Google::APIClient::BatchRequest.new do |result|
-        # Do something with the animal result.
-      end
+    get_list_names.each do |l|
+      list_memberships << l["id"] if get_list_members(l["id"]).include?(e)
     end
-    @batch.add(item)
-    @batch_count += 1
-    batch_execute if @batch_count == 80
+  end
+
+  def sync_list(list_id, emails_list_should_contain)
+    current_members = get_list_member_emails(list_id)
+
+    # Add in new members
+    (emails_list_should_contain - current_members).each {|email| batch_add(list_id, email) }
+
+    # Remove members that have left
+    (current_members - emails_list_should_contain).each {|email| batch_add(list_id, email, true) }
+  end
+
+  def get_members(list_id)
+    # Get list members.
+    return @mailchimp_api.lists.members(list_id)
+  end
+
+  def batch_add(list_id, email, unsubscribe=false)
+    @batch = { } if @batch.nil?
+    @batch[list_id] = { to_subscribe: [], to_unsubscribe: [] } if @batch[list_id].nil?
+
+    list = @batch[list_id]
+
+    if unsubscribe
+      list[:to_unsubscribe] << { email: email.downcase }
+    else
+      list[:to_subscribe] << { email: { email: email.downcase }, email_type: "html" }
+    end
+
+    max_before_execute = 80
+    batch_execute if list[:to_subscribe].count > max_before_execute || list[:to_unsubscribe].count > max_before_execute
   end
 
   def batch_execute
-    @batch_count = 0
-    @client.execute(@batch)
-    @batch = nil
+    return if @batch.nil?
+
+    double_optin = false #don't send confirmation email to user, asking if they really want to be added. These folks have already opted in.
+    update_existing = true #don't throw an error if this user is already in the list. Even though theoretically they shouldn't be.
+
+    delete_member = true #if unsubscribing, delete this email out of the list.
+    send_goodbye = false #don't send a goodbye email on unsubscribe
+
+    @batch.each_by_index do |list_id|
+      if @batch[list_id][:to_subscribe].count > 0
+        @mailchimp_api.lists.batch_subscribe(list_id, @batch[list_id][:to_subscribe],double_optin,update_existing)
+        @batch[list_id][:to_subscribe] = []  #clear the array
+      end
+      if @batch[list_id][:to_unsubscribe].count > 0
+        @mailchimp_api.lists.batch_unsubscribe(list_id, @batch[list_id][:to_unsubscribe],delete_member,send_goodbye)
+        @batch[list_id][:to_unsubscribe] = []  #clear the array
+      end
+    end
   end
 
 end

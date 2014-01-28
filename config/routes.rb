@@ -49,6 +49,7 @@ EnergyfolksServer::Application.routes.draw do
   get 'mailchimp/inbound'
   get 'mailchimp/logout'
   get 'mailchimp/:affiliate_id/edit' => 'mailchimp#edit'
+  get 'mailchimp/:affiliate_id/sync_now' => 'mailchimp#sync_now'
   put 'mailchimp/:affiliate_id/update' => 'mailchimp#update'
 
   # Omniauth routes

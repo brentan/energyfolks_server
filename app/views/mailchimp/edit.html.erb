@@ -1,8 +1,10 @@
-<h1><%= @affiliate.name %> Mailchimp Integration Settings</h1>
+<% affiliate_name = @affiliate.present? ? @affiliate.name : "Global Energyfolks List"
+  affiliate_id_str = @affiliate.present? ? ("/" + @affiliate.id.to_s) : "" %>
+<h1><%= affiliate_name %> - Mailchimp Integration Settings</h1>
 <br/>
 <div class='form'>
   <% if @mailchimp_client.present? %>
-    <%= form_for @mailchimp_client, url: "mailchimp/#{@mailchimp_client.affiliate_id}/update" do |f| %>
+    <%= form_for @mailchimp_client, url: "/mailchimp#{affiliate_id_str}/update" do |f| %>
       <%= raw(iframe_form) %>
         <%= raw(show_errors(@mailchimp_client)) %>
 
@@ -39,6 +41,9 @@
 
             <div class='form_label'>Editor / Administrator List</div>
             <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class="instructions">
+              Your Mailchimp email lists above will be automatically synced with the <%= affiliate_name %> member list in Energyfolks nightly. <%= link_to "Sync Now", "/mailchimp#{affiliate_id_str}/sync_now" %>
+            </div>
           <% end %>
         <% end %>
         <%= f.submit "Update", class: "popup_no_carousel button submit" %>
