@@ -53,7 +53,7 @@ class GoogleClient
       batch_add({api_method: @admin.members.delete, parameters: {:groupKey => to_remove, memberKey: user.email.downcase }})
     end
     (add_groups - current_groups).each { |to_add| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => to_add}, body_object: {email: user.email.downcase, role: 'MEMBER', type: 'USER'}})}
-    add_admins.each { |to_admin| batch_add({api_method: @admin.members.update, parameters: {:groupKey => to_admin, memberKey: user.email.downcase}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    add_admins.each { |to_admin| batch_add({api_method: @admin.members.update, parameters: {:groupKey => to_admin, memberKey: user.email.downcase}, body_object: {role: 'OWNER'}}) }
     batch_execute
   end
 
@@ -64,7 +64,7 @@ class GoogleClient
     admins << "#{affiliate.email_name}@energyfolks.com"
 
     #members list
-    emails = affiliate.announcement_members.map{ |u| u.email.downcase }
+    emails = affiliate.announcement_members.map{ |u| u.email.downcase } | admins
     current_members = get_list_members("#{affiliate.email_name}-members")
     current_admins = get_list_admins("#{affiliate.email_name}-members")
     # Re-assign admins that have been removed
@@ -74,10 +74,10 @@ class GoogleClient
     # Add in new members
     (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
     # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER'}}) }
 
     #digest list
-    emails = affiliate.announcement_members.map{ |u| u.email.downcase }
+    emails = affiliate.announcement_members.map{ |u| u.email.downcase } | admins
     current_members = get_list_members("#{affiliate.email_name}-digest")
     current_admins = get_list_admins("#{affiliate.email_name}-digest")
     # Re-assign admins that have been removed
@@ -87,10 +87,10 @@ class GoogleClient
     # Add in new members
     (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
     # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-digest@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER'}}) }
 
     #contributor list
-    emails = affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
+    emails = affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase } | admins
     current_members = get_list_members("#{affiliate.email_name}-contributors")
     current_admins = get_list_admins("#{affiliate.email_name}-contributors")
     # Re-assign admins that have been removed
@@ -100,13 +100,13 @@ class GoogleClient
     # Add in new members
     (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
     # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-contributors@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER'}}) }
 
     #admin list
     current_admins = get_list_members("#{affiliate.email_name}-admins")
     (current_admins - admins).each {|e| batch_add({api_method: @admin.members.delete, parameters: {:groupKey => "#{affiliate.email_name}-admins@energyfolks.com", memberKey: e}}) }
     # Add in new members
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-admins@energyfolks.com"}, body_object: {email: e, role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "#{affiliate.email_name}-admins@energyfolks.com"}, body_object: {email: e, role: 'OWNER', type: 'USER'}}) }
 
     batch_execute
   end
@@ -127,7 +127,7 @@ class GoogleClient
     # Add in new members
     (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-users@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
     # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-users@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER'}}) }
 
     # all admins
     emails = User.verified.joins(:memberships).where("memberships.approved = 1").where("memberships.admin_level >= ?", Membership::EDITOR).all.map{ |u| u.email.downcase }
@@ -142,10 +142,12 @@ class GoogleClient
     # Add in new members
     (emails - current_members).each {|e| batch_add({api_method: @admin.members.insert, parameters: {:groupKey => "energyfolks-admins@energyfolks.com"}, body_object: {email: e, role: 'MEMBER', type: 'USER'}}) }
     # Update admins
-    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'MANAGER', type: 'USER'}}) }
+    (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "energyfolks-admins@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER'}}) }
 
     batch_execute
   end
+
+
 
   def create_affiliate(affiliate)
     return unless Rails.env.production?
@@ -235,7 +237,7 @@ class GoogleClient
     get_members({:groupKey => "#{listname}@energyfolks.com" }).map { |m| m.email }
   end
   def get_list_admins(listname)
-    get_members({:groupKey => "#{listname}@energyfolks.com" , roles:'MANAGER,OWNER'}).map { |m| m.email }
+    get_members({:groupKey => "#{listname}@energyfolks.com" , roles:'OWNER,MANAGER'}).map { |m| m.email }
   end
 
   def admin(input_method, options)
