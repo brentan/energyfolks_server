@@ -194,7 +194,7 @@ class User < ActiveRecord::Base
           @membership.save!
           self.delay.sync
           @user = self
-          UserMailer.delay.affiliate_approved(self,@aid, @host)
+          UserMailer.delay.affiliate_approved(self.id,@aid, @host)
           self.update_index
           return "User has been added to your group"
         else
@@ -213,10 +213,10 @@ class User < ActiveRecord::Base
         @membership = Membership.find_by_affiliate_id_and_user_id(@affiliate.id, @user.id)
         if @membership.present? && reason.present?
           if @membership.approved?
-            UserMailer.delay.affiliate_removed(@user, reason, @aid, @host)
+            UserMailer.delay.affiliate_removed(@user.id, reason, @aid, @host)
             message = "User has been removed from your group"
           else
-            UserMailer.delay.affiliate_rejected(@user, reason, @aid, @host)
+            UserMailer.delay.affiliate_rejected(@user.id, reason, @aid, @host)
             message = "User request to join group has been rejected"
           end
           @membership.approved = false
@@ -259,7 +259,7 @@ class User < ActiveRecord::Base
     self.memberships.where(broadcast: false).each do |i|
       recipients = i.affiliate.admins(Membership::EDITOR, true)
       recipients.each do |user|
-        NotificationMailer.delay.awaiting_moderation(user, i.affiliate_id, self, i)
+        NotificationMailer.delay.awaiting_moderation(user.id, i.affiliate_id, self.id, self.entity_name, i)
       end
       i.broadcast = true
       i.save(:validate => false)

@@ -49,7 +49,7 @@ class CalendarImport < ActiveRecord::Base
     rescue
       recipients = self.affiliate.admins(Membership::EDITOR, true)
       recipients.each do |user|
-        NotificationMailer.delay.auto_import_failure(user, self.affiliate_id, self.url)
+        NotificationMailer.auto_import_failure(user, self.affiliate_id, self.url).deliver()
       end
     end
     return self.affiliate_id, self.url, group_admins, ef_admins
