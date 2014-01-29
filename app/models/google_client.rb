@@ -278,6 +278,8 @@ class GoogleClient
   end
 
   def batch_add(item)
+    @client.execute(item)
+    return
     if @batch.nil?
       @batch = Google::APIClient::BatchRequest.new do |result|
         # Do something with the animal result.
@@ -289,6 +291,7 @@ class GoogleClient
   end
 
   def batch_execute
+    return
     @batch_count = 0
     @client.execute(@batch)
     @batch = nil
