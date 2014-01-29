@@ -18,6 +18,7 @@ class CalendarImport < ActiveRecord::Base
           event.name = e.summary
           event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart
           event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend
+          next if event.end < Time.now
           event.user_id = -1
           event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
           event.location = self.location
