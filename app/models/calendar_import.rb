@@ -30,12 +30,17 @@ class CalendarImport < ActiveRecord::Base
           event.html = html_string
           event.synopsis = TruncateHtml::HtmlTruncator.new(html_string, {length: 115}).truncate.html_safe
           event.save!
-          affilid = self.send_to_all? ? 0 : self.affiliate_id
-          a = AffiliatesEvent.where(:event_id => event.id, :affiliate_id => affilid).first
+          if self.send_to_all?
+            a = AffiliatesEvent.where(:event_id => event.id, :affiliate_id => 0).first
+            if a.blank?
+              AffiliatesEvent.create(:event_id => event.id, :affiliate_id => 0, :admin_version => event.current_version, :broadcast => true)
+              ef_admins += 1
+            end
+          end
+          a = AffiliatesEvent.where(:event_id => event.id, :affiliate_id => self.affiliate_id).first
           if a.blank?
-            AffiliatesEvent.create(:event_id => event.id, :affiliate_id => affilid, :admin_version => event.current_version, :broadcast => true)
-            group_admins += 1 unless affilid == 0
-            ef_admins += 1 if affilid == 0
+            AffiliatesEvent.create(:event_id => event.id, :affiliate_id => self.affiliate_id, :admin_version => event.current_version, :broadcast => true)
+            group_admins += 1
           end
         rescue
           # item was problematic, ignore it
