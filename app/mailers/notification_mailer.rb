@@ -12,6 +12,22 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "A new #{item.entity_type} is awaiting moderation")
   end
 
+  def auto_import_complete(user, aid, numbers)
+    @user = user
+    @affiliate = Affiliate.find_by_id(aid)
+    @numbers = numbers
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "New imported events awaiting moderation")
+  end
+
+  def auto_import_failure(user, aid, url)
+    @user = user
+    @affiliate = Affiliate.find_by_id(aid)
+    @url = url
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Auto-import failure")
+  end
+
   def entity(user, entity, token)
     @item = entity
     @user = user
@@ -49,6 +65,7 @@ class NotificationMailer < ActionMailer::Base
 
   def item_removed(item, reason, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @reason = reason
     @affiliate = Affiliate.find_by_id(aid)
@@ -61,6 +78,7 @@ class NotificationMailer < ActionMailer::Base
 
   def item_rejected(item, reason, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @user = @item.user
     @reason = reason
@@ -72,6 +90,7 @@ class NotificationMailer < ActionMailer::Base
 
   def item_approved(item, aid)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @user = @item.user
     @affiliate = Affiliate.find_by_id(aid)

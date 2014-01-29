@@ -601,7 +601,7 @@ module MixinEntity
   # When saving a new version, should we increment the version number?  Only needed if someone has approved current version
   def increment_version?
     return true if self.current_version == 0
-    return false if self.instance_of?(Blog)
+    return false if self.instance_of?(Blog) && self.wordpress_id.present?
     total_approved = self.affiliate_join.where(:approved_version => self.current_version).count
     return true if total_approved > 0
     return false

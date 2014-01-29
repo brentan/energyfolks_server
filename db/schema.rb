@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140121041547) do
+ActiveRecord::Schema.define(:version => 20140129015450) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -161,6 +161,13 @@ ActiveRecord::Schema.define(:version => 20140121041547) do
 
   add_index "blogs_versions", ["entity_id"], :name => "index_blogs_versions_on_entity_id"
   add_index "blogs_versions", ["version_number"], :name => "index_blogs_versions_on_version_number"
+
+  create_table "calendar_imports", :force => true do |t|
+    t.integer "affiliate_id"
+    t.string  "url"
+    t.string  "location"
+    t.boolean "send_to_all"
+  end
 
   create_table "comment_details", :force => true do |t|
     t.string "name"
@@ -319,6 +326,7 @@ ActiveRecord::Schema.define(:version => 20140121041547) do
     t.string   "timezone"
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
+    t.string   "autoimport"
   end
 
   create_table "events_versions", :force => true do |t|
