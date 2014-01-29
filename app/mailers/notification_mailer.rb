@@ -3,7 +3,8 @@ class NotificationMailer < ActionMailer::Base
   layout 'site_mailer'
 
   def awaiting_moderation(user_id, aid, item_id, item_model, join_item)
-    @item = item_model.constantize.find(item_id)
+    item = item_model.constantize.find(item_id)
+    @item = item
     @join_item = join_item
     @affiliate = Affiliate.find_by_id(aid)
     @host = @affiliate.entity_url(item)
