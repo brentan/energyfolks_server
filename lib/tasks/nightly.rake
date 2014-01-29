@@ -68,13 +68,13 @@ namespace :nightly do
     to_send_affiliate.each do |k, v|
       recipients = Affiliate.find_by_id(k.to_i).admins(Membership::EDITOR, true)
       recipients.each do |user|
-        NotificationMailer.delay.auto_import_complete(user, Affiliate.find_by_id(k.to_i), v)
+        NotificationMailer.auto_import_complete(user, k.to_i, v).deliver()
       end
     end
     if to_send_ef.present?
       recipients = User.where(admin: true, admin_emails: true).all
       recipients.each do |user|
-        NotificationMailer.delay.auto_import_complete(user, Affiliate.find_by_id(0), to_send_ef)
+        NotificationMailer.auto_import_complete(user, 0, to_send_ef).deliver()
       end
     end
     operation.mark_complete

@@ -58,30 +58,30 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "Your #{@affiliate.name} account was frozen")
   end
 
-  def affiliate_approved(user, aid, host)
+  def affiliate_approved(user_id, aid, host)
     @host = host
     @aid = aid
-    @user = user
+    @user = User.find_by_id(user_id)
     @affiliate = Affiliate.find_by_id(@aid)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your request to join #{@affiliate.name} was approved")
   end
 
-  def affiliate_removed(user, reason, aid, host)
+  def affiliate_removed(user_id, reason, aid, host)
     @host = host
     @reason = reason
     @aid = aid
-    @user = user
+    @user = User.find_by_id(user_id)
     @affiliate = Affiliate.find_by_id(@aid)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your membership with #{@affiliate.name} has been revoked")
   end
 
-  def affiliate_rejected(user, reason, aid, host)
+  def affiliate_rejected(user_id, reason, aid, host)
     @host = host
     @reason = reason
     @aid = aid
-    @user = user
+    @user = User.find_by_id(user_id)
     @affiliate = Affiliate.find_by_id(@aid)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
     mail(to: @user.email, from: from, subject: "Your request to join #{@affiliate.name} was approved")
