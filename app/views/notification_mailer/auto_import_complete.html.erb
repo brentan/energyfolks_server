@@ -1,0 +1,16 @@
+<%= @user.first_name %>,
+<BR><BR>
+New events have been imported from calendars you are syncing with.  The import results show:
+<ul>
+  <% @numbers.each do |v| %>
+    <li><%= v[:total] %> events from <%= v[:url] %></li>
+  <% end %>
+</ul>
+
+<BR><BR>
+
+You can approve at <%= link_to @affiliate.url_events, @affiliate.url_events %> by clicking the 'moderation queue' link.
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.id.present? ? "energyfolks on behalf of #{@affiliate.name}" : "energyfolks" %>

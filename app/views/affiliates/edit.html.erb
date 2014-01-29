@@ -1,5 +1,5 @@
 <div class='form'>
-    <%=	 form_for @affiliate, :url => { :action => "update", :id => @affiliate.id }, :html => { :multipart => true } do |f| %>
+    <%=	 nested_form_for @affiliate, :url => { :action => "update", :id => @affiliate.id }, :html => { :multipart => true } do |f| %>
       <%= raw(iframe_form) %>
       <%= render :partial => 'form', :locals => {f: f} %>
 
