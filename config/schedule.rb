@@ -51,3 +51,6 @@ end
 every 1.hour do
   rake "digest:weekly"
 end
+every 6.hours do
+  rake "clean_up:delayed_job_test"
+end
