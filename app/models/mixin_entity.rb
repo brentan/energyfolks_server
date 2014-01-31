@@ -520,9 +520,10 @@ module MixinEntity
           # geocode test
           if self.geocoded?
             distance = u.subscription.send("#{self.class.name.downcase}_radius")
+            distance ||= 0
             next if (distance > 0) && (self.distance_from([u.latitude, u.longitude]) > distance)
           else
-            next if u.subscription.send("#{self.class.name.downcase}_radius") > 0
+            next if u.subscription.send("#{self.class.name.downcase}_radius").present? && (u.subscription.send("#{self.class.name.downcase}_radius") > 0)
           end
         end
         token = self.emails.create(user_id: user_id).token
