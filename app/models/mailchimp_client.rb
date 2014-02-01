@@ -75,45 +75,24 @@ class MailchimpClient < ActiveRecord::Base
   def sync_lists
     return unless Rails.env.production? && api_key.present?
     # This will sync this affiliate's Mailchimp email lists with their user database.
-    # if affiliate_id is nil, that means that this Mailchimp list is for the global EnergyFolks list.
-    if affiliate_id.present?
-      # we're doing a sync for this affiliate
-      if self.members_list_id.present?
-        emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
-        sync_list(self.members_list_id, emails)
-      end
+    if self.members_list_id.present?
+      emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
+      sync_list(self.members_list_id, emails)
+    end
 
-      if self.daily_digest_list_id.present?
-        emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
-        sync_list(self.daily_digest_list_id, emails)
-      end
+    if self.daily_digest_list_id.present?
+      emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
+      sync_list(self.daily_digest_list_id, emails)
+    end
 
-      if self.author_contributor_list_id.present?
-        emails = self.affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
-        sync_list(self.author_contributor_list_id, emails)
-      end
+    if self.author_contributor_list_id.present?
+      emails = self.affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
+      sync_list(self.author_contributor_list_id, emails)
+    end
 
-      if self.editor_administrator_list_id.present?
-        emails = self.affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
-        sync_list(self.editor_administrator_list_id, emails)
-      end
-    else
-      # we're doing a sync for the global lists
-
-      if self.members_list_id.present?
-        emails = User.verified.all.map{ |u| u.email.downcase }
-        sync_list(self.members_list_id, emails)
-      end
-
-      # for the global lists, there is no daily digest or author/contributor list.
-
-      if self.editor_administrator_list_id.present?
-        emails = User.verified.joins(:memberships).where("memberships.approved = 1").where("memberships.admin_level >= ?", Membership::EDITOR).all.map{ |u| u.email.downcase }
-        admins = User.verified.where(admin: true).all.map{ |u| u.email.downcase }
-        emails += admins
-        sync_list(self.editor_administrator_list_id, emails)
-      end
-
+    if self.editor_administrator_list_id.present?
+      emails = self.affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
+      sync_list(self.editor_administrator_list_id, emails)
     end
 
     batch_execute
@@ -134,7 +113,11 @@ class MailchimpClient < ActiveRecord::Base
   end
 
   def get_list_member_emails(list_id)
-    get_members(list_id).map { |m| m.email }
+    get_members(list_id, 'subscribed').map { |m| m.email }
+  end
+
+  def get_list_unsubscribed_emails(list_id)
+    get_members(list_id, 'unsubscribed').map { |m| m.email }
   end
 
   def get_lists_for_this_user(email)
