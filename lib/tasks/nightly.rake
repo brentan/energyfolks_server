@@ -46,4 +46,38 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "AutoImport"
+  task :autoimport => :environment do
+    operation = ScheduledOperation.start('Auto-Import')
+    to_send_ef = []
+    to_send_affiliate = {}
+    imports = CalendarImport.all
+    imports.each do |i|
+      aid, url, total, total_ef = i.import_events
+      if total > 0
+        if to_send_affiliate.has_key?(aid)
+          to_send_affiliate[aid] << {aid: aid, url: url, total: total}
+        else
+          to_send_affiliate[aid] = [{aid: aid, url: url, total: total}]
+        end
+      end
+      if total_ef > 0
+        to_send_ef << {aid: aid, url: url, total: total_ef}
+      end
+    end
+    to_send_affiliate.each do |k, v|
+      recipients = Affiliate.find_by_id(k.to_i).admins(Membership::EDITOR, true)
+      recipients.each do |user|
+        NotificationMailer.auto_import_complete(user, k.to_i, v).deliver()
+      end
+    end
+    if to_send_ef.present?
+      recipients = User.where(admin: true, admin_emails: true).all
+      recipients.each do |user|
+        NotificationMailer.auto_import_complete(user, 0, to_send_ef).deliver()
+      end
+    end
+    operation.mark_complete
+  end
+
 end

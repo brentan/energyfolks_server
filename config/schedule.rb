@@ -41,10 +41,16 @@ end
 every 1.day, :at => '7:00 pm' do
   rake "nightly:archive"
 end
+every 1.day, :at => '7:20 pm' do
+  rake "nightly:autoimport"
+end
 
 every 1.hour do
   rake "digest:daily"
 end
 every 1.hour do
   rake "digest:weekly"
+end
+every 6.hours do
+  rake "clean_up:delayed_job_test"
 end
