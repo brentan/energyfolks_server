@@ -1,6 +1,6 @@
 
 <div id='ef_carousel' class='no_animation'>
-  <%= raw(carousel_slide_title_section('Settings',8, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration'] })) %>
+  <%= raw(carousel_slide_title_section('Settings',9, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration','Cal Sync'] })) %>
   <div class="viewport">
     <ul class="overview">
       <li class='slide'>
@@ -185,6 +185,29 @@
                 <% end %>
             <% end %>
         </li>
+      <li class="slide">
+        <h1>External Calendar Sync</h1> <BR>
+        <p>EnergyFolks can be setup to automatically pull events from an external calendar and add to your groups calendar.  We can read any calendar that outputs data in iCal format (such as google calendar).</p>
+
+        <%= f.fields_for :calendar_imports do |c| %>
+            <div style="border:1px solid black;padding:3px;background-color:#f5f5f5;">
+
+              <div class='form_label' style="float:none;">iCal Feed URL</div>
+              <div class='form_entry' style="float:none;"><%= c.text_field :url %></div>
+              <div class='form_label' style="float:none;">Default Event Location</div>
+              <div class='form_entry' style="float:none;"><%= c.text_field :location %></div>
+
+              <div class='form_label' style="float:none;">Sharing Settings</div>
+              <div class='form_entry' style="float:none;">
+                <label><%= c.radio_button :send_to_all, true %> Share with all networks</label><BR>
+                <label><%= c.radio_button :send_to_all, false %> Post events only to my calendar</label>
+              </div>
+              <%= c.link_to_remove "Remove this calendar" %>
+            </div>
+        <% end %>
+        <%= f.link_to_add "Add a Calendar", :calendar_imports %>
+
+      </li>
     </ul>
     <%= prev_next_buttons(false) %>
   </div>
