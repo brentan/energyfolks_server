@@ -75,25 +75,14 @@ class MailchimpClient < ActiveRecord::Base
   def sync_lists
     return unless Rails.env.production? && api_key.present?
     # This will sync this affiliate's Mailchimp email lists with their user database.
-    if self.members_list_id.present?
-      emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
-      sync_list(self.members_list_id, emails)
-    end
 
-    if self.daily_digest_list_id.present?
-      emails = self.affiliate.announcement_members.map{ |u| u.email.downcase }
-      sync_list(self.daily_digest_list_id, emails)
-    end
+    sync_list(self.members_list_id, :members_list) if self.members_list_id.present?
 
-    if self.author_contributor_list_id.present?
-      emails = self.affiliate.admins(Membership::AUTHOR).map{ |u| u.email.downcase }
-      sync_list(self.author_contributor_list_id, emails)
-    end
+    sync_list(self.daily_digest_list_id, :daily_digest_list) if self.daily_digest_list_id.present?
 
-    if self.editor_administrator_list_id.present?
-      emails = self.affiliate.admins(Membership::EDITOR).map{ |u| u.email.downcase }
-      sync_list(self.editor_administrator_list_id, emails)
-    end
+    sync_list(self.author_contributor_list_id, :author_contributor_list) if self.author_contributor_list_id.present?
+
+    sync_list(self.editor_administrator_list_id, :editor_administrator_list) if self.editor_administrator_list_id.present?
 
     batch_execute
   end
@@ -129,7 +118,11 @@ class MailchimpClient < ActiveRecord::Base
     end
   end
 
-  def sync_list(list_id, emails_list_should_contain)
+  def sync_list(list_id, list_type)
+
+    handle_unsubscribes(list_id,list_type)
+
+    emails_list_should_contain = get_users(list_type).map{ |u| u.email.downcase }
     current_members = get_list_member_emails(list_id)
 
     # Add in new members
@@ -137,6 +130,54 @@ class MailchimpClient < ActiveRecord::Base
 
     # Remove members that have left
     (current_members - emails_list_should_contain).each {|email| batch_add(list_id, email, true) }
+  end
+
+  def handle_unsubscribes(list_id, list_type)
+    # check for users that have unsubscribed via Mailchimp
+    # if they have, alter their subscription preferences in EnergyFolks accordingly.
+    unsubscribed_emails = get_list_unsubscribed_emails(list_id)
+
+    unsubscribed_emails.each do |email|
+      #get the EnergyFolks user with this email address, making sure to downcase all emails before comparing
+      u = get_users(list_type).map { |u| u if u.email.downcase == email.downcase }.reject {|u| u.empty? }.first
+      handle_unsubscribe(u, list_type) if u.present?
+      batch_add(list_id,email,true) #delete this user from the Mailchimp list. We've already registered that they wanted to unsubscribe from this list.
+    end
+
+    batch_execute
+  end
+
+  def get_users(list_type)
+    case list_type
+      when :members_list
+        users = self.affiliate.announcement_members
+      when :daily_digest_list
+        users = self.affiliate.digest_members
+      when :author_contributor_list
+        users = self.affiliate.admins(Membership::AUTHOR)
+      when :editor_administrator_list
+        users = self.affiliate.admins(Membership::EDITOR)
+    end
+  end
+
+  def handle_unsubscribe(user, list_type)
+    s = user.subscriptions.where(affiliate: self.affiliate).first
+    return if s.nil?
+
+    case list_type
+      when :members_list
+        s.announcement = 0
+        s.save
+      when :daily_digest_list
+        s.digest = 0
+        s.save
+      when :author_contributor_list
+        # ignore.
+        # #author / contributor can't unsubscribe via Mailchimp
+      when :editor_administrator_list
+        # ignore.
+        # editor / administrator can't unsubscribe via Mailchimp
+    end
   end
 
   def get_members(list_id)
