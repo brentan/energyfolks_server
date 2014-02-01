@@ -33,7 +33,12 @@ class MailchimpController < ApplicationController
     @affiliate = Affiliate.find_by_id(params[:affiliate_id])
     if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
 
-      @mailchimp_client.sync_global
+      @mailchimp_client = @affiliate.mailchimp_client
+      @mailchimp_client.sync_lists
+
+      @list_names = @mailchimp_client.get_list_names
+    else
+      flash[:notice] = "You do not have administrative privileges for this affiliate."
     end
 
     render 'edit'
