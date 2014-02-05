@@ -526,6 +526,9 @@ EnergyFolks.$(function() {
         EnergyFolks.$(this).find('.ef_add_event').show();
     });
     EnergyFolks.$('body').on('mouseenter','.enfolks_calendar_item', function() {
+        EnergyFolks.$('.enfolks_detail_popup').hide();
+        EnergyFolks.$('.enfolks_detail_popup_white_2').hide();
+        EnergyFolks.$('.enfolks_detail_popup_white').hide();
         EnergyFolks.$(this).find('.enfolks_detail_popup').show();
         EnergyFolks.$(this).find('.enfolks_detail_popup_white').show();
         EnergyFolks.$(this).find('.enfolks_detail_popup_white_2').show();
