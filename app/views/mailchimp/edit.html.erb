@@ -34,6 +34,9 @@
             <div class='form_label'>Daily Digest List</div>
             <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
 
+            <div class='form_label'>Weekly Digest List</div>
+            <div class='form_entry'><%= f.select :weekly_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
             <div class='form_label'>Author / Contributor List</div>
             <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names, {:include_blank => blank_list_item} %></div>
 
