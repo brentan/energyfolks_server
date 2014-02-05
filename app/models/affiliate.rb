@@ -88,12 +88,15 @@ class Affiliate < ActiveRecord::Base
     search = search.where("moderation_emails = 1") if emails_only
     return search.all.map{|u| u.user }
   end
+
   def approved_members
     self.memberships.approved.joins(:user).all.map {|u| u.user }
   end
+
   def announcement_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:announcement => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
+
   def digest_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end

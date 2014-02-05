@@ -73,8 +73,11 @@ class MailchimpClient < ActiveRecord::Base
   end
 
   def sync_lists
-    return unless Rails.env.production? && api_key.present?
+    #TODO: take out the debug comment below
+    return unless api_key.present? #debug && Rails.env.production?
+
     # This will sync this affiliate's Mailchimp email lists with their user database.
+    get_client
 
     sync_list(self.members_list_id, :members_list) if self.members_list_id.present?
 
@@ -99,14 +102,15 @@ class MailchimpClient < ActiveRecord::Base
       #api_key is a string the mailchimp list admin can find in the list settings. Example:  'b4d5cf71998106c7b8cf0f860549d348-us3'
       @mailchimp_api = Mailchimp::API.new(self.api_key)
     end
+
   end
 
   def get_list_member_emails(list_id)
-    get_members(list_id, 'subscribed').map { |m| m.email }
+    get_subscribed_members(list_id).map { |m| m['email'] }
   end
 
   def get_list_unsubscribed_emails(list_id)
-    get_members(list_id, 'unsubscribed').map { |m| m.email }
+    get_unsubscribed_members(list_id).map { |m| m['email'] }
   end
 
   def get_lists_for_this_user(email)
@@ -114,7 +118,7 @@ class MailchimpClient < ActiveRecord::Base
     list_memberships = []
 
     get_list_names.each do |l|
-      list_memberships << l["id"] if get_list_members(l["id"]).include?(e)
+      list_memberships << l["id"] if get_list_member_emails(l["id"]).include?(e)
     end
   end
 
@@ -139,12 +143,10 @@ class MailchimpClient < ActiveRecord::Base
 
     unsubscribed_emails.each do |email|
       #get the EnergyFolks user with this email address, making sure to downcase all emails before comparing
-      u = get_users(list_type).map { |u| u if u.email.downcase == email.downcase }.reject {|u| u.empty? }.first
+      u = get_users(list_type).map { |u| u if u.email.downcase == email.downcase }.reject {|u| u.nil? }.first
       handle_unsubscribe(u, list_type) if u.present?
       batch_add(list_id,email,true) #delete this user from the Mailchimp list. We've already registered that they wanted to unsubscribe from this list.
     end
-
-    batch_execute
   end
 
   def get_users(list_type)
@@ -161,7 +163,7 @@ class MailchimpClient < ActiveRecord::Base
   end
 
   def handle_unsubscribe(user, list_type)
-    s = user.subscriptions.where(affiliate: self.affiliate).first
+    s = Subscription.where(user_id: user.id).first
     return if s.nil?
 
     case list_type
@@ -180,9 +182,14 @@ class MailchimpClient < ActiveRecord::Base
     end
   end
 
-  def get_members(list_id)
+  def get_subscribed_members(list_id)
     # Get list members.
-    return @mailchimp_api.lists.members(list_id)
+    return @mailchimp_api.lists.members(list_id, 'subscribed')["data"]
+  end
+
+  def get_unsubscribed_members(list_id)
+    # Get list members.
+    return @mailchimp_api.lists.members(list_id, 'unsubscribed')["data"]
   end
 
   def batch_add(list_id, email, unsubscribe=false)
@@ -210,14 +217,14 @@ class MailchimpClient < ActiveRecord::Base
     delete_member = true #if unsubscribing, delete this email out of the list.
     send_goodbye = false #don't send a goodbye email on unsubscribe
 
-    @batch.each_by_index do |list_id|
-      if @batch[list_id][:to_subscribe].count > 0
-        @mailchimp_api.lists.batch_subscribe(list_id, @batch[list_id][:to_subscribe],double_optin,update_existing)
-        @batch[list_id][:to_subscribe] = []  #clear the array
+    @batch.each do |list_id, list|
+      if list[:to_subscribe].count > 0
+        result = @mailchimp_api.lists.batch_subscribe(list_id, list[:to_subscribe],double_optin,update_existing)
+        list[:to_subscribe] = []  #clear the array
       end
-      if @batch[list_id][:to_unsubscribe].count > 0
-        @mailchimp_api.lists.batch_unsubscribe(list_id, @batch[list_id][:to_unsubscribe],delete_member,send_goodbye)
-        @batch[list_id][:to_unsubscribe] = []  #clear the array
+      if list[:to_unsubscribe].count > 0
+        result = @mailchimp_api.lists.batch_unsubscribe(list_id, list[:to_unsubscribe],delete_member,send_goodbye)
+        list[:to_unsubscribe] = []  #clear the array
       end
     end
   end
