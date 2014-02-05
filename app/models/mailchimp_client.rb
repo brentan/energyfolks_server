@@ -3,7 +3,7 @@ require 'mailchimp'
 class MailchimpClient < ActiveRecord::Base
   belongs_to :affiliate
 
-  attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id,
+  attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id, :weekly_digest_list_id,
                   :author_contributor_list_id, :editor_administrator_list_id
 
   # NOTE: affiliate_id can be nil, if these are the Mailchimp settings for the global Energyfolks mailing list.
@@ -16,11 +16,16 @@ class MailchimpClient < ActiveRecord::Base
 
   def each_list_different
     errors.add(:members_list_id, "must not be same as the daily digest list") if present_and_equal(self.members_list_id, self.daily_digest_list_id)
+    errors.add(:members_list_id, "must not be same as the weekly digest list") if present_and_equal(self.members_list_id, self.weekly_digest_list_id)
     errors.add(:members_list_id, "must not be same as the author contributor list") if present_and_equal(self.members_list_id, self.author_contributor_list_id)
     errors.add(:members_list_id, "must not be same as the editor administrator list") if present_and_equal(self.members_list_id, self.editor_administrator_list_id)
 
+    errors.add(:daily_digest_list_id, "must not be same as the weekly digest list") if present_and_equal(self.daily_digest_list_id, self.weekly_digest_list_id)
     errors.add(:daily_digest_list_id, "must not be same as the author contributor list") if present_and_equal(self.daily_digest_list_id, self.author_contributor_list_id)
     errors.add(:daily_digest_list_id, "must not be same as the editor administrator list") if present_and_equal(self.daily_digest_list_id, self.editor_administrator_list_id)
+
+    errors.add(:weekly_digest_list_id, "must not be same as the author contributor list") if present_and_equal(self.weekly_digest_list_id, self.author_contributor_list_id)
+    errors.add(:weekly_digest_list_id, "must not be same as the editor administrator list") if present_and_equal(self.weekly_digest_list_id, self.editor_administrator_list_id)
 
     errors.add(:author_contributor_list_id, "must not be same as the editor administrator list") if present_and_equal(self.author_contributor_list_id, self.editor_administrator_list_id)
   end
@@ -61,7 +66,8 @@ class MailchimpClient < ActiveRecord::Base
     m = user.memberships.approved.where(affilate_id == self.affiliate_id)
     if m.present?
       lists_in_energyfolks << self.members_list_id if user.subscription.announcement? || (m.admin_level >= Membership::EDITOR)
-      lists_in_energyfolks << self.daily_digest_list_id if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
+      lists_in_energyfolks << self.daily_digest_list_id if user.subscription.daily? || (m.admin_level >= Membership::EDITOR)
+      lists_in_energyfolks << self.weekly_digest_list_id if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
       lists_in_energyfolks << self.author_contributor_list_id if m.admin_level >= Membership::AUTHOR
       lists_in_energyfolks << self.editor_administrator_list_id if m.admin_level >= Membership::EDITOR
     end
@@ -82,6 +88,8 @@ class MailchimpClient < ActiveRecord::Base
     sync_list(self.members_list_id, :members_list) if self.members_list_id.present?
 
     sync_list(self.daily_digest_list_id, :daily_digest_list) if self.daily_digest_list_id.present?
+
+    sync_list(self.weekly_digest_list_id, :weekly_digest_list) if self.weekly_digest_list_id.present?
 
     sync_list(self.author_contributor_list_id, :author_contributor_list) if self.author_contributor_list_id.present?
 
@@ -154,6 +162,8 @@ class MailchimpClient < ActiveRecord::Base
       when :members_list
         users = self.affiliate.announcement_members
       when :daily_digest_list
+        users = self.affiliate.daily_digest_members
+      when :weekly_digest_list
         users = self.affiliate.digest_members
       when :author_contributor_list
         users = self.affiliate.admins(Membership::AUTHOR)
@@ -171,7 +181,10 @@ class MailchimpClient < ActiveRecord::Base
         s.announcement = 0
         s.save
       when :daily_digest_list
-        s.digest = 0
+        s.daily = 0
+        s.save
+      when :weekly_digest_list
+        s.weekly = 0
         s.save
       when :author_contributor_list
         # ignore.

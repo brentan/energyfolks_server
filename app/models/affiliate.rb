@@ -101,6 +101,11 @@ class Affiliate < ActiveRecord::Base
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
 
+  def daily_digest_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:daily => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+
+
   def email
     email = super
     email = 'contact@energyfolks.com' if email.blank?
