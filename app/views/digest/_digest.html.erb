@@ -28,7 +28,7 @@
 <% end %>
 
 <% if @items[:events][:all].present? %>
-    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="events"></a>Upcoming Events</div>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="events"></a><%= @items[:events][:message] %></div>
     <% if @items[:events][:highlighted].present? %>
         <strong>Highlighted by <%= @affiliate.name %></strong>
         <ul style='margin-top:0px;'>
@@ -68,7 +68,7 @@
 <% end %>
 
 <% if @items[:jobs][:all].present? %>
-    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="jobs"></a>Recent Job Posts</div>
+    <div style='margin:2px -2px;padding:3px;background-color:#<%= @affiliate.present? && @affiliate.id.present? ? @affiliate.color : '1D272F' %>;color:white;font-weight:bold;font-size:120%;'><a name="jobs"></a><%= @items[:jobs][:message] %></div>
     <% if @items[:jobs][:highlighted].present? %>
         <strong>Highlighted by <%= @affiliate.name %></strong>
         <ul style='margin-top:0px;'>

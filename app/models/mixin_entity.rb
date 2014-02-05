@@ -66,7 +66,7 @@ module MixinEntity
     end
 
     def date_column
-      'created_at'
+      'first_approved_at'
     end
     def to_archive
       self.where("created_at < ?", 2.years.ago).all
@@ -331,7 +331,7 @@ module MixinEntity
         :full_text => HTML::FullSanitizer.new.sanitize(self.html,:tags=>[]),
         :lat => latlng[:lat],
         :lng => latlng[:lng],
-        :date => self.send(self.class.date_column).to_i,
+        :date => self.send(self.class.date_column).present? ? self.send(self.class.date_column).to_i : 0,
         :affiliates => "ss#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :highlights => "ss#{self.highlights.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :type => self.entity_name,
@@ -650,6 +650,7 @@ module MixinEntity
         join_item.save!
         NotificationMailer.delay.item_approved(self.id, self.entity_name, affiliate.id)
         Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
+        self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
         self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
@@ -666,6 +667,7 @@ module MixinEntity
         join_item.save!
         NotificationMailer.delay.item_approved(self.id, self.entity_name, 0)
         Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
+        self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
         self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
