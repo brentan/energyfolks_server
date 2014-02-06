@@ -42,7 +42,7 @@ EnergyFolks.SmallLoginBox = function(element_id) {
  */
 EnergyFolks.LoginLinks = function(element_id) {
     var id = EnergyFolks.uniqueId();
-    var intext = "<div id='EnFolksLoginDiv_"+id+"' style='text-align:center;'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center><h6>Contacting energyfolks.com user system...</h6></div>";
+    var intext = "<div id='EnFolksLoginDiv_"+id+"'><h1>Loading...</h1><img src='"+EnergyFolks.server_url+"'/assets/loader.gif' style='display:inline;' align=center></div>";
     if(typeof element_id !== 'undefined')
         EnergyFolks.$(element_id).html(intext);
     else
