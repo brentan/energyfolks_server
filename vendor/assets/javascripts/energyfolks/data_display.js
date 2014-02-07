@@ -368,6 +368,7 @@ EnergyFolks.$(function() {
 
 //Map View
 EnergyFolks.moveMap = function(allow_reload) {
+    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) return;
     var bounds = EnergyFolks.map_layer.getBounds();
     var reload = false;
     if(bounds.getSouth() < EnergyFolks.map_bounds[0][0]) { reload=true; EnergyFolks.map_bounds[0][0] = bounds.getSouth(); }
@@ -382,7 +383,7 @@ EnergyFolks.showMap = function() {
     else
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
     if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
-        window.setTimeout(function() {Energyfolks.showMap(); }, 250);
+        window.setTimeout(function() {EnergyFolks.showMap(); }, 250);
         return;
     }
     EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
