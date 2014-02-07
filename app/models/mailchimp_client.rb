@@ -114,11 +114,11 @@ class MailchimpClient < ActiveRecord::Base
   end
 
   def get_list_member_emails(list_id)
-    get_subscribed_members(list_id).map { |m| m['email'] }
+    get_members(list_id, :subscribed).map { |m| m['email'] }
   end
 
   def get_list_unsubscribed_emails(list_id)
-    get_unsubscribed_members(list_id).map { |m| m['email'] }
+    get_members(list_id, :unsubscribed).map { |m| m['email'] }
   end
 
   def get_lists_for_this_user(email)
@@ -195,14 +195,23 @@ class MailchimpClient < ActiveRecord::Base
     end
   end
 
-  def get_subscribed_members(list_id)
+  def get_members(list_id, list_type = :subscribed)
     # Get list members.
-    return @mailchimp_api.lists.members(list_id, 'subscribed')["data"]
-  end
+    if list_type == :subscribed
+      list_type_string = 'subscribed'
+    else
+      list_type_string = 'unsubscribed'
+    end
 
-  def get_unsubscribed_members(list_id)
-    # Get list members.
-    return @mailchimp_api.lists.members(list_id, 'unsubscribed')["data"]
+    page_number = 0
+    members = []
+    begin
+      members_this_page = @mailchimp_api.lists.members(list_id, list_type_string, {start: page_number})["data"]
+      members = members + members_this_page
+      page_number += 1
+    end while members_this_page.count > 0
+
+    return members
   end
 
   def batch_add(list_id, email, unsubscribe=false)
@@ -217,7 +226,7 @@ class MailchimpClient < ActiveRecord::Base
       list[:to_subscribe] << { email: { email: email.downcase }, email_type: "html" }
     end
 
-    max_before_execute = 80
+    max_before_execute = 100 #Mailchimp recommends capping at 5k to 10k records, this number is conservative.
     batch_execute if list[:to_subscribe].count > max_before_execute || list[:to_unsubscribe].count > max_before_execute
   end
 
