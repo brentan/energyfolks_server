@@ -408,7 +408,11 @@ EnergyFolks.populateMap = function() {
     if(EnergyFolks.$('#EnfolksMapDiv').length == 0)
         EnergyFolks.showMap();
     EnergyFolks.$('#EnfolksMapDiv_loading').hide();
-    EnergyFolks.marker_layer.clearLayers();
+    try {
+        EnergyFolks.marker_layer.clearLayers();
+    } catch(err) {
+        alert('here');
+    }
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
         //EnergyFolks.marker_layer.addLayer(EnergyFolks.Leaflet.marker([v.latitude, v.longitude]).setPopupContent(EnergyFolks.itemDetailHTML(v, false)).openPopup());
         var marker = EnergyFolks.Leaflet.marker([v.latitude, v.longitude]);
