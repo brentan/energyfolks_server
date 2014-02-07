@@ -383,8 +383,8 @@ EnergyFolks.showMap = function() {
     else
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
     if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
-        window.setTimeout(function() {EnergyFolks.showMap(); }, 250);
-        return;
+        window.setTimeout(function() {if(EnergyFolks.showMap()) EnergyFolks.loadData(); }, 250);
+        return false;
     }
     EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
     EnergyFolks.Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -402,6 +402,7 @@ EnergyFolks.showMap = function() {
     EnergyFolks.map_layer.on('dragend', function(e) {
         EnergyFolks.moveMap(true);
     });
+    return true;
 }
 EnergyFolks.populateMap = function() {
     if(EnergyFolks.$('#EnfolksMapDiv').length == 0)
