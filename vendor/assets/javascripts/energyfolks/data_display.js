@@ -687,7 +687,7 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.params = {id: item.id, model: 'Event'};
         output.line_one = item.start_time + " - " + item.end_time + " " + item.tz;
         output.line_two = item.location;
-        output.widget = item.start_data + ", " + output.line_one;
+        output.widget = item.start_date + ", " + output.line_one;
         output.admin_links = EnergyFolks.adminLink(item, 'events');
     } else if(source == 'discussions') {
         output.affiliate_id = item.affiliate_id;
