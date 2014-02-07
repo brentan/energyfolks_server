@@ -22,6 +22,7 @@ class MailchimpController < ApplicationController
 
       @mailchimp_client = @affiliate.mailchimp_client
       @list_names = @mailchimp_client.get_list_names
+      flash[:notice] = "Your Mailchimp list settings for this affiliate have been synced."
     else
       flash[:notice] = "You do not have administrative privileges for this affiliate."
     end
@@ -37,6 +38,7 @@ class MailchimpController < ApplicationController
       @mailchimp_client.sync_lists
 
       @list_names = @mailchimp_client.get_list_names
+      flash[:notice] = "The membership list for this affiliate has been synced with your Mailchimp lists."
     else
       flash[:notice] = "You do not have administrative privileges for this affiliate."
     end
