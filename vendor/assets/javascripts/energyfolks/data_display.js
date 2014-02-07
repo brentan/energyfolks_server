@@ -402,6 +402,7 @@ EnergyFolks.showMap = function() {
     EnergyFolks.map_layer.on('dragend', function(e) {
         EnergyFolks.moveMap(true);
     });
+    alert(EnergyFolks.marker_layer);
     return true;
 }
 EnergyFolks.populateMap = function() {
