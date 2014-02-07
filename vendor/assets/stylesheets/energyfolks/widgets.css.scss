@@ -39,8 +39,12 @@ div.ef_widget {
   }
   div.line_one {
     font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
   }
-  div.line_one {
+  div.line_two {
     font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
