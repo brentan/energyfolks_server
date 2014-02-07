@@ -382,10 +382,7 @@ EnergyFolks.showMap = function() {
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div class='ef_force_ie8'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div></div>");
     else
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
-    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
-        window.setTimeout(function() {if(EnergyFolks.showMap()) window.setTimeout(function() {EnergyFolks.loadData(); }, 50)}, 250);
-        return false;
-    }
+    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) return;
     EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
     EnergyFolks.Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -402,8 +399,6 @@ EnergyFolks.showMap = function() {
     EnergyFolks.map_layer.on('dragend', function(e) {
         EnergyFolks.moveMap(true);
     });
-    alert(EnergyFolks.marker_layer);
-    return true;
 }
 EnergyFolks.populateMap = function() {
     if(EnergyFolks.$('#EnfolksMapDiv').length == 0)
@@ -412,7 +407,8 @@ EnergyFolks.populateMap = function() {
     try {
         EnergyFolks.marker_layer.clearLayers();
     } catch(err) {
-        alert('here');
+        EnergyFolks.showMap();
+        EnergyFolks.marker_layer.clearLayers();
     }
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
         //EnergyFolks.marker_layer.addLayer(EnergyFolks.Leaflet.marker([v.latitude, v.longitude]).setPopupContent(EnergyFolks.itemDetailHTML(v, false)).openPopup());
