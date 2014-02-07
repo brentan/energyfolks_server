@@ -350,7 +350,6 @@ EnergyFolks.loadData = function() {
         EnergyFolks.loading('#EnfolksResultDiv');
     else
         EnergyFolks.loading('#EnfolksResultDiv_' + EnergyFolks.page);
-    console.log({source: EnergyFolks.source_restrict, tags: EnergyFolks.active_tags, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts});
     EnergyFolks.ajax(EnergyFolks.source, {source: EnergyFolks.source_restrict, tags: EnergyFolks.active_tags, radius: EnergyFolks.map_location_radius, location_lat: EnergyFolks.map_location_lat, location_lng: EnergyFolks.map_location_lng, bounds: bounds, terms: EnergyFolks.search_terms, shift: EnergyFolks.shift_later, month: EnergyFolks.current_month, per_page: EnergyFolks.per_page, page: EnergyFolks.page, display: EnergyFolks.format, moderation: EnergyFolks.get_moderated, my_posts: EnergyFolks.get_my_posts}, EnergyFolks.showData);
 }
 
@@ -409,7 +408,8 @@ EnergyFolks.populateMap = function() {
         EnergyFolks.marker_layer.clearLayers();
     } catch(err) {
         EnergyFolks.showMap();
-        EnergyFolks.marker_layer.clearLayers();
+        EnergyFolks.moveMap(true);
+        return;
     }
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
         //EnergyFolks.marker_layer.addLayer(EnergyFolks.Leaflet.marker([v.latitude, v.longitude]).setPopupContent(EnergyFolks.itemDetailHTML(v, false)).openPopup());
