@@ -332,6 +332,7 @@ EnergyFolks.showData = function(data) {
     if(EnergyFolks.format == 'map') {
         EnergyFolks.$('#ef_map').addClass('ef_selected');
         EnergyFolks.$('#location_filter').hide();
+        alert(data.data);
         EnergyFolks.populateMap();
     }
     if(EnergyFolks.format == 'stream') {
