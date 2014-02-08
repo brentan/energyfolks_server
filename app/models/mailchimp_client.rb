@@ -58,29 +58,29 @@ class MailchimpClient < ActiveRecord::Base
   def sync_user(user)
     # call this for each affiliate
     # to sync the email settings for one particular user & affiliate in mailchimp with the email settings in the Energyfolks database.
-    return unless Rails.env.production? && api_key.present?
+
+    return unless api_key.present? && Rails.env.production?
 
     lists_in_mailchimp = get_lists_for_this_user(user.email)
     lists_in_energyfolks = []
 
-    m = user.memberships.approved.where(affilate_id == self.affiliate_id)
+    m = user.memberships.approved.where(affiliate_id: self.affiliate).first
     if m.present?
-      lists_in_energyfolks << self.members_list_id if user.subscription.announcement? || (m.admin_level >= Membership::EDITOR)
-      lists_in_energyfolks << self.daily_digest_list_id if user.subscription.daily? || (m.admin_level >= Membership::EDITOR)
-      lists_in_energyfolks << self.weekly_digest_list_id if user.subscription.weekly? || (m.admin_level >= Membership::EDITOR)
-      lists_in_energyfolks << self.author_contributor_list_id if m.admin_level >= Membership::AUTHOR
-      lists_in_energyfolks << self.editor_administrator_list_id if m.admin_level >= Membership::EDITOR
+      lists_in_energyfolks << self.members_list_id if self.members_list_id.present? && (user.subscription.announcement? || (m.admin_level >= Membership::EDITOR))
+      lists_in_energyfolks << self.daily_digest_list_id if self.daily_digest_list_id.present? && (user.subscription.daily? || (m.admin_level >= Membership::EDITOR))
+      lists_in_energyfolks << self.weekly_digest_list_id if self.weekly_digest_list_id.present? && (user.subscription.weekly? || (m.admin_level >= Membership::EDITOR))
+      lists_in_energyfolks << self.author_contributor_list_id if self.author_contributor_list_id.present? && (m.admin_level >= Membership::AUTHOR)
+      lists_in_energyfolks << self.editor_administrator_list_id if self.editor_administrator_list_id.present? && (m.admin_level >= Membership::EDITOR)
     end
 
-    (lists_in_energyfolks - lists_in_mailchimp).each { |list_id_to_add| batch_add(list_id, user.email.downcase) }
-    (lists_in_mailchimp - lists_in_energyfolks).each { |list_id_to_remove| batch_add(list_id, user.email.downcase,true) }
+    (lists_in_energyfolks - lists_in_mailchimp).each { |list_id_to_add| batch_add(list_id_to_add, user.email.downcase) }
+    (lists_in_mailchimp - lists_in_energyfolks).each { |list_id_to_remove| batch_add(list_id_to_remove, user.email.downcase,true) }
 
     batch_execute
   end
 
   def sync_lists
-    #TODO: take out the debug comment below
-    return unless api_key.present? #debug && Rails.env.production?
+    return unless api_key.present? && Rails.env.production?
 
     # This will sync this affiliate's Mailchimp email lists with their user database.
     get_client
@@ -126,8 +126,11 @@ class MailchimpClient < ActiveRecord::Base
     list_memberships = []
 
     get_list_names.each do |l|
-      list_memberships << l["id"] if get_list_member_emails(l["id"]).include?(e)
+      #pull out the list id in element l[1], don't need the list name in element 0.
+      list_memberships << l[1] if get_list_member_emails(l[1]).include?(e)
     end
+
+    return list_memberships
   end
 
   def sync_list(list_id, list_type)
