@@ -66,7 +66,7 @@ module MixinEntity
     end
 
     def date_column
-      'created_at'
+      'first_approved_at'
     end
     def to_archive
       self.where("created_at < ?", 2.years.ago).all
@@ -331,7 +331,7 @@ module MixinEntity
         :full_text => HTML::FullSanitizer.new.sanitize(self.html,:tags=>[]),
         :lat => latlng[:lat],
         :lng => latlng[:lng],
-        :date => self.send(self.class.date_column).to_i,
+        :date => self.send(self.class.date_column).present? ? self.send(self.class.date_column).to_i : 0,
         :affiliates => "ss#{self.affiliate_join.where("approved_version > 0").map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :highlights => "ss#{self.highlights.map { |e| e.affiliate_id.to_s(27).tr("0-9a-q", "A-Z") }.join("ee ss")}ee",
         :type => self.entity_name,
@@ -390,6 +390,7 @@ module MixinEntity
     Comment.count_comments(self.comment_hash)
   end
   def static_url(affil = nil)
+    return self.url if self.instance_of?(Blog) && self.wordpress_id.present? && self.url.present?
     if affil.present?
       affil_url = affil.send("url_#{self.method_name}")
       return "#{affil_url}#command=show&parameters=id%3D#{self.id}%26model%3D#{self.entity_name}" if affil_url.present?
@@ -480,7 +481,7 @@ module MixinEntity
         affiliate = Affiliate.find_by_id(0)
       end
       recipients.each do |user|
-        NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(user, affiliate.id.present? ? affiliate.id : 0, self, i)
+        NotificationMailer.delay(:run_at => 15.minutes.from_now).awaiting_moderation(user.id, affiliate.id.present? ? affiliate.id : 0, self.id, self.entity_name, i)
       end
       i.broadcast = true
       i.save(:validate => false)
@@ -519,9 +520,10 @@ module MixinEntity
           # geocode test
           if self.geocoded?
             distance = u.subscription.send("#{self.class.name.downcase}_radius")
+            distance ||= 0
             next if (distance > 0) && (self.distance_from([u.latitude, u.longitude]) > distance)
           else
-            next if u.subscription.send("#{self.class.name.downcase}_radius") > 0
+            next if u.subscription.send("#{self.class.name.downcase}_radius").present? && (u.subscription.send("#{self.class.name.downcase}_radius") > 0)
           end
         end
         token = self.emails.create(user_id: user_id).token
@@ -600,6 +602,7 @@ module MixinEntity
   # When saving a new version, should we increment the version number?  Only needed if someone has approved current version
   def increment_version?
     return true if self.current_version == 0
+    return false if self.instance_of?(Blog) && self.wordpress_id.present?
     total_approved = self.affiliate_join.where(:approved_version => self.current_version).count
     return true if total_approved > 0
     return false
@@ -645,8 +648,9 @@ module MixinEntity
         join_item.awaiting_edit = false
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
-        NotificationMailer.delay.item_approved(self, affiliate.id)
+        NotificationMailer.delay.item_approved(self.id, self.entity_name, affiliate.id)
         Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
+        self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
         self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
@@ -661,8 +665,9 @@ module MixinEntity
         join_item.awaiting_edit = false
         join_item.approved_versions += ",#{self.current_version}"
         join_item.save!
-        NotificationMailer.delay.item_approved(self, 0)
+        NotificationMailer.delay.item_approved(self.id, self.entity_name, 0)
         Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
+        self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
         self.delay(:run_at => 15.minutes.from_now).user_broadcast
         self.update_index
@@ -678,12 +683,12 @@ module MixinEntity
         join_item = self.affiliate_join.where(affiliate_id: affiliate.id).first
         return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
-          NotificationMailer.delay.item_removed(self, reason, affiliate.id)
+          NotificationMailer.delay.item_removed(self.id, self.entity_name, reason, affiliate.id)
           join_item.approved_version = 0
           join_item.approved_versions ='0'
           notice = "Item removed"
         else
-          NotificationMailer.delay.item_rejected(self, reason, affiliate.id)
+          NotificationMailer.delay.item_rejected(self.id, self.entity_name, reason, affiliate.id)
           notice = "Item Rejected"
         end
         join_item.awaiting_edit = true
@@ -696,12 +701,12 @@ module MixinEntity
         join_item = self.affiliate_join.where(affiliate_id: 0).first
         return "Something went wrong" if join_item.blank?
         if join_item.approved_version == self.current_version
-          NotificationMailer.delay.item_removed(self, reason, 0)
+          NotificationMailer.delay.item_removed(self.id, self.entity_name, reason, 0)
           join_item.approved_version = 0
           join_item.approved_versions ='0'
           notice = "Item removed"
         else
-          NotificationMailer.delay.item_rejected(self, reason, 0)
+          NotificationMailer.delay.item_rejected(self.id, self.entity_name, reason, 0)
           notice = "Item Rejected"
         end
         join_item.awaiting_edit = true

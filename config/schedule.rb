@@ -30,6 +30,7 @@ every 1.day, :at => '10:00 am' do
   rake "clean_up:sessions"
   rake "clean_up:tag_count"
   rake "clean_up:old_analytics"
+  rake "clean_up:scheduled_operations"
 end
 every 1.day, :at => '9:00 am' do
   rake "nightly:wordpress"
@@ -41,10 +42,16 @@ end
 every 1.day, :at => '7:00 pm' do
   rake "nightly:archive"
 end
+every 1.day, :at => '7:20 pm' do
+  rake "nightly:autoimport"
+end
 
 every 1.hour do
   rake "digest:daily"
 end
 every 1.hour do
   rake "digest:weekly"
+end
+every 6.hours do
+  rake "clean_up:delayed_job_test"
 end

@@ -27,6 +27,7 @@ div.ef_widget {
     margin: 0px;
     padding: 2px;
     text-align: left;
+    overflow: hidden;
     &:hover {
       background-color: #eeeeee;
     }
@@ -40,7 +41,9 @@ div.ef_widget {
   div.line_one {
     font-size: 13px;
   }
-  div.line_one {
+  div.line_two {
     font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

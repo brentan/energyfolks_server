@@ -22,6 +22,15 @@ class AdminsController < ApplicationController
     @css_hash = Rails.application.assets.find_asset('energyfolks.css').digest_path.split('-')[1].split('.')[0]
   end
 
+  def sync_wordpress
+    call_rake "nightly:wordpress"
+    redirect_to '/admins/wordpress_versions?iframe_next=1'
+  end
+
+  def crontab
+    @items = ScheduledOperation.order('created_at').all
+  end
+
   private
   def check_for_admin_rights
     return redirect_to '/' unless current_user.present?

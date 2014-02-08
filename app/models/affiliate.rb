@@ -7,6 +7,7 @@ class Affiliate < ActiveRecord::Base
   has_many :emails, as: :entity, :dependent => :destroy
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :calendar_imports, :dependent => :destroy
   has_many :visits, :dependent => :destroy
   has_many :user_logins
   has_many :nightly_stats, :dependent => :destroy
@@ -18,7 +19,7 @@ class Affiliate < ActiveRecord::Base
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :custom_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
-                  :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius,
+                  :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius, :calendar_imports_attributes,
                   :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded
 
 
@@ -44,6 +45,8 @@ class Affiliate < ActiveRecord::Base
   before_destroy :remove_all_primary_references
   before_destroy :remove_from_google
   after_create :add_to_google
+
+  accepts_nested_attributes_for :calendar_imports, :allow_destroy => true
 
   # 'open' codes
   OPEN = 1

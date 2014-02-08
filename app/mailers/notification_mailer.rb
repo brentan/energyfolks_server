@@ -2,14 +2,31 @@ class NotificationMailer < ActionMailer::Base
   helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
-  def awaiting_moderation(user, aid, item, join_item)
+  def awaiting_moderation(user_id, aid, item_id, item_model, join_item)
+    item = item_model.constantize.find(item_id)
     @item = item
     @join_item = join_item
     @affiliate = Affiliate.find_by_id(aid)
     @host = @affiliate.entity_url(item)
     from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
-    @user = user
+    @user = User.find_by_id(user_id)
     mail(to: @user.email, from: from, subject: "A new #{item.entity_type} is awaiting moderation")
+  end
+
+  def auto_import_complete(user, aid, numbers)
+    @user = user
+    @affiliate = Affiliate.find_by_id(aid)
+    @numbers = numbers
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "New imported events awaiting moderation")
+  end
+
+  def auto_import_failure(user, aid, url)
+    @user = user
+    @affiliate = Affiliate.find_by_id(aid)
+    @url = url
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Auto-import failure")
   end
 
   def entity(user, entity, token)
@@ -47,8 +64,10 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, reply_to: "comment_#{reply_to}@reply.energyfolks.com", subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}: New Comment] #{entity.name}")
   end
 
-  def item_removed(item, reason, aid)
+  def item_removed(item_id, item_model, reason, aid)
+    item = item_model.constantize.find(item_id)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @reason = reason
     @affiliate = Affiliate.find_by_id(aid)
@@ -59,8 +78,10 @@ class NotificationMailer < ActionMailer::Base
 
   end
 
-  def item_rejected(item, reason, aid)
+  def item_rejected(item_id, item_model, reason, aid)
+    item = item_model.constantize.find(item_id)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @user = @item.user
     @reason = reason
@@ -70,8 +91,10 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "Your #{item.entity_type} has been rejected")
   end
 
-  def item_approved(item, aid)
+  def item_approved(item_id, item_model, aid)
+    item = item_model.constantize.find(item_id)
     return if item.instance_of?(Blog) #Blogs are only posted by admins, so approval/denial notices are not needed
+    return if item.user_id.blank? || (item.user_id == -1)
     @item = item
     @user = @item.user
     @affiliate = Affiliate.find_by_id(aid)

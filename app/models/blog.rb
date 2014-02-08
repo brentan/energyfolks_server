@@ -6,6 +6,7 @@ class Blog < ActiveRecord::Base
 
   after_save :update_comment_details
   before_save :update_lat_lng
+  before_save :html_entities
   before_destroy :remove_comments
 
   default_scope order('created_at DESC').where(frozen_by_wordpress: false)
@@ -43,6 +44,11 @@ class Blog < ActiveRecord::Base
     self.created_at.strftime( "%B %-d, %Y")
   end
 
+
+  def self.total_needing_moderation(affiliate)
+    self.join_table.joins(:blog).waiting.where(affiliates_blogs: { affiliate_id: affiliate.id.present? ? affiliate.id : 0, broadcast: true}, blogs: {frozen_by_wordpress: false})
+  end
+
   private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)
@@ -63,7 +69,7 @@ class Blog < ActiveRecord::Base
     begin
       user = User.find(self.user_id)
       affiliate = Affiliate.find_by_id(self.affiliate_id)
-      errors.add(:name, "You are not authorized to create new blog posts" ) if !user.admin? && !affiliate.admin?(user, Membership::AUTHOR)
+      errors.add(:name, "You are not authorized to create new blog posts" ) if !user.admin? && !affiliate.admin?(user, Membership::CONTRIBUTOR)
     rescue
       errors.add(:name, "You are not authorized to create new blog posts" )
     end
@@ -72,6 +78,10 @@ class Blog < ActiveRecord::Base
     Comment.where(:unique_hash => self.comment_hash).all.each { |e| e.destroy }
     CommentDetail.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
     CommentSubscriber.where(:comment_hash => self.comment_hash).all.each { |e| e.destroy }
+  end
+
+  def html_entities
+    self.name = HTMLEntities.new.decode(self.name)
   end
 
 end

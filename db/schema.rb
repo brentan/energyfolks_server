@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205024207) do
+ActiveRecord::Schema.define(:version => 20140205220432) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20140205024207) do
     t.boolean  "archived",                :default => false
     t.boolean  "frozen_by_wordpress",     :default => false
     t.boolean  "legacy",                  :default => false
+    t.datetime "first_approved_at"
   end
 
   add_index "blogs", ["frozen_by_wordpress"], :name => "index_blogs_on_frozen_by_wordpress"
@@ -161,6 +162,13 @@ ActiveRecord::Schema.define(:version => 20140205024207) do
 
   add_index "blogs_versions", ["entity_id"], :name => "index_blogs_versions_on_entity_id"
   add_index "blogs_versions", ["version_number"], :name => "index_blogs_versions_on_version_number"
+
+  create_table "calendar_imports", :force => true do |t|
+    t.integer "affiliate_id"
+    t.string  "url"
+    t.string  "location"
+    t.boolean "send_to_all"
+  end
 
   create_table "comment_details", :force => true do |t|
     t.string "name"
@@ -252,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20140205024207) do
     t.integer  "total_comments",          :default => 0
     t.boolean  "archived",                :default => false
     t.boolean  "legacy",                  :default => false
+    t.datetime "first_approved_at"
   end
 
   create_table "discussions_versions", :force => true do |t|
@@ -319,6 +328,8 @@ ActiveRecord::Schema.define(:version => 20140205024207) do
     t.string   "timezone"
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
+    t.string   "autoimport"
+    t.datetime "first_approved_at"
   end
 
   create_table "events_versions", :force => true do |t|
@@ -382,6 +393,7 @@ ActiveRecord::Schema.define(:version => 20140205024207) do
     t.integer  "last_updated_by"
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
+    t.datetime "first_approved_at"
   end
 
   create_table "jobs_versions", :force => true do |t|

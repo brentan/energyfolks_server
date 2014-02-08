@@ -4,6 +4,7 @@ namespace :nightly do
 
   desc "Synchronize information with all wordpress affiliates"
   task :wordpress => :environment do
+    operation = ScheduledOperation.start('wordpress sync')
     require 'open-uri'
     Affiliate.all.each do |affiliate|
       next if affiliate.shared_secret.blank?
@@ -19,17 +20,18 @@ namespace :nightly do
       rescue
       end
     end
+    operation.mark_complete
   end
 
   desc "Resynchronize with google"
   task :google => :environment do
+    operation = ScheduledOperation.start('google sync')
     google = GoogleClient.new
     google.sync_global
     Affiliate.all.each { |a|
-      ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', a.name).deliver
       google.sync_affiliate(a)
     }
-    ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY GOOGLE SYNC', 'subject', 'COMPLETE').deliver
+    operation.mark_complete
   end
 
   desc "Resynchronize with mailchimp"
@@ -43,12 +45,48 @@ namespace :nightly do
 
   desc "Archive Old Stuff"
   task :archive => :environment do
+    operation = ScheduledOperation.start('archive old stuff')
     ApplicationController::ENTITIES.each do |e|
       e.to_archive.each do |i|
         i.update_column(:archived, true)
         i.remove_from_index
       end
     end
+    operation.mark_complete
+  end
+
+  desc "AutoImport"
+  task :autoimport => :environment do
+    operation = ScheduledOperation.start('Auto-Import')
+    to_send_ef = []
+    to_send_affiliate = {}
+    imports = CalendarImport.all
+    imports.each do |i|
+      aid, url, total, total_ef = i.import_events
+      if total > 0
+        if to_send_affiliate.has_key?(aid)
+          to_send_affiliate[aid] << {aid: aid, url: url, total: total}
+        else
+          to_send_affiliate[aid] = [{aid: aid, url: url, total: total}]
+        end
+      end
+      if total_ef > 0
+        to_send_ef << {aid: aid, url: url, total: total_ef}
+      end
+    end
+    to_send_affiliate.each do |k, v|
+      recipients = Affiliate.find_by_id(k.to_i).admins(Membership::EDITOR, true)
+      recipients.each do |user|
+        NotificationMailer.auto_import_complete(user, k.to_i, v).deliver()
+      end
+    end
+    if to_send_ef.present?
+      recipients = User.where(admin: true, admin_emails: true).all
+      recipients.each do |user|
+        NotificationMailer.auto_import_complete(user, 0, to_send_ef).deliver()
+      end
+    end
+    operation.mark_complete
   end
 
 end

@@ -4,6 +4,7 @@
     <th>Affiliate Name</th>
     <th>Member?</th>
     <th>Add/Remove</th>
+    <th>Primary</th>
   </tr>
 <% Affiliate.all.each do |a| %>
   <tr>
@@ -36,6 +37,10 @@
     </td>
     <td>
       <%= @memberships.include?(a.id) ? link_to('Remove', "/users/memberships_remove?id=#{@user.id}&mid=#{@status[a.id][:mid]}") : link_to('Add', "/users/memberships_add?id=#{@user.id}&aid=#{a.id}") %>
+    </td>
+    <td>
+      <%= 'Primary' if @memberships.include?(a.id) && (@user.affiliate_id == a.id) %>
+      <%=  link_to('Make Primary', "/users/memberships_primary?id=#{@user.id}&mid=#{@status[a.id][:mid]}") if @memberships.include?(a.id) && (@user.affiliate_id != a.id) %>
     </td>
   </tr>
 <% end %>

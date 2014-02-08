@@ -165,6 +165,7 @@ class AjaxController < ApplicationController
   def show
     return render_ajax( {html: '<h1>An error has occurred</h1><p>We have been notified and will work to fix this issue.</p>'}) if params[:model].nil? || params[:id].nil?
     item = params[:model].constantize.find_by_id(params[:id])
+    return render_ajax(html: 'This item no longer exists.  It may have been removed by its author.') unless item.present?
     item.mark_read(user_logged_in? ? current_user.id : 0, current_affiliate.id, request.remote_ip)
     @item = item
     @item.version_control(current_user, current_affiliate)
