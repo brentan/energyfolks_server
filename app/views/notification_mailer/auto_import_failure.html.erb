@@ -1,0 +1,11 @@
+<%= @user.first_name %>,
+<BR><BR>
+An automatic import for a calendar you are syncing with failed.  This is possibly due to a bad URL, the calendar server
+being down, or malformed content.  If you receive this message multiple days in a row, the calendar URL has likely changed
+or been removed.
+<BR><BR>
+URL: <%= @url %>
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.id.present? ? "energyfolks on behalf of #{@affiliate.name}" : "energyfolks" %>

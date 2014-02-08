@@ -368,6 +368,7 @@ EnergyFolks.$(function() {
 
 //Map View
 EnergyFolks.moveMap = function(allow_reload) {
+    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) return;
     var bounds = EnergyFolks.map_layer.getBounds();
     var reload = false;
     if(bounds.getSouth() < EnergyFolks.map_bounds[0][0]) { reload=true; EnergyFolks.map_bounds[0][0] = bounds.getSouth(); }
@@ -381,10 +382,7 @@ EnergyFolks.showMap = function() {
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div class='ef_force_ie8'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div></div>");
     else
         EnergyFolks.$('#EnfolksResultDiv').html("<div id='EnfolksMapDiv'><div id='EnfolksMapDiv_map'></div><div id='EnfolksMapDiv_loading'></div></div>");
-    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) {
-        window.setTimeout(function() {Energyfolks.showMap(); }, 250);
-        return;
-    }
+    if((EnergyFolks.map_lat == 0) && (EnergyFolks.map_lng == 0)) return;
     EnergyFolks.map_layer = EnergyFolks.Leaflet.map('EnfolksMapDiv_map').setView([EnergyFolks.map_lat, EnergyFolks.map_lng], EnergyFolks.map_zoom);
     EnergyFolks.Leaflet.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -406,7 +404,13 @@ EnergyFolks.populateMap = function() {
     if(EnergyFolks.$('#EnfolksMapDiv').length == 0)
         EnergyFolks.showMap();
     EnergyFolks.$('#EnfolksMapDiv_loading').hide();
-    EnergyFolks.marker_layer.clearLayers();
+    try {
+        EnergyFolks.marker_layer.clearLayers();
+    } catch(err) {
+        EnergyFolks.showMap();
+        EnergyFolks.moveMap(true);
+        return;
+    }
     EnergyFolks.$.each(EnergyFolks.data, function(i, v) {
         //EnergyFolks.marker_layer.addLayer(EnergyFolks.Leaflet.marker([v.latitude, v.longitude]).setPopupContent(EnergyFolks.itemDetailHTML(v, false)).openPopup());
         var marker = EnergyFolks.Leaflet.marker([v.latitude, v.longitude]);
@@ -526,6 +530,9 @@ EnergyFolks.$(function() {
         EnergyFolks.$(this).find('.ef_add_event').show();
     });
     EnergyFolks.$('body').on('mouseenter','.enfolks_calendar_item', function() {
+        EnergyFolks.$('.enfolks_detail_popup').hide();
+        EnergyFolks.$('.enfolks_detail_popup_white_2').hide();
+        EnergyFolks.$('.enfolks_detail_popup_white').hide();
         EnergyFolks.$(this).find('.enfolks_detail_popup').show();
         EnergyFolks.$(this).find('.enfolks_detail_popup_white').show();
         EnergyFolks.$(this).find('.enfolks_detail_popup_white_2').show();
@@ -593,7 +600,7 @@ EnergyFolks.itemDetailHTML = function(item, show_links) {
     if((info.line_one != null) && (info.line_one != 'null'))
         output += '<h3 class="line1">' + info.line_one + '</h3>';
     if(EnergyFolks.format == 'stream')
-        output += '</td></tr></table><div class="html">' + info.html + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
+        output += '</td></tr></table><div class="html">' + info.html.replace(/width=/g, 'width=300 old_width=').replace(/height=/g,'old_height=').replace(/<script/g, '<noscript').replace(/script>/g,'noscript>') + EnergyFolks.Comments_HTML(info.title, info.hash, true) + '</div>';
     else if((info.line_two != null) && (info.line_two != 'null'))
         output += '<span class="line2">' + info.line_two + '</span>';
     output += '</td></tr></table>';
@@ -683,7 +690,7 @@ EnergyFolks.getItemInfo = function(item, source) {
         output.params = {id: item.id, model: 'Event'};
         output.line_one = item.start_time + " - " + item.end_time + " " + item.tz;
         output.line_two = item.location;
-        output.widget = item.start_data + ", " + output.line_one;
+        output.widget = item.start_date + ", " + output.line_one;
         output.admin_links = EnergyFolks.adminLink(item, 'events');
     } else if(source == 'discussions') {
         output.affiliate_id = item.affiliate_id;

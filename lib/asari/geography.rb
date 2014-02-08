@@ -77,13 +77,12 @@ class Asari
 
         bottom = latitude_to_int(latitude - change_in_latitude)
         top = latitude_to_int(latitude + change_in_latitude)
-        if((latitude - change_in_latitude).abs < (latitude + change_in_latitude).abs)
-          left = longitude_to_int(longitude - change_in_longitude, latitude - change_in_latitude)
-          right = longitude_to_int(longitude + change_in_longitude, latitude - change_in_latitude)
-        else
-          left = longitude_to_int(longitude - change_in_longitude, latitude + change_in_latitude)
-          right = longitude_to_int(longitude + change_in_longitude, latitude + change_in_latitude)
-        end
+        left1 = longitude_to_int(longitude - change_in_longitude, latitude - change_in_latitude)
+        right1 = longitude_to_int(longitude + change_in_longitude, latitude - change_in_latitude)
+        left2 = longitude_to_int(longitude - change_in_longitude, latitude + change_in_latitude)
+        right2 = longitude_to_int(longitude + change_in_longitude, latitude + change_in_latitude)
+        left = left1 < left2 ? left1 : left2
+        right = right1 > right2 ? right1 : right2
 
         { lat: (bottom.round..top.round), lng: (left.round..right.round) }
       end
@@ -102,13 +101,14 @@ class Asari
 
         bottom = latitude_to_int(options[:sw][:lat])
         top = latitude_to_int(options[:ne][:lat])
-        if((options[:sw][:lat]).abs < (options[:ne][:lat]).abs)
-          left = longitude_to_int(options[:sw][:lng], options[:sw][:lat])
-          right = longitude_to_int(options[:ne][:lng], options[:sw][:lat])
-        else
-          left = longitude_to_int(options[:sw][:lng], options[:ne][:lat])
-          right = longitude_to_int(options[:ne][:lng], options[:ne][:lat])
-        end
+        left1 = longitude_to_int(options[:sw][:lng], options[:sw][:lat])
+        right1 = longitude_to_int(options[:ne][:lng], options[:sw][:lat])
+
+        left2 = longitude_to_int(options[:sw][:lng], options[:ne][:lat])
+        right2 = longitude_to_int(options[:ne][:lng], options[:ne][:lat])
+
+        left = left1 < left2 ? left1 : left2
+        right = right1 > right2 ? right1 : right2
 
         { lat: (bottom.round..top.round), lng: (left.round..right.round) }
       end

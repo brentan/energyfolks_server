@@ -1,0 +1,11 @@
+<a href='/admins/?iframe_next=1'>Back to Admin Main Screen</a>
+<h1>Automated Task Log</h1>
+<ul>
+<% @items.each do |i| %>
+  <li>
+    <%= content_tag(:strong, i.command) %> -
+    <%= i.created_at.strftime( "%A, %B %-d, %Y - %l:%M %p") %>:
+    <%= i.complete? ? "COMPLETED - #{i.updated_at.strftime( "%A, %B %-d, %Y - %l:%M %p")}" : "NOT YET COMPLETE" %>
+  </li>
+<% end %>
+</ul>

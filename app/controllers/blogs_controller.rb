@@ -17,13 +17,6 @@ class BlogsController < ApplicationController
         # Current post, update details
         if(blog.update_attributes(data))
           Tag.update_tags(params[:tags], blog)
-          blog.affiliate_join.where(awaiting_edit: true).each do |r|
-            r.awaiting_edit = false
-            r.broadcast = false
-            r.save!
-          end
-          blog.reload
-          blog.broadcast(false)
           render :nothing => true
         else
           render :inline => 'Item could not be saved: ensure the title and body are not blank.'
@@ -42,7 +35,7 @@ class BlogsController < ApplicationController
             last_updated_by: params[:owner_id].to_i
         }
         blog = Blog.new(data)
-        blog.affiliates_blogs.build({affiliate_id: 0})
+        blog.affiliates_blogs.build({affiliate_id: 0, awaiting_edit: false})
         if blog.save!
           Tag.update_tags(params[:tags], blog)
           render :nothing => true

@@ -180,8 +180,7 @@ class UsersController < ApplicationController
   def delete
     @user = User.find(session[:userid])
     @user.destroy
-    @alert="Your account has been completely removed."
-    render 'common/refresh_parent'
+    render :inline => "Your account has been completely removed."
   end
 
   def update
@@ -335,6 +334,8 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
     Membership.create({affiliate_id: params[:aid], user_id: params[:id], approved: true})
     @user.reload
+    @user.update_column(:affiliate_id, params[:aid]) if @user.memberships.length == 1
+    @user.reload
     @user.delay.sync
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User added to group'
   end
@@ -342,10 +343,24 @@ class UsersController < ApplicationController
   def memberships_remove
     return redirect_to "/" unless current_user.admin?
     @user = User.find_by_id(params[:id])
-    Membership.find_by_id(params[:mid]).destroy
+    m = Membership.find_by_id(params[:mid])
+    aid = m.affiliate_id
+    m.destroy
+    @user.reload
+    @user.update_column(:affiliate_id, 0) if @user.memberships.length == 0
+    @user.update_column(:affiliate_id, @user.memberships.first.affiliate_id) if (@user.memberships.length > 0) && (@user.affiliate_id == aid)
     @user.reload
     @user.delay.sync
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User removed from group'
+  end
+  def memberships_primary
+    return redirect_to "/" unless current_user.admin?
+    @user = User.find_by_id(params[:id])
+    m = Membership.find_by_id(params[:mid])
+    @user.update_column(:affiliate_id, m.affiliate_id)
+    @user.reload
+    @user.delay.sync
+    redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User Primary Affiliation Changed'
   end
 
   def privacy
