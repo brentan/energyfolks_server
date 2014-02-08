@@ -44,6 +44,11 @@ class Blog < ActiveRecord::Base
     self.created_at.strftime( "%B %-d, %Y")
   end
 
+
+  def self.total_needing_moderation(affiliate)
+    self.join_table.joins(:blog).waiting.where(affiliates_blogs: { affiliate_id: affiliate.id.present? ? affiliate.id : 0, broadcast: true}, blogs: {frozen_by_wordpress: false})
+  end
+
   private
   def update_comment_details
     CommentDetail.update(self.comment_hash, self.name, self.static_url)

@@ -37,20 +37,20 @@ class DigestMailer < ActiveRecord::Base
 
     # Determine job radius settings
     if self.user.subscription.job_radius == 0
-      output[:jobs] = {message: 'All Jobs regardless of location'}
+      output[:jobs] = {message: 'Recent Job Posts (Any location)'}
       options = {}
     else
-      output[:jobs] = {message: "Jobs within #{self.user.subscription.job_radius} miles of #{self.user.location}"}
+      output[:jobs] = {message: "Recent Job Posts (within #{self.user.subscription.job_radius} miles of #{self.user.location})"}
       options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: self.user.subscription.job_radius }
     end
     output[:jobs] = output[:jobs].merge(get_items(Job, options))
 
     # Determine event radius settings
-    if self.user.subscription.job_radius == 0
-      output[:events] = {message: 'All Events regardless of location'}
+    if self.user.subscription.event_radius == 0
+      output[:events] = {message: 'Upcoming Events (Any location)'}
       options = {}
     else
-      output[:events] = {message: "Events within #{self.user.subscription.event_radius} miles of #{self.user.location}"}
+      output[:events] = {message: "Upcoming Events (within #{self.user.subscription.event_radius} miles of #{self.user.location})"}
       options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: self.user.subscription.event_radius }
     end
     output[:events] = output[:events].merge(get_items(Event, options))

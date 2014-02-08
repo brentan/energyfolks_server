@@ -77,7 +77,7 @@ class GoogleClient
     (admins - current_admins).each {|e| batch_add({api_method: @admin.members.update, parameters: {:groupKey => "#{affiliate.email_name}-members@energyfolks.com", memberKey: e}, body_object: {role: 'OWNER', type: 'USER'}}) }
 
     #digest list
-    emails = affiliate.announcement_members.map{ |u| u.email.downcase } | admins
+    emails = affiliate.digest_members.map{ |u| u.email.downcase } | admins
     current_members = get_list_members("#{affiliate.email_name}-digest")
     current_admins = get_list_admins("#{affiliate.email_name}-digest")
     # Re-assign admins that have been removed

@@ -23,6 +23,7 @@ EnergyfolksServer::Application.routes.draw do
   get "users/memberships"
   get "users/memberships_add"
   get "users/memberships_remove"
+  get "users/memberships_primary"
   get "users/manual_verify"
   get "users/freeze_account"
   get "users/digest"
