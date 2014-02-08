@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140129015450) do
+ActiveRecord::Schema.define(:version => 20140205220432) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(:version => 20140129015450) do
     t.boolean  "archived",                :default => false
     t.boolean  "frozen_by_wordpress",     :default => false
     t.boolean  "legacy",                  :default => false
+    t.datetime "first_approved_at"
   end
 
   add_index "blogs", ["frozen_by_wordpress"], :name => "index_blogs_on_frozen_by_wordpress"
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20140129015450) do
     t.integer  "total_comments",          :default => 0
     t.boolean  "archived",                :default => false
     t.boolean  "legacy",                  :default => false
+    t.datetime "first_approved_at"
   end
 
   create_table "discussions_versions", :force => true do |t|
@@ -327,6 +329,7 @@ ActiveRecord::Schema.define(:version => 20140129015450) do
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
     t.string   "autoimport"
+    t.datetime "first_approved_at"
   end
 
   create_table "events_versions", :force => true do |t|
@@ -390,6 +393,7 @@ ActiveRecord::Schema.define(:version => 20140129015450) do
     t.integer  "last_updated_by"
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
+    t.datetime "first_approved_at"
   end
 
   create_table "jobs_versions", :force => true do |t|

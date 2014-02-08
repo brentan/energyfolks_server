@@ -54,7 +54,7 @@ class AffiliatesController < ApplicationController
     flash[:notice]="Affiliate successfully created"
     google = GoogleClient.new
     google.create_affiliate(@affiliate)
-    redirect_to :action => 'edit?iframe_next=1', :id => @affiliate.id
+    redirect_to "/affiliates/dashboard?iframe_next=1&aid=#{@affiliate.id}"
   end
 
   def delete

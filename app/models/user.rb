@@ -157,6 +157,9 @@ class User < ActiveRecord::Base
   def archived
     false
   end
+  def self.date_column
+    'created_at'
+  end
   def self.join_table
     Membership
   end
