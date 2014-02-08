@@ -422,6 +422,7 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
     t.string   "api_key"
     t.string   "members_list_id"
     t.string   "daily_digest_list_id"
+    t.string   "weekly_digest_list_id"
     t.string   "author_contributor_list_id"
     t.string   "editor_administrator_list_id"
   end
