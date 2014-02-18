@@ -146,7 +146,7 @@ module MixinEntity
             latlng = Asari::Geography.coordinate_bounded_box(sw: {lat: bounds[0].to_f, lng: bounds[1].to_f}, ne: {lat: bounds[2].to_f, lng: bounds[3].to_f})
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
-          elsif (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
+          elsif options[:radius].present? && (options[:radius] > 0) && (self.name.downcase.pluralize != 'discussions')
             latlng = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
@@ -158,7 +158,7 @@ module MixinEntity
           filters[:and][:secondary] = options[:tags].join('|') if options[:tags].present? && (options[:tags].length > 0)
           sort = ["date", :desc]
           sort = ["primary", :asc] if(self.name.downcase.pluralize == 'users')
-          sort = "primary,secondary,full_text" if terms.length > 0
+          sort = "primary,secondary,full_text" if terms.present? && (terms.length > 0)
           sort = ["date", :asc] if(self.name.downcase.pluralize == 'events')
 
           asari_options = {
@@ -456,6 +456,7 @@ module MixinEntity
         # Check if this edit was made by an admin.  If so, mark as approved immediately
         # Also check if this affiliate simply allows anyone to post, and if so, auto-approve
         if i.affiliate.admin?(self.last_update, Membership::CONTRIBUTOR, self.method_name)
+          self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
           i.broadcast = true
           i.approved_version = i.admin_version
           i.awaiting_edit = false
@@ -469,6 +470,7 @@ module MixinEntity
       else
         # Check if this edit was made by an admin.  If so, mark as approved immediately
         if self.last_update.admin?
+          self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
           i.broadcast = true
           i.approved_version = i.admin_version
           i.awaiting_edit = false

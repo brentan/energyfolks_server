@@ -82,7 +82,9 @@ class DigestMailer < ActiveRecord::Base
           start: Time.now(),
           source: 0,
           highlight: 0,
-          entity_back: true
+          entity_back: true,
+          page: 0,
+          per_page: 100000
       }
     else
       defaults = {
@@ -91,7 +93,9 @@ class DigestMailer < ActiveRecord::Base
           end: Time.now(),
           source: 0,
           highlight: 0,
-          entity_back: true
+          entity_back: true,
+          page: 0,
+          per_page: 100000
       }
     end
     options = defaults.merge(options)

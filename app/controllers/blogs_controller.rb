@@ -37,7 +37,10 @@ class BlogsController < ApplicationController
         blog = Blog.new(data)
         blog.affiliates_blogs.build({affiliate_id: 0, awaiting_edit: false})
         if blog.save!
+          blog.update_column(:first_approved_at, Time.now()) if blog.respond_to?(:first_approved_at) && blog.first_approved_at.blank?
           Tag.update_tags(params[:tags], blog)
+          blog.reload
+          blog.update_index
           render :nothing => true
         else
           render :inline => 'Item could not be saved: ensure the title and body are not blank.'
