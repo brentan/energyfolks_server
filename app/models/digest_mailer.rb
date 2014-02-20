@@ -41,7 +41,7 @@ class DigestMailer < ActiveRecord::Base
       options = {}
     else
       output[:jobs] = {message: "Recent Job Posts (within #{self.user.subscription.job_radius} miles of #{self.user.location})"}
-      options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: self.user.subscription.job_radius }
+      options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: (self.user.subscription.job_radius* 1609.34) }
     end
     output[:jobs] = output[:jobs].merge(get_items(Job, options))
 
@@ -51,7 +51,7 @@ class DigestMailer < ActiveRecord::Base
       options = {}
     else
       output[:events] = {message: "Upcoming Events (within #{self.user.subscription.event_radius} miles of #{self.user.location})"}
-      options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: self.user.subscription.event_radius }
+      options = {location_lat: self.user.latitude, location_lng: self.user.longitude, radius: (self.user.subscription.event_radius* 1609.34) }
     end
     output[:events] = output[:events].merge(get_items(Event, options))
 
