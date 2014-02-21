@@ -38,6 +38,8 @@ gem 'ruby-saml-idp'
 gem 'google-api-client'
 gem 'icalendar'
 
+gem 'soapforce'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
