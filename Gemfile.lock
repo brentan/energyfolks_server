@@ -70,6 +70,7 @@ GEM
     docile (1.1.2)
     email_reply_parser (0.5.5)
     erubis (2.7.0)
+    excon (0.31.0)
     execjs (2.0.2)
     extlib (0.9.16)
     factory_girl (4.3.0)
@@ -131,6 +132,9 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailchimp-api (2.0.4)
+      excon (>= 0.16.0)
+      json (>= 1.7.7)
     mime-types (1.25.1)
     mini_portile (0.5.2)
     multi_json (1.8.4)
@@ -293,6 +297,7 @@ DEPENDENCIES
   launchy
   letter_opener
   linkedin
+  mailchimp-api
   mysql2
   nested_form
   nokogiri

@@ -13,6 +13,8 @@ class Affiliate < ActiveRecord::Base
   has_many :nightly_stats, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
+  has_one :mailchimp_client, :dependent => :destroy
+
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :custom_header, :location, :latitude, :longitude,
@@ -89,15 +91,23 @@ class Affiliate < ActiveRecord::Base
     search = search.where("moderation_emails = 1") if emails_only
     return search.all.map{|u| u.user }
   end
+
   def approved_members
     self.memberships.approved.joins(:user).all.map {|u| u.user }
   end
+
   def announcement_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:announcement => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
+
   def digest_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
+
+  def daily_digest_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:daily => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+
 
   def email
     email = super

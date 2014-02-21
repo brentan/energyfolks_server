@@ -34,6 +34,15 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "Resynchronize with mailchimp"
+  task :mailchimp => :environment do
+    Affiliate.all.each { |a|
+      ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', a.name).deliver
+      a.mailchimp_client.sync_lists
+    }
+    ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', 'COMPLETE').deliver
+  end
+
   desc "Archive Old Stuff"
   task :archive => :environment do
     operation = ScheduledOperation.start('archive old stuff')
