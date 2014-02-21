@@ -44,6 +44,13 @@ EnergyfolksServer::Application.routes.draw do
   get '/google/saml/inbound', to: 'google#inbound'
   get '/google/saml/logout', to: 'google#logout'
 
+  #Mailchimp list routes
+  get 'mailchimp/inbound'
+  get 'mailchimp/logout'
+  get 'mailchimp/:affiliate_id/edit' => 'mailchimp#edit'
+  get 'mailchimp/:affiliate_id/sync_now' => 'mailchimp#sync_now'
+  put 'mailchimp/:affiliate_id/update' => 'mailchimp#update'
+
   # Omniauth routes
   get '/external_login', to: 'users#external_login'
   get '/auth/linkedin/callback', to: 'users#linkedin'

@@ -54,6 +54,9 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -61,9 +64,6 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
     t.string   "wordpress_js_hash"
     t.boolean  "blogs",                     :default => false
     t.boolean  "announcement",              :default => true
-    t.integer  "year_founded"
-    t.string   "president_name"
-    t.text     "description"
     t.boolean  "custom_header",             :default => false
     t.datetime "wordpress_server_ping"
   end
@@ -414,6 +414,20 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
 
   add_index "jobs_versions", ["entity_id"], :name => "index_jobs_versions_on_entity_id"
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
+
+  create_table "mailchimp_clients", :force => true do |t|
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "affiliate_id"
+    t.string   "api_key"
+    t.string   "members_list_id"
+    t.string   "daily_digest_list_id"
+    t.string   "weekly_digest_list_id"
+    t.string   "author_contributor_list_id"
+    t.string   "editor_administrator_list_id"
+  end
+
+  add_index "mailchimp_clients", ["affiliate_id"], :name => "index_mailchimp_clients_on_affiliate_id"
 
   create_table "mark_read_actions", :force => true do |t|
     t.datetime "created_at",   :null => false

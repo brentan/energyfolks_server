@@ -428,6 +428,13 @@ class User < ActiveRecord::Base
   def sync
     google = GoogleClient.new
     google.sync_user(self)
+
+    Affiliate.all.each do |a|
+      a.mailchimp_client.sync_user(self) #sync this user's preferences with each affiliate.
+      # even if they're not a member of this affiliate now, they might have been previously,
+      # in which case we should delete them out of the Mailchimp list for that affiliate.
+    end
+
   end
 
   protected
