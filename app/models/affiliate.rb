@@ -14,13 +14,15 @@ class Affiliate < ActiveRecord::Base
   has_many :subcomments, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
   has_one :mailchimp_client, :dependent => :destroy
+  has_many :salesforce_items, :dependent => :destroy
 
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :custom_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius, :calendar_imports_attributes,
-                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded
+                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded,
+                  :salesforce_username, :salesforce_password, :salesforce_token
 
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
@@ -47,6 +49,7 @@ class Affiliate < ActiveRecord::Base
   after_create :add_to_google
 
   accepts_nested_attributes_for :calendar_imports, :allow_destroy => true
+  accepts_nested_attributes_for :salesforce_items, :allow_destroy => true
 
   # 'open' codes
   OPEN = 1

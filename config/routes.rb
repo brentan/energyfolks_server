@@ -73,6 +73,8 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/approve"
   get "affiliates/logo"
   get "affiliates/dashboard"
+  get "affiliates/salesforce"
+  put "affiliates/salesforce"
 
   # Comment routes
   get "comments/new"

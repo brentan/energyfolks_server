@@ -1,0 +1,40 @@
+<div class='form'>
+  <%= nested_form_for @affiliate, :url => { :action => "salesforce", :id => @affiliate.id }, :html => { :multipart => true } do |f| %>
+      <%= raw(iframe_form) %>
+      <h1>Salesforce Sync</h1>
+      <p>Salesforce sync will sync your membership list with the 'contact' object in salesforce.  As new users create accounts, new contacts in salesforce will automatically be created and kept up to date as users update information.</p>
+      <h2>Login information</h2>
+      <div class='form_label'>Salesforce Username</div>
+      <div class='form_entry'>
+        <%= f.text_field :salesforce_username %>
+        <div class='explain'>Remove to disable Salesforce sync</div>
+      </div>
+
+      <div class='form_label'>Salesforce Password</div>
+      <div class='form_entry'>
+        <%= f.text_field :salesforce_password %>
+      </div>
+      <div class='form_label'>Saleforce Security Token</div>
+      <div class='form_entry'>
+        <%= f.text_field :salesforce_token %>
+        <div class='explain'>If you do not know your token, you can reset it to get a new one emailed to you.  Login to salesforce, click your account name near the top right, and select 'My Settings' from the pulldown menu.  On the screen that appears, click 'personal' in the lefthand menu and then 'Reset my security token'.</div>
+      </div>
+      <% if @client.enabled? %>
+         <%
+            login = @client.login
+            if login.present? %>
+              <h2>Error logging in</h2>
+              <%= login %>
+            <% else %>
+              <h2>Manual Sync</h2>
+              <p><a href=''>Click Here to manually resynchronize your membership list</a> (recommended after first linking to salesforce, or if logins temporarily failed for a period of time).</p>
+              <h2>Sync Settings</h2>
+              <%= @client.fields %>
+
+            <% end %>
+      <% end %>
+      <input type=hidden name='subbed' value='1'>
+      <%= f.submit 'Update Options' %>
+
+  <% end %>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205220432) do
+ActiveRecord::Schema.define(:version => 20140221180246) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -54,9 +54,6 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
     t.integer  "job_radius",                :default => 0
     t.boolean  "show_details",              :default => true
     t.string   "timezone",                  :default => "Pacific Time (US & Canada)"
-    t.integer  "year_founded"
-    t.string   "president_name"
-    t.text     "description"
     t.string   "wordpress_version",         :default => "unknown"
     t.string   "wordpress_plugin_version",  :default => "unknown"
     t.string   "wordpress_checked_version", :default => ""
@@ -64,8 +61,14 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
     t.string   "wordpress_js_hash"
     t.boolean  "blogs",                     :default => false
     t.boolean  "announcement",              :default => true
+    t.integer  "year_founded"
+    t.string   "president_name"
+    t.text     "description"
     t.boolean  "custom_header",             :default => false
     t.datetime "wordpress_server_ping"
+    t.string   "salesforce_username"
+    t.string   "salesforce_password"
+    t.string   "salesforce_token"
   end
 
   create_table "affiliates_blogs", :force => true do |t|
@@ -480,6 +483,15 @@ ActiveRecord::Schema.define(:version => 20140205220432) do
   end
 
   add_index "nightly_stats", ["affiliate_id"], :name => "index_nightly_stats_on_affiliate_id"
+
+  create_table "salesforce_items", :force => true do |t|
+    t.integer "affiliate_id"
+    t.integer "type"
+    t.string  "salesforce_name"
+    t.boolean "custom"
+    t.string  "energyfolks_name"
+    t.text    "custom_text"
+  end
 
   create_table "scheduled_operations", :force => true do |t|
     t.datetime "created_at",                    :null => false
