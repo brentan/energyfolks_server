@@ -98,6 +98,16 @@ class AffiliatesController < ApplicationController
     @result = user.reject_or_remove(current_user, current_affiliate, params[:reason])
   end
 
+  def salesforce
+    @affiliate = Affiliate.find(params[:id])
+    @client = SalesforceClient.new(@affiliate)
+    if params[:subbed].present?
+      @affiliate.update_attributes(params[:affiliate])
+      @affiliate.reload
+      flash[:notice]="Changes successfully saved"
+    end
+  end
+
 
   private
   def check_for_admin_rights(level = Membership::ADMINISTRATOR)

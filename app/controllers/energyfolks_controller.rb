@@ -1,8 +1,6 @@
 class EnergyfolksController < ApplicationController
 
   def index
-    test = SalesforceClient.new()
-    render :json => test.output
   end
   def privacy
 

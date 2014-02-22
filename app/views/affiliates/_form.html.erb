@@ -1,6 +1,6 @@
 
 <div id='ef_carousel' class='no_animation'>
-  <%= raw(carousel_slide_title_section('Settings',9, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration','Cal Sync'] })) %>
+  <%= raw(carousel_slide_title_section('Settings',9, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration','External Sync'] })) %>
   <div class="viewport">
     <ul class="overview">
       <li class='slide'>
@@ -161,7 +161,9 @@
             <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_user) : @affiliate.cpanel_user %></div>
 
             <div class='form_label'>CPanel Password</div>
-            <div class='form_entry'><%= current_user.admin? ? (f.text_field :cpanel_password) : @affiliate.cpanel_password %></div>
+            <div class='form_entry'>
+              <%= current_user.admin? ? (f.text_field :cpanel_password) : @affiliate.cpanel_password %>
+            </div>
 
             <% if current_user.admin? %>
                 <h1>Admin options</h1>
@@ -186,9 +188,18 @@
             <% end %>
         </li>
       <li class="slide">
+        <h1>Mailchimp</h1> <BR>
+        <p>Energyfolks can be setup to sync membership lists with Mailchimp automatically.</p>
+        <%= popup("Mailchimp sync setup (will close/replace this window)", "mailchimp/#{@affiliate.id}/edit", true) %>
+
+        <h1>Salesforce</h1> <BR>
+        <p>Energyfolks can be setup to sync membership lists with Salesforce automatically, and allows for custom questions to be asked of a user during signup and in their profile.</p>
+        <%= popup("Salesforce sync setup (will close/replace this window)", "affiliates/salesforce?id=#{@affiliate.id}", true) %>
+
         <h1>External Calendar Sync</h1> <BR>
         <p>EnergyFolks can be setup to automatically pull events from an external calendar and add to your groups calendar.  We can read any calendar that outputs data in iCal format (such as google calendar).</p>
-
+        <a href='#' onclick='EnergyFolks.$("#EF_cal_sync").show();EnergyFolks.$(this).hide();'>Calendar Sync Setup</a>
+        <div id='Ef_cal_sync' style='display:none;'>
         <%= f.fields_for :calendar_imports do |c| %>
             <div style="border:1px solid black;padding:3px;background-color:#f5f5f5;">
 
@@ -206,7 +217,7 @@
             </div>
         <% end %>
         <%= f.link_to_add "Add a Calendar", :calendar_imports %>
-
+        </div>
       </li>
     </ul>
     <%= prev_next_buttons(false) %>

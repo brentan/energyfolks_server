@@ -12,9 +12,6 @@
                 <%= link_to 'Edit', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/#{affiliate.id}/edit", iframe: 'true' } %>
                 | <%= link_to 'Members', "affiliates/#{affiliate.id}/users" %>
               <% end %>
-              <% if affiliate.admin?(current_user, Membership::EDITOR) %>
-                | <%= popup("Mailchimp setup", "mailchimp/#{affiliate.id}/edit", true) %>
-              <% end %>
             </div>
           <% end %>
           <% first = false %>
