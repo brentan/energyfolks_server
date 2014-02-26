@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221180246) do
+ActiveRecord::Schema.define(:version => 20140225232845) do
 
   create_table "affiliates", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
@@ -486,11 +486,13 @@ ActiveRecord::Schema.define(:version => 20140221180246) do
 
   create_table "salesforce_items", :force => true do |t|
     t.integer "affiliate_id"
-    t.integer "type"
+    t.integer "salesforce_type"
     t.string  "salesforce_name"
-    t.boolean "custom"
     t.string  "energyfolks_name"
-    t.text    "custom_text"
+    t.integer "custom"
+    t.boolean "enabled",            :default => false
+    t.string  "salesforce_label"
+    t.text    "salesforce_options"
   end
 
   create_table "scheduled_operations", :force => true do |t|

@@ -1,0 +1,35 @@
+<%
+  if current_affiliate.id.present?
+    client = SalesforceClient.new(current_affiliate)
+    if client.enabled?
+      client.login
+      client.find_user(@user)
+      SalesforceItem.where(affiliate_id: current_affiliate.id).where("custom >= ?",signup ? SalesforceItem::SIGNUP : SalesforceItem::PROFILE).all.each do |i|
+        %>
+
+            <div class='form_label'><%= i.salesforce_label %></div>
+            <div class='form_entry'>
+              <% if i.salesforce_type == SalesforceItem::TEXTAREA %>
+                <textarea name='salesforce[<%= i.salesforce_name %>]'>
+                  <%= client.get_data(i.salesforce_name) %>
+                </textarea>
+              <% elsif i.salesforce_type == SalesforceItem::BOOLEAN %>
+                <label><input type=radio name='salesforce[<%= i.salesforce_name %>]' value=1 <%= client.get_data(i.salesforce_name).present? ? 'checked' : '' %>> Yes</label>
+                <label><input type=radio name='salesforce[<%= i.salesforce_name %>]' value=0 <%= client.get_data(i.salesforce_name).present? ? '' : 'checked' %>> No</label>
+              <% elsif (i.salesforce_type == SalesforceItem::PICKLIST) || (i.salesforce_type == SalesforceItem::MULTIPICKLIST) %>
+                <select name='salesforce[<%= i.salesforce_name %>]'>
+                  <option value=''>---</option>
+                  <% i.salesforce_options.each do |o| %>
+                    <option value='<%= o[:value] %>' <%= client.get_data(i.salesforce_name).present? && (client.get_data(i.salesforce_name) == o[:value]) ? 'selected' : '' %>><%= o[:label]%></option>
+                  <% end %>
+                </select>
+              <% else %>
+                <input type=text name='salesforce[<%= i.salesforce_name %>]' value="<%= client.get_data(i.salesforce_name).present? ? client.get_data(i.salesforce_name).gsub('"','') : '' %>">
+              <% end %>
+            </div>
+
+        <%
+      end
+    end
+  end
+%>

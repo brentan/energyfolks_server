@@ -29,6 +29,14 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "Auto-import failure")
   end
 
+  def salesforce_failure(user, aid, msg)
+    @user = user
+    @message = msg
+    @affiliate = Affiliate.find_by_id(aid)
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Salesforce failure")
+  end
+
   def entity(user, entity, token)
     @item = entity
     @user = user
