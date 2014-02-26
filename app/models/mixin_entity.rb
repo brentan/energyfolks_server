@@ -93,6 +93,11 @@ module MixinEntity
       version_control(user, Affiliate.find_by_id(0), self.where(user_id: user.id).all)
     end
 
+    def user_broadcast(id)
+      item = self.find_by_id(id)
+      item.user_broadcast if item.present?
+    end
+
     def search(terms, affiliates, options, admin_user_search = false)
       if options[:display] == 'month'
         year = DateTime.now.year
@@ -489,7 +494,7 @@ module MixinEntity
       i.save(:validate => false)
     end
     self.update_index
-    self.delay(:run_at => 15.minutes.from_now).user_broadcast if call_user_broadcast
+    self.class.delay(:run_at => 15.minutes.from_now).user_broadcast(self.id) if call_user_broadcast
   end
 
   def user_broadcast
@@ -654,7 +659,7 @@ module MixinEntity
         Highlight.create({affiliate_id: affiliate.id, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
-        self.delay(:run_at => 15.minutes.from_now).user_broadcast
+        self.class.delay(:run_at => 15.minutes.from_now).user_broadcast(self.id)
         self.update_index
         return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
@@ -671,7 +676,7 @@ module MixinEntity
         Highlight.create({affiliate_id: 0, entity: self}) if highlight && !self.highlighted?(affiliate)
         self.update_column(:first_approved_at, Time.now()) if self.respond_to?(:first_approved_at) && self.first_approved_at.blank?
         self.reload
-        self.delay(:run_at => 15.minutes.from_now).user_broadcast
+        self.class.delay(:run_at => 15.minutes.from_now).user_broadcast(self.id)
         self.update_index
         return "This item has been approved#{highlight ? ' and highlighted' : ''}"
       end
