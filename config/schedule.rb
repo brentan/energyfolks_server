@@ -37,7 +37,12 @@ every 1.day, :at => '9:00 am' do
 end
 every 1.day, :at => '11:00 am' do
   rake "nightly:google"
+end
+every 1.day, :at => '11:20 am' do
   rake "nightly:mailchimp"
+end
+every 1.day, :at => '11:40 am' do
+  rake "nightly:salesforce"
 end
 every 1.day, :at => '7:00 pm' do
   rake "nightly:archive"

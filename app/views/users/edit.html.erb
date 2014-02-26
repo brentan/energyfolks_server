@@ -74,6 +74,9 @@
                   <%= link_to('Current Resume', @user.resume.url) if @user.resume.present? %>
                   <%= f.file_field :resume %>
                 </div>
+
+                <%= render :partial => '/users/salesforce', :locals => {signup: false} %>
+
               </li>
               <li class="slide">
                 <div class='form_label'>Your Bio</div>

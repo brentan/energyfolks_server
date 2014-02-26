@@ -92,6 +92,7 @@ class UsersController < ApplicationController
       user.save!(validate:false)
       session[:userid]=user.id
       user.update_index
+      user.delay.sync
       flash[:notice]="Your account has been activated!  Please setup your profile."
       redirect_to "/users/profile?iframe=1&current_url=#{params[:current_url]}&aid=#{params[:aid]}"
     else
@@ -104,6 +105,13 @@ class UsersController < ApplicationController
     # Verify changes to email address
     user = params['token'].present? ? User.find_by_verification_token(params['token']) : nil
     if user.present?
+      user.affiliates.each do |a|
+        client = SalesforceClient.new(a)
+        if client.enabled?
+          client.update_email(user) if client.login == ''
+        end
+      end
+
       UserMailer.delay.email_verification_request_2(user, @aid, @host)
       user.email = user.email_to_verify
       user.email_to_verify = nil
@@ -186,6 +194,11 @@ class UsersController < ApplicationController
   def update
     params[:user][:admin].delete if params[:user][:admin].present?
     @user = User.find(session[:userid])
+    if params[:salesforce].present?
+      client = SalesforceClient.new(current_affiliate)
+      client.login
+      client.update_user(@user, params[:salesforce])
+    end
     if (params[:user][:password_old].blank? && params[:user][:password].blank?) || (params[:user][:password_old].present? && @user.check_password(params[:user][:password_old]))
       old_email = @user.email_to_verify
       if(@user.update_attributes(params[:user]))
@@ -216,6 +229,11 @@ class UsersController < ApplicationController
     if !@user.save
       render :action => "new"
     else
+      if params[:salesforce].present?
+        client = SalesforceClient.new(current_affiliate)
+        client.login
+        client.update_user(@user, params[:salesforce])
+      end
       Tag.update_tags(@user.raw_tags, @user)
       UserMailer.delay.confirmation_request(@user, @aid, @host)
     end

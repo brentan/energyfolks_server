@@ -36,11 +36,23 @@ namespace :nightly do
 
   desc "Resynchronize with mailchimp"
   task :mailchimp => :environment do
+    operation = ScheduledOperation.start('mailchimp sync')
     Affiliate.all.each { |a|
-      ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', a.name).deliver
       a.mailchimp_client.sync_lists
     }
-    ErrorMailer.error_back_to_sender('brentan@energyfolks.com', 'NIGHTLY MAILCHIMP SYNC', 'subject', 'COMPLETE').deliver
+    operation.mark_complete
+  end
+
+  desc "Test Salesforce"
+  task :salesforce => :environment do
+    operation = ScheduledOperation.start('Salesforce tests')
+    Affiliate.all.each do |a|
+      c = SalesforceClient.new(a)
+      if c.enabled?
+        c.login(true)
+      end
+    end
+    operation.mark_complete
   end
 
   desc "Archive Old Stuff"
