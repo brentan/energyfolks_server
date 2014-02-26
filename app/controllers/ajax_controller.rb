@@ -131,6 +131,7 @@ class AjaxController < ApplicationController
   end
 
   def get_comments
+    params[:title] = '' if params[:title].blank?
     CommentDetail.update(params[:hash], params[:title], params[:url])
     output = Comment.get_all_comments(params[:hash])
     render_ajax "{ title: \"#{params[:title].gsub('"','')}\", subscribed: #{user_logged_in? && CommentSubscriber.subscribed?(params[:hash], current_user) ? 'true' : 'false'}, data: #{output.to_json(:include => :subcomments)}, hash: '#{params[:hash]}' }"
