@@ -125,7 +125,7 @@ module MixinEntityController
   def create
     @item = model.new(params[self.param_label])
     @item.user = current_user
-    @item.affiliate_id = current_affiliate.id.present? ? current_affiliate.id : 0
+    @item.affiliate_id = current_affiliate.id.present? ? current_affiliate.id : (current_user.affiliate_id.present? ? current_user.affiliate_id : 0)
     @item.last_updated_by = current_user.id
     if !@item.save
       render :action => "new"

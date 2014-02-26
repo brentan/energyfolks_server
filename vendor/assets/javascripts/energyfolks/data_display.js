@@ -750,10 +750,14 @@ EnergyFolks.$(function() {
         return false;
     });
     EnergyFolks.$('body').on('click', '.ef_reject_link', function() {
-        var reason = prompt('Please profide a reason for rejection');
-        if((typeof reason === 'undefined') || (reason.trim() == '')) {
-            EnergyFolks.showNotice('You must provide a reason', 'red');
-            return false;
+        if(EnergyFolks.$(this).attr('data-model') == 'Blog')
+            var reason = 'Item not deemed appropriate for all EF users.  Item has still been posted to your group members.';
+        else {
+            var reason = prompt('Please profide a reason for rejection');
+            if((typeof reason === 'undefined') || (reason.trim() == '')) {
+                EnergyFolks.showNotice('You must provide a reason', 'red');
+                return false;
+            }
         }
         EnergyFolks.$(this).before('<div><i>Loading...</i></div>');
         EnergyFolks.$(this).hide();
