@@ -45,7 +45,7 @@
     <!-- Beginning of Profile -->
     <% if visible %>
         <div id="ef_show">
-          <%= image_tag(@item.avatar.url(:thumb_big), :class => 'ef_post_logo', :align => 'right') if @item.avatar.present? %>
+          <%= image_tag(@item.avatar.url, :class => 'ef_post_logo', :align => 'right', :width => '200px') if @item.avatar.present? %>
             <h1><%= @item.first_name %> <%= @item.last_name %></h1>
             <%= content_tag(:h3, @item.position) if @item.position.present? %>
             <%= content_tag(:h3, @item.organization) if @item.organization.present? %>
