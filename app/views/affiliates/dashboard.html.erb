@@ -9,7 +9,7 @@
 
         ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
         current_version = ef_data['version']
-        if current_affiliate.wordpress_plugin_version.to_s == current_version.to_s
+        if current_affiliate.wordpress_plugin_version.to_s != current_version.to_s
           %>
             <tr><td colspan="2">
             <div class="warning">
