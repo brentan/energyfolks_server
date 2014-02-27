@@ -38,7 +38,7 @@ namespace :nightly do
   task :mailchimp => :environment do
     operation = ScheduledOperation.start('mailchimp sync')
     Affiliate.all.each { |a|
-      a.mailchimp_client.sync_lists
+      a.mailchimp_client.sync_lists if a.mailchimp_client.present?
     }
     operation.mark_complete
   end
