@@ -80,7 +80,7 @@ class MailchimpClient < ActiveRecord::Base
   end
 
   def sync_lists
-    return unless api_key.present? && Rails.env.production?
+    return unless api_key.present? #&& Rails.env.production?
 
     # This will sync this affiliate's Mailchimp email lists with their user database.
     get_client
