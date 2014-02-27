@@ -1,92 +1,490 @@
 <div id="affiliate_dashboard">
     <h1>Your energyfolks dashboard</h1>
     <p>Your access level is: <%= current_affiliate.level_name(current_user) %> (<a href="<%= SITE_HOST %>/developers/admin_levels">What does this mean?</a>)</p>
-    <div class="box">
-      <h2>Stats</h2>
-      Your group currently has:<ul>
-          <li><%= Membership.approved.where(affiliate_id: current_affiliate.id).count %> Members</li>
-          <li><%= User.verified.where(affiliate_id: current_affiliate.id).count %> Members who list your group as 'primary'</li>
-          <li><%= Job.where(affiliate_id: current_affiliate.id).count %> Job Posts originating from your website</li>
-          <li><%= Event.where(affiliate_id: current_affiliate.id).count %> Event Posts originating from your website</li>
-          <li><%= Discussion.where(affiliate_id: current_affiliate.id).count %> Discussions originating from your website</li>
-          <li><%= Blog.where(affiliate_id: current_affiliate.id).count %> Blog Posts originating from your website</li>
-      </ul>
-    </div>
-    <div class="box">
-      <h2>Leadership Tools</h2>
-      <% if current_affiliate.admin?(current_user, Membership::EDITOR) %>
-         <h4>Email your membership</h4>
-          <ul>
-            <li>Your full membership: <a href="mailto:<%= current_affiliate.email_name %>-members@energyfolks.com"><%= current_affiliate.email_name %>-members@energyfolks.com</a></li>
-            <li>Members who receive the weekly digest: <a href="mailto:<%= current_affiliate.email_name %>-digest@energyfolks.com"><%= current_affiliate.email_name %>-digest@energyfolks.com</a></li>
-            <li>Your full leadership: <a href="mailto:<%= current_affiliate.email_name %>-contributors@energyfolks.com"><%= current_affiliate.email_name %>-contributors@energyfolks.com</a></li>
-            <li>Your Editors and Admins: <a href="mailto:<%= current_affiliate.email_name %>-admins@energyfolks.com"><%= current_affiliate.email_name %>-admins@energyfolks.com</a></li>
-          </ul>
-          <p>Emails to these lists must come from the email address of a group editor or admin in order to be successfully sent onward.  You can also send messages to your group, and add items to the top of the next digest, by writing a blog post and selecting the appropriate options from the EnergyFolks dialog.</p>
-      <% end %>
-      <h4>Group Documents</h4>
-      <ul>
-        <li><a href="http://gmail.energyfolks.com/">Group gmail Account (<%= mail_to "#{current_affiliate.email_name}@energyfolks.com" %>)</a></li>
-        <li><a href="http://docs.energyfolks.com/">Group Google Drive</a></li>
-        <li><a href="http://wiki.energyfolks.com/">Google 'Sites' page for your group</a></li>
-      </ul>
-    </div>
-
-  <div class="box">
-    <h2>Visit Statistics and Analytics</h2>
-    <i>This feature is coming soon!</i>
-  </div>
-
-  <div class="box">
-    <h2>Digests</h2>
-    <i>Looking to post an item to the top of your next automated digest?  Create a new blog post in wordpress and use the 'add to digest' option in the energyfolks box at the right.</i>
-    <BR><a href="<%= SITE_HOST %>/users/digest" target="_blank">Preview the next digest</a>
-  </div>
-
-
-
-
-  <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
-
-      <div class="box">
-        <h2>Group Settings</h2>
-        <ul>
-          <li>Group Name: <%= current_affiliate.name %></li>
-          <li>Group Contact Email: <%= current_affiliate.email %></li>
-          <li>Group Color: <div style='width:30px;height:10px;display:inline-block;border:1px solid black;background-color:#<%= current_affiliate.color %>;'></div></li>
-        </ul>
-        <%= popup('Update your group settings', "/affiliates/#{current_affiliate.id}/edit", true, {aid: current_affiliate.id}) %>
+  <table border=0 cellpadding=10 cellspacing=0 width='100%'>
+    <tr>
+      <td valign=top width='50%'>
         <% if current_affiliate.admin?(current_user, Membership::EDITOR) %>
-            <BR><%= popup("Mailchimp sync setup", "mailchimp/#{current_affiliate.id}/edit", true) %>
-        <% end %>
-      </div>
-
-      <div class="box">
-          <h2>Leadership</h2>
-          <p>To add a new leader to your group, find their profile in your <a href="<%= current_affiliate.url_users %>" target="_blank">member database</a> and click the 'Admin Rights' link</p>
-          <a href="#" onclick="EnergyFolks.$(this).next('div').show();EnergyFolks.$(this).hide();return false;">View your leadership</a>
-          <div style="display:none;">
-            <p>Click on any name to view the user profile and edit their admin rights.</p>
-            <p><a href="<%= SITE_HOST %>/developers/admin_levels">Description of each Leadership level.</a></p>
-            <h4>Administrators</h4>
-            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::ADMINISTRATOR).all.each do |u| %>
-                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
-            <% end %>
-            <h4>Editors</h4>
-            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::EDITOR).all.each do |u| %>
-                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
-            <% end %>
-            <h4>Authors</h4>
-            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::AUTHOR).all.each do |u| %>
-                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
-            <% end %>
-            <h4>Contributors</h4>
-            <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::CONTRIBUTOR).all.each do |u| %>
-                - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
-            <% end %>
+          <div class="box">
+          <h2>Email your Members</h2>
+              <p>Email <i>must</i> come from an administrator or editor email address, or the <a href="http://gmail.energyfolks.com/">group Gmail account</a></p>
+              <ul>
+                <li>Your full membership: <a href="mailto:<%= current_affiliate.email_name %>-members@energyfolks.com"><%= current_affiliate.email_name %>-members@energyfolks.com</a></li>
+                <li>Members who receive the weekly digest: <a href="mailto:<%= current_affiliate.email_name %>-digest@energyfolks.com"><%= current_affiliate.email_name %>-digest@energyfolks.com</a></li>
+                <li>Your full leadership: <a href="mailto:<%= current_affiliate.email_name %>-contributors@energyfolks.com"><%= current_affiliate.email_name %>-contributors@energyfolks.com</a></li>
+                <li>Your Editors and Admins: <a href="mailto:<%= current_affiliate.email_name %>-admins@energyfolks.com"><%= current_affiliate.email_name %>-admins@energyfolks.com</a></li>
+              </ul>
+              <h4>List Archive</h4>
+                <p><a href="http://groups.energyfolks.com/" target='_blank'>Your Google Group page contains the archive.</a></p>
+              <h4>Mailchimp Integration</h4>
+              <p><%= popup("Sync your member list with Mailchimp.", "mailchimp/#{current_affiliate.id}/edit", true) %></p>
+              <h4>Send a Wordpress Blog Post</h4>
+              <p>When posting a new Blog post in Wordpress, use the energyfolks options on the right to immediately send the item to all members, or to include it at the top of the next automated digest.</p>
           </div>
+        <% end %>
+
+        <div class="box">
+          <h2>Digests</h2>
+          <i>Looking to post an item to the top of your next automated digest?  Create a new blog post in wordpress and use the 'add to digest' option in the energyfolks box at the right.</i>
+          <BR><a href="<%= SITE_HOST %>/users/digest" target="_blank">Preview the next digest</a>
+          <h2>Digest Stats</h2>
+          <% for a in 1..4 %>
+          - <a href='#' onclick='$("#ef_digest_plot<%= a %>").show();$(this).hide();return false;'>Digest Analytics from <%= a %> week<%= a == 1 ? '' : 's' %> ago</a><BR>
+          <%
+             count = 0
+             running = 0
+             if a == 1
+               start = 7.days.ago
+               endt = Time.now
+             elsif a == 2
+               start = 14.days.ago
+               endt = 7.days.ago
+             elsif a == 3
+               start = 21.days.ago
+               endt = 14.days.ago
+             elsif a == 4
+               start = 28.days.ago
+               endt = 21.days.ago
+             end
+             data_raw = DigestMailer.joins(:user).where(users: {affiliate_id: current_affiliate.id}, weekly: true).order(:open_date).where('digest_mailers.created_at > ? AND digest_mailers.created_at <= ?',start, endt).all
+             data = {}
+             data[(start - 1.day).strftime("Date.UTC(%Y, %m-1, %d)")] = 0
+             data_raw.each do |m|
+               count += 1
+               next unless m.opened?
+               date = m.open_date.strftime("Date.UTC(%Y, %m-1, %d)")
+               if(data.has_key?(date))
+                 data[date] += 1
+                 running += 1
+               else
+                 data[date] = running + 1
+                 running += 1
+               end
+             end
+             date = Time.now.strftime("Date.UTC(%Y, %m-1, %d)")
+             if(!data.has_key?(date))
+               data[date] = running
+             end
+
+          %>
+
+          <div id="ef_digest_plot<%= a %>" style='display:none;'>
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_digest_plot<%= a %>').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      title: {
+                          text: 'Cumulative Confirmed Opens (out of <%= count %> total digests sent)'
+                      },
+                      subtitle: {
+                          text: 'Due to email reader security settings, actual opens may be larger.  Click/drag to zoom'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Users'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Confirmed Digest Opens',
+                          data: [
+                              <%= data.to_a.map { |m| "[#{m[0]}, #{m[1]}]"}.join(', ') %>
+                          ]
+                      }]
+                  });
+              });
+
+
+          </script>
+          <% end %>
+
         </div>
-    <% end %>
+        <div class="box">
+          <h4>Group Google Tools</h4>
+          <p>EnergyFolks has partnered with the Google for Nonprofits program to bring google business products to you, for free.  This service includes a group Gmail account, google drive space, and google sites page.  Why use these instead of your own account?  When you move on and new leaders take your place, these tools, and the content in them, follows the group, not you.</p>
+          <ul>
+            <li><a href="http://gmail.energyfolks.com/" target='_blank'>gmail.energyfolks.com: You group Gmail Account (<%= "#{current_affiliate.email_name}@energyfolks.com" %>)</a></li>
+            <li><a href="http://docs.energyfolks.com/" target='_blank'>docs.energyfolks.com: Your Group Google Drive</a></li>
+            <li><a href="http://wiki.energyfolks.com/" target='_blank'>wiki.energyfolks.com: Your Group Google 'Sites' page</a></li>
+            <li><a href="http://groups.energyfolks.com/" target='_blank'>groups.energyfolks.com: Your Group Google Groups page</a></li>
+          </ul>
+        </div>
+
+
+        <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
+
+            <div class="box">
+              <h2>Leadership</h2>
+              <p>To add a new leader to your group, find their profile in your <a href="<%= current_affiliate.url_users %>" target="_blank">member database</a> and click the 'Admin Rights' link</p>
+              <a href="#" onclick="EnergyFolks.$(this).next('div').show();EnergyFolks.$(this).hide();return false;">View your leadership</a>
+              <div style="display:none;">
+                <p>Click on any name to view the user profile and edit their admin rights.</p>
+                <p><a href="<%= SITE_HOST %>/developers/admin_levels">Description of each Leadership level.</a></p>
+                <h4>Administrators</h4>
+                <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::ADMINISTRATOR).all.each do |u| %>
+                    - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+                <% end %>
+                <h4>Editors</h4>
+                <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::EDITOR).all.each do |u| %>
+                    - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+                <% end %>
+                <h4>Authors</h4>
+                <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::AUTHOR).all.each do |u| %>
+                    - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+                <% end %>
+                <h4>Contributors</h4>
+                <% Membership.where(affiliate_id: current_affiliate.id, admin_level: Membership::CONTRIBUTOR).all.each do |u| %>
+                    - <%= popup(u.user.full_name , 'show', false, {model: 'User', id: u.user_id}) if u.user.present? %>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+        <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::ADMINISTRATOR) %>
+
+            <div class="box">
+              <h2>Group Settings</h2>
+              <ul>
+                <li>Group Name: <%= current_affiliate.name %></li>
+                <li>Group Contact Email: <%= current_affiliate.email %></li>
+                <li>Group Color: <div style='width:30px;height:10px;display:inline-block;border:1px solid black;background-color:#<%= current_affiliate.color %>;'></div></li>
+              </ul>
+              <%= popup('Update your group settings', "/affiliates/#{current_affiliate.id}/edit", true, {aid: current_affiliate.id}) %>
+            </div>
+        <% end %>
+
+      </td>
+      <td valign=top width='50%'>
+        <div class="box">
+          <h2>Statistics</h2>
+          <%
+            data = current_affiliate.nightly_stats.where('created_at > ?',6.months.ago).all
+          %>
+
+          <div id="ef_analytics_plot">
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_analytics_plot').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      title: {
+                          text: 'Users'
+                      },
+                      subtitle: {
+                          text: 'Active users have signed-in/opened email in last 3 months.  Click/drag to zoom'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Users'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Active Users',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_active_users}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Inactive Users',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_users - m.total_active_users}]"}.join(', ') %>
+                          ]
+                      }]
+                  });
+              });
+
+
+          </script>
+
+          <div id="ef_analytics_plot4">
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_analytics_plot4').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      title: {
+                          text: 'Daily Visits'
+                      },
+                      subtitle: {
+                          text: 'Daily Unique Visits.  Click/drag to zoom'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Users'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Active Users',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.visits}]"}.join(', ') %>
+                          ]
+                      }]
+                  });
+              });
+
+
+          </script>
+
+          <div id="ef_analytics_plot2">
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_analytics_plot2').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      title: {
+                          text: 'Total Posts'
+                      },
+                      subtitle: {
+                          text: 'Total is posts originating from your network.  Click/drag to zoom'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Posts'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Jobs',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_jobs}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Events',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_events}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Discussions',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_discussions}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Blogs',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_blogs}]"}.join(', ') %>
+                          ]
+                      }]
+                  });
+              });
+
+
+          </script>
+
+          <div id="ef_analytics_plot3">
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_analytics_plot3').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      title: {
+                          text: 'Total Posts Awaiting Moderation'
+                      },
+                      subtitle: {
+                          text: 'Total is from any network, awaiting moderation from your group.  Click/drag to zoom'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Posts'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Users',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_users_moderation}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Jobs',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_jobs_moderation}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Events',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_events_moderation}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Discussions',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_discussions_moderation}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Blogs',
+                          data: [
+                              <%= data.map { |m| "[#{m.created_at.strftime("Date.UTC(%Y, %m-1, %d)")}, #{m.total_blogs_moderation}]"}.join(', ') %>
+                          ]
+                      }]
+                  });
+              });
+
+
+          </script>
+          <h2>Post Analytics</h2>
+            For any post in the system, click the 'analytics' tab in the post popup window to view detailed analyics, including email reads and unique visits, for that particular post.
+        </div>
+
+      </td>
+    </tr>
+  </table>
+
+
+
 </div>
 <script language="JavaScript">
     EnergyFolks.iframe = false;

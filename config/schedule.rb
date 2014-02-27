@@ -60,3 +60,6 @@ end
 every 6.hours do
   rake "clean_up:delayed_job_test"
 end
+every 1.day, :at => '2:00 am' do
+  rake "nightly:stats"
+end

@@ -810,6 +810,8 @@ function energyfolks_post_box( $post ) {
     if(get_post_meta($post->ID, '_energyfolks_digest',true) == '1') echo "checked";
     echo "></div>Add this to the top of the next automated digest</label>";
   }
+  echo "<h4>Post Analytics</h4>";
+  echo "<a href='#' class='EnergyFolks_popup' data-command='blogs/analytics?aid=".get_option('energyfolks_affiliate_id')."&id=".($post->ID)."' data-iframe="true">View Post Analytics</a>";
 }
 function energyfolks_page_box($post) {
     if(get_option('energyfolks_plugin_enabled') != '1') return;
