@@ -1,9 +1,11 @@
-<% if @item.blank? %>
-    <h1>Item not found</h1>
-    <p>This post has likely not been shared with the energyfolks system.  Once a post is shared, it will be included in emails and digests, and its analytics will show up here.</p>
-<% else %>
-    <% if @item.is_editable?(current_user) || (current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)) %>
-        <%= render :partial => '/common/show_top/analytics' %>
+<div id="ef_show">
+    <% if @item.blank? %>
+        <h1>Item not found</h1>
+        <p>This post has likely not been shared with the energyfolks system.  Once a post is shared, it will be included in emails and digests, and its analytics will show up here.</p>
+    <% else %>
+        <% if @item.is_editable?(current_user) || (current_affiliate.id.present? && current_affiliate.admin?(current_user, Membership::EDITOR)) %>
+            <%= render :partial => '/common/show_top/analytics' %>
+        <% end %>
+        <i>Note that 'web views' are views that occured through EF.com or other EF affiliates.  It does not include views to the post page on your website.</i>
     <% end %>
-    <i>Note that 'web views' are views that occured through EF.com or other EF affiliates.  It does not include views to the post page on your website.</i>
-<% end %>
+</div>
