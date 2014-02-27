@@ -1,39 +1,44 @@
 <div id="affiliate_dashboard">
     <h1>Your energyfolks dashboard</h1>
     <p>Your access level is: <%= current_user.admin? ? 'Super User' : current_affiliate.level_name(current_user) %> (<a href="<%= SITE_HOST %>/developers/admin_levels">What does this mean?</a>)</p>
-<%
-  if current_affiliate.shared_secret.present?
-
-    ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
-    current_version = ef_data['version']
-    if current_affiliate.wordpress_plugin_version.to_s == current_version.to_s
-      %>
-        <div class="warning">
-          <h1>Your EnergyFolks Plugin is Out of Date</h1>
-          <p>It appears you are running version <%= current_affiliate.wordpress_plugin_version.to_s %> of the EnergyFolks plugin.  The current version is <%= current_version.to_s %>.</p>
-          <p>To update, please click on the 'Updates' option under the 'Dashboard' menu on the left side of the Wordpress backend.  Check for updates, and install the 'EnergyFolks Tools' plugin update that is available.</p>
-        </div>
-      <%
-    end
-  end
-  messages = AdminMessage.where('created_at > ?', 14.days.ago).all
-  if messages.length > 0
-   %>
-   <div class="box">
-     <h1>Messages from EnergyFolks</h1>
-     <% messages.each do |m| %>
-        <h4><%= m.name %></h4>
-        <i><%= m.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= m.user.name %></i><BR>
-        <%= raw(m.html) %>
-     <% end %>
-   </div>
-   <%
-  end
-
-%>
 
 
-  <table border=0 cellpadding=10 cellspacing=0 width='100%'>
+<table border=0 cellpadding=10 cellspacing=0 width='100%'>
+    <%
+      if current_affiliate.shared_secret.present?
+
+        ef_data = YAML::load(File.open("#{Rails.root}/public/wordpress/wordpress.yml"))
+        current_version = ef_data['version']
+        if current_affiliate.wordpress_plugin_version.to_s == current_version.to_s
+          %>
+            <tr><td colspan="2">
+            <div class="warning">
+              <h1>Your EnergyFolks Plugin is Out of Date</h1>
+              <p>It appears you are running version <%= current_affiliate.wordpress_plugin_version.to_s %> of the EnergyFolks plugin.  The current version is <%= current_version.to_s %>.</p>
+              <p>To update, please click on the 'Updates' option under the 'Dashboard' menu on the left side of the Wordpress backend.  Check for updates, and install the 'EnergyFolks Tools' plugin update that is available.</p>
+            </div>
+            </td></tr>
+          <%
+        end
+      end
+      messages = AdminMessage.where('created_at > ?', 14.days.ago).all
+      if messages.length > 0
+       %>
+       <tr><td colspan="2">
+       <div class="box">
+         <h1>Messages from EnergyFolks</h1>
+         <% messages.each do |m| %>
+            <h4><%= m.name %></h4>
+            <i><%= m.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <%= m.user.name %></i><BR>
+            <%= raw(m.html) %>
+         <% end %>
+       </div>
+       </td></tr>
+       <%
+      end
+
+    %>
+
     <tr>
       <td valign=top width='50%'>
         <% if current_user.admin? || current_affiliate.admin?(current_user, Membership::EDITOR) %>
