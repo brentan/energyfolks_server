@@ -17,17 +17,10 @@
         <% else %>
           <% if @list_names.empty? %>
             <div class="instructions">We were able to connect to Mailchimp with the API key you entered, but it looks like your Mailchimp account doesn't contain any lists.
-              Please log in to <%= link_to 'mailchimp.com' %> and add four lists
-              (the names don't have to exactly match, but you need a separate list for each of these user groups):
-              <ul>
-                <li>Members List</li>
-                <li>Daily Digest List</li>
-                <li>Author / Contributor List</li>
-                <li>Editor / Administrator List</li>
-              </ul>
+              Please log in to <%= link_to 'mailchimp.com' %> and add some lists
             </div>
           <% else %>
-            <% blank_list_item = '[select a list from your Mailchimp account]' %>
+            <% blank_list_item = '[select a mailchimp list - leave blank to disable sync]' %>
             <div class='form_label'>Members List (users signed up to receive Important Announcements)</div>
             <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => blank_list_item} %></div>
 
