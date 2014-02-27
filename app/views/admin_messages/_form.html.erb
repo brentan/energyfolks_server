@@ -1,0 +1,20 @@
+<div class="form">
+  <%= form_for @item, :url => { :action => new ? 'create' : 'update' } do |f| %>
+      <%= raw(iframe_form) %>
+      <%= raw(show_errors(@item)) %>
+      <% if !new %>
+          <input type=hidden name='id' value=<%= @item.id %>>
+      <% end %>
+
+      <div class='form_label'>Post Title</div>
+      <div class='form_entry'><%= f.text_field :name %></div>
+
+      <div class='form_label'>Text</div>
+      <div class='form_entry'><%= f.text_area :html, :class => 'tinymce' %></div>
+
+      <%= tinymce %>
+
+      <div class='form_entry'><%= f.submit %></div>
+
+  <% end %>
+</div>

@@ -2,7 +2,7 @@ class MailchimpController < ApplicationController
 
   def edit
     @affiliate = Affiliate.find_by_id(params[:affiliate_id])
-    if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
+    if @affiliate.present? && (current_user.admin? || @affiliate.admin?(current_user, Membership::EDITOR))
       if @affiliate.mailchimp_client.nil?
         @affiliate.mailchimp_client = MailchimpClient.new
         @affiliate.mailchimp_client.save
@@ -16,7 +16,7 @@ class MailchimpController < ApplicationController
 
   def update
     @affiliate = Affiliate.find_by_id(params[:affiliate_id])
-    if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
+    if @affiliate.present? && (current_user.admin? || @affiliate.admin?(current_user, Membership::EDITOR))
       @affiliate.mailchimp_client.update_attributes(params[:mailchimp_client])
       @affiliate.mailchimp_client.save
 
@@ -32,7 +32,7 @@ class MailchimpController < ApplicationController
 
   def sync_now
     @affiliate = Affiliate.find_by_id(params[:affiliate_id])
-    if @affiliate.present? && @affiliate.admin?(current_user, Membership::EDITOR)
+    if @affiliate.present? && (current_user.admin? || @affiliate.admin?(current_user, Membership::EDITOR))
 
       @mailchimp_client = @affiliate.mailchimp_client
       @mailchimp_client.sync_lists

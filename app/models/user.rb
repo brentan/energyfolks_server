@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :user_comments, :class_name => 'Comment', :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :user_highlights, :dependent => :destroy
+  has_many :admin_messages, :dependent => :destroy
   has_many :mark_reads_reader, :class_name => 'MarkRead'
   has_many :visits
   has_many :google_emails, :dependent => :destroy
