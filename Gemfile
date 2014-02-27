@@ -36,7 +36,10 @@ gem 'rubyzip'
 
 gem 'ruby-saml-idp'
 gem 'google-api-client'
+gem 'mailchimp-api'
 gem 'icalendar'
+
+gem 'soapforce'
 
 
 # Gems used only for assets and not required

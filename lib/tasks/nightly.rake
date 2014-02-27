@@ -34,6 +34,27 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "Resynchronize with mailchimp"
+  task :mailchimp => :environment do
+    operation = ScheduledOperation.start('mailchimp sync')
+    Affiliate.all.each { |a|
+      a.mailchimp_client.sync_lists
+    }
+    operation.mark_complete
+  end
+
+  desc "Test Salesforce"
+  task :salesforce => :environment do
+    operation = ScheduledOperation.start('Salesforce tests')
+    Affiliate.all.each do |a|
+      c = SalesforceClient.new(a)
+      if c.enabled?
+        c.login(true)
+      end
+    end
+    operation.mark_complete
+  end
+
   desc "Archive Old Stuff"
   task :archive => :environment do
     operation = ScheduledOperation.start('archive old stuff')
@@ -42,6 +63,15 @@ namespace :nightly do
         i.update_column(:archived, true)
         i.remove_from_index
       end
+    end
+    operation.mark_complete
+  end
+
+  desc "NightlyStats"
+  task :stats => :environment do
+    operation = ScheduledOperation.start('Nightly Statistics')
+    Affiliate.all.each do |a|
+      NightlyStat.create!(a.measure_stats)
     end
     operation.mark_complete
   end

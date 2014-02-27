@@ -98,6 +98,44 @@ class AffiliatesController < ApplicationController
     @result = user.reject_or_remove(current_user, current_affiliate, params[:reason])
   end
 
+  def salesforce
+    @affiliate = Affiliate.find(params[:id])
+    @client = SalesforceClient.new(@affiliate)
+    if params[:subbed].present?
+      @affiliate.update_attributes(params[:affiliate])
+      @affiliate.reload
+      flash[:notice]="Changes successfully saved"
+    end
+    if params[:force].present?
+      if @client.enabled? && @client.login.blank?
+        @affiliate.approved_members.each do |u|
+          @client.sync_user(u)
+        end
+        flash[:notice]="Your membership has been synced."
+      else
+        flash[:notice]="Could not authenticate to Salesforce.  Check your settings."
+      end
+    end
+    if @client.enabled? && @client.login.blank?
+      current = @affiliate.salesforce_items.map { |i| i.id }
+      @client.fields.each do |f|
+        item = SalesforceItem.where(affiliate_id: @affiliate.id, salesforce_name: f[:name]).first
+        if item.blank?
+          SalesforceItem.create!(affiliate_id: @affiliate.id, salesforce_label: f[:label], salesforce_name: f[:name], salesforce_options: f[:options], salesforce_type: SalesforceItem.type_index(f[:type]), custom: SalesforceItem::NONE)
+        else
+          item.salesforce_options = f[:options]
+          item.salesforce_type = SalesforceItem.type_index(f[:type])
+          item.salesforce_label = f[:label]
+          item.save!
+          current -= [item.id]
+        end
+      end
+      current.each { |c| SalesforceItem.find(c).destroy }
+      @affiliate.reload
+    end
+
+  end
+
 
   private
   def check_for_admin_rights(level = Membership::ADMINISTRATOR)

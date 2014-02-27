@@ -1,5 +1,5 @@
 <div class="energyfolks_show_post_details">
-  <%= image_tag(@item.logo.url(:thumb_big), :class => 'ef_post_logo', :align => 'right') if @item.logo.present? %>
+  <%= image_tag(@item.logo.url, :class => 'ef_post_logo', :align => 'right', :width => '200px') if @item.logo.present? %>
     <h1><%= @item.name %></h1>
     <%= content_tag(:h3, @item.employer) if @item.employer.present? %>
     <%= content_tag(:h3, @item.location) if @item.location.present? %>

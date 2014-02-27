@@ -1,0 +1,49 @@
+<h1>Mailchimp Integration Settings for <%= @affiliate.name %></h1>
+<br/>
+<div class='form'>
+  <% if @mailchimp_client.present? %>
+    <%= form_for @mailchimp_client, url: "/mailchimp/#{@affiliate.id}/update" do |f| %>
+      <%= raw(iframe_form) %>
+        <%= raw(show_errors(@mailchimp_client)) %>
+
+        <div class='form_label'>Mailchimp API Key</div>
+        <div class='form_entry'><%= f.text_field :api_key %></div>
+
+        <% if @mailchimp_client.api_key.nil? or @list_names.nil? %>
+          <div class="instructions">
+            Enter the API key for your Mailchimp account (you can create one by logging in to your
+            <%= link_to "Mailchimp account", "http://www.mailchimp.com" %>, and going to Account Settings | Extras.
+          </div>
+        <% else %>
+          <% if @list_names.empty? %>
+            <div class="instructions">We were able to connect to Mailchimp with the API key you entered, but it looks like your Mailchimp account doesn't contain any lists.
+              Please log in to <%= link_to 'mailchimp.com' %> and add some lists
+            </div>
+          <% else %>
+            <% blank_list_item = '[select a mailchimp list - leave blank to disable sync]' %>
+            <div class='form_label'>Members List (users signed up to receive Important Announcements)</div>
+            <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Daily Digest List</div>
+            <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Weekly Digest List</div>
+            <div class='form_entry'><%= f.select :weekly_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Author / Contributor List</div>
+            <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+
+            <div class='form_label'>Editor / Administrator List</div>
+            <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class="instructions">
+              Your Mailchimp email lists above will be automatically synced with the <%= @affiliate.name %> member list in Energyfolks nightly. <%= link_to "Sync Now", "/mailchimp/#{@affiliate.id}/sync_now?iframe=1" %>
+            </div>
+          <% end %>
+        <% end %>
+        <%= f.submit "Update", class: "popup_no_carousel button submit" %>
+      </div>
+    <% end %>
+  <% else %>
+    <h3>There was an error.</h3>
+  <% end %>
+</div>

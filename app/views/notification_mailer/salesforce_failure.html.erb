@@ -1,0 +1,14 @@
+<%= @user.first_name %>,
+<BR><BR>
+An attempt to connect to your Salesforce system through Energyfolks failed.  This is possibly due to a bad/expired password.
+The exact error encountered was:
+<BR><BR>
+<%= @message %>
+<BR><BR>
+Please visit the following URL while logged in to update your salesforce settings:
+<BR><BR>
+URL: https://www.energyfolks.com/affiliates/salesforce?id=<%= @affiliate.id %>&iframe_next=1
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.id.present? ? "energyfolks on behalf of #{@affiliate.name}" : "energyfolks" %>

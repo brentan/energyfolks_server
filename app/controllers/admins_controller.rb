@@ -31,6 +31,10 @@ class AdminsController < ApplicationController
     @items = ScheduledOperation.order('created_at').all
   end
 
+  def messages
+    @items = AdminMessage.all
+  end
+
   private
   def check_for_admin_rights
     return redirect_to '/' unless current_user.present?

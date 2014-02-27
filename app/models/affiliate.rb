@@ -4,6 +4,7 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliates_jobs, :dependent => :destroy
   has_many :affiliates_events, :dependent => :destroy
   has_many :affiliates_discussions, :dependent => :destroy
+  has_many :affiliates_blogs, :dependent => :destroy
   has_many :emails, as: :entity, :dependent => :destroy
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -13,12 +14,16 @@ class Affiliate < ActiveRecord::Base
   has_many :nightly_stats, :dependent => :destroy
   has_many :subcomments, :dependent => :destroy
   has_many :blog_posts, :class_name => 'Blog', :dependent => :destroy
+  has_one :mailchimp_client, :dependent => :destroy
+  has_many :salesforce_items, :dependent => :destroy
+
 
   attr_accessible :name, :short_name, :email_name, :url, :url_events, :url_jobs, :url_discussions, :url_users, :url_blogs,
                   :email, :live, :open, :visible, :color, :email_header, :custom_header, :location, :latitude, :longitude,
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius, :calendar_imports_attributes,
-                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded
+                  :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded,
+                  :salesforce_username, :salesforce_password, :salesforce_token, :salesforce_items_attributes
 
 
   validates_presence_of :name, :location, :url, :short_name, :email_name
@@ -45,6 +50,7 @@ class Affiliate < ActiveRecord::Base
   after_create :add_to_google
 
   accepts_nested_attributes_for :calendar_imports, :allow_destroy => true
+  accepts_nested_attributes_for :salesforce_items, :allow_destroy => true
 
   # 'open' codes
   OPEN = 1
@@ -89,15 +95,41 @@ class Affiliate < ActiveRecord::Base
     search = search.where("moderation_emails = 1") if emails_only
     return search.all.map{|u| u.user }
   end
+
   def approved_members
     self.memberships.approved.joins(:user).all.map {|u| u.user }
   end
+
   def announcement_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:announcement => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
+
   def digest_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:weekly => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
   end
+
+  def daily_digest_members
+    User.joins(:subscription).joins(:memberships).where(:subscriptions => {:daily => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+
+  def measure_stats
+    {
+      affiliate_id: self.id,
+      total_users: self.memberships.approved.count,
+      total_active_users: self.memberships.approved.joins(:user).where('users.last_login > ?',3.months.ago).count,
+      total_users_moderation: self.memberships.waiting.count,
+      total_jobs: Job.where(:affiliate_id => self.id).count,
+      total_jobs_moderation: self.affiliates_jobs.waiting.count,
+      total_events: Event.where(:affiliate_id => self.id).count,
+      total_events_moderation: self.affiliates_events.waiting.count,
+      total_discussions: Discussion.where(:affiliate_id => self.id).count,
+      total_discussions_moderation: self.affiliates_discussions.waiting.count,
+      total_blogs: Blog.where(:affiliate_id => self.id).count,
+      total_blogs_moderation: self.affiliates_blogs.waiting.count,
+      visits: Visit.unique_visits(affiliate_id: self.id)
+    }
+  end
+
 
   def email
     email = super

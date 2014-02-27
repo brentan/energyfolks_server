@@ -32,6 +32,7 @@ namespace :clean_up do
       m.destroy if m.present? && m.mark_read_actions.length == 0
     end
     DigestMailer.where("created_at < ?",2.years.ago).all.each { |e| e.destroy }
+    AdminMessage.where("created_at < ?",1.year.ago).all.each { |e| e.destroy }
   end
 
   desc "resync with cloudsearch"

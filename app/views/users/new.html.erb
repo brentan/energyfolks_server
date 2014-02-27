@@ -64,6 +64,8 @@
                   </div>
                 </div>
               <% end %>
+
+              <%= render :partial => '/users/salesforce', :locals => {signup: true} %>
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
             </li>
             <li class='slide'>

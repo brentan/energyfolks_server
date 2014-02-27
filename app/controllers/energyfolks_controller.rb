@@ -1,7 +1,6 @@
 class EnergyfolksController < ApplicationController
 
   def index
-
   end
   def privacy
 

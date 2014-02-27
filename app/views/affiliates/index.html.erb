@@ -6,26 +6,30 @@
     <div id="EnfolksResultDiv">
         <% first = true %>
         <% @affiliates.each do |affiliate| %>
-          <% if current_user.present? && (current_user.admin? || affiliate.admin?(current_user, Membership::ADMINISTRATOR)) %>
-              <div style="text-align: right;">
+          <% if current_user.present? %>
+            <div style="text-align: right;">
+              <% if (current_user.admin? || affiliate.admin?(current_user, Membership::ADMINISTRATOR)) %>
                 <%= link_to 'Edit', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/#{affiliate.id}/edit", iframe: 'true' } %>
-                <%= link_to 'Members', "affiliates/#{affiliate.id}/users" %>
-              </div>
-              <% first = false %>
+                | <%= link_to 'Dashboard', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/dashboard?aid=#{affiliate.id}", iframe: 'true' } %>
+                | <%= link_to 'Members', "affiliates/#{affiliate.id}/users" %>
+              <% end %>
+            </div>
           <% end %>
-            <div class="enfolks_item enfolks_no_popup enfolks_list_item<%= first ? ' ef_first_item' : '' %>" onclick="window.location.href='<%= affiliate.url %>';">
-              <% first = false %>
-              <table border="0" class="ef_item_details">
-                <tbody><tr><td class="ef_main_td">
+          <% first = false %>
+          <div class="enfolks_item enfolks_no_popup enfolks_list_item<%= first ? ' ef_first_item' : '' %>" onclick="window.location.href='<%= affiliate.url %>';">
+            <% first = false %>
+            <table border="0" class="ef_item_details">
+              <tbody><tr>
+                <td class="ef_main_td">
                   <h1 class="title"><%= affiliate.name %></h1>
                   <h3 class="line1"><%= Membership.approved.where(affiliate_id: affiliate.id).count %> Members</h3>
-
                 </td>
                 <td class="enfolks_logo">
                   <%= image_tag(affiliate.logo.url) %>
-                </td></tr></tbody></table>
-              </div>
-
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
         <% end %>
     </div>
 </div>

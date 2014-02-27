@@ -125,7 +125,7 @@ module MixinEntityController
   def create
     @item = model.new(params[self.param_label])
     @item.user = current_user
-    @item.affiliate_id = current_affiliate.id.present? ? current_affiliate.id : 0
+    @item.affiliate_id = current_affiliate.id.present? ? current_affiliate.id : (current_user.affiliate_id.present? ? current_user.affiliate_id : 0)
     @item.last_updated_by = current_user.id
     if !@item.save
       render :action => "new"
@@ -166,10 +166,6 @@ module MixinEntityController
 
   def force_resend
     # TODO: write this...force resend email to all users in group with special message at top.  Copy logic from user_broadcast
-  end
-
-  def email_open
-    #TODO: write this, should update email model with info on who opened/when/etc
   end
 
 end

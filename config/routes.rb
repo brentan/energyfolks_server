@@ -44,6 +44,13 @@ EnergyfolksServer::Application.routes.draw do
   get '/google/saml/inbound', to: 'google#inbound'
   get '/google/saml/logout', to: 'google#logout'
 
+  #Mailchimp list routes
+  get 'mailchimp/inbound'
+  get 'mailchimp/logout'
+  get 'mailchimp/:affiliate_id/edit' => 'mailchimp#edit'
+  get 'mailchimp/:affiliate_id/sync_now' => 'mailchimp#sync_now'
+  put 'mailchimp/:affiliate_id/update' => 'mailchimp#update'
+
   # Omniauth routes
   get '/external_login', to: 'users#external_login'
   get '/auth/linkedin/callback', to: 'users#linkedin'
@@ -66,6 +73,8 @@ EnergyfolksServer::Application.routes.draw do
   get "affiliates/approve"
   get "affiliates/logo"
   get "affiliates/dashboard"
+  get "affiliates/salesforce"
+  put "affiliates/salesforce"
 
   # Comment routes
   get "comments/new"
@@ -73,6 +82,13 @@ EnergyfolksServer::Application.routes.draw do
   get "subcomments/new"
   post "subcomments/create"
   post "inbound_emails/inbound"
+
+  # Admin Message routes
+  get 'admin_messages/new'
+  post 'admin_messages/create'
+  match 'admin_messages/:id/edit' => "admin_messages#edit"
+  put 'admin_messages/update'
+  get 'admin_messages/delete'
 
   # Wordpress routes
   post "blogs/AddWordpressPost"
@@ -105,6 +121,7 @@ EnergyfolksServer::Application.routes.draw do
     }
   rescue
   end
+  get "blogs/analytics"
 
 
   # Make ajax routes visible

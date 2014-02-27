@@ -31,7 +31,10 @@ class EmailsController < ApplicationController
 
   def open
     email = Email.find_by_token(params[:token])
-    email.mark_read if email.present?
+    if email.present?
+      email.mark_read
+      email.user.update_column(:last_login, Time.now) if email.user.present?
+    end
     # Serve a small transparent 1x1 gif image
     send_data(Base64.decode64("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="), :type => "image/gif", :disposition => "inline")
   end

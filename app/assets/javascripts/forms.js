@@ -51,4 +51,13 @@ $(function () {
     $("body").on('blur', '#affiliate_location', function() {
         GeoLocate($(this));
     });
+    $("body").on("change", '.salesforce_select select', function() {
+        if($(this).val() == '') {
+            $(this).closest('tr').find('.custom').show();
+            $(this).closest('tr').find('.custom_explain').hide();
+        } else {
+            $(this).closest('tr').find('.custom').hide();
+            $(this).closest('tr').find('.custom_explain').show();
+        }
+    });
 });
