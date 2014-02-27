@@ -116,12 +116,12 @@ EnergyfolksServer::Application.routes.draw do
         get "#{method}/force_resend"
         get "#{method}/email_open"
         get "#{method}/myposts"
+        get "#{method}/analytics" if type.new.entity_name == 'Blog'
         match "#{method}/:id" => "#{method}#show"
       end
     }
   rescue
   end
-  get "blogs/analytics"
 
 
   # Make ajax routes visible
