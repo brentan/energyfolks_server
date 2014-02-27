@@ -58,6 +58,7 @@ class DigestMailer < ActiveRecord::Base
     output[:discussions] = get_items(Discussion)
 
     # Generate the digest_items records used for tracking
+    output[:announcements].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
     output[:blogs][:all].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
     output[:events][:all].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
     output[:jobs][:all].each { |e| self.digest_items.create!(entity: e, weekly: self.weekly?) }
