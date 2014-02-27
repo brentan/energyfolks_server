@@ -3,7 +3,7 @@
 Plugin Name: Energyfolks tools
 Plugin URI: http://www.energyfolks.com/developers/wordpress
 Description: Add energyfolks tools to your wordpress site, and use energyfolks as the primary authenticator for your site.
-Version: 2.03
+Version: 2.04
 Author: Brentan Alexander
 Author URI: http://www.energyfolks.com
 
