@@ -5,12 +5,12 @@ class SalesforceClient
   end
 
   def enabled?
-    #return false unless Rails.env.production?
+    return false unless Rails.env.production?
     return @affiliate.salesforce_username.present? && @affiliate.salesforce_password.present? && @affiliate.salesforce_token.present?
   end
 
   def login(send_email_failure = false)
-    #return 'Salesforce not enabled on development' unless Rails.env.production?
+    return 'Salesforce not enabled on development' unless Rails.env.production?
     begin
       @client = Soapforce::Client.new
       @client.authenticate(:username => @affiliate.salesforce_username, :password => "#{@affiliate.salesforce_password}#{@affiliate.salesforce_token}")
