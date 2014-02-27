@@ -67,6 +67,15 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "NightlyStats"
+  task :stats => :environment do
+    operation = ScheduledOperation.start('Nightly Statistics')
+    Affiliate.all.each do |a|
+      NightlyStat.create!(a.measure_stats)
+    end
+    operation.mark_complete
+  end
+
   desc "AutoImport"
   task :autoimport => :environment do
     operation = ScheduledOperation.start('Auto-Import')

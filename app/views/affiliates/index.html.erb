@@ -10,6 +10,7 @@
             <div style="text-align: right;">
               <% if (current_user.admin? || affiliate.admin?(current_user, Membership::ADMINISTRATOR)) %>
                 <%= link_to 'Edit', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/#{affiliate.id}/edit", iframe: 'true' } %>
+                | <%= link_to 'Dashboard', '#', :class => 'EnergyFolks_popup', :data => {command: "affiliates/dashboard?aid=#{affiliate.id}", iframe: 'true' } %>
                 | <%= link_to 'Members', "affiliates/#{affiliate.id}/users" %>
               <% end %>
             </div>

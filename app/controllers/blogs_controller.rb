@@ -76,6 +76,10 @@ class BlogsController < ApplicationController
     end
   end
 
+  def analytics
+    @item = Blog.unscoped.where(affiliate_id: current_affiliate.id, wordpress_id: params[:id].to_i).first
+  end
+
   private
   def check_hash
     params[:hash] == Digest::MD5.hexdigest("#{current_affiliate.shared_secret}#{params[:post_id]}")

@@ -168,8 +168,4 @@ module MixinEntityController
     # TODO: write this...force resend email to all users in group with special message at top.  Copy logic from user_broadcast
   end
 
-  def email_open
-    #TODO: write this, should update email model with info on who opened/when/etc
-  end
-
 end

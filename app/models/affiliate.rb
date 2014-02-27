@@ -4,6 +4,7 @@ class Affiliate < ActiveRecord::Base
   has_many :affiliates_jobs, :dependent => :destroy
   has_many :affiliates_events, :dependent => :destroy
   has_many :affiliates_discussions, :dependent => :destroy
+  has_many :affiliates_blogs, :dependent => :destroy
   has_many :emails, as: :entity, :dependent => :destroy
   has_many :highlights, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -109,6 +110,24 @@ class Affiliate < ActiveRecord::Base
 
   def daily_digest_members
     User.joins(:subscription).joins(:memberships).where(:subscriptions => {:daily => true}, :memberships => {:approved => true, :affiliate_id => self.id}).all
+  end
+
+  def measure_stats
+    {
+      affiliate_id: self.id,
+      total_users: self.memberships.approved.count,
+      total_active_users: self.memberships.approved.joins(:user).where('users.last_login > ?',3.months.ago).count,
+      total_users_moderation: self.memberships.waiting.count,
+      total_jobs: Job.where(:affiliate_id => self.id).count,
+      total_jobs_moderation: self.affiliates_jobs.waiting.count,
+      total_events: Event.where(:affiliate_id => self.id).count,
+      total_events_moderation: self.affiliates_events.waiting.count,
+      total_discussions: Discussion.where(:affiliate_id => self.id).count,
+      total_discussions_moderation: self.affiliates_discussions.waiting.count,
+      total_blogs: Blog.where(:affiliate_id => self.id).count,
+      total_blogs_moderation: self.affiliates_blogs.waiting.count,
+      visits: Visit.unique_visits(affiliate_id: self.id)
+    }
   end
 
 

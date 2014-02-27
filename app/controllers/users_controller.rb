@@ -89,6 +89,7 @@ class UsersController < ApplicationController
     user = params['token'].present? ? User.find_by_activation_token(params['token']) : nil
     if user.present? && user.active?
       user.verified= true
+      user.last_login = Time.now
       user.save!(validate:false)
       session[:userid]=user.id
       user.update_index
@@ -137,6 +138,7 @@ class UsersController < ApplicationController
     if !user_logged_in? && cookies[:cookieID].present?
       user = User.find_by_cookie(cookies[:cookieID])
       if user.present?
+        user.update_column(:last_login, Time.now)
         session[:userid] = user.id if user.present?
         login_hash = UserLoginHash.create(user_id: current_user.id)
         render :js => "EnergyFolks.login_callback('#{login_hash.login_hash}');"

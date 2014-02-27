@@ -114,6 +114,7 @@ EnergyfolksServer::Application.routes.draw do
     }
   rescue
   end
+  get "blogs/analytics"
 
 
   # Make ajax routes visible
