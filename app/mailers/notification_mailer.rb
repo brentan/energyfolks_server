@@ -13,6 +13,13 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "A new #{item.entity_type} is awaiting moderation")
   end
 
+  def admin_message(user_id, aid, item_id)
+    @item = AdminMessage.find(item_id)
+    @user = User.find_by_id(user_id)
+    @user_affiliate = Affiliate.find_by_id(aid)
+    mail(to: @user.email, from: 'contact@energyfolks.com', subject: "[EnergyFolks Admins] #{@item.name}")
+  end
+
   def auto_import_complete(user, aid, numbers)
     @user = user
     @affiliate = Affiliate.find_by_id(aid)

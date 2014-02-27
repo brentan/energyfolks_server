@@ -83,6 +83,13 @@ EnergyfolksServer::Application.routes.draw do
   post "subcomments/create"
   post "inbound_emails/inbound"
 
+  # Admin Message routes
+  get 'admin_messages/new'
+  post 'admin_messages/create'
+  match 'admin_messages/:id/edit' => "admin_messages#edit"
+  put 'admin_messages/update'
+  get 'admin_messages/delete'
+
   # Wordpress routes
   post "blogs/AddWordpressPost"
   get "blogs/FreezeWordpressPost"

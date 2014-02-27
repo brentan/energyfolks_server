@@ -12,7 +12,7 @@
         <% if @mailchimp_client.api_key.nil? or @list_names.nil? %>
           <div class="instructions">
             Enter the API key for your Mailchimp account (you can create one by logging in to your
-            <%= link_to "Mailchimp account", "www.mailchimp.com" %>, and going to Account Settings | Extras.
+            <%= link_to "Mailchimp account", "http://www.mailchimp.com" %>, and going to Account Settings | Extras.
           </div>
         <% else %>
           <% if @list_names.empty? %>

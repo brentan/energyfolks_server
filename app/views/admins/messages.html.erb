@@ -1,0 +1,24 @@
+<a href='/admins/?iframe_next=1'>Back to Admin Main Screen</a>
+<h1>Admin Messages</h1>
+<h3><a href='/admin_messages/new?iframe_next=1'>Post New Message</a></h3>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%" style="border-top:1px solid black;">
+<% @items.each do |m| %>
+    <tr>
+      <td style="border-bottom: 1px solid black;">
+        <%= m.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %>
+      </td>
+      <td style="border-bottom: 1px solid black;">
+        <%= m.user.name %>
+      </td>
+      <td style="border-bottom: 1px solid black;">
+        <%= m.name %>
+      </td>
+      <td style="border-bottom: 1px solid black;">
+        <a href="/admin_messages/<%= m.id %>/edit?iframe_next=1">Edit</a> |
+        <a href="/admin_messages/delete?id=<%= m.id %>" onclick="return confirm('Are you sure?');">Delete</a>
+      </td>
+    </tr>
+
+<% end %>
+</table>
