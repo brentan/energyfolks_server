@@ -1,5 +1,6 @@
 class Email < ActiveRecord::Base
   belongs_to :entity, :polymorphic => true
+  belongs_to :user
   before_create :set_token_details
 
   attr_accessible :user_id, :entity_id, :entity_type, :entity
