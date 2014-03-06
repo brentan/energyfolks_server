@@ -17,6 +17,9 @@ class AffiliatesController < ApplicationController
   def users
     @affiliate = Affiliate.find_by_id(params[:id])
   end
+  def members
+    @users = current_affiliate.approved_members
+  end
 
   def wordpress_details
     return render :inline => 'false' if current_affiliate.blank? || current_affiliate.id.blank?

@@ -5,7 +5,12 @@
       <label><%= f.check_box :daily %> Daily Digest</label>
     </div>
 <% end %>
-<div class='form_label'>Notification Emails</div>
+<div class="form_label">Announcements from Leadership</div>
+<div class='form_entry'>
+    <label><%= f.check_box :announcement %> Receive Announcements from Group Leaders</label>
+    <div class="explain">Announcement emails are sent by group leaders to membership.  These are NOT automated emails, and are the primary mechanism for most groups to reach their membership.</div>
+</div>
+<div class='form_label'>Automated Notification Emails</div>
 <div class='form_entry'>
   <% if @user.present? && @user.affiliate.present? %>
     <%= f.radio_button :affiliate_only, false, class: "toggle" %>
@@ -28,6 +33,5 @@
     <% end %>
   </div>
   <label><%= f.check_box :discussions %> New Discussions</label><BR>
-  <label><%= f.check_box :blogs %> New Blog Posts</label><BR>
-  <label><%= f.check_box :announcement %> Important Announcements</label>
+  <label><%= f.check_box :blogs %> New Blog Posts</label>
 </div>

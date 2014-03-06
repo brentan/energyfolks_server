@@ -67,6 +67,7 @@ EnergyfolksServer::Application.routes.draw do
   match "affiliates" => 'affiliates#index'
   match "affiliates/:id/users" => 'affiliates#users'
   get "affiliates/rights"
+  get "affiliates/members"
   put "affiliates/rights"
   get "affiliates/reject_or_remove"
   post "affiliates/reject_or_remove"
