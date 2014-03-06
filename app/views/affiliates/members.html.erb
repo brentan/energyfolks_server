@@ -1,5 +1,5 @@
 <a href="/affiliates/dashboard?aid=<%= current_affiliate.id %>&iframe_next=1">Back to Dashboard</a><BR><BR>
-<table>
+<table border="1">
   <tr>
     <th>Name</th>
     <th>Email</th>
@@ -9,7 +9,7 @@
   <tr>
     <td><%= u.name %></td>
     <td><%= u.email %></td>
-    <td><%= u.subscription.announcement? ? 'Yes' : 'No' %></td>
+    <td><%= u.subscription.present? ? (u.subscription.announcement? ? 'Yes' : 'No') : 'No' %></td>
   </tr>
   <% end %>
 </table>
