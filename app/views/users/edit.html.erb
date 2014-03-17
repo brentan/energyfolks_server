@@ -6,7 +6,7 @@
       <%=	 nested_form_for @user, :url => { :action => "update", :id => @user.id }, :html => { :multipart => true } do |f| %>
         <%= raw(iframe_form) %>
         <div id='ef_carousel' class='no_animation'>
-          <%= raw(carousel_slide_title_section('Edit Profile',8, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Profile', 'Bio', 'Interests', 'Expertise', 'Affiliates', 'Preferences', 'Account'] })) %>
+          <%= raw(carousel_slide_title_section('Edit Profile',(@user.self_donations.length > 0) || (@user.stripe_tokens.length > 0) ? 9 : 8, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Profile', 'Bio', 'Interests', 'Expertise', 'Affiliates', 'Preferences', 'Account', 'Donations'] })) %>
           <div class="viewport">
             <ul class="overview">
               <li class='slide'>
@@ -153,6 +153,46 @@
 
                 <%= tinymce %>
               </li>
+              <% if (@user.self_donations.length > 0) || (@user.stripe_tokens.length > 0) %>
+                  <li class="slide">
+                    <div class="form_entry">
+                      <% if @user.stripe_tokens.length > 0 %>
+                          <h1>Cards on File</h1>
+                          <table border=0 style='clear:both;border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+                            <% @user.stripe_tokens.each do |token| %>
+                                <tr>
+                                  <td style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                                    <%= token.card_type %> *********-<%= token.last4 %>
+                                  </td>
+                                  <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                                    <a href='#' class='remove_stripe' data-id='<%= token.id %>'>Remove</a>
+                                  </td>
+                                </tr>
+                            <% end %>
+                          </table><BR><BR>
+                      <% end %>
+                      <% if @user.self_donations.length > 0 %>
+                          <h1>Past Donations</h1>
+                          <table border=0 style='clear:both;border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+                            <% @user.self_donations.each do |donation| %>
+                                <tr>
+                                  <td style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                                    <%= donation.created_at.strftime("%-m/%-d/%Y") %>
+                                  </td>
+                                  <td style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                                    <%= raw(donation.entity.blank? ? 'General Donation' : "<a href='#{SITE_HOST}/#{donation.entity.method_name}#{donation.entity.path}' target='_blank'>#{donation.entity.name}</a>") %>
+                                  </td>
+                                  <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                                    $<%= donation.amount %>
+                                  </td>
+                                </tr>
+                            <% end %>
+                          </table>
+                          <i>Questions or Concerns?  Send an email to <a href='mailto:contact@energyfolks.com'>contact@energyfolks.com</a>.</i>
+                      <% end %>
+                    </div>
+                  </li>
+              <% end %>
             </ul>
             <%= prev_next_buttons(false) %>
           </div>

@@ -33,6 +33,13 @@ class AjaxController < ApplicationController
     render_ajax( {html: html, id: params['id']} )
   end
 
+  # Remove credit card
+  def remove_stripe
+    token = StripeToken.where(:user_id => current_user.id, :id => params[:id]).first
+    token.destroy if token.present?
+    render_ajax({complete: true})
+  end
+
   # Privacy policy
   def privacy
     html = render_to_string :partial => "users/privacy"
