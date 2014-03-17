@@ -80,3 +80,10 @@ google:
   service_email: 'XXX@developer.gserviceaccount.com'
   admin_email: 'xxx@energyfolks.com'
   cert_relative_path: 'relative_path_from_Rails_root_to_p12_google_private_key'
+
+##########################
+### Stripe
+##########################
+stripe:
+  publishable: 'XXX'
+  private: 'xxx'

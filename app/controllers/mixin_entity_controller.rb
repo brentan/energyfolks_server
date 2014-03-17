@@ -131,7 +131,34 @@ module MixinEntityController
       render :action => "new"
     else
       Tag.update_tags(@item.raw_tags, @item)
-      redirect_to :action => "show", :iframe_next => true, :id => @item.id, :notice => "Your post was successful.  Moderation status is found below."
+      if @item.instance_of(Job) && current_affiliate.id.blank?
+        @item.update_column(:donate, true)
+        redirect_to :action => "donate", :iframe_next => true, :id => @item.id, :notice => "Your post was successful."
+      else
+        redirect_to :action => "show", :iframe_next => true, :id => @item.id, :notice => "Your post was successful.  Moderation status is found below."
+      end
+    end
+  end
+
+  def donate
+    @item = model.find_by_id(params[:id])
+    @email_settings_token= EmailSettingsToken.find_by_token(params[:user_token])
+    if @email_settings_token
+      @user = @email_settings_token.user
+      @email_settings_token.update_token
+    end
+    @user = current_user if user_logged_in?
+    if params[:card].present?
+      if params[:card] == 'new'
+        customer = StripeToken.new_customer(@user, params[:token], params[:card_type], params[:last4])
+        card = StripeToken.create!(user_id: @user.id, token: customer, last4: params[:last4], card_type: params[:card_type])
+      else
+        card = StripeToken.where(user_id: @user.id, id: params[:card].to_i).first
+      end
+      success, message = card.charge(params[:amount], @item)
+      card.destroy unless success
+      @item.reload
+      flash[success ? :notice : :alert] = message
     end
   end
 

@@ -1,0 +1,34 @@
+<%= @user.first_name %>,
+<BR><BR>
+    Thank you for your donation to EnergyFolks!  Donations from individuals like yourself help us keep our servers running so that
+    we can continue to provide our services to students and professionals in the energy space.  A receipt confirming your donation
+    is provided below.
+<BR><BR>
+<b>EnergyFolks, Inc. - EIN: 51-0666014</b>
+<BR>Tax Donation Receipt
+<BR><BR>
+
+<table border=1 width=100%>
+      <tr>
+        <td>
+          <%= @donation.created_at.strftime("%-m/%-d/%Y") %>
+        </td>
+        <td>
+          <%= raw(@donation.entity.blank? ? 'General Donation' : "<a href='#{SITE_HOST}/#{@donation.entity.method_name}#{@donation.entity.path}' target='_blank'>#{@donation.entity.name}</a>") %>
+        </td>
+        <td>
+          $<%= @donation.amount %>
+        </td>
+      </tr>
+</table>
+
+<BR><BR>
+EnergyFolks, Inc. is a recognized 501c3 nonprofit organization.  Your contribution is tax-deductible to the extent allowed by law.
+No goods or services were provided in exchange for your generous financial donation.
+<BR><BR>
+You can always find a full list of all your donations in your profile at <%= SITE_HOST %>/users/profile under the 'donations' tab.
+
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.name %>

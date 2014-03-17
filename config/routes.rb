@@ -108,6 +108,8 @@ EnergyfolksServer::Application.routes.draw do
         match "#{method}/:id/edit" => "#{method}#edit"
         get "#{method}/edit"
         get "#{method}/restore"
+        get "#{method}/donate"
+        post "#{method}/donate"
         put "#{method}/update"
         get "#{method}/reject_or_remove"
         post "#{method}/reject_or_remove"
@@ -144,6 +146,7 @@ EnergyfolksServer::Application.routes.draw do
   match "welcome/terms" => "users#terms"
   match "feedback/new" => "energyfolks#new"
   match "contact" => "energyfolks#contact"
+  match "donate" => "energyfolks#donate"
   match "add_your_group" => "energyfolks#add_your_group"
   match ':controller(/:action(/:id))(.:format)', controller: /developers/ #expose developer routes
   match ':controller(/:action(/:id))(.:format)', controller: /admins/ #expose admin routes

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227023727) do
+ActiveRecord::Schema.define(:version => 20140317182006) do
 
   create_table "admin_messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -290,6 +290,16 @@ ActiveRecord::Schema.define(:version => 20140227023727) do
   add_index "discussions_versions", ["entity_id"], :name => "index_bulletins_versions_on_entity_id"
   add_index "discussions_versions", ["version_number"], :name => "index_bulletins_versions_on_version_number"
 
+  create_table "donations", :force => true do |t|
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "amount"
+    t.integer  "user_id"
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.string   "stripe_id"
+  end
+
   create_table "email_settings_tokens", :force => true do |t|
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -405,6 +415,7 @@ ActiveRecord::Schema.define(:version => 20140227023727) do
     t.boolean  "archived",          :default => false
     t.boolean  "legacy",            :default => false
     t.datetime "first_approved_at"
+    t.boolean  "donate",            :default => false
   end
 
   create_table "jobs_versions", :force => true do |t|
@@ -520,6 +531,15 @@ ActiveRecord::Schema.define(:version => 20140227023727) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
+  create_table "stripe_tokens", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "token"
+    t.integer  "user_id"
+    t.string   "card_type"
+    t.string   "last4"
+  end
+
   create_table "subcomments", :force => true do |t|
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -552,8 +572,6 @@ ActiveRecord::Schema.define(:version => 20140227023727) do
     t.string  "name"
     t.integer "count", :default => 0
   end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"

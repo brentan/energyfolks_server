@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :admin_messages, :dependent => :destroy
   has_many :mark_reads_reader, :class_name => 'MarkRead'
   has_many :visits
+  has_many :self_donations, :class_name => 'Donation'
+  has_many :stripe_tokens, :dependent => :destroy
   has_many :google_emails, :dependent => :destroy
   has_many :digest_mailers
   has_many :user_logins
