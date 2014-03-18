@@ -167,15 +167,16 @@
   <tr class="odd">
     <td valign="top"><code>energyfolks_logged_in</code></td>
     <td>
+      <Code>restricttoaffiliate</code>
     </td>
-    <td valign="top">Used with a closing tag, all content between the two tags will only be shown if the user is logged in.  For example:<BR><code>[energyfolks_logged_in]THIS TEXT IS ONLY SHOWN WHEN LOGGED IN![/energyfolks_logged_in]</code><BR><BR><i>Note: Nested shortcodes are allowed...so <Code>[energyfolks_logged_in]Welcome [energyfolks_full_name]![/energyfolks_logged_in]</code> will work fine.
+    <td valign="top">Used with a closing tag, all content between the two tags will only be shown if the user is logged in.  If 'restricttoaffiliate' is set to '1' (default), then content is only shown to logged in members who are members of your group.  Otherwise, content is shown to any logged in user.  For example:<BR><code>[energyfolks_logged_in]THIS TEXT IS ONLY SHOWN WHEN LOGGED IN AND A MEMBER OF YOUR GROUP![/energyfolks_logged_in]</code><BR><BR><i>Note: Nested shortcodes are allowed...so <Code>[energyfolks_logged_in]Welcome [energyfolks_full_name]![/energyfolks_logged_in]</code> will work fine.
     </td>
   </tr>
   <tr class="odd">
     <td valign="top"><code>energyfolks_logged_out</code></td>
     <td>
     </td>
-    <td valign="top">Used with a closing tag, all content between the two tags will only be shown if the user is NOT logged in.  For example:<BR><code>[energyfolks_logged_out]THIS TEXT IS ONLY SHOWN WHEN LOGGED OUT![/energyfolks_logged_out]</code>
+    <td valign="top">Used with a closing tag, all content between the two tags will only be shown if the user is NOT logged in.  If 'restricttoaffiliate' is set to '1' (default), then content is shown to logged in members who are not members of your group, and logged out users.  Otherwise, content is shown to only logged out users.    For example:<BR><code>[energyfolks_logged_out]THIS TEXT IS ONLY SHOWN WHEN LOGGED OUT OR NOT A MEMBER OF YOUR GROUP![/energyfolks_logged_out]</code>
     </td>
   </tr>
   </tbody>

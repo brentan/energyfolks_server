@@ -3,7 +3,7 @@
 Plugin Name: Energyfolks tools
 Plugin URI: http://www.energyfolks.com/developers/wordpress
 Description: Add energyfolks tools to your wordpress site, and use energyfolks as the primary authenticator for your site.
-Version: 2.06
+Version: 2.07
 Author: Brentan Alexander
 Author URI: http://www.energyfolks.com
 
@@ -539,14 +539,29 @@ add_shortcode('energyfolks_picture', 'energyfolks_shortcode_picture');
  */
 function energyfolks_logged_in_tag($atts,$content=null) {
     global $EnergyFolks;
-    if(!$EnergyFolks->logged) return '';
-    return do_shortcode($content);
+     $atts=shortcode_atts(array(
+	      'restricttoaffiliate' => '1'
+     ), $atts);
+     if($atts['restricttoaffiliate']!='1') {
+        if(!$EnergyFolks->logged) return '';
+     } else {
+        if(!$EnergyFolks->logged) return '';
+        if(!(($EnergyFolks->user_details['member'] === true) || ($EnergyFolks->user_details['member'] == 'true'))) return '';
+     }
+     return do_shortcode($content);
 }
 add_shortcode("energyfolks_logged_in",'energyfolks_logged_in_tag');
 function energyfolks_logged_out_tag($atts,$content=null) {
     global $EnergyFolks;
-    if($EnergyFolks->logged) return '';
-    return do_shortcode($content);
+     $atts=shortcode_atts(array(
+	      'restricttoaffiliate' => '1'
+     ), $atts);
+     if($atts['restricttoaffiliate']!='1') {
+        if($EnergyFolks->logged) return '';
+     } elseif($EnergyFolks->logged) {
+        if(($EnergyFolks->user_details['member'] === true) || ($EnergyFolks->user_details['member'] == 'true')) return '';
+     }
+     return do_shortcode($content);
 }
 add_shortcode("energyfolks_logged_out",'energyfolks_logged_out_tag');
 

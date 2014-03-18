@@ -76,6 +76,7 @@ class UsersController < ApplicationController
           picture_url: login.user.avatar.present? ? login.user.avatar.url(:thumb) : "#{SITE_HOST}/assets/noimage.png",
           visibility: login.user.visibility,
           affiliates: login.user.memberships.approved.map{ |m| m.affiliate_id },
+          member: current_affiliate.id.present? ? current_affiliate.member?(login.user) : true,
           position: login.user.position,
           company: login.user.organization
       }
