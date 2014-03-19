@@ -21,7 +21,7 @@
           end
           if donations.length > 0
         %>
-            <h1>Thank You for Your Earlier Donation!</h1>
+            <h1>Thank You for Your Donation!</h1>
             Our records show that you donated <%= @item.nil? ? 'in the past' : 'in relation to this post' %>.  Your donations <%= @item.nil? ? '' : 'tied to this item ' %>are shown below.  Thank you for your support.
             <table border=0 style='border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
               <% donations.each do |donation| %>
