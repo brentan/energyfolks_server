@@ -126,6 +126,11 @@
       <div class='submit_button'>
         <button type="submit" id='donate_button'>Donate $<%= @user.nil? ? 250 : @user.average_donation %>!</button>
         <%= image_tag 'loader.gif', :id => 'loading_button' %>
+        <% if @just_posted %>
+            <BR><BR>
+            <a href='/<%= @item.method_name %>/<%= @item.id %>?iframe_next=1' style='font-size:11px;'>No thanks, take me to my post.</a>
+            <input type=hidden name=just_posted value=1>
+        <% end %>
       </div>
       <i>All donations are tax-deductible.  You will receive a receipt confirming your donation by email.</i>
       <%= raw('</div>') if @just_donated %>
