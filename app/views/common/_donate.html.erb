@@ -1,0 +1,257 @@
+<%
+   plot_data = {}
+   created_at = @item.created_at
+   plot_data[(created_at - 1.day).strftime("Date.UTC(%Y, %m-1, %d)")] = {:value => (created_at - 1.day), :web => 0, :email => 0, :digest => 0}
+   @item.mark_reads.each do |m|
+     current_dates = []
+     m.mark_read_actions.each do |a|
+       date = a.created_at.strftime("Date.UTC(%Y, %m-1, %d)")
+       next if current_dates.include?(date)
+       next if a.created_at < created_at
+       current_dates << date
+       if(plot_data.has_key?(date))
+         plot_data[date][:web] += 1
+       else
+         plot_data[date] = {:value => a.created_at, :web => 1, :email => 0, :digest => 0}
+       end
+     end
+   end
+   @item.emails.where(opened: true).all.each do |e|
+       date = e.open_date.strftime("Date.UTC(%Y, %m-1, %d)")
+       if(plot_data.has_key?(date))
+         plot_data[date][:email] += 1
+       else
+         plot_data[date] = {:value => e.open_date, :web => 0, :email => 1, :digest => 0}
+       end
+   end
+   @item.digest_items.where(opened: true).all.each do |e|
+       date = e.open_date.strftime("Date.UTC(%Y, %m-1, %d)")
+       if(plot_data.has_key?(date))
+         plot_data[date][:digest] += 1
+       else
+         plot_data[date] = {:value => e.open_date, :web => 0, :email => 0, :digest => 1}
+       end
+   end
+   plot_data = plot_data.sort_by {|k, v| v[:value]}
+   # Cumulative:
+   webs = 0
+   emails = 0
+   digests = 0
+   plot_data.each_with_index do |v,k|
+     webs += v[1][:web]
+     emails += v[1][:email]
+     digests += v[1][:digest]
+     plot_data[k][1][:web] = webs
+     plot_data[k][1][:email] = emails
+     plot_data[k][1][:digest] = digests
+   end
+   plot_data << [Time.now.strftime("Date.UTC(%Y, %m-1, %d)"), {:web => webs, :email => emails, :digest => digests}] unless plot_data.last[0] == Time.now.strftime("Date.UTC(%Y, %m-1, %d)")
+   show_plots = (@item.digest_items.count + @item.emails.count + MarkRead.total_reads(@item.mark_reads).count) > 10
+%>
+<table width='100%'>
+  <tr>
+    <td>
+      <% if show_plots %>
+          <h1 style='font-size:26px;'>Your Post Found an Audience!</h1>
+          Your post <i><%= @item.name %></i> was seen throughout the EnergyFolks network:
+          <table border="0" width='100%' style='text-align:center;font-size: 14px;'>
+            <tr>
+              <td width='25%' style='background-color:#eeeeee;'>
+                <div style='font-size:40px;line-height: 40px;'>
+                  <%= MarkRead.total_reads(@item.mark_reads).count %>
+                </div>
+                Web Visit<%= MarkRead.total_reads(@item.mark_reads).count == 1 ? '' : 's' %>
+              </td>
+              <td width='25%' style='background-color:#eeeeee;'>
+                <div style='font-size:40px;line-height: 40px;'>
+                  <%= @item.emails.count %>
+                </div>
+                Targeted Email<%= @item.emails.count == 1 ? '' : 's' %>
+              </td>
+              <td width='25%' style='background-color:#eeeeee;'>
+                <div style='font-size:40px;line-height: 40px;'>
+                  <%= @item.digest_items.count %>
+                </div>
+                Digest Listing<%= @item.digest_items.count == 1 ? '' : 's' %>
+              </td>
+              <td width='25%' style='background-color:#F16522;color:#ffffff;'>
+                <div style='font-size:50px;line-height: 50px;'>
+                  <%= @item.digest_items.count + @item.emails.count + MarkRead.total_reads(@item.mark_reads).count %>
+                </div>
+                <span style='font-weight:bold;'>Total Impressions</span>
+              </td>
+            </tr>
+          </table>
+      <% else %>
+          <h1 style='font-size:26px;'>EnergyFolks is Distributing Your Post</h1>
+          The EnergyFolks network reaches users across a large range of groups:
+          <table border="0" width='100%' style='text-align:center;font-size: 14px;'>
+            <tr>
+              <td width='33%' style='background-color:#eeeeee;'>
+                <div style='font-size:40px;line-height: 40px;'>
+                  3
+                </div>
+                Continents
+              </td>
+              <td width='33%' style='background-color:#eeeeee;'>
+                <div style='font-size:40px;line-height: 40px;'>
+                  <%= Affiliate.where(live: true).count %>
+                </div>
+                Affiliate Networks
+              </td>
+              <td width='34%' style='background-color:#F16522;color:#ffffff;'>
+                <div style='font-size:50px;line-height: 50px;'>
+                  <%= User.verified.count %>
+                </div>
+                <span style='font-weight:bold;'>Users</span>
+              </td>
+            </tr>
+          </table>
+          <span style='font-size:10px;'><i>* Your post will be distributed based on your earlier choices and may not reach all users.</i></span>
+      <% end %>
+
+      <h1 style='margin-top:16px;font-size:26px;'>Similar For-Profit Services Charge a Fee</h1>
+      <table border="0" width='100%' style='text-align:center;font-size: 22px;'>
+        <tr>
+          <td width='25%' style='background-color:#eeeeee;'>
+            <img src='<%= SITE_HOST %>/assets/third_party/CareerBuilder.gif' align=center border=0 width=120 style='display:inline;'>
+          </td>
+          <td width='25%' style='background-color:#eeeeee;'>
+            <img src='<%= SITE_HOST %>/assets/third_party/monster.png' align=center border=0 width=120 style='display:inline;margin-bottom:5px;'>
+          </td>
+          <td width='25%' style='background-color:#eeeeee;'>
+            <img src='<%= SITE_HOST %>/assets/third_party/linkedinbig.png' align=center border=0 width=120 style='display:inline;margin-bottom:5px;'>
+          </td>
+          <td width='25%' style='background-color:#F16522;color:#ffffff;'>
+            <img src='<%= SITE_HOST %>/assets/ef_logo.png' align=center border=0 width=120 style='display:inline;'>
+          </td>
+        </tr>
+        <tr>
+          <td width='25%' style='background-color:#eeeeee;padding:8px;'>
+            $419*
+          </td>
+          <td width='25%' style='background-color:#eeeeee;padding:8px;'>
+            $395*
+          </td>
+          <td width='25%' style='background-color:#eeeeee;padding:8px;'>
+            $495*
+          </td>
+          <td width='25%' style='background-color:#F16522;color:#ffffff;padding:8px;font-weight:bold;font-size:26px;'>
+            FREE
+          </td>
+        </tr>
+
+      </table>
+      <span style='font-size:10px;'><i>* Price for a single job post as of 3/18/2014</i></span>
+
+    </td>
+    <% if plot %>
+      <td style='width:300px;'>
+        <% if show_plots %>
+
+          <div id="ef_analytics_plot">
+
+          </div>
+          <script language="JavaScript">
+              EnergyFolks.$(function () {
+                  EnergyFolks.$('#ef_analytics_plot').highcharts({
+                      chart: {
+                          zoomType: 'x',
+                          type: 'area'
+                      },
+                      xAxis: {
+                          type: 'datetime',
+                          dateTimeLabelFormats: { // don't display the dummy year
+                              month: '%e. %b',
+                              year: '%b'
+                          },
+                          maxZoom: 7 * 24 * 3600000 // seven days
+                      },
+                      yAxis: {
+                          title: {
+                              text: 'Impressions'
+                          },
+                          labels: {
+                              formatter: function() {
+                                  return this.value;
+                              }
+                          }
+                      },
+                      title: {
+                          text: ''
+                      },
+                      legend: {
+                          enabled: false
+                      },
+                      tooltip: {
+                          shared: true,
+                          valueSuffix: ''
+                      },
+                      plotOptions: {
+                          area: {
+                              stacking: 'normal',
+                              lineColor: '#666666',
+                              lineWidth: 1,
+                              marker: {
+                                  lineWidth: 1,
+                                  lineColor: '#666666'
+                              }
+                          }
+                      },
+                      series: [{
+                          name: 'Unique Web Views',
+                          data: [
+                              <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:web]}]"}.join(', ') %>
+                          ]
+                      }<% if !@item.instance_of?(User) %>,{
+                          name: 'Confirmed Email Opens',
+                          data: [
+                              <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:email]}]"}.join(', ') %>
+                          ]
+                      },{
+                          name: 'Confirmed Digest Opens',
+                          data: [
+                              <%= plot_data.map { |v| "[#{v[0]}, #{v[1][:digest]}]"}.join(', ') %>
+                          ]
+                      }<% end %>]
+                  });
+              });
+
+
+          </script>
+        <% else %>
+          <img src='<%= SITE_HOST %>/assets/globe.png' height=250 border=0>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+</table>
+<% if !plot %>
+    <%
+       donations = @user.present? ? @item.donations.where(user_id: @user.id).all : []
+       if donations.length > 0
+    %>
+        <h1 style='margin-top:16px;font-size:26px;'>Thank You for Your Earlier Donation!</h1>
+        Our records show that you donated in relation to this post.  Your donations tied to this item are shown below.  Thank you for your support.
+        <table border=0 style='border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+          <% donations.each do |donation| %>
+              <tr>
+                <td style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                  <%= donation.created_at.strftime("%-m/%-d/%Y") %>
+                </td>
+                <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                  $<%= donation.amount %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+        <div align=center><a href='<%= SITE_HOST %>/<%= @item.method_name %>/donate?id=<%= @item.id %>&user_token=<%= @user.email_settings_tokens.create.token %>'
+                      style='display:block;width:600px;padding:10px;background-color:#1D272F;border:0px solid white;border-radius:5px;color:white;font-size:26px;text-align:center;'>Donate More</a></div>
+    <% else %>
+        <h1 style='margin-top:16px;font-size:26px;'>Donate and Support EnergyFolks</h1>
+        Help support our mission by donating to our cause.  No donation is necessary.  All donations are tax-deductible.
+        <div align=center><a href='<%= SITE_HOST %>/<%= @item.method_name %>/donate?id=<%= @item.id %>&user_token=<%= @user.email_settings_tokens.create.token %>'
+           style='display:block;width:600px;padding:10px;background-color:#1D272F;border:0px solid white;border-radius:5px;color:white;font-size:26px;text-align:center;'>Donate Now</a></div>
+    <% end %>
+<% end %>
+

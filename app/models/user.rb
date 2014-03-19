@@ -166,6 +166,16 @@ class User < ActiveRecord::Base
   def self.join_table
     Membership
   end
+  def average_donation
+    tot = 0
+    sum = 0
+    self.self_donations.each do |d|
+      tot += 1
+      sum += d.amount
+    end
+    return 250 if tot == 0
+    return (sum/tot).to_i
+  end
   def self.to_archive
     []
   end

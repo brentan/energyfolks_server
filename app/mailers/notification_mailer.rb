@@ -69,6 +69,15 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "[#{@affiliate.present? ? @affiliate.name : 'EnergyFolks'}] Your #{weekly ? 'Weekly' : 'Daily'} digest")
   end
 
+  def item_analytics(user, item)
+    @user = user
+    @item = item
+    @affiliate = Affiliate.find_by_id(0)
+    @user_affiliate = Affiliate.find_by_id(item.affiliate_id)
+    from = "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "Analytics for your #{item.entity_type} post from #{@user_affiliate.name}")
+  end
+
   def new_comment_or_reply(user, entity)
     @entity = entity
     @user = user

@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
       @layout = 'iframe'
     elsif request.fullpath.include?('developer')
       @layout = 'developer'
+    elsif request.fullpath.include?('donate')
+      @layout = 'plain'
     else
       @layout = 'application'
     end

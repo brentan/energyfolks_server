@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jqueryui
+//= require jquery.ui.all
 //= require jscolor
 //= require select2
 //= require_tree .

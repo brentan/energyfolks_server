@@ -1,0 +1,50 @@
+<a href='/admins/?iframe_next=1'>Back to Admin Main Screen</a>
+<h1>Stripe Dashboard</h1>
+All charges, refunds, and other information and services are managed through the Stripe dashboard:<BR>
+<a href='https://stripe.com/' target='_blank'>Stripe Dashboard</a>  <BR><BR>
+<h1>Donations</h1>
+
+<table border=0 style='clear:both;border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+  <tr>
+    <th style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      Date
+    </th>
+    <th style='width:120px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      Stripe ID
+    </th>
+    <th style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      User
+    </th>
+    <th style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      Associated Post
+    </th>
+    <th style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      Amount
+    </th>
+    <th style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+      Refund
+    </th>
+  </tr>
+  <% @donations.each do |donation| %>
+      <tr>
+        <td style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          <%= donation.created_at.strftime("%-m/%-d/%Y") %>
+        </td>
+        <td style='width:120px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          <%= donation.stripe_id %>
+        </td>
+        <td style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          <%= raw(donation.user.present? ? "<a href='#{SITE_HOST}/users#{donation.user.path}' target='_blank'>#{donation.user.name}</a>" : "Unknown User (id: #{donation.user_id})") %>
+        </td>
+        <td style='margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          <%= raw(donation.entity.blank? ? 'General Donation' : "<a href='#{SITE_HOST}/#{donation.entity.method_name}#{donation.entity.path}' target='_blank'>#{donation.entity.name}</a>") %>
+        </td>
+        <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          $<%= donation.amount %>
+        </td>
+        <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+          <a href='#' data-id='<%= donation.id %>' data-amt='<%= donation.amount %>' data-sid='<%= donation.stripe_id %>' class='stripe_refund'>Refund</a>
+        </td>
+      </tr>
+  <% end %>
+</table>
