@@ -97,4 +97,14 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, from: from, subject: "EnergyFolks Donation Receipt.  Thank you!")
   end
 
+  def donation_refunded(user_id, donation)
+    @host = SITE_HOST
+    @donation = donation
+    @aid = 0
+    @user = User.find_by_id(user_id)
+    @affiliate = Affiliate.find_by_id(@aid)
+    from = @affiliate.present? && @affiliate.id.present? ? "#{@affiliate.name} <#{@affiliate.email_name}@energyfolks.com>" : "EnergyFolks <donotreply@energyfolks.com>"
+    mail(to: @user.email, from: from, subject: "EnergyFolks Donation Refund Processed")
+  end
+
 end
