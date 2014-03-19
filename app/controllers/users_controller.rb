@@ -311,6 +311,7 @@ class UsersController < ApplicationController
       user.active = true
       user.save!(validate:false)
       user.update_index
+      user.delay.sync
     end
   end
 
@@ -335,6 +336,7 @@ class UsersController < ApplicationController
       end
       @user.save!(:validate => false)
       @user.delay.sync
+      @user.update_index
       flash[:notice] = "Settings saved"
     end
   end
@@ -357,6 +359,7 @@ class UsersController < ApplicationController
     @user.update_column(:affiliate_id, params[:aid]) if @user.memberships.length == 1
     @user.reload
     @user.delay.sync
+    @user.update_index
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User added to group'
   end
 
@@ -371,6 +374,7 @@ class UsersController < ApplicationController
     @user.update_column(:affiliate_id, @user.memberships.first.affiliate_id) if (@user.memberships.length > 0) && (@user.affiliate_id == aid)
     @user.reload
     @user.delay.sync
+    @user.update_index
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User removed from group'
   end
   def memberships_primary
@@ -380,6 +384,7 @@ class UsersController < ApplicationController
     @user.update_column(:affiliate_id, m.affiliate_id)
     @user.reload
     @user.delay.sync
+    @user.update_index
     redirect_to "/users/memberships?id=#{@user.id}&iframe_next=1", :notice => 'User Primary Affiliation Changed'
   end
 

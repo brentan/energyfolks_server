@@ -46,15 +46,15 @@
         <table cellpadding=0 cellspacing=0>
           <tr>
             <td id='donate_slider'>
-              <div id="donation_slider" data-val='<%= @user.average_donation %>'></div>
+              <div id="donation_slider" data-val='<%= @user.nil? ? 250 : @user.average_donation %>'></div>
             </td>
             <td id='donate_amount'>
-              $<%= @user.average_donation %>
-              <div style='font-size:12px;line-height:12px;'><%= @user.self_donations.length > 0 ? 'Your Average' : 'Suggested' %> Donation</div>
+              $<%= @user.nil? ? 250 : @user.average_donation %>
+              <div style='font-size:12px;line-height:12px;'><%= !@user.nil? && @user.self_donations.length > 0 ? 'Your Average' : 'Suggested' %> Donation</div>
             </td>
           </tr>
         </table>
-        <input type='hidden' name='amount' id='amount' value='<%= @user.average_donation %>'>
+        <input type='hidden' name='amount' id='amount' value='<%= @user.nil? ? 250 : @user.average_donation %>'>
 
 
 
@@ -124,7 +124,7 @@
          <% end %>
       </div>
       <div class='submit_button'>
-        <button type="submit" id='donate_button'>Donate $<%= @user.average_donation %>!</button>
+        <button type="submit" id='donate_button'>Donate $<%= @user.nil? ? 250 : @user.average_donation %>!</button>
         <%= image_tag 'loader.gif', :id => 'loading_button' %>
       </div>
       <i>All donations are tax-deductible.  You will receive a receipt confirming your donation by email.</i>
