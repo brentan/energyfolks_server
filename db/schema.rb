@@ -573,6 +573,8 @@ ActiveRecord::Schema.define(:version => 20140317182006) do
     t.integer "count", :default => 0
   end
 
+  add_index "tags", ["name"], :name => "index_tags_on_name"
+
   create_table "tags_entities", :force => true do |t|
     t.integer "entity_id"
     t.string  "entity_type"
