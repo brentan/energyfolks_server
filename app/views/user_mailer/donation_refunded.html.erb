@@ -1,0 +1,8 @@
+<%= @user.first_name %>,
+<BR><BR>
+Your donation to EnergyFolks dated <%= @donation.created_at.strftime("%-m/%-d/%Y") %> for $<%= @donation.amount %> has been refunded to your account.  It may take
+a few business days for the credit to appear on your statement.
+<BR><BR>
+Sincerely,
+<BR>
+<%= @affiliate.name %>

@@ -14,6 +14,23 @@ class EnergyfolksController < ApplicationController
   def add_your_group
 
   end
+  def donate
+    @user = current_user if user_logged_in?
+    if params[:card].present?
+      if params[:card] == 'new'
+        customer = StripeToken.new_customer(@user, params[:token], params[:card_type], params[:last4])
+        card = StripeToken.create!(user_id: @user.id, token: customer, last4: params[:last4], card_type: params[:card_type])
+      else
+        card = StripeToken.where(user_id: @user.id, id: params[:card].to_i).first
+      end
+      success, message = card.charge(params[:amount], nil)
+      card.destroy unless success
+      flash[success ? :notice : :alert] = message
+      @just_donated = success
+    else
+      @just_donated = false
+    end
+  end
   def new
 
   end

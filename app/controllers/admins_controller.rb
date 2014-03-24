@@ -35,6 +35,10 @@ class AdminsController < ApplicationController
     @items = AdminMessage.all
   end
 
+  def donations
+    @donations = Donation.all
+  end
+
   private
   def check_for_admin_rights
     return redirect_to '/' unless current_user.present?

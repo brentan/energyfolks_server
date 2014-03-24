@@ -4,6 +4,22 @@
   Submitted on <%= @item.created_at.strftime("%A, %B %-d, %Y at %-k:%M") %> by <a href='<%= current_affiliate.url_users %>#command=show&parameters=id%3D<%= @item.user_id %>%26model%3DUser' target='_blank'><%= current_user.id == @item.user_id ? 'you' : @item.user.full_name %></a>.
   Last updated on <%= @item.last_updated_at(current_affiliate, current_user).strftime("%A, %B %-d, %Y at %-k:%M") %> by <a href='<%= current_affiliate.url_users %>#command=show&parameters=id%3D<%= @item.last_updated_by %>%26model%3DUser' target='_blank'><%= current_user.id == @item.last_updated_by ? 'you' : @item.last_update.full_name %></a>.<BR>
   <% if current_user.admin? || (current_user.id == @item.user_id) %>
+      <% if @item.donations.length > 0 %>
+          <h4>Thank you for your donation in relation to this post!</h4>
+          <table border=0 style='border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+            <% @item.donations.each do |donation| %>
+                <tr>
+                  <td style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                    <%= donation.created_at.strftime("%-m/%-d/%Y") %>
+                  </td>
+                  <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                    $<%= donation.amount %>
+                  </td>
+                </tr>
+            <% end %>
+          </table>
+      <% end %>
+
       <h4>Moderation Status</h4>
       <% @item.affiliate_join.each do |j| %>
           <% a = Affiliate.find_by_id(j.affiliate_id) %>

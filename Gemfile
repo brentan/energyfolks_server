@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-rails', '3.1'
+gem 'jquery-ui-rails', '4.1.2'
 gem 'rails-asset-jqueryui'
 gem 'select2-rails'
 gem 'nested_form'#, '0.2.3'

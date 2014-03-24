@@ -131,9 +131,10 @@ module MixinEntityController
       render :action => "new"
     else
       Tag.update_tags(@item.raw_tags, @item)
-      if @item.instance_of(Job) && current_affiliate.id.blank?
+      if @item.instance_of?(Job) && current_affiliate.id.blank?
+        # When changing to all post, make sure admins of the group it was posted from do not see the donation page.
         @item.update_column(:donate, true)
-        redirect_to :action => "donate", :iframe_next => true, :id => @item.id, :notice => "Your post was successful."
+        redirect_to :action => "donate", :iframe_next => true, :id => @item.id, :just_posted => true, :notice => "Your post was successful.  Please Consider a Donation."
       else
         redirect_to :action => "show", :iframe_next => true, :id => @item.id, :notice => "Your post was successful.  Moderation status is found below."
       end
@@ -147,6 +148,7 @@ module MixinEntityController
       @user = @email_settings_token.user
       @email_settings_token.update_token
     end
+    @just_posted = params[:just_posted].present?
     @user = current_user if user_logged_in?
     if params[:card].present?
       if params[:card] == 'new'
@@ -159,6 +161,10 @@ module MixinEntityController
       card.destroy unless success
       @item.reload
       flash[success ? :notice : :alert] = message
+      @just_donated = success
+      redirect_to :action => "show", :iframe_next => true, :id => @item.id if success && @just_posted
+    else
+      @just_donated = false
     end
   end
 

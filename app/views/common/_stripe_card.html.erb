@@ -4,16 +4,63 @@
 </script>
 
 <div class='stripe'>
-    <%= form_tag "/#{@item.method_name}/donate", method: :post, id: 'payment-form' do %>
+    <% location = @item.nil? ? '/donate' : "/#{@item.method_name}/donate" %>
+    <%= form_tag location, method: :post, id: 'payment-form' do %>
       <%= raw(iframe_form) %>
-      <input type=hidden name=id value='<%= @item.id %>'>
+      <input type=hidden name=id value='<%= @item.nil? ? '' : @item.id %>'>
       <% if @email_settings_token.present? %>
         <input type=hidden name='user_token' value='<%= @email_settings_token.token %>'>
       <% end %>
       <div class='amount'>
-        <div class='form_label'>Amount</div>
-        <div class='form_entry'>$<input type="text" name='amount' id='amount'/></div>
+
+        <%
+          if @item.nil?
+            donations = @user.present? ? Donation.where(user_id: @user.id).where('entity_id IS NULL').all : []
+          else
+            donations = @user.present? ? @item.donations.where(user_id: @user.id).all : []
+          end
+          if donations.length > 0
+        %>
+            <h1>Thank You for Your Donation!</h1>
+            Our records show that you donated <%= @item.nil? ? 'in the past' : 'in relation to this post' %>.  Your donations <%= @item.nil? ? '' : 'tied to this item ' %>are shown below.  Thank you for your support.
+            <table border=0 style='border-top: 1px solid #dddddd;' cellspacing=0 width='100%'>
+              <% donations.each do |donation| %>
+                  <tr>
+                    <td style='width:90px;margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                      <%= donation.created_at.strftime("%-m/%-d/%Y") %>
+                    </td>
+                    <td style='text-align:right; margin:0px; padding:3px; border-bottom: 1px solid #dddddd;'>
+                      $<%= donation.amount %>
+                    </td>
+                  </tr>
+              <% end %>
+            </table>
+            <%= raw('<div style="display:none;">') if @just_donated %>
+            <h1>Consider Further Support</h1>
+        <% elsif @item.nil? %>
+            <h1>Make a Donation</h1>
+        <% else %>
+            <h1>Pay What You Think it's Worth</h1>
+        <% end %>
+        Help support our mission by donating to our cause.  No donation is necessary.  All donations are tax-deductible.
+        <table cellpadding=0 cellspacing=0>
+          <tr>
+            <td id='donate_slider'>
+              <div id="donation_slider" data-val='<%= @user.nil? ? 250 : @user.average_donation %>'></div>
+            </td>
+            <td id='donate_amount'>
+              $<%= @user.nil? ? 250 : @user.average_donation %>
+              <div style='font-size:12px;line-height:12px;'><%= !@user.nil? && @user.self_donations.length > 0 ? 'Your Average' : 'Suggested' %> Donation</div>
+            </td>
+          </tr>
+        </table>
+        <input type='hidden' name='amount' id='amount' value='<%= @user.nil? ? 250 : @user.average_donation %>'>
+
+
+
+
       </div>
+      <%= raw('</div><div style="display:none;">') if @just_donated %>
       <div class='card'>
         <% if @user.blank? %>
         You must be logged in to donate.  Please login below to donate.
@@ -29,7 +76,7 @@
              <% first = false
              end
              %>
-             <div class='card_item new_card<%= first ? ' selected' : '' %>' data-id='new'>
+             <div class='card_item new_card<%= first ? ' selected_no_yellow' : '' %>' data-id='new'>
                <%= 'Donate from a New Card' if @user.stripe_tokens.length > 0 %>
                <div class='card_form'>
                   <input type=hidden name=card id='selected_card' value='<%= first ? 'new' : @user.stripe_tokens.first.id %>'>
@@ -38,7 +85,7 @@
                   <div class='form_entry'><input type="text" data-stripe="number"/></div>
 
                   <div class='form_label'>Security Code</div>
-                  <div class='form_entry'><input type="text" style='width:40px;' data-stripe="cvc"/></div>
+                  <div class='form_entry'><input type="text" style='width:40px;margin:2px;' data-stripe="cvc"/></div>
 
                   <div class='form_label'>Expiration</div>
                   <div class='form_entry'>
@@ -71,13 +118,21 @@
                       </tr>
                     </table>
                   </div>
+                 <span style='font-size:10px;font-weight:normal;'><i>Credit Card data securely processed by <a href='https://stripe.com/help/security' target='_blank'>Stripe</a>.</i></span>
                  </div>
                </div>
          <% end %>
       </div>
       <div class='submit_button'>
-        <button type="submit">Donate!</button>
+        <button type="submit" id='donate_button'>Donate $<%= @user.nil? ? 250 : @user.average_donation %>!</button>
+        <%= image_tag 'loader.gif', :id => 'loading_button' %>
+        <% if @just_posted %>
+            <BR><BR>
+            <a href='/<%= @item.method_name %>/<%= @item.id %>?iframe_next=1' style='font-size:11px;'>No thanks, take me to my post.</a>
+            <input type=hidden name=just_posted value=1>
+        <% end %>
       </div>
       <i>All donations are tax-deductible.  You will receive a receipt confirming your donation by email.</i>
+      <%= raw('</div>') if @just_donated %>
     <% end %>
 </div>

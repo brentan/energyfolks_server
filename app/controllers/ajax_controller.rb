@@ -40,6 +40,20 @@ class AjaxController < ApplicationController
     render_ajax({complete: true})
   end
 
+  # Refund a charge
+  def refund_stripe
+    if current_user.admin?
+      donation = Donation.find_by_id(params[:id])
+      if donation.refund
+        UserMailer.donation_refunded(donation.user_id, donation).deliver()
+        donation.destroy
+        render_ajax({complete: true})
+        return
+      end
+    end
+    render_ajax({complete: false})
+  end
+
   # Privacy policy
   def privacy
     html = render_to_string :partial => "users/privacy"

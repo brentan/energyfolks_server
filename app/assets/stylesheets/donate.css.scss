@@ -12,63 +12,110 @@
     margin-left: 250px;
   }
   .amount {
-    font-size: 14px;
-    font-weight: bold;
-    border:1px solid #bbbbbb;
-    background-color: #eeeeee;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom: 0px solid white;
+    padding: 0px;
+    h1 {
+      margin-top:16px;
+      font-size:26px;
+    }
+    table {
+      width: 100%;
+      text-align:center;
+      font-size: 16px;
+      padding: 0px;
+      margin: 0px;
+      td {
+        font-size:20px;
+      }
+      #donate_slider {
+        background-color:#eeeeee;
+        div#donation_slider {
+          padding: 0px;
+          margin: 2px 20px;
+          .ui-slider-handle {
+            cursor: pointer;
+            background-color: #26313B;
+            background-image: none;
+          }
+          .ui-widget-header {
+            padding: 0px;
+            background-color:#F16522;
+            background-image: none;
+          }
+        }
+      }
+      #donate_amount {
+        width:300px;
+        margin-left: 2px;
+        background-color:#F16522;
+        font-size:60px;
+        text-align:center;
+        color:white;
+        line-height:60px;
+        height: 90px;
+      }
+    }
   }
   .card {
     font-size: 14px;
     font-weight: bold;
     padding: 0px;
-    border:1px solid #bbbbbb;
+    border:0px solid #bbbbbb;
     border-top: 0px solid white;
     border-bottom: 0px solid white;
     background-color: #eeeeee;
     .individual_card, .new_card {
-      border-top: 1px solid #ffffff;
+      border-top: 2px solid #ffffff;
       cursor: pointer;
       &:hover {
         background-color: #cccccc;
       }
       &:last-child {
-        border-bottom: 1px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
       }
       &.selected {
         background-color: #ffffcc;
         &:hover {
           background-color: #ffffcc;
-          border-top: 1px solid white;
+          border-top: 2px solid white;
         }
       }
     }
     .card_form {
       display:none;
+      div {
+        padding: 2px 6px;
+      }
     }
-    .new_card.selected .card_form {
+    .new_card.selected .card_form, .new_card.selected_no_yellow .card_form {
       display: block;
     }
   }
+  .card_item.selected_no_yellow {
+    cursor: auto;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
   .submit_button {
-    border:1px solid #bbbbbb;
-    border-top: 0px solid white;
+    border: 0px solid white;
     background-color: #eeeeee;
     text-align:right;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
     button {
       padding: 10px 20px;
       border-radius: 5px;
       color: white;
       background-color: #26313B;
       display: inline-block;
+      cursor: pointer;
+      font-weight: bold;
       &:hover {
         color: #F16522;
         background-color: #ffffff;
       }
+    }
+    img {
+      margin-right: 40px;
+      display: none;
     }
   }
 }

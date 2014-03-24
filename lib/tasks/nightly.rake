@@ -23,6 +23,22 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "Send Analytics Emails"
+  task :analytics => :environment do
+    operation = ScheduledOperation.start('send analytics')
+    start = 14.days.ago
+    endt = 15.days.ago
+    Job.where(donate: true).where("first_approved_at < ? AND first_approved_at > ?",start, endt).all.each do |j|
+      NotificationMailer.item_analytics(j.user, j).deliver() if j.user.present?
+    end
+    start = 28.days.ago
+    endt = 29.days.ago
+    Job.where(donate: true).where("first_approved_at < ? AND first_approved_at > ?",start, endt).all.each do |j|
+      NotificationMailer.item_analytics(j.user, j).deliver() if j.user.present?
+    end
+    operation.mark_complete
+  end
+
   desc "Resynchronize with google"
   task :google => :environment do
     operation = ScheduledOperation.start('google sync')

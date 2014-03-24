@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html style='background-color:#1D272F;'>
+<head>
+  <link rel="shortcut icon" href="/favicon.ico">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "energyfolks", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "energyfolks" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class='energyfolks plain'>
+<div class='HomeTop' align=center style="align:center;padding:0px;margin:0px;">
+  <div style='z-index:69;width:950px;height:85px;border-style:solid;border-color:#F16522;border-width:0px 0px 5px 0px;text-align:left;position:relative;color:white;align:center'>
+
+    <div class='pagetitle' style='position:absolute;bottom:10px;left:0px;padding:0px;'>
+      <a href='/' border=0><%= image_tag 'ef_logo.png', {height: 60, width: 245, alt: 'energyfolks', border: 0} %></a>
+    </div>
+</div>
+  <div id='mainbody' style='width:950px;padding:0px;margin:0px;background-color:white;'>
+        <table border=0 cellpadding=0 cellspacing=0 width=950 style='padding:0px;margin:0px;'>
+          <tr>
+            <td style='width:940px;text-align:left;padding:5px;' valign=top>
+              <%= yield %>
+            </td>
+          </tr>
+        </table>
+  </div>
+  <div style='width:950px;text-align:right;align:center;' class='sidebar footer'>
+        <i><a href='/'>&copy; <%= Time.now().strftime('%Y') %> Energyfolks</a></i>
+  </div>
+</div>
+<BR><BR><BR>
+
+<%= raw(notices(flash.discard(:notice), flash.discard(:alert))) %>
+<div id='efadminbar' style='display:none;'></div>
+</body>
+</html>
