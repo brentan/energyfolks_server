@@ -92,7 +92,7 @@
                     <table border=0 cellpadding=2 cellspacing=0>
                       <tr>
                         <td>
-                          <select data-stripe='exp-month' style='width:40px;'>
+                          <select data-stripe='exp-month' style='width:60px;'>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
                             <option value='3'>3</option>
@@ -108,7 +108,7 @@
                           </select>
                         </td>
                         <td>
-                          <select data-stripe='exp-year' style='width:60px;'>
+                          <select data-stripe='exp-year' style='width:100px;'>
                             <% year = Time.now.year
                                for i in 0..12 %>
                                 <option value='<%= (year + i) %>'><%= (year + i) %></option>
