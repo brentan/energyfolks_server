@@ -1,0 +1,83 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+    Stripe.setPublishableKey('<%= SITE_SPECIFIC['stripe']['publishable'] %>');
+</script>
+
+<div class='stripe'>
+    <%= form_tag "/#{@item.method_name}/donate", method: :post, id: 'payment-form' do %>
+      <%= raw(iframe_form) %>
+      <input type=hidden name=id value='<%= @item.id %>'>
+      <% if @email_settings_token.present? %>
+        <input type=hidden name='user_token' value='<%= @email_settings_token.token %>'>
+      <% end %>
+      <div class='amount'>
+        <div class='form_label'>Amount</div>
+        <div class='form_entry'>$<input type="text" name='amount' id='amount'/></div>
+      </div>
+      <div class='card'>
+        <% if @user.blank? %>
+        You must be logged in to donate.  Please login below to donate.
+        <script language=javascript>
+          EnergyFolks.LoginBox();
+        </script>
+        <% else
+             first = true
+             @user.stripe_tokens.each do |t| %>
+                <div class='card_item individual_card<%= first ? ' selected' : '' %>' data-id='<%= t.id %>'>
+                  Donate from <%= t.card_type %> ********-<%= t.last4 %>
+                </div>
+             <% first = false
+             end
+             %>
+             <div class='card_item new_card<%= first ? ' selected' : '' %>' data-id='new'>
+               <%= 'Donate from a New Card' if @user.stripe_tokens.length > 0 %>
+               <div class='card_form'>
+                  <input type=hidden name=card id='selected_card' value='<%= first ? 'new' : @user.stripe_tokens.first.id %>'>
+
+                  <div class='form_label'>Card Number</div>
+                  <div class='form_entry'><input type="text" data-stripe="number"/></div>
+
+                  <div class='form_label'>Security Code</div>
+                  <div class='form_entry'><input type="text" style='width:40px;' data-stripe="cvc"/></div>
+
+                  <div class='form_label'>Expiration</div>
+                  <div class='form_entry'>
+                    <table border=0 cellpadding=2 cellspacing=0>
+                      <tr>
+                        <td>
+                          <select data-stripe='exp-month' style='width:40px;'>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                            <option value='6'>6</option>
+                            <option value='7'>7</option>
+                            <option value='8'>8</option>
+                            <option value='9'>9</option>
+                            <option value='10'>10</option>
+                            <option value='11'>11</option>
+                            <option value='12'>12</option>
+                          </select>
+                        </td>
+                        <td>
+                          <select data-stripe='exp-year' style='width:60px;'>
+                            <% year = Time.now.year
+                               for i in 0..12 %>
+                                <option value='<%= (year + i) %>'><%= (year + i) %></option>
+                            <% end %>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                 </div>
+               </div>
+         <% end %>
+      </div>
+      <div class='submit_button'>
+        <button type="submit">Donate!</button>
+      </div>
+      <i>All donations are tax-deductible.  You will receive a receipt confirming your donation by email.</i>
+    <% end %>
+</div>

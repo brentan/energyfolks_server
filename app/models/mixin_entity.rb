@@ -57,6 +57,7 @@ module MixinEntity
     def acts_as_taggable
       has_many :tags_entities, as: :entity, :dependent => :destroy
       has_many :highlights, as: :entity, :dependent => :destroy
+      has_many :donations, as: :entity
       has_many :tags, :through => :tags_entities
       has_many :mark_reads, as: :entity, :dependent => :destroy
       has_many :emails, as: :entity, :dependent => :destroy
