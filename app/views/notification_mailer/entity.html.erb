@@ -1,5 +1,5 @@
 <i>View this post at <%= link_to "#{@host}#{@item.path}", "#{@host}#{@item.path}" %></i><BR>
 <%= render :partial => "/#{@item.method_name}/inner_show" %>
 <% if @item.instance_of?(Discussion) %>
-    <i>Reply to this email to content on this post.  The author will be notified via email.</i>
+    <i>Reply to this email to comment on this post.  The author will be notified via email.</i>
 <% end %>
