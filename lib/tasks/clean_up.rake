@@ -68,5 +68,22 @@ namespace :clean_up do
     ErrorMailer.mailerror("CHECK DELAYED_JOB...IT MAY HAVE SHUT DOWN! #{res.first[0]} ITEM IN QUEUE").deliver() if res.first[0] > 20
   end
 
+  desc "Check for and correct malformed submission"
+  task :fix_bad_submissions => :environment do
+    # This shouldn't be necessary, but something occasionally causes submitted posts to have approved and admin versions
+    # of 0 in the affiliate join table.  This script will look for that and correct them...but really we should one day
+    # find the bug that causes this issue in the submission workflow and fix
+    [Job Event Discussion Blog].each do |model|
+      model.join_table.where(:admin_version => 0).each do |item|
+        entity = model.find_by_id(item.entity_id)
+        if entity.present? && (entity.current_version > 0)
+          item.update_column(:admin_version, entity.current_version)
+          item.update_column(:broadcast, false)
+          entity.broadcast(false)
+        end
+      end
+    end
+  end
+
 
 end

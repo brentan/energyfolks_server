@@ -414,6 +414,7 @@ module MixinEntity
 
   def broadcast(version_control =  true)
     return if @skip_broadcast_callback
+    check_affiliate_join = true
     if version_control
       # Version control: Decide if we need to increment versions or if we can just save
       if self.increment_version?
@@ -431,12 +432,20 @@ module MixinEntity
           i.admin_version = version
           i.save(:validate => false)
         end
+        check_affiliate_join = false
       else
         v = self.class.version_table.where(:entity_id => self.id, :version_number => self.current_version).first
         self.class::VERSION_CONTROLLED.each do |item|
           v.send("#{item}=", self.send(item))
         end
         v.save!
+      end
+    end
+    if check_affiliate_join
+      self.affiliate_join.each do |i|
+        i.broadcast = false if i.admin_version < self.current_version
+        i.admin_version = self.current_version
+        i.save(:validate => false)
       end
     end
     # EF control: If this is a 'to all' post, we need to also add in affiliates that override EF approval
