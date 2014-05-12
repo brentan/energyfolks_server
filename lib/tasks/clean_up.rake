@@ -73,7 +73,7 @@ namespace :clean_up do
     # This shouldn't be necessary, but something occasionally causes submitted posts to have approved and admin versions
     # of 0 in the affiliate join table.  This script will look for that and correct them...but really we should one day
     # find the bug that causes this issue in the submission workflow and fix
-    [Job Event Discussion Blog].each do |model|
+    [Job, Event, Discussion, Blog].each do |model|
       model.join_table.where(:admin_version => 0).each do |item|
         entity = model.find_by_id(item.entity_id)
         if entity.present? && (entity.current_version > 0)
