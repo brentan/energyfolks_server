@@ -74,9 +74,9 @@ $(function($) {
     $( "#donation_slider" ).slider({
         range: "min",
         value:parseInt($("#donation_slider").attr('data-val')),
-        min: 50,
-        max: 750,
-        step: 50,
+        min: 20,
+        max: 250,
+        step: 10,
         slide: function( event, ui ) {
             $( "#donate_amount" ).html( "$" + ui.value );
             $( "#amount" ).val( ui.value );
