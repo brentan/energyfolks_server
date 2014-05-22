@@ -3,7 +3,7 @@
 Plugin Name: Energyfolks tools
 Plugin URI: http://www.energyfolks.com/developers/wordpress
 Description: Add energyfolks tools to your wordpress site, and use energyfolks as the primary authenticator for your site.
-Version: 2.07
+Version: 2.10
 Author: Brentan Alexander
 Author URI: http://www.energyfolks.com
 
@@ -27,6 +27,22 @@ Author URI: http://www.energyfolks.com
  * TODOS
  * 
  */
+
+ /*
+  * SESSIONS
+  */
+if( ! defined( 'WP_SESSION_COOKIE' ) )
+    define( 'WP_SESSION_COOKIE', '_ef_session' );
+
+if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
+    require_once( 'RecursiveArrayaccess.php' );
+}
+
+// Only include the functionality if it's not pre-defined.
+if ( ! class_exists( 'WP_Session' ) ) {
+    require_once( 'ClassWPsession.php' );
+    require_once( 'WPsession.php' );
+}
 
 
 /*
@@ -69,12 +85,13 @@ wp_enqueue_style("EnergyFolks","https://www.energyfolks.com/assets/energyfolks-"
 /*
  * Function will ping energyfolks for a login if user is not currently recognized, or show top admin bar if they are logged in
  */
-function energyfolks_TestForLogin() { 
+function energyfolks_TestForLogin() {
+    $wp_session = WP_Session::get_instance();
     if(get_option('energyfolks_plugin_enabled') != '1') return;
     echo "<script language=javascript>
         EnergyFolks.id=".get_option('energyfolks_affiliate_id').";
         EnergyFolks.color='".get_option('energyfolks_color')."';";
-    if(!$_SESSION['energyfolks_logged']) echo "EnergyFolks.forceLogin = true;";
+    if(!$wp_session['energyfolks_logged']) echo "EnergyFolks.forceLogin = true;";
         echo "EnergyFolks.callbackURL = '/';
     </script>";
 }
@@ -87,19 +104,20 @@ add_action('admin_footer', 'energyfolks_TestForLogin');
  */
 function energyfolks_init_check() { 
     global $EnergyFolks;
+    $wp_session = WP_Session::get_instance();
     if (!isset($EnergyFolks)) $EnergyFolks = new STDClass();
     if (!session_id()) {
         session_start();
     }
     if($_GET['enfolks_logout'] != "") {
-        $_SESSION['energyfolks_logged']=false;
+        $wp_session['energyfolks_logged']=false;
 	wp_clear_auth_cookie();
         header("Content-type: text/javascript"); echo "window.location.reload();";exit();
     }
-    if($_SESSION['energyfolks_logged']) {
+    if($wp_session['energyfolks_logged']) {
         $EnergyFolks->logged=true;
-        $EnergyFolks->userid=$_SESSION['energyfolks_userid'];
-        $EnergyFolks->user_details=$_SESSION['energyfolks_details'];
+        $EnergyFolks->userid=$wp_session['energyfolks_userid'];
+        $EnergyFolks->user_details=$wp_session['energyfolks_details'];
     } else 
         $EnergyFolks->logged=false;
     if($_GET['enfolks_update'] != "") {
@@ -129,15 +147,15 @@ function energyfolks_init_check() {
         if($response['body'] == 'badsecret') { update_option('energyfolks_plugin_enabled',"0"); header("Content-type: text/javascript"); echo "alert('There was an error with the secret passed to energyfolks by this server.  Please contact the server admins.');";exit(); }
         $returned_data = json_decode($response['body'],true);
         //Successful login! Set variables
-        $_SESSION['energyfolks_logged']=true;
+        $wp_session['energyfolks_logged']=true;
         $savedata=$returned_data;
         unset($savedata['pass']);
         unset($savedata['role']);
-        $_SESSION['energyfolks_userid']=$savedata['user_id'];
-        $_SESSION['energyfolks_details']=$savedata;
+        $wp_session['energyfolks_userid']=$savedata['user_id'];
+        $wp_session['energyfolks_details']=$savedata;
         $EnergyFolks->logged=true;
-        $EnergyFolks->userid=$_SESSION['energyfolks_userid'];
-        $EnergyFolks->user_details=$_SESSION['energyfolks_details'];
+        $EnergyFolks->userid=$wp_session['energyfolks_userid'];
+        $EnergyFolks->user_details=$wp_session['energyfolks_details'];
         
         if($returned_data['role']=='0') { header("Content-type: text/javascript"); echo "window.location.reload();";exit(); }
         //User is also a wordpress admin...
@@ -181,10 +199,11 @@ function energyfolks_init_check() {
 /*
  * Logout user when logout is clicked....also log out of energyfolks
  */
-function energyfolks_logout() { 
+function energyfolks_logout() {
+    $wp_session = WP_Session::get_instance();
     if(get_option('energyfolks_plugin_enabled') != '1') return;
-    $_SESSION['energyfolks_logged']=false;
-    $_SESSION['energyfolks_blog_error'] = "<script language=javascript>
+    $wp_session['energyfolks_logged']=false;
+    $wp_session['energyfolks_blog_error'] = "<script language=javascript>
         window.location.href = EnergyFolks.server_url + '/users/logout?'+EnergyFolks.urlhash()+'&aid=" . get_option('energyfolks_affiliate_id') . "&no_callback=true';
             </script>";
 }
@@ -244,13 +263,14 @@ function energyfolks_remove_admin_bar_links() {
 }
 function energyfolks_admin_notice(){
     global $pagenow;
+    $wp_session = WP_Session::get_instance();
     if ((get_option('energyfolks_plugin_enabled') == '1') && (( $pagenow == 'users.php' ) || ( $pagenow == 'user-edit.php' ) || ( $pagenow == 'user-new.php' ) || ( $pagenow == 'profile.php' ))) {
          echo '<div class="error">
              <h2>Notice: User rights linked to energyfolks</h2><p>You can use this page to create additional wordpress-only users that can access this system.</p><p>Please note that access rights are also granted through Energyfolks automatically.  These users will have a username of EnergyfolksUser_## in the list below.  Deleting/Altering these automatically created users here will have no effect, as they will be recreated or updated when the user next logs in.  To remove access for an energyfolks user, please use the energyfolks user interface by clicking the <i>energyfolks</i> link at the top left of the screen.</p>
          </div>';
-    } elseif ($_SESSION['energyfolks_blog_error'] != '') {
-        echo '<div class="error">'.$_SESSION['energyfolks_blog_error'] .'</div>';
-        $_SESSION['energyfolks_blog_error'] = null;
+    } elseif ($wp_session['energyfolks_blog_error'] != '') {
+        echo '<div class="error">'.$wp_session['energyfolks_blog_error'] .'</div>';
+        $wp_session['energyfolks_blog_error'] = null;
     } elseif (get_option('energyfolks_plugin_enabled') != '1') {         
         echo '<div class="error">
              <h2>Setup the EnergyFolks plugin</h2><p>Welcome to EnergyFolks!  To finish plugin installation, please synchronize the plugin with the energyfolks server by <a href="https://www.energyfolks.com/developers/wordpress_sync?return_url=' . urlencode(get_site_url()) . '">clicking here</a>.</p>
@@ -727,6 +747,7 @@ require_once('updates.php');
  */
 function energyfolks_blog_integration( $post_id ) {
     global $EnergyFolks;
+    $wp_session = WP_Session::get_instance();
     if(get_option('energyfolks_plugin_enabled') != '1') return;
     //Verify this is a post 
     if(get_post_type($post_id) != 'post') return;
@@ -752,17 +773,17 @@ function energyfolks_blog_integration( $post_id ) {
                 )
             );
             if ( is_wp_error( $response ) )
-                $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message(); 
+                $wp_session['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message();
             elseif(trim($response['body']) != '')
-                $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
+                $wp_session['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
         } else {
             //post is not published.  Ping energyfolks to remove in case it was published and now has been reverted.
             $url="https://www.energyfolks.com/blogs/FreezeWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
             $response = wp_remote_request($url, array('headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)')));
             if ( is_wp_error( $response ) )
-                $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message(); 
+                $wp_session['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message();
             elseif(trim($response['body']) != '')
-                $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
+                $wp_session['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
         }
 
     }
@@ -773,6 +794,7 @@ add_action( 'save_post', 'energyfolks_blog_integration',20);
  * Blogs: Delete post integration as well
  */
 function energyfolks_blog_delete( $post_id) {
+    $wp_session = WP_Session::get_instance();
     //Verify this is a post 
     if(get_option('energyfolks_plugin_enabled') != '1') return;
     if(get_post_type($post_id) != 'post') return;
@@ -780,9 +802,9 @@ function energyfolks_blog_delete( $post_id) {
         $url="https://www.energyfolks.com/blogs/DeleteWordpressPost?aid=".get_option('energyfolks_affiliate_id')."&post_id=".$post_id."&hash=".md5(get_option('energyfolks_secret').$post_id);
         $response = wp_remote_request($url, array('headers' => array('user-agent' => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)')));
         if ( is_wp_error( $response ) )
-            $_SESSION['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message(); 
+            $wp_session['energyfolks_blog_error'] =  "<h2>There was an error saving information to energyfolks</h2>".$response->get_error_message();
         elseif(trim($response['body']) != '')
-            $_SESSION['energyfolks_blog_error'] = "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
+            $wp_session['energyfolks_blog_error'] = "<h2>There was an error saving information to energyfolks</h2>".$response['body'];
     }
 }
 add_action( 'before_delete_post', 'energyfolks_blog_delete');

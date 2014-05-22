@@ -36,6 +36,11 @@ class DigestMailer < ActiveRecord::Base
     output[:blogs][:all_other] -= output[:announcements]
 
     # Determine job radius settings
+    if self.user.subscription.blank?
+      self.user.setup_subscriptions
+      self.user.reload
+    end
+
     if self.user.subscription.job_radius == 0
       output[:jobs] = {message: 'Recent Job Posts (Any location)'}
       options = {}

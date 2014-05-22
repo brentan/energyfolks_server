@@ -458,6 +458,22 @@ class User < ActiveRecord::Base
 
   end
 
+  # After create, setup default email subscriptons
+  def setup_subscriptions
+    subscription = Subscription.new(user_id: self.id)
+    first_affiliate = self.affiliate
+    if first_affiliate.present?
+      subscription.weekly = first_affiliate.weekly
+      subscription.daily = first_affiliate.daily
+      subscription.jobs = first_affiliate.jobs
+      subscription.events = first_affiliate.events
+      subscription.discussions = first_affiliate.discussions
+      subscription.job_radius = first_affiliate.job_radius
+      subscription.event_radius = first_affiliate.event_radius
+    end
+    subscription.save
+  end
+
   protected
   # Used in validation to throw error if password do not match
   def password_entered?
@@ -522,19 +538,4 @@ class User < ActiveRecord::Base
     return output
   end
 
-  # After create, setup default email subscriptons
-  def setup_subscriptions
-    subscription = Subscription.new(user_id: self.id)
-    first_affiliate = self.affiliate
-    if first_affiliate.present?
-      subscription.weekly = first_affiliate.weekly
-      subscription.daily = first_affiliate.daily
-      subscription.jobs = first_affiliate.jobs
-      subscription.events = first_affiliate.events
-      subscription.discussions = first_affiliate.discussions
-      subscription.job_radius = first_affiliate.job_radius
-      subscription.event_radius = first_affiliate.event_radius
-    end
-    subscription.save
-  end
 end
