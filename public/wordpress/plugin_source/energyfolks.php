@@ -35,7 +35,7 @@ if( ! defined( 'WP_SESSION_COOKIE' ) )
     define( 'WP_SESSION_COOKIE', '_ef_session' );
 
 if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-    require_once( 'RecursiveArrayaccess.php' );
+    require_once( 'RecursiveArray.php' );
 }
 
 // Only include the functionality if it's not pre-defined.
