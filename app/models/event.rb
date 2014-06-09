@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
 
   default_scope order('start ASC')
 
-  VERSION_CONTROLLED = %w(name host start end timezone html synopsis location location2 logo_file_name logo_content_type logo_file_size logo_updated_at)
+  VERSION_CONTROLLED = %w(name host start end url timezone html synopsis location location2 logo_file_name logo_content_type logo_file_size logo_updated_at)
   include MixinEntity
 
   acts_as_locatable
@@ -21,6 +21,7 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :name, :synopsis, :location, :html
   validates_length_of :synopsis, :maximum => 120
+  validates_format_of :url, :with => URI::regexp(%w(http https)), :allow_blank => true, :allow_nil => true
 
   has_attached_file :logo, {
       :styles => { :medium => "120x200>", :thumb_big => "90x90#", :thumb => "40x40#" },
@@ -31,7 +32,7 @@ class Event < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  attr_accessible :name, :host, :location, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv
+  attr_accessible :name, :host, :location, :url, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv
 
 
   def self.date_column
