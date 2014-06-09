@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140317182006) do
+ActiveRecord::Schema.define(:version => 20140609024732) do
 
   create_table "admin_messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(:version => 20140317182006) do
     t.boolean  "legacy",            :default => false
     t.string   "autoimport"
     t.datetime "first_approved_at"
+    t.string   "url"
   end
 
   create_table "events_versions", :force => true do |t|
@@ -371,6 +372,7 @@ ActiveRecord::Schema.define(:version => 20140317182006) do
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "timezone"
+    t.string   "url"
   end
 
   add_index "events_versions", ["entity_id"], :name => "index_events_versions_on_entity_id"
