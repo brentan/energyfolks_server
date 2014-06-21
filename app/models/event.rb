@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
   acts_as_moderatable
   acts_as_taggable
 
-  before_save :update_start_end_time
+  before_validation :update_start_end_time
 
   attr_writer :start_dv, :end_dv
 
