@@ -23,7 +23,7 @@ class Affiliate < ActiveRecord::Base
                   :moderate_discussions, :moderate_jobs, :moderate_events, :shared_secret, :cpanel_user, :cpanel_password,
                   :send_digest, :logo, :weekly, :daily, :jobs, :events, :discussions, :event_radius, :job_radius, :calendar_imports_attributes,
                   :show_details, :timezone, :date_founded, :president_name, :description, :blogs, :announcement, :year_founded,
-                  :salesforce_username, :salesforce_password, :salesforce_token, :salesforce_items_attributes
+                  :salesforce_username, :salesforce_password, :salesforce_token, :salesforce_items_attributes, :custom_feedback_message
 
 
   validates_presence_of :name, :location, :url, :short_name, :email_name

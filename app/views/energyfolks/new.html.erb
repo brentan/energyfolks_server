@@ -1,8 +1,12 @@
 <% if current_affiliate.present? && current_affiliate.id.present? %>
-    <h1>We want to hear from you!</h1>
-    Have you found a bug?  Have a suggestion?  Let us know!  Send all comments and suggestions to the
-    <%= current_affiliate.name %> leadership by emailing <%= mail_to current_affiliate.email %>.
-    Send any bug reports or website specific questions to EnergyFolks at <%= mail_to "contact@energyfolks.com" %>.
+    <% if current_affiliate.custom_feedback_message.present? %>
+        <%= raw(current_affiliate.custom_feedback_message) %>
+    <% else %>
+        <h1>We want to hear from you!</h1>
+        Have you found a bug?  Have a suggestion?  Let us know!  Send all comments and suggestions to the
+        <%= current_affiliate.name %> leadership by emailing <%= mail_to current_affiliate.email %>.
+        Send any bug reports or website specific questions to EnergyFolks at <%= mail_to "contact@energyfolks.com" %>.
+    <% end %>
 <% else %>
     <h1>We want to hear from you!</h1>
     Have you found a bug?  Have a suggestion?  Let us know!  Send all comments and suggestions to the

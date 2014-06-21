@@ -41,6 +41,14 @@
 
             <div class='form_label'>Description (to introduce your group)</div>
             <div class='form_entry'><%= f.text_field :description %></div>
+
+            <div class="form_label">Feedback Message</div>
+            <div class="form_entry">
+              <div style="width:550px;">
+                <%= f.text_area :custom_feedback_message, :class => 'tinymce' %>
+              </div>
+              <div class="explain">This message will appear in the popup box when a user presses the 'feedback' link on the energyfolks account bar on your website.  By default, this message will direct users to email your group leadership, however a custom message or links to contact pages can be placed here instead.</div>
+            </div>
       </li>
       <li class='slide'>
             <h1>Default Views on Your Webpage</h1>

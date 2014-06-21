@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140609024732) do
+ActiveRecord::Schema.define(:version => 20140621022014) do
 
   create_table "admin_messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20140609024732) do
     t.string   "salesforce_username"
     t.string   "salesforce_password"
     t.string   "salesforce_token"
+    t.text     "custom_feedback_message"
   end
 
   create_table "affiliates_blogs", :force => true do |t|
