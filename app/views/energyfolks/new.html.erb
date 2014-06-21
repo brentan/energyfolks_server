@@ -1,6 +1,6 @@
 <% if current_affiliate.present? && current_affiliate.id.present? %>
     <% if current_affiliate.custom_feedback_message.present? %>
-        <%= raw(current_affiliate.custom_feedback_message) %>
+        <%= raw(current_affiliate.custom_feedback_message.gsub("href","target='_blank' href")) %>
     <% else %>
         <h1>We want to hear from you!</h1>
         Have you found a bug?  Have a suggestion?  Let us know!  Send all comments and suggestions to the
