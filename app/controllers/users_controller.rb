@@ -417,8 +417,13 @@ class UsersController < ApplicationController
   end
 
   def omniauth_failure
-    return redirect_to env['PATH_INFO'].gsub("callback","") if env['omniauth.error'].problem == 'parameter_absent'
-    redirect_to "/", :notice => 'There was an error during the authentication process'
+    begin
+      return redirect_to env['PATH_INFO'].gsub("callback","") if env['omniauth.error'].problem == 'parameter_absent'
+    rescue
+      error_message = env['omniauth.error']
+      ErrorMailer.mailerror("LINKEDIN LOGIN ERROR: #{error_message}").deliver()
+      redirect_to "/", :notice => 'There was an error during the authentication process'
+    end
   end
 
   def linkedin

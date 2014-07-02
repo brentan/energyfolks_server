@@ -22,7 +22,7 @@ gem 'whenever-elasticbeanstalk'
 
 gem 'linkedin'   #used to do pull profile info from LinkedIn.com
 gem 'omniauth'
-gem 'omniauth-linkedin'
+gem 'omniauth-linkedin-oauth2'
 
 gem 'email_reply_parser'
 
