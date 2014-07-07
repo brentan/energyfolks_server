@@ -421,7 +421,7 @@ class UsersController < ApplicationController
       return redirect_to env['PATH_INFO'].gsub("callback","") if env['omniauth.error'].problem == 'parameter_absent'
     rescue
       error_message = env['omniauth.error']
-      ErrorMailer.mailerror("LINKEDIN LOGIN ERROR: #{error_message}").deliver()
+      ErrorMailer.mailerror("LINKEDIN LOGIN ERROR: #{error_message}, AFFILITE: #{current_affiliate.id.present? ? current_affiliate.name : "energyfolks"}").deliver()
       redirect_to "/", :notice => 'There was an error during the authentication process'
     end
   end
@@ -437,12 +437,12 @@ class UsersController < ApplicationController
       user ||= User.find_by_email(email)
       user ||= current_user if user_logged_in?
       if user && user_logged_in? && (current_user.id != user.id)
-        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: USER LOGIN LINKED ACCOUNT").deliver()
+        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: USER LOGIN LINKED ACCOUNT, AFFILITE: #{current_affiliate.id.present? ? current_affiliate.name : "energyfolks"}").deliver()
         # Linkedin is linked to another user account
         @alert = 'This linkedin account is associated with a different EnergyFolks account.  You can delete this account, or you can delete the other account and synchronize this account with linkedin (first logout, then use the "login with linkedin" button, then delete that account, then login with this account, and then associate this account with linkedin).'
         render 'common/refresh_parent', layout: "iframe"
       elsif user
-        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: USER LOGIN").deliver()
+        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: USER LOGIN, AFFILITE: #{current_affiliate.id.present? ? current_affiliate.name : "energyfolks"}").deliver()
         # We know who this user is...lets log them in
         redirect_to "/", :alert => "Your account is frozen and your login is not allowed." unless user.active?
         user.last_login = Time.now
@@ -480,7 +480,7 @@ class UsersController < ApplicationController
         cookies[:cookieID] = user.cookie
         render 'common/refresh_parent', layout: "iframe"
       else
-        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: NEW USER").deliver()
+        ErrorMailer.mailerror("LINKEDIN LOGIN SUCCESS: NEW USER, AFFILITE: #{current_affiliate.id.present? ? current_affiliate.name : "energyfolks"}").deliver()
         # We have never seen this user...ask what they want to do
         @name = hash.info.name
         @service = 'LinkedIn'
