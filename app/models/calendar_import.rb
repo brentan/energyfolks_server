@@ -12,19 +12,19 @@ class CalendarImport < ActiveRecord::Base
       cal = cals.first.events
       cal.each do |e|
         begin
-          event = Event.where(autoimport: e.uid).first
+          event = Event.where(autoimport: e.uid.to_s).first
           next if event.present?
           event = Event.new()
-          event.name = e.summary
-          event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart
-          event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend
+          event.name = e.summary.to_s
+          event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s
+          event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s
           next if event.end < Time.now
           event.user_id = -1
           event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
           event.location = self.location
-          event.location2 = e.location
+          event.location2 = e.location.to_s
           event.affiliate_id = self.affiliate_id
-          event.autoimport = e.uid
+          event.autoimport = e.uid.to_s
           next if e.description.nil?
           html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
           event.html = html_string
