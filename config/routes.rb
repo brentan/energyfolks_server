@@ -99,6 +99,7 @@ EnergyfolksServer::Application.routes.draw do
   # ENTITY ROUTES
   resources :users, only: ['show']
   get "energyfolks/locate"
+  get "events/ical"
   begin
     ApplicationController::ENTITIES.each { |type|
       if type.new.entity_name != 'User'

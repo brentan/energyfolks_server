@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
                        :content_type => { :content_type => /^(image).*/ },
                        :size => { :in => 0..2.megabytes }
 
-  attr_accessible :name, :host, :location, :url, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv
+  attr_accessible :name, :host, :location, :url, :location2, :html, :synopsis, :start, :end, :logo, :affiliates_events_attributes, :last_updated_by, :start_d, :end_d, :start_t, :end_t, :timezone, :start_dv, :end_dv, :ical_start, :ical_end
 
 
   def self.date_column
@@ -49,6 +49,12 @@ class Event < ActiveRecord::Base
     return "#{start} to #{end_string}"
   end
 
+  def ical_start
+    "#{self.start.utc.strftime("%Y%m%d")}T#{self.start.utc.strftime("%H%M%S")}Z"
+  end
+  def ical_end
+    "#{self.end.utc.strftime("%Y%m%d")}T#{self.end.utc.strftime("%H%M%S")}Z"
+  end
   def mmddyyyy
     self.start.strftime("%m%d%Y")
   end
