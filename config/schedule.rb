@@ -27,9 +27,17 @@ end
 
 every 1.day, :at => '10:00 am' do
   rake "clean_up:user_login_hash"
+end
+every 1.day, :at => '10:05 am' do
   rake "clean_up:sessions"
+end
+every 1.day, :at => '10:10 am' do
   rake "clean_up:tag_count"
+end
+every 1.day, :at => '10:15 am' do
   rake "clean_up:old_analytics"
+end
+every 1.day, :at => '10:20 am' do
   rake "clean_up:scheduled_operations"
 end
 every 1.day, :at => '9:00 am' do
