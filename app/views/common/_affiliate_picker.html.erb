@@ -13,7 +13,7 @@
           <%= image_tag('ef_logo.png') %>
         </div>
         <h3>Share with all of EnergyFolks</h3>
-        <strong><%= User.verified.count %> users across <%= Affiliate.all.count %> networks.</strong>
+        <strong><%= User.verified.count %> users across <%= Affiliate.where(live: true).all.count %> networks.</strong>
       </div>
       <% if current_affiliate.id.present? %>
           <div class="chooser" id="chooser_send_to_one" data-id="<%= current_affiliate.id %>">
@@ -41,7 +41,7 @@
     <h1>Send to</h1>
     <div class='form_entry'>
       <input id='send_to_all_yes' type=radio name='send_to_all' value=1 class='toggle' <%= send_to_all ? 'checked' : '' %>>
-      <label for="send_to_all_yes">All <%= Affiliate.all.count() %> Energyfolks Affiliates</label>
+      <label for="send_to_all_yes">All <%= Affiliate.where(live: true).all.count() %> Energyfolks Affiliates</label>
       <input id='send_to_all_no' type=radio name='send_to_all' value=0 class='toggle' <%= !send_to_all ? 'checked' : '' %>>
       <label for="send_to_all_no">Target Networks Individually</label>
     </div>
@@ -52,7 +52,7 @@
   </div>
 
   <div id="sending_to_all" class='form_entry' <%= send_to_all ? '' : 'style=display:none;' %>>
-    <h3>Shared with <%= User.verified.count %> users across all <%= Affiliate.all.count() %> Energyfolks networks.</h3>
+    <h3>Shared with <%= User.verified.count %> users across all <%= Affiliate.where(live: true).all.count() %> Energyfolks networks.</h3>
 
   </div>
 
