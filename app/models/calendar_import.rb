@@ -21,6 +21,7 @@ class CalendarImport < ActiveRecord::Base
           next if event.end < Time.now
           event.user_id = -1
           event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
+          event.timezone = self.affiliate.timezone if event.timezone.blank?
           event.location = self.location
           event.location2 = e.location.to_s
           event.affiliate_id = self.affiliate_id
@@ -30,6 +31,7 @@ class CalendarImport < ActiveRecord::Base
           event.html = html_string
           event.synopsis = TruncateHtml::HtmlTruncator.new(html_string, {length: 115}).truncate.html_safe
           event.save!
+
           if self.send_to_all?
             a = AffiliatesEvent.where(:event_id => event.id, :affiliate_id => 0).first
             if a.blank?
