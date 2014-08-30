@@ -81,7 +81,7 @@ EnergyFolks.populateWidget = function(data, id, height, source) {
     if(data.data.length == 0) output = 'No Results Found';
     EnergyFolks.$.each(data.data, function(i, v) {
         var info = EnergyFolks.getItemInfo(v, source);
-        output += '<div data-params="' + EnergyFolks.$.param(info.params) + '" class="ef_item' + (first ? ' first' : '') + (v.highlighted ? ' ef_highlight' : '') + '" style="height:' + height + 'px;"><div class="line_one">' + info.title + '</div><div class="line_two">' + info.widget + '</div></div>';
+        output += '<div data-params="' + EnergyFolks.$.param(info.params) + '" class="ef_item' + (first ? ' first' : '') + (v.highlighted ? ' ef_highlight' : '') + '" style="height:' + height + 'px;"><div class="line_one"><h3>' + info.title + '</h3></div><div class="line_two">' + info.widget + '</div></div>';
         first = false;
     });
     EnergyFolks.$('#ef_widget_' + id).html(output);
