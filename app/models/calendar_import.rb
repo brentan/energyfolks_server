@@ -13,24 +13,43 @@ class CalendarImport < ActiveRecord::Base
       cal.each do |e|
         begin
           event = Event.where(autoimport: e.uid.to_s).first
-          next if event.present?
-          event = Event.new()
-          event.name = e.summary.to_s
-          event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s
-          event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s
-          next if event.end < Time.now
-          event.user_id = -1
-          event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
-          event.timezone = self.affiliate.timezone if event.timezone.blank?
-          event.location = self.location
-          event.location2 = e.location.to_s
-          event.affiliate_id = self.affiliate_id
-          event.autoimport = e.uid.to_s
-          next if e.description.nil?
-          html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
-          event.html = html_string
-          event.synopsis = TruncateHtml::HtmlTruncator.new(html_string, {length: 115}).truncate.html_safe
-          event.save!
+          if event.present?
+            event.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
+            event.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+            event.versions.each do |v|
+              v.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
+              v.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+            end
+            new_name = e.summary.to_s
+            new_location2 = e.location.to_s
+            new_html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
+            if (event.name != new_name) || (event.location2 != new_location2) || (event.html != new_html_string)
+              event.name = new_name
+              event.location2 = new_location2
+              event.html = new_html_string
+              event.save!
+            end
+            event.reload
+            event.update_index
+          else
+            event = Event.new()
+            event.name = e.summary.to_s
+            event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s
+            event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s
+            next if event.end < Time.now
+            event.user_id = -1
+            event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
+            event.timezone = self.affiliate.timezone if event.timezone.blank?
+            event.location = self.location
+            event.location2 = e.location.to_s
+            event.affiliate_id = self.affiliate_id
+            event.autoimport = e.uid.to_s
+            next if e.description.nil?
+            html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
+            event.html = html_string
+            event.synopsis = TruncateHtml::HtmlTruncator.new(html_string, {length: 115}).truncate.html_safe
+            event.save!
+          end
 
           if self.send_to_all?
             a = AffiliatesEvent.where(:event_id => event.id, :affiliate_id => 0).first
