@@ -452,40 +452,48 @@ class UsersController < ApplicationController
         session[:userid] = user.id
         cookies[:cookieID] = user.cookie
         render 'common/refresh_parent', layout: "iframe"
-      elsif params[:create_new].present?
-        cookies.delete(:create_new)
-        if current_affiliate.id.present?
-          user = User.new({ memberships_attributes: [ { affiliate_id: current_affiliate.id, reason: 'linkedin login' } ] })
-        else
-          user = User.new()
-        end
-        user.email = hash.info.email
-        user.first_name = hash.info.first_name
-        user.last_name = hash.info.last_name
-        user.location = hash.info.location
-        user.linkedin_hash = hash.uid
-        pass = rand(1..10000000).to_s
-        user.password = pass
-        user.password_confirmation = pass
-        user.verified = true
-        user.active = true
-        user.save!
-        ThirdPartyLogin.update(user, 'linkedin', hash.credentials.token, hash.credentials.secret)
-        user.update_by_linkedin
-        user.update_index
-        user.delay.sync
-        session[:userid] = user.id
-        cookies[:cookieID] = user.cookie
-        render 'common/refresh_parent', layout: "iframe"
       else
         # We have never seen this user...ask what they want to do
         @name = hash.info.name
         @service = 'LinkedIn'
         @link = 'linkedin'
+        cookies[:external_email] = hash.info.email
+        cookies[:external_fname] = hash.info.first_name
+        cookies[:external_lname] = hash.info.last_name
+        cookies[:external_location] = hash.info.location
+        cookies[:external_linkedin_hash] = hash.uid
+        cookies[:external_token] = hash.credentials.token
+        cookies[:external_secret] = hash.credentials.secret
         render 'common/new_external', layout: "iframe"
       end
     rescue
       redirect_to "/", :notice => 'There was an error during the authentication process'
     end
+  end
+
+  def external_new
+    if current_affiliate.id.present?
+      user = User.new({ memberships_attributes: [ { affiliate_id: current_affiliate.id, reason: 'linkedin login' } ] })
+    else
+      user = User.new()
+    end
+    user.email = cookies[:external_email]
+    user.first_name = cookies[:external_fname]
+    user.last_name = cookies[:external_lname]
+    user.location = cookies[:external_location]
+    user.linkedin_hash = cookies[:external_linkedin_hash]
+    pass = rand(1..10000000).to_s
+    user.password = pass
+    user.password_confirmation = pass
+    user.verified = true
+    user.active = true
+    user.save!
+    ThirdPartyLogin.update(user, 'linkedin', cookies[:external_token], cookies[:external_secret])
+    user.update_by_linkedin
+    user.update_index
+    user.delay.sync
+    session[:userid] = user.id
+    cookies[:cookieID] = user.cookie
+    render 'common/refresh_parent', layout: "iframe"
   end
 end

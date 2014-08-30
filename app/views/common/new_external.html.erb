@@ -12,7 +12,7 @@
 </td><td style='vertical-align: text-top;text-align: center;'>
   <h2>I'm a new user</h2>
   Welcome!  Click the link below to complete your login with <%= @service %>. <BR><BR>
-  <a href='/auth/<%= @link %>?create_new=true' class='button'>Complete Login</a>
+  <a href='/users/external_new<%= current_affiliate.id.present? ? "?aid=#{current_affiliate.id};" : "" %>' class='button'>Complete Login</a>
 </td></tr></table>
 
 <script language='javascript'>
