@@ -37,24 +37,22 @@
             </table>
             <%= raw('<div style="display:none;">') if @just_donated %>
             <h1>Consider Further Support</h1>
-        <% elsif @item.nil? %>
-            <h1>Make a Donation</h1>
         <% else %>
-            <h1>Pay What You Think it's Worth</h1>
+            <h1>Make a Donation</h1>
         <% end %>
-        Help support our mission by donating to our cause.  No donation is necessary.  All donations are tax-deductible.
+        Help support our mission by donating to our cause.  No donation is necessary to submit your post.  All donations are tax-deductible and will be used to support our services and outreach programs for students and young professionals in the energy space.
         <table cellpadding=0 cellspacing=0>
           <tr>
             <td id='donate_slider'>
-              <div id="donation_slider" data-val='<%= @user.nil? ? 50 : @user.average_donation %>'></div>
+              <div id="donation_slider" data-val='<%= @user.nil? ? 100 : @user.average_donation %>'></div>
             </td>
             <td id='donate_amount'>
-              $<%= @user.nil? ? 50 : @user.average_donation %>
+              $<%= @user.nil? ? 100 : @user.average_donation %>
               <div style='font-size:12px;line-height:12px;'><%= !@user.nil? && @user.self_donations.length > 0 ? 'Your Average' : 'Suggested' %> Donation</div>
             </td>
           </tr>
         </table>
-        <input type='hidden' name='amount' id='amount' value='<%= @user.nil? ? 50 : @user.average_donation %>'>
+        <input type='hidden' name='amount' id='amount' value='<%= @user.nil? ? 100 : @user.average_donation %>'>
 
 
 
@@ -124,13 +122,16 @@
          <% end %>
       </div>
       <div class='submit_button'>
-        <% if @just_posted %>
-            <a href='/<%= @item.method_name %>/<%= @item.id %>?iframe_next=1' style='font-size:11px;display:block;float: left;'>No thanks, take me to my post.</a>
-            <input type=hidden name=just_posted value=1>
-        <% end %>
-        <button type="submit" id='donate_button'>Donate $<%= @user.nil? ? 50 : @user.average_donation %>!</button>
+        <button type="submit" id='donate_button' <%= @just_posted ? 'class=recent_post' : '' %>>Donate $<%= @user.nil? ? 100 : @user.average_donation %> and Submit my Post!</button>
         <%= image_tag 'loader.gif', :id => 'loading_button' %>
       </div>
+      <% if @just_posted %>
+          <div style="text-align:right;">
+              <a href='/<%= @item.method_name %>/<%= @item.id %>?iframe_next=1&notice=Your%20post%20was%20successful' style='font-size:11px;display:block;'>No thanks, submit my post without a donation.</a>
+              <input type=hidden name=just_posted value=1>
+          </div>
+      <% end %>
+
       <i>All donations are tax-deductible.  You will receive a receipt confirming your donation by email.</i>
       <%= raw('</div>') if @just_donated %>
     <% end %>

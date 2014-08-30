@@ -134,7 +134,7 @@ module MixinEntityController
       if @item.instance_of?(Job) && current_affiliate.id.blank?
         # When changing to all post, make sure admins of the group it was posted from do not see the donation page.
         @item.update_column(:donate, true)
-        redirect_to :action => "donate", :iframe_next => true, :id => @item.id, :just_posted => true, :notice => "Your post was successful.  Please Consider a Donation."
+        redirect_to :action => "donate", :iframe_next => true, :id => @item.id, :just_posted => true, :notice => "Post ready for submittal.  First, please consider a donation."
       else
         redirect_to :action => "show", :iframe_next => true, :id => @item.id, :notice => "Your post was successful.  Moderation status is found below."
       end
@@ -160,7 +160,7 @@ module MixinEntityController
       success, message = card.charge(params[:amount], @item)
       card.destroy unless success
       @item.reload
-      flash[success ? :notice : :alert] = message
+      flash[success ? :notice : :alert] = @just_posted ? "Your post was successful<BR>#{message}" : message
       @just_donated = success
       redirect_to :action => "show", :iframe_next => true, :id => @item.id if success && @just_posted
     else

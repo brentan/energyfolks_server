@@ -75,12 +75,15 @@ $(function($) {
         range: "min",
         value:parseInt($("#donation_slider").attr('data-val')),
         min: 20,
-        max: 250,
+        max: 500,
         step: 10,
         slide: function( event, ui ) {
             $( "#donate_amount" ).html( "$" + ui.value );
             $( "#amount" ).val( ui.value );
-            $( "#donate_button").html('Donate $' + ui.value + '!')
+            if($( "#donate_button").hasClass('recent_post'))
+                $( "#donate_button").html('Donate $' + ui.value + ' and Submit my Post!');
+            else
+                $( "#donate_button").html('Donate $' + ui.value + '!');
         }
     });
 });

@@ -20,10 +20,10 @@ module ApplicationHelper
     return html.join("\n")
   end
 
-  def prev_next_buttons(hide_submit_until_last_page=true)
+  def prev_next_buttons(hide_submit_until_last_page=true, next_instead_of_submit=false)
     html = ''
     html += link_to('Previous', '#', class: 'button prev')
-    html += link_to('Submit', '#', class: "button submit#{ ' do_not_hide' unless hide_submit_until_last_page}")
+    html += link_to((next_instead_of_submit ? 'Next' : 'Submit'), '#', class: "button submit#{ ' do_not_hide' unless hide_submit_until_last_page}")
     html += link_to('Next', '#', class: 'button next')
     return content_tag(:div, raw(html), class: 'buttons')
   end

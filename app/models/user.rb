@@ -173,7 +173,7 @@ class User < ActiveRecord::Base
       tot += 1
       sum += d.amount
     end
-    return 50 if tot == 0
+    return 100 if tot == 0
     return (sum/tot).to_i
   end
   def self.to_archive

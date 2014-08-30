@@ -68,7 +68,7 @@
 
             </li>
           </ul>
-          <%= prev_next_buttons(new) %>
+          <%= prev_next_buttons(new,current_affiliate.id.blank? || (current_affiliate.id == 0)) %>
         </div>
       </div>
   <% end %>
