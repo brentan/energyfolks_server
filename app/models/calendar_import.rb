@@ -27,6 +27,7 @@ class CalendarImport < ActiveRecord::Base
               event.name = new_name
               event.location2 = new_location2
               event.html = new_html_string
+              event.synopsis = TruncateHtml::HtmlTruncator.new(new_html_string, {length: 115}).truncate.html_safe
               event.save!
             end
             event.reload
