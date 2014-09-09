@@ -16,19 +16,19 @@ class CalendarImport < ActiveRecord::Base
           if event.present?
             event.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
             event.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+            event.update_column(:name, e.summary.to_s)
+            event.update_column(:location2, e.location.to_s)
+            new_html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
+            event.update_column(:html, new_html_string)
+            synopsis = TruncateHtml::HtmlTruncator.new(new_html_string, {length: 115}).truncate.html_safe
+            event.update_column(:synopsis, synopsis)
             event.versions.each do |v|
               v.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
               v.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
-            end
-            new_name = e.summary.to_s
-            new_location2 = e.location.to_s
-            new_html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
-            if (event.name != new_name) || (event.location2 != new_location2) || (event.html != new_html_string)
-              event.name = new_name
-              event.location2 = new_location2
-              event.html = new_html_string
-              event.synopsis = TruncateHtml::HtmlTruncator.new(new_html_string, {length: 115}).truncate.html_safe
-              event.save!
+              event.update_column(:name, e.summary.to_s)
+              event.update_column(:location2, e.location.to_s)
+              event.update_column(:html, new_html_string)
+              event.update_column(:synopsis, synopsis)
             end
             event.reload
             event.update_index
