@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
       user = User.find_by_email(value.downcase)
       if user.present? && (user.id != record.id)
         if user.affiliate.present?
-          record.errors.add(attr, "email address already in use.  Energyfolks account exists through #{user.affilate.name}.  You may login here with that account.")
+          record.errors.add(attr, "email address already in use.  Energyfolks account exists through #{user.affiliate.name}.  You may login here with that account.")
         else
           record.errors.add(attr, "email address already in use.  Energyfolks account exists, you may login here with that account.")
         end
