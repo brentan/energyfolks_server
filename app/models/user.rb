@@ -89,7 +89,13 @@ class User < ActiveRecord::Base
     if value.present?
       record.errors.add(attr, 'Invalid email address') unless value.upcase =~ /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,12}$/
       user = User.find_by_email(value.downcase)
-      record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
+      if user.present? && (user.id != record.id)
+        if user.affiliate.present?
+          record.errors.add(attr, "email address already in use.  Energyfolks account exists through #{user.affilate.name}.  You may login here with that account.")
+        else
+          record.errors.add(attr, "email address already in use.  Energyfolks account exists, you may login here with that account.")
+        end
+     end
       user = User.find_by_email_to_verify(value.downcase)
       record.errors.add(attr, 'email address already in use') if user.present? && (user.id != record.id)
     else
