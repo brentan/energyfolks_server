@@ -431,7 +431,7 @@ class UsersController < ApplicationController
       hash = request.env['omniauth.auth']
       return redirect_to "/auth/linkedin" if hash.nil?
       # Find user email:
-      email = hash.info.email
+      email = hash.info.email.downcase
       # Attempt to login this user:
       user = User.find_by_linkedin_hash(hash.uid)
       user ||= User.find_by_email(email)
@@ -457,7 +457,7 @@ class UsersController < ApplicationController
         @name = hash.info.name
         @service = 'LinkedIn'
         @link = 'linkedin'
-        cookies[:external_email] = hash.info.email
+        cookies[:external_email] = hash.info.email.downcase
         cookies[:external_fname] = hash.info.first_name
         cookies[:external_lname] = hash.info.last_name
         cookies[:external_location] = hash.info.location
