@@ -415,6 +415,7 @@ module MixinEntity
   def broadcast(version_control =  true)
     return if @skip_broadcast_callback
     check_affiliate_join = true
+    self.affiliate_join.create({:affiliate_id => 0, :approved_version => 0, :admin_version => self.current_version, :broadcast => false, :user_broadcast => false}) if self.affiliate_join.length == 0
     if version_control
       # Version control: Decide if we need to increment versions or if we can just save
       if self.increment_version?
