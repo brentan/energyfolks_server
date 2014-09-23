@@ -14,8 +14,13 @@ class CalendarImport < ActiveRecord::Base
         begin
           event = Event.where(autoimport: e.uid.to_s).first
           if event.present?
-            event.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
-            event.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+            begin
+              event.update_column(:start, e.dtstart.utc)
+              event.update_column(:end, e.dtend.utc)
+            rescue
+              event.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
+              event.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+            end
             event.update_column(:name, e.summary.to_s)
             event.update_column(:location2, e.location.to_s)
             new_html_string = TruncateHtml::HtmlString.new(ActionController::Base.helpers.sanitize(e.description, tags: %w(p i b u br a img)))
@@ -23,8 +28,13 @@ class CalendarImport < ActiveRecord::Base
             synopsis = TruncateHtml::HtmlTruncator.new(new_html_string, {length: 115}).truncate.html_safe
             event.update_column(:synopsis, synopsis)
             event.versions.each do |v|
-              v.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
-              v.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+              begin
+                v.update_column(:start, e.dtstart.utc)
+                v.update_column(:end, e.dtend.utc)
+              rescue
+                v.update_column(:start, e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s)
+                v.update_column(:end, e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s)
+              end
               event.update_column(:name, e.summary.to_s)
               event.update_column(:location2, e.location.to_s)
               event.update_column(:html, new_html_string)
@@ -35,8 +45,13 @@ class CalendarImport < ActiveRecord::Base
           else
             event = Event.new()
             event.name = e.summary.to_s
-            event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s
-            event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s
+            begin
+              event.start = e.dtsart.utc
+              event.end = e.dtend.utc
+            rescue
+              event.start = e.dtstart.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtstart.icalendar_tzid).local_to_utc(e.dtstart) : e.dtstart.to_s
+              event.end = e.dtend.is_a?(DateTime) ? ActiveSupport::TimeZone.new(e.dtend.icalendar_tzid).local_to_utc(e.dtend) : e.dtend.to_s
+            end
             next if event.end < Time.now
             event.user_id = -1
             event.timezone = e.dtstart.icalendar_tzid if e.dtstart.is_a?(DateTime)
@@ -65,6 +80,7 @@ class CalendarImport < ActiveRecord::Base
             group_admins += 1
           end
         rescue
+          a
           # item was problematic, ignore it
         end
       end

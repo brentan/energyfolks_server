@@ -23,7 +23,11 @@ class AdminsController < ApplicationController
   end
 
   def sync_wordpress
-    call_rake "nightly:wordpress"
+    imports = CalendarImport.all
+    imports.each do |i|
+      aid, url, total, total_ef = i.import_events
+    end
+    #call_rake "nightly:wordpress"
     redirect_to '/admins/wordpress_versions?iframe_next=1'
   end
 
