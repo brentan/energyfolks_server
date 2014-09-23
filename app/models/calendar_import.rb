@@ -80,7 +80,6 @@ class CalendarImport < ActiveRecord::Base
             group_admins += 1
           end
         rescue
-          a
           # item was problematic, ignore it
         end
       end
