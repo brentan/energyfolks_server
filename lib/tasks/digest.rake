@@ -22,6 +22,12 @@ namespace :digest do
       rescue Exception => ex
         ErrorMailer.rake_error(ex, "Weekly Digest: #{u.email} (#{u.id})").deliver if error_count < 20
         error_count += 1
+      rescue Timeout::Error => e
+        ErrorMailer.mailerror("TIMEOUT ERROR: Weekly Digest: #{u.email} (#{u.id})").deliver if error_count < 20
+        error_count += 1
+      rescue
+        ErrorMailer.mailerror("UNKNOWN ERROR: Weekly Digest: #{u.email} (#{u.id})").deliver if error_count < 20
+        error_count += 1
       end
     end
     operation.mark_complete
