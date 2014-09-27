@@ -13,8 +13,8 @@ class SalesforceClient
     return 'Salesforce not enabled on development' unless Rails.env.production?
     begin
       @client = Soapforce::Client.new
-      @client.authenticate(:username => @affiliate.salesforce_username, :password => "#{@affiliate.salesforce_password}#{@affiliate.salesforce_token}")
-      ErrorMailer.mailerror(@client.to_json).deliver();
+      output = @client.authenticate(:username => @affiliate.salesforce_username, :password => "#{@affiliate.salesforce_password}#{@affiliate.salesforce_token}")
+      ErrorMailer.mailerror(output).deliver();
       return ''
     rescue Exception => e
       if send_email_failure
