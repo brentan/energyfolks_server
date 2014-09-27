@@ -14,7 +14,9 @@ class SalesforceClient
     begin
       @client = Soapforce::Client.new
       output = @client.authenticate(:username => @affiliate.salesforce_username, :password => "#{@affiliate.salesforce_password}#{@affiliate.salesforce_token}")
-      ErrorMailer.mailerror(output).deliver();
+      if(output[:password_expired])
+        raise "Your Salesforce Password has expired.  You must login to salesforce, update your password, and then update your group energyfolks profile with this new password (at: https://www.energyfolks.com/affiliates/salesforce?id=#{@affiliate.id}?&iframe_next=1)"
+      end
       return ''
     rescue Exception => e
       if send_email_failure
