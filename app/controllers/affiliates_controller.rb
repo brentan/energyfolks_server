@@ -119,24 +119,26 @@ class AffiliatesController < ApplicationController
         flash[:notice]="Could not authenticate to Salesforce.  Check your settings."
       end
     end
-    if @client.enabled? && @client.login.blank?
-      current = @affiliate.salesforce_items.map { |i| i.id }
-      @client.fields.each do |f|
-        item = SalesforceItem.where(affiliate_id: @affiliate.id, salesforce_name: f[:name]).first
-        if item.blank?
-          SalesforceItem.create!(affiliate_id: @affiliate.id, salesforce_label: f[:label], salesforce_name: f[:name], salesforce_options: f[:options], salesforce_type: SalesforceItem.type_index(f[:type]), custom: SalesforceItem::NONE)
-        else
-          item.salesforce_options = f[:options]
-          item.salesforce_type = SalesforceItem.type_index(f[:type])
-          item.salesforce_label = f[:label]
-          item.save!
-          current -= [item.id]
+    begin
+      if @client.enabled? && @client.login.blank?
+        current = @affiliate.salesforce_items.map { |i| i.id }
+        @client.fields.each do |f|
+          item = SalesforceItem.where(affiliate_id: @affiliate.id, salesforce_name: f[:name]).first
+          if item.blank?
+            SalesforceItem.create!(affiliate_id: @affiliate.id, salesforce_label: f[:label], salesforce_name: f[:name], salesforce_options: f[:options], salesforce_type: SalesforceItem.type_index(f[:type]), custom: SalesforceItem::NONE)
+          else
+            item.salesforce_options = f[:options]
+            item.salesforce_type = SalesforceItem.type_index(f[:type])
+            item.salesforce_label = f[:label]
+            item.save!
+            current -= [item.id]
+          end
         end
+        current.each { |c| SalesforceItem.find(c).destroy }
+        @affiliate.reload
       end
-      current.each { |c| SalesforceItem.find(c).destroy }
-      @affiliate.reload
+    rescue
     end
-
   end
 
 
