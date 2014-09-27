@@ -232,6 +232,13 @@ class UsersController < ApplicationController
     if !@user.save
       render :action => "new"
     else
+      if current_affiliate.id.present? && (current_affiliate.programs.length > 0)
+        m = Membership.where({:affiliate_id => current_affiliate.id, :user_id => @user.id}).first
+        m.update_column(:graduation_year, @user.graduation_year)
+        m.update_column(:graduation_month, @user.graduation_month)
+        m.update_column(:program_id, @user.program_id)
+        m.update_column(:school_affiliation, @user.school_affiliation)
+      end
       if params[:salesforce].present?
         client = SalesforceClient.new(current_affiliate)
         client.login

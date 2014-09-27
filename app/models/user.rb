@@ -30,16 +30,17 @@ class User < ActiveRecord::Base
   include MixinEntity
   default_scope order(:last_name, :first_name)
 
-  attr_accessible :email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
+  attr_accessible :email, :secondary_email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
                   :resume_visibility, :position, :organization, :memberships_attributes, :subscription_attributes,
-                  :affiliate_id
-  attr_accessor :password, :password_old
+                  :affiliate_id, :school_affiliation, :program_id, :graduation_month, :graduation_year
+  attr_accessor :password, :password_old, :graduation_year, :graduation_month, :program_id, :school_affiliation
 
   validates_presence_of :first_name
   validates_length_of :password, :within => 4..40, :if => :password_entered?
   validates_confirmation_of :password, :if => :password_entered?
   validates_format_of :email, :with => EMAIL_VALIDATION
+  validates_format_of :secondary_email, :with => EMAIL_VALIDATION, :allow_blank => true, :allow_nil => true
 
   accepts_nested_attributes_for :memberships, :allow_destroy => true
   accepts_nested_attributes_for :google_emails, :allow_destroy => true
@@ -146,6 +147,23 @@ class User < ActiveRecord::Base
     admin_user_search = options[:terms].present? && current_user.present? && current_user.admin?
     results, more_pages = self.search(options[:terms],affiliates, options, admin_user_search)
     return results, more_pages
+  end
+
+  def member_grad_year(aid)
+    m = self.memberships.where(:affiliate_id => aid).first
+    m.graduation_year.present? ? m.graduation_year.to_s : ""
+  end
+  def member_grad_month_year(aid)
+    m = self.memberships.where(:affiliate_id => aid).first
+    "#{m.graduation_month}/#{m.graduation_year}"
+  end
+  def member_school_program(aid)
+    m = self.memberships.where(:affiliate_id => aid).first
+    m.program.present? ? m.program.name : ""
+  end
+  def member_school_affiliation(aid)
+    m = self.memberships.where(:affiliate_id => aid).first
+    m.school_affiliation.present? ? Membership.school_affiliation(m.school_affiliation) : ""
   end
 
   def affiliate_join

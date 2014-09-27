@@ -30,7 +30,7 @@ class SalesforceItem < ActiveRecord::Base
     hash[str.downcase]
   end
   def self.select_options
-    [['Not Linked',''], ['First Name', 'first_name'], ['Last Name', 'last_name'], ['Full Name', 'name'], ['Email Address', 'email'], ['City/State (Location)','location'], ['Latitude','latitude'],['Longitude','longitude'],['Current Position', 'position'], ['Current Employer', 'organization'], ['User Bio','bio'], ['User Interests','interest'],['User Expertise','expertise']]
+    [['Not Linked',''], ['First Name', 'first_name'], ['Last Name', 'last_name'], ['Full Name', 'name'], ['Email Address', 'email'], ['School Affiliation (faculty/student/etc)','member_school_affiliation'],['School Program', 'member_school_program'],['Graduation Month/Year','member_grad_month_year'],['Graduation Year','member_grad_year'],['City/State (Location)','location'], ['Latitude','latitude'],['Longitude','longitude'],['Current Position', 'position'], ['Current Employer', 'organization'], ['User Bio','bio'], ['User Interests','interest'],['User Expertise','expertise']]
   end
 
   private

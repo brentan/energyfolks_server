@@ -10,7 +10,11 @@
     <%=	nested_form_for @user, :url => { :action => "create"} do |f| %>
       <%= raw(iframe_form) %>
       <div id='ef_carousel'>
-        <%= raw(carousel_slide_title_section("Sign up for an #{current_affiliate.name} account",3, {show_vertical: false, use_slide_titles: false, slide_titles: ['Basics', 'Affiliates', 'Legal'] })) %>
+        <% if current_affiliate.id.present? && (current_affiliate.programs.length > 0) %>
+            <%= raw(carousel_slide_title_section("Sign up for an #{current_affiliate.name} account",4, {show_vertical: false, use_slide_titles: false, slide_titles: ['Basics', 'Education','Affiliates', 'Legal'] })) %>
+        <% else %>
+            <%= raw(carousel_slide_title_section("Sign up for an #{current_affiliate.name} account",3, {show_vertical: false, use_slide_titles: false, slide_titles: ['Basics', 'Affiliates', 'Legal'] })) %>
+        <% end %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
@@ -21,6 +25,15 @@
                 <%= f.text_field :email %>
                 <div class='explain'>
                   Your email is kept private and not shared with anyone. It is not shown on your profile page.
+                </div>
+              </div>
+              <div id="secondary_email_div" style="display:none;">
+                <div class="form_label">Secondary Email Address</div>
+                <div class="form_entry">
+                  <%= f.text_field :secondary_email %>
+                  <div class='explain'>
+                    Please provide a secondary, non .edu email address.  We will only use this address if your .edu address becomes unresponsive.
+                  </div>
                 </div>
               </div>
               <div class='form_label'>First Name</div>
@@ -68,6 +81,31 @@
               <%= render :partial => '/users/salesforce', :locals => {signup: true} %>
               <% @user.memberships << Membership.new({affiliate_id: current_affiliate.id, approved: (current_affiliate.open == 1)}) if current_affiliate.id.present? && (@user.memberships.length == 0) %>
             </li>
+
+
+            <% if current_affiliate.id.present? && (current_affiliate.programs.length > 0) %>
+                  <li class='slide affiliate_options'>
+
+                    <div class='form_label'>School Affiliation</div>
+                    <div class='form_entry affiliation_select'><%= f.select(:school_affiliation, Membership.school_affiliations_select) %></div>
+                    <div class="program_select" style="display:none;">
+                      <div class='form_label'>Program</div>
+                      <div class='form_entry'><%= f.collection_select(:program_id, current_affiliate.programs, :id, :name) %></div>
+                    </div>
+                    <div class="grad_year_select" style="display:none;">
+                      <div class='form_label'>Graduation Date</div>
+                      <div class='form_entry'><%= f.select(:graduation_month, Membership.graduation_month) %> <%= f.select(:graduation_year, Membership.graduation_year) %></div>
+                    </div>
+                    <div class="other_select" style="display:none;">
+                      <div class='form_label'>Position/Title</div>
+                      <div class='form_entry'><%= f.text_field :position %></div>
+
+                      <div class='form_label'>Organization</div>
+                      <div class='form_entry'><%= f.text_field :organization %></div>
+                    </div>
+                  </li>
+            <% end %>
+
             <li class='slide'>
               <h1>Join Networks</h1><BR>
               <% if current_affiliate.id.present? %>

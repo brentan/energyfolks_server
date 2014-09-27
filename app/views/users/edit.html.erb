@@ -41,7 +41,7 @@
                       (<%= link_to('Resend verification email','/users/resend_email_change_verification', :class => 'resend_activation', :remote => true )%>)</b>
                   <% else %>
                     <div class='hide_me'><%= @user.email %> <a href="#" onclick="$(this).closest('.hide_me').hide();$(this).closest('.form_entry').find('.show_me').show();return false;">(Change)</a></div>
-                    <div class='show_me' style='display:none;'><%= f.text_field :email_to_verify %></div>
+                    <div class='show_me' style='display:none;'><%= f.text_field :email_to_verify %></div><input type="hidden" value="<%= @user.email %>" id="user_email">
                   <% end %>
                   <div class='explain'>
                     Your email is kept private and not shared with anyone. It is not shown on your profile page.
@@ -49,6 +49,15 @@
                   <div class='explain'>
                     Any change to your email will require verification of ownership of the new address.
                   </div>
+                </div>
+                <div id="secondary_email_div" style="display:none;">
+                    <div class="form_label">Secondary Email Address</div>
+                    <div class="form_entry">
+                      <%= f.text_field :secondary_email %>
+                      <div class='explain'>
+                        Please provide a secondary, non .edu email address.  We will only use this address if your .edu address becomes unresponsive.
+                      </div>
+                    </div>
                 </div>
 
               </li>
@@ -74,6 +83,26 @@
                   <%= link_to('Current Resume', @user.resume.url) if @user.resume.present? %>
                   <%= f.file_field :resume %>
                 </div>
+
+
+                <%= f.fields_for :memberships do |m| %>
+                  <% if (m.object.affiliate.programs.length > 0) %>
+                    <div class='form_label'><h3><%= m.object.affiliate.name %></h3></div>
+                    <div class='affiliate_options'>
+                      <div class='form_label'>School Affiliation</div>
+                      <div class='form_entry affiliation_select'><%= m.select(:school_affiliation, Membership.school_affiliations_select) %></div>
+                      <div class="program_select" style="display:none;">
+                        <div class='form_label'>Program</div>
+                        <div class='form_entry'><%= m.collection_select(:program_id, m.object.affiliate.programs, :id, :name) %></div>
+                      </div>
+                      <div class="grad_year_select" style="display:none;">
+                        <div class='form_label'>Graduation Date</div>
+                        <div class='form_entry'><%= m.select(:graduation_month, Membership.graduation_month) %> <%= m.select(:graduation_year, Membership.graduation_year) %></div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+
 
                 <%= render :partial => '/users/salesforce', :locals => {signup: false} %>
 

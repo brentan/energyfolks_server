@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140621022014) do
+ActiveRecord::Schema.define(:version => 20140927170522) do
 
   create_table "admin_messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -475,15 +475,19 @@ ActiveRecord::Schema.define(:version => 20140621022014) do
   add_index "mark_reads", ["entity_type"], :name => "index_mark_reads_on_entity_type"
 
   create_table "memberships", :force => true do |t|
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.integer  "user_id"
     t.integer  "affiliate_id"
-    t.boolean  "approved",          :default => false
-    t.integer  "admin_level",       :default => 0
-    t.boolean  "moderation_emails", :default => false
+    t.boolean  "approved",           :default => false
+    t.integer  "admin_level",        :default => 0
+    t.boolean  "moderation_emails",  :default => false
     t.string   "reason"
-    t.boolean  "broadcast",         :default => false
+    t.boolean  "broadcast",          :default => false
+    t.integer  "graduation_year"
+    t.integer  "graduation_month"
+    t.integer  "program_id"
+    t.integer  "school_affiliation"
   end
 
   create_table "nightly_stats", :force => true do |t|
@@ -505,6 +509,11 @@ ActiveRecord::Schema.define(:version => 20140621022014) do
   end
 
   add_index "nightly_stats", ["affiliate_id"], :name => "index_nightly_stats_on_affiliate_id"
+
+  create_table "programs", :force => true do |t|
+    t.string  "name"
+    t.integer "affiliate_id"
+  end
 
   create_table "salesforce_items", :force => true do |t|
     t.integer "affiliate_id"
@@ -659,6 +668,7 @@ ActiveRecord::Schema.define(:version => 20140621022014) do
     t.integer  "affiliate_id",        :default => 0
     t.string   "linkedin_hash"
     t.string   "linkedin_url"
+    t.string   "secondary_email"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

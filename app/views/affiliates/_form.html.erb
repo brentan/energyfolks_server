@@ -1,6 +1,6 @@
 
 <div id='ef_carousel' class='no_animation'>
-  <%= raw(carousel_slide_title_section('Settings',9, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'Moderation', 'Email Header', 'Integration','External Sync'] })) %>
+  <%= raw(carousel_slide_title_section('Settings',10, {show_vertical: true, use_slide_titles: true, slide_titles: ['Basics', 'Description', 'Default Filters', 'URLs', 'Membership', 'School Info', 'Moderation', 'Email Header', 'Integration','External Sync'] })) %>
   <div class="viewport">
     <ul class="overview">
       <li class='slide'>
@@ -110,6 +110,16 @@
 
             <h1>Default Email Subscriptions for new members:</h1>
             <%= render :partial => '/common/subscriptions', :locals => { f: f, show_rad: false} %>
+        </li>
+        <li class="slide">
+            <h1>School Information</h1><BR>
+            <p>If your organization is part of a university, EnergyFolks can gether extra information from users, including their affiliation (student, faculty, staff, alumni), expected graduation date, and program.  To enable these features, add programs that a user can choose from (such as 'engineering', 'law', 'business', etc):</p>
+
+              <%= f.fields_for :programs do |p| %>
+                  <%= p.text_field :name %> <%= p.link_to_remove "[X]" %>
+              <% end %>
+              <%= f.link_to_add "Add a program", :programs %>
+
         </li>
         <li class="slide">
 

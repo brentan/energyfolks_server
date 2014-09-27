@@ -79,7 +79,11 @@ class SalesforceClient
         params[:FirstName] = user.first_name
         SalesforceItem.where(affiliate_id: @affiliate.id).where('energyfolks_name IS NOT NULL').all.each do |i|
           next if i.energyfolks_name.blank?
-          params[i.salesforce_name] = user.send(i.energyfolks_name)
+          if(i.energyfolks_name.include?('member_'))
+            params[i.salesforce_name] = user.send(i.energyfolks_name, @affiliate.id)
+          else
+            params[i.salesforce_name] = user.send(i.energyfolks_name)
+          end
         end
         out = @client.upsert('Contact', 'Email', params)
         return true
