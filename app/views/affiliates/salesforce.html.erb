@@ -54,14 +54,7 @@
                           Picklists and Multipicklists cannot be synced with EnergyFolks fields
                           <%= item.hidden_field :energyfolks_name, :value => '' %>
                       <% else %>
-                          <%= item.select(:energyfolks_name, options_for_select(SalesforceItem.select_options)) %>
-                          <% if item.object.energyfolks_name.present? %>
-                             <script language=javascript>
-                               $(function() {
-                                   $('#salesforce_<%= item.object.id %> select').val('<%= item.object.energyfolks_name %>');
-                               });
-                             </script>
-                          <% end %>
+                          <%= item.select(:energyfolks_name, SalesforceItem.select_options) %>
                       <% end %>
                     </td>
                     <td>
