@@ -14,7 +14,7 @@ class SalesforceClient
     begin
       @client = Soapforce::Client.new
       @client.authenticate(:username => @affiliate.salesforce_username, :password => "#{@affiliate.salesforce_password}#{@affiliate.salesforce_token}")
-      ErrorMailer.mailerror(@client).deliver();
+      ErrorMailer.mailerror(@client.to_json).deliver();
       return ''
     rescue Exception => e
       if send_email_failure
