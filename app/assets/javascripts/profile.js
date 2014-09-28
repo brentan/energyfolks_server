@@ -32,8 +32,10 @@ $(function() {
     $('body').on('change', '.affiliation_select select', function() {
         TestOptions($(this));
     });
-    TestEdu($('#user_email'));
-    $('.affiliation_select select').each(function() {
-        TestOptions($(this));
-    });
+    try {
+        TestEdu($('#user_email'));
+        $('.affiliation_select select').each(function() {
+            TestOptions($(this));
+        });
+    } catch(err) { }
 });
