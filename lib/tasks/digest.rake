@@ -104,18 +104,4 @@ namespace :digest do
     operation.mark_complete
   end
 
-  desc "Temporary Send Survey Link"
-  task :survey => :environment do
-    stan = Affiliate.find_by_id(1)
-    berc = Affiliate.find_by_id(11)
-    User.verified.where("last_login > ?", 1.month.ago).all.each do |u|
-      next if stan.admin?(u, Membership::CONTRIBUTOR)
-      next if berc.admin?(u, Membership::CONTRIBUTOR)
-      puts u.full_name
-      begin
-        UserMailer.survey(u).deliver
-      rescue
-      end
-    end
-  end
 end
