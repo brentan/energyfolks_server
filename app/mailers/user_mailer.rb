@@ -2,6 +2,13 @@ class UserMailer < ActionMailer::Base
   helper ActionView::Helpers::UrlHelper
   layout 'site_mailer'
 
+  def survey(user)
+    @user = user
+    @aid = user.affiliate.present? ? user.affiliate_id : 0
+    @affiliate = user.affiliate.present? ? user.affiliate : Affiliate.find_by_id(0)
+    mail(to: @user.email, from:"EnergyFolks <donotreply@energyfolks.com>", subject: "[EnergyFolks] Take our Survey and help us get better!")
+  end
+
   def confirmation_request(user, aid, host)
     @user = user
     @host = host
