@@ -118,7 +118,7 @@ class AffiliatesController < ApplicationController
           fail += 1 if @client.sync_user(u) == 2
           tot += 1
         end
-        @notice_message = "#{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
+        @notice_message = "Manual Sync Complete: #{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
         flash[:notice]="Your membership has been synced."
       else
         flash[:notice]="Could not authenticate to Salesforce.  Check your settings."
