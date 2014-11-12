@@ -9,7 +9,7 @@ class MailchimpClient < ActiveRecord::Base
   # NOTE: affiliate_id can be nil, if these are the Mailchimp settings for the global Energyfolks mailing list.
 
   # no two affiliates can have the same mailchimp api_key
-  validates :api_key, :uniqueness => {message: "This API key is already being used by another EnergyFolks affiliate. Please check your API key or notify an administrator."}
+  validates :api_key, :uniqueness => {message: "This API key is already being used by another EnergyFolks affiliate. Please check your API key or notify an administrator."}, :allow_blank => true, :allow_nil => true
 
   # for each affiliate, the members list ID has to be different from the daily digest list ID, and so on
   validate :each_list_different
