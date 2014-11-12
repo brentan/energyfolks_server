@@ -111,10 +111,13 @@ class AffiliatesController < ApplicationController
     end
     if params[:force].present?
       if @client.enabled? && @client.login.blank?
+        fail = 0
+        tot = 0
         @affiliate.approved_members.each do |u|
-          @client.sync_user(u)
+          fail += 1 if @client.sync_user(u) == 2
+          tot += 1
         end
-        flash[:notice]="Your membership has been synced."
+        flash[:notice]="Your membership has been synced. #{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
       else
         flash[:notice]="Could not authenticate to Salesforce.  Check your settings."
       end

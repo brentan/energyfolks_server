@@ -74,7 +74,7 @@ class SalesforceClient
     end
   end
   def sync_user(user)
-    #begin
+    begin
       if @affiliate.member?(user)
         params = {}
         params[:Email] = user.email
@@ -94,8 +94,9 @@ class SalesforceClient
         find_user(user)
         @client.destroy(@data.id) if @found
       end
-    #rescue
-    #end
+    rescue
+      return 2
+    end
     return false
   end
 
