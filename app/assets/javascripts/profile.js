@@ -24,7 +24,7 @@ $(function() {
             el.closest(".affiliate_options").find(".program_select").show();
         else
             el.closest(".affiliate_options").find(".program_select").hide();
-        if(el.val() == 6)
+        if((el.val() == 6) || (el.val() == 5))
             el.closest(".affiliate_options").find(".other_select").show();
         else
             el.closest(".affiliate_options").find(".other_select").hide();
