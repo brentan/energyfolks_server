@@ -78,15 +78,17 @@ namespace :nightly do
     if @client.enabled? && @client.login.blank?
       fail = 0
       tot = 0
+      end_m = ''
       @affiliate.approved_members.each do |u|
         if @client.sync_user(u) == 2
           fail += 1
-          puts "FAILURE: #{u.email}"
+          end_m += "#{u.email},"
         end
         tot += 1
       end
       puts "Manual Sync Complete: #{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
       puts "Your membership has been synced."
+      puts end_m
     else
       puts "Could not authenticate to Salesforce.  Check your settings."
     end
