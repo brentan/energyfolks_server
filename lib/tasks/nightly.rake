@@ -71,6 +71,27 @@ namespace :nightly do
     operation.mark_complete
   end
 
+  desc "Force Salesforce BERC test"
+  task :force_salesforce => :environment do
+    @affiliate = Affiliate.find(18)
+    @client = SalesforceClient.new(@affiliate)
+    if @client.enabled? && @client.login.blank?
+      fail = 0
+      tot = 0
+      @affiliate.approved_members.each do |u|
+        if @client.sync_user(u) == 2
+          fail += 1
+          puts "FAILURE: #{u.email}"
+        end
+        tot += 1
+      end
+      puts "Manual Sync Complete: #{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
+      puts "Your membership has been synced."
+    else
+      puts "Could not authenticate to Salesforce.  Check your settings."
+    end
+  end
+
   desc "Archive Old Stuff"
   task :archive => :environment do
     operation = ScheduledOperation.start('archive old stuff')
