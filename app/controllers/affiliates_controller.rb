@@ -104,6 +104,7 @@ class AffiliatesController < ApplicationController
   def salesforce
     @affiliate = Affiliate.find(params[:id])
     @client = SalesforceClient.new(@affiliate)
+    @notice_message = ''
     if params[:subbed].present?
       @affiliate.update_attributes(params[:affiliate])
       @affiliate.reload
@@ -117,7 +118,8 @@ class AffiliatesController < ApplicationController
           fail += 1 if @client.sync_user(u) == 2
           tot += 1
         end
-        flash[:notice]="Your membership has been synced. #{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
+        @notice_message = "#{fail} failure#{fail == 1 ? '' : 's'} out of #{tot} total."
+        flash[:notice]="Your membership has been synced."
       else
         flash[:notice]="Could not authenticate to Salesforce.  Check your settings."
       end

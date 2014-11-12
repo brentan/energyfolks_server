@@ -1,6 +1,7 @@
 <div class='form'>
   <%= nested_form_for @affiliate, :url => { :action => "salesforce", :id => @affiliate.id }, :html => { :multipart => true } do |f| %>
       <%= raw(iframe_form) %>
+      <%= @notice_message %>
       <h1>Salesforce Sync</h1><BR>
       <p>Salesforce sync will sync your membership list with the 'contact' object in salesforce.  As new users create accounts, new contacts in salesforce will automatically be created and kept up to date as users update information.</p>
       <h2>Login information</h2>
