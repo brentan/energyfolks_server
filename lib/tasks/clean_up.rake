@@ -44,7 +44,7 @@ namespace :clean_up do
 
   desc "clear out old stuff"
   task :scheduled_operations => :environment do
-    ScheduledOperation.where("created_at < ?",1.month.ago).all do |e|
+    ScheduledOperation.where("created_at < ?",1.month.ago).all.each do |e|
       e.destroy
     end
   end
