@@ -5,7 +5,8 @@
       client.login
       client.find_user(@user)
       SalesforceItem.where(affiliate_id: current_affiliate.id).where("custom >= ?",signup ? SalesforceItem::SIGNUP : SalesforceItem::PROFILE).all.each do |i|
-        %>
+            next if i.energyfolks_name.present?
+            %>
 
             <div class='form_label'><%= i.salesforce_label %></div>
             <div class='form_entry'>
