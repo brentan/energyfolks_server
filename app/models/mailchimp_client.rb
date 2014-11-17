@@ -4,7 +4,8 @@ class MailchimpClient < ActiveRecord::Base
   belongs_to :affiliate
 
   attr_accessible :affiliate_id, :api_key, :members_list_id, :daily_digest_list_id, :weekly_digest_list_id,
-                  :author_contributor_list_id, :editor_administrator_list_id
+                  :author_contributor_list_id, :editor_administrator_list_id, :member_list_sync, :daily_digest_sync,
+                  :weekly_digest_sync, :author_contributor_list_sync, :editor_administrator_list_sync
 
   # NOTE: affiliate_id can be nil, if these are the Mailchimp settings for the global Energyfolks mailing list.
 
