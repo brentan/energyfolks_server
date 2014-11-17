@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140927170522) do
+ActiveRecord::Schema.define(:version => 20141117041415) do
 
   create_table "admin_messages", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -441,8 +441,8 @@ ActiveRecord::Schema.define(:version => 20140927170522) do
   add_index "jobs_versions", ["version_number"], :name => "index_jobs_versions_on_version_number"
 
   create_table "mailchimp_clients", :force => true do |t|
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
     t.integer  "affiliate_id"
     t.string   "api_key"
     t.string   "members_list_id"
@@ -450,6 +450,11 @@ ActiveRecord::Schema.define(:version => 20140927170522) do
     t.string   "weekly_digest_list_id"
     t.string   "author_contributor_list_id"
     t.string   "editor_administrator_list_id"
+    t.boolean  "member_list_sync",               :default => true
+    t.boolean  "daily_digest_sync",              :default => true
+    t.boolean  "weekly_digest_sync",             :default => true
+    t.boolean  "author_contributor_list_sync",   :default => true
+    t.boolean  "editor_administrator_list_sync", :default => true
   end
 
   add_index "mailchimp_clients", ["affiliate_id"], :name => "index_mailchimp_clients_on_affiliate_id"

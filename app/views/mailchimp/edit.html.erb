@@ -22,21 +22,29 @@
           <% else %>
             <% blank_list_item = '[select a mailchimp list - leave blank to disable sync]' %>
             <div class='form_label'>Members List (users signed up to receive Important Announcements)</div>
-            <div class='form_entry'><%= f.select :members_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class='form_entry'>
+              <%= f.select :members_list_id, @list_names, {:include_blank => blank_list_item} %><BR>
+              <%= f.check_box :member_list_sync %> Two-way sync enabled
+            </div>
 
             <div class='form_label'>Daily Digest List</div>
-            <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class='form_entry'><%= f.select :daily_digest_list_id, @list_names, {:include_blank => blank_list_item} %><BR>
+              <%= f.check_box :daily_digest_sync %> Two-way sync enabled</div>
 
             <div class='form_label'>Weekly Digest List</div>
-            <div class='form_entry'><%= f.select :weekly_digest_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class='form_entry'><%= f.select :weekly_digest_list_id, @list_names, {:include_blank => blank_list_item} %><BR>
+              <%= f.check_box :weekly_digest_sync %> Two-way sync enabled</div>
 
             <div class='form_label'>Author / Contributor List</div>
-            <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class='form_entry'><%= f.select :author_contributor_list_id, @list_names, {:include_blank => blank_list_item} %><BR>
+              <%= f.check_box :author_contributor_list_sync %> Two-way sync enabled</div>
 
             <div class='form_label'>Editor / Administrator List</div>
-            <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names, {:include_blank => blank_list_item} %></div>
+            <div class='form_entry'><%= f.select :editor_administrator_list_id, @list_names, {:include_blank => blank_list_item} %><BR>
+              <%= f.check_box :editor_administrator_list_sync %> Two-way sync enabled</div>
             <div class="instructions">
-              Your Mailchimp email lists above will be automatically synced with the <%= @affiliate.name %> member list in Energyfolks nightly. <%= link_to "Sync Now", "/mailchimp/#{@affiliate.id}/sync_now?iframe=1" %>
+              Your Mailchimp email lists above will be automatically synced with the <%= @affiliate.name %> member list in Energyfolks nightly. <%= link_to "Sync Now", "/mailchimp/#{@affiliate.id}/sync_now?iframe=1" %><BR>
+              "Two-way" sync will add your members to your mailchimp lists, AND it will remove any users from your mailchimp lists who are not in the EF database.  When "Two-way" sync is disabled, your users in the EF database will be added to your mailchimp list, however users on your mailchimp list who are not in the EF database will remain on your lists.
             </div>
           <% end %>
         <% end %>

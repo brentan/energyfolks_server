@@ -85,15 +85,15 @@ class MailchimpClient < ActiveRecord::Base
     # This will sync this affiliate's Mailchimp email lists with their user database.
     get_client
 
-    sync_list(self.members_list_id, :members_list) if self.members_list_id.present?
+    sync_list(self.members_list_id, self.member_list_sync, :members_list) if self.members_list_id.present?
 
-    sync_list(self.daily_digest_list_id, :daily_digest_list) if self.daily_digest_list_id.present?
+    sync_list(self.daily_digest_list_id, self.daily_digest_sync, :daily_digest_list) if self.daily_digest_list_id.present?
 
-    sync_list(self.weekly_digest_list_id, :weekly_digest_list) if self.weekly_digest_list_id.present?
+    sync_list(self.weekly_digest_list_id, self.weekly_digest_sync, :weekly_digest_list) if self.weekly_digest_list_id.present?
 
-    sync_list(self.author_contributor_list_id, :author_contributor_list) if self.author_contributor_list_id.present?
+    sync_list(self.author_contributor_list_id, self.author_contributor_list_sync, :author_contributor_list) if self.author_contributor_list_id.present?
 
-    sync_list(self.editor_administrator_list_id, :editor_administrator_list) if self.editor_administrator_list_id.present?
+    sync_list(self.editor_administrator_list_id, self.editor_administrator_list_sync, :editor_administrator_list) if self.editor_administrator_list_id.present?
 
     batch_execute
   end
@@ -133,7 +133,7 @@ class MailchimpClient < ActiveRecord::Base
     return list_memberships
   end
 
-  def sync_list(list_id, list_type)
+  def sync_list(list_id, two_way, list_type)
 
     handle_unsubscribes(list_id,list_type)
 
@@ -142,9 +142,10 @@ class MailchimpClient < ActiveRecord::Base
 
     # Add in new members
     (emails_list_should_contain - current_members).each {|email| batch_add(list_id, email) }
-
-    # Remove members that have left
-    (current_members - emails_list_should_contain).each {|email| batch_add(list_id, email, true) }
+    if two_way
+      # Remove members that have left
+      (current_members - emails_list_should_contain).each {|email| batch_add(list_id, email, true) }
+    end
   end
 
   def handle_unsubscribes(list_id, list_type)
