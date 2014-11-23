@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :secondary_email, :first_name, :last_name, :latitude, :longitude, :visibility, :timezone, :location, :avatar, :resume,
                   :password, :password_confirmation, :password_old, :email_to_verify, :bio, :interests, :expertise,
-                  :resume_visibility, :position, :organization, :memberships_attributes, :subscription_attributes,
+                  :resume_visibility, :position, :organization, :memberships_attributes, :subscription_attributes, :organization_type,
                   :affiliate_id, :school_affiliation, :program_id, :graduation_month, :graduation_year
   attr_accessor :password, :password_old, :graduation_year, :graduation_month, :program_id, :school_affiliation
 
@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
 
   # We dont use version control
   VERSION_CONTROLLED = []
+  ORG_TYPES = %w(Government NonProfit Industry Academia)
 
   def to_index
     begin

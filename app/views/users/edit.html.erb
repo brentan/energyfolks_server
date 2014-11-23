@@ -70,6 +70,9 @@
                 <div class='form_label'>Organization</div>
                 <div class='form_entry'><%= f.text_field :organization %></div>
 
+                <div class='form_label'>Organization Type</div>
+                <div class='form_entry'><%= f.select(:organization_type, User::ORG_TYPES) %></div>
+
                 <div class='form_label'>Tags</div>
                 <div class='form_entry'>
                   <%= f.hidden_field :raw_tags, class: 'tag_box', style: {width: '300px'} %>
