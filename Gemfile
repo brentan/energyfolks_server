@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+#ruby=1.9.3
 gem 'rails', '3.2.12'
 gem 'jquery-rails', '3.1'
 gem 'jquery-ui-rails', '4.1.2'
@@ -73,5 +74,4 @@ group :development, :test do
   gem 'letter_opener'
 
   gem 'execjs'
-  gem 'therubyracer'
 end
