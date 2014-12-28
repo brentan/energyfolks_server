@@ -30,8 +30,7 @@
             <% else %>
 <%
         @affiliate.approved_members.each do |u| %>
-          <%= @client.need_sync(u) %><BR>
-          <%= u.updated_at %><BR>
+          <%= @client.need_sync?(u) ? 'NEED IT' : 'NO NEED' %>: <%= @client.get_data('LastModifiedDate') %>, <%= u.updated_at %>
         <% end
 %>
 

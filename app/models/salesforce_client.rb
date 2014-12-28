@@ -63,10 +63,10 @@ class SalesforceClient
     return nil unless @found
     return @data.send(item)
   end
-  def need_sync(user)
+  def need_sync?(user)
     find_user(user)
-    return 0 unless @found
-    @data
+    return true unless @found
+    return (@data.LastModifiedDate < user.updated_at)
   end
 
   def update_user(user, params)
