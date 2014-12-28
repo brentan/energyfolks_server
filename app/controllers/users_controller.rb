@@ -197,11 +197,6 @@ class UsersController < ApplicationController
   def update
     params[:user][:admin].delete if params[:user][:admin].present?
     @user = User.find(session[:userid])
-    if params[:salesforce].present?
-      client = SalesforceClient.new(current_affiliate)
-      client.login
-      client.update_user(@user, params[:salesforce])
-    end
     if (params[:user][:password_old].blank? && params[:user][:password].blank?) || (params[:user][:password_old].present? && @user.check_password(params[:user][:password_old]))
       old_email = @user.email_to_verify
       if(@user.update_attributes(params[:user]))
@@ -210,6 +205,12 @@ class UsersController < ApplicationController
         UserMailer.delay.reset_password_2(@user, @aid, @host) if params[:user][:password_old].present? && params[:user][:password].present?
         @user.delay.sync
         @user.update_index
+        if params[:salesforce].present?
+          @user.reload
+          client = SalesforceClient.new(current_affiliate)
+          client.login
+          client.update_user(@user, params[:salesforce])
+        end
         flash[:notice]="Your account has been updated"
       else
         flash[:alert]="There are errors in your profile.  Please correct and resubmit."
