@@ -30,12 +30,17 @@
             <% else %>
 <%
         @affiliate.approved_members.each do |u| %>
-          <%= @client.need_sync?(u) ? 'NOT FOUND' : @client.get_data('LastModifiedDate').to_datetime %>, <%= u.updated_at %><BR>
+          <%= @client.need_sync?(u) ? 'NEEDS IT' : 'NO NEED' %> <% begin %>
+          <%= @client.get_data('LastModifiedDate').to_datetime %>
+          <% rescue %>
+          ERR
+          <% end %>, <%= u.updated_at %><BR>
         <% end
 %>
 
               <h2>Manual Sync</h2>
-              <p><a href='/affiliates/salesforce?id=<%= @affiliate.id %>&force=1&iframe_next=1'>Click Here to manually resynchronize your membership list</a> (recommended after first linking to salesforce, or if logins temporarily failed for a period of time.  This action may take a long time...).</p>
+              <p><a href='/affiliates/salesforce?id=<%= @affiliate.id %>&force=1&full=1&iframe_next=1'>Full Sync</a> (recommended after first linking to salesforce, This action may take a long time...This will overwrite syncing fields in salesforce that you may have set manually!).</p>
+              <p><a href='/affiliates/salesforce?id=<%= @affiliate.id %>&force=1&iframe_next=1'>Update Sync</a> (recommended after salesforce sync is lost for a period of time...This will only update users who have new information in their EF fields.  It will check the EF 'last updated' attribute against the SalesForce 'last_modified' attribute to determine which has the latest data, and only update if EF data is newer).</p>
               <h2>Sync Settings</h2>
               <p>To enable salesforce syncing, you must connect EnergyFolks data fields with Salesforce data fields.  You can also add Salesforce data fields to the EnergyFolks user profile page when no corresponding EnergyFolks data type exists.  The Email and name fields are assumed and automatically linked.</p>
               <table border=1>
