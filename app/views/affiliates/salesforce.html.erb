@@ -28,15 +28,6 @@
               <h2>Error logging in</h2>
               <%= login %>
             <% else %>
-<%
-        @affiliate.approved_members.each do |u| %>
-          <%= @client.need_sync?(u) ? 'NEEDS IT' : 'NO NEED' %> <% begin %>
-          <%= @client.get_data('LastModifiedDate').to_datetime %>
-          <% rescue %>
-          ERR
-          <% end %>, <%= u.updated_at %><BR>
-        <% end
-%>
 
               <h2>Manual Sync</h2>
               <p><a href='/affiliates/salesforce?id=<%= @affiliate.id %>&force=1&full=1&iframe_next=1'>Full Sync</a> (recommended after first linking to salesforce, This action may take a long time...This will overwrite syncing fields in salesforce that you may have set manually!).</p>

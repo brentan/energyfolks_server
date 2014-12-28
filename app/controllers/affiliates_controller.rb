@@ -115,6 +115,7 @@ class AffiliatesController < ApplicationController
         fail = 0
         tot = 0
         @affiliate.approved_members.each do |u|
+          next unless (params[:force].present? || @client.need_sync(u))
           fail += 1 if @client.sync_user(u) == 2
           tot += 1
         end
