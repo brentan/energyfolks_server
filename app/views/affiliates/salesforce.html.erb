@@ -31,8 +31,7 @@
 <%
         @affiliate.approved_members.each do |u| %>
           <%= @client.need_sync(u) %><BR>
-          <%= u.updated_at %>
-          <%= (u.updated_at > @client.need_sync(u)) %>
+          <%= u.updated_at %><BR>
         <% end
 %>
 
