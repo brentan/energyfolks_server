@@ -28,6 +28,14 @@
               <h2>Error logging in</h2>
               <%= login %>
             <% else %>
+<%
+        @affiliate.approved_members.each do |u| %>
+          <%= @client.need_sync(u) %><BR>
+          <%= u.updated_at %>
+          <%= (u.updated_at > @client.need_sync(u)) %>
+        <% end
+%>
+
               <h2>Manual Sync</h2>
               <p><a href='/affiliates/salesforce?id=<%= @affiliate.id %>&force=1&iframe_next=1'>Click Here to manually resynchronize your membership list</a> (recommended after first linking to salesforce, or if logins temporarily failed for a period of time.  This action may take a long time...).</p>
               <h2>Sync Settings</h2>
