@@ -66,8 +66,11 @@ class SalesforceClient
   def need_sync?(user)
     find_user(user)
     return true unless @found
-    return true if @data.LastModifiedDate.blank?
-    return (@data.LastModifiedDate.to_datetime < user.updated_at)
+    begin
+      return (@data.LastModifiedDate.to_datetime < user.updated_at)
+    rescue
+      return true
+    end
   end
 
   def update_user(user, params)
