@@ -20,12 +20,12 @@ most are less than 3 lines of total code to implement.</p>
 
 
       <h2><a name="css"></a>Styling the EnergyFolks library</h2>
-        <p><b><i>Important: You are highly encouraged to include a CSS stylesheet on your pages to customize the style of energyfolks content.  A default sheet can be loaded directly in your <Code>head</Code> section from <a href='<%= SITE_HOST %>/assets/EnergyFolks.css'><%= SITE_HOST %>/assets/EnergyFolks.css</a></i></b></p>
+        <p><b><i>Important: You are highly encouraged to include a CSS stylesheet on your pages to customize the style of energyfolks content.  A default sheet can be loaded directly in your <Code>head</Code> section from <a href='<%= SITE_HOST %>/assets/energyfolks.css'><%= SITE_HOST %>/assets/EnergyFolks.css</a></i></b></p>
         <p>The EnergyFolks library uses occasional inline-styles throughout its many displays to obtain a desired look (by setting element positioning, padding, and other options).  Colors, font choices, and other styles are not set inline, and flow from your set of CSS styles.  All of your pages that show any energyfolks content should load a stylesheet for proper display, and we recommend our default stylesheet.  Custom stylesheets can be loaded instead as well, and the default stylesheet can be used as a template for your custom CSS file.  <b>Regardless of customizations, it is still recommended that you load the EnergyFolks.css file from our servers in your head section <i>before</i> loading your custom file</b>.  This will ensure that any future styles added to the platform reach your users and requires you to only define styles that differ from our defaults in your css files. (Note: any customizations you have in your files will take precedence over the default styles if you load your custom file after the default file in your header).</p>
 
       <h2><a name="library"></a>
       The EnergyFolks Javascript Library</h2>
-        <p>The EnergyFolks library is available for download or inclusion into your site at: <a href='<%= SITE_HOST %>/assets/EnergyFolks.js'><%= SITE_HOST %>/assets/EnergyFolks.js</a>.  We recommend loading the library directly from energyfolks servers (instead of storing a copy locally on your server) as any bug fixes or updates will automatically flow to your userbase.  You should also include this library on evert page (energyfolks emails will send users to your site for actions, and if the library is not loaded on those pages, such as the homepage, actions will fail).  For proper display, be sure to include either the default energyfolks css file (<a href='#css'>described above</a>) or your own custom file.</p>
+        <p>The EnergyFolks library is available for download or inclusion into your site at: <a href='<%= SITE_HOST %>/assets/energyfolks.js'><%= SITE_HOST %>/assets/EnergyFolks.js</a>.  We recommend loading the library directly from energyfolks servers (instead of storing a copy locally on your server) as any bug fixes or updates will automatically flow to your userbase.  You should also include this library on evert page (energyfolks emails will send users to your site for actions, and if the library is not loaded on those pages, such as the homepage, actions will fail).  For proper display, be sure to include either the default energyfolks css file (<a href='#css'>described above</a>) or your own custom file.</p>
         <p>The library includes a version of JQuery for its operation.  To avoid conflicts with other JQuery installations or other javascript libraries that utilize the '$' namepsace, JQuery is mapped to <code>EnergyFolks.$</code> in the Energyfolks library.</p>
         <p>All methods and properties are accessed from the <Code>EnergyFolks</code> namespace.  For example, the <code>LoginBox</code> method is called with <code>EnergyFolks.LoginBox()</code>.</p>
         <h3><a name="objectvars"></a>Addressable Properties</h3>
@@ -193,7 +193,7 @@ most are less than 3 lines of total code to implement.</p>
               <th>Description</th>
             </tr>
             <tr class="odd">
-              <td><code>showWidget( parameters:hash )</code></td>
+              <td><code>showWidget( source, [parameters:hash] )</code></td>
               <td><code>none</code></td>
               <td>
                 Outputs an energyfolks widget that shows energyfolks information in a compact, vertical list.  Multiple widgets can be used per page.  Input parameters are:
@@ -204,6 +204,9 @@ most are less than 3 lines of total code to implement.</p>
                     <li><code>blogs</code>: the blog database (other group submitted blogs)
                     <li><code>discussions</code>: the discussion threads
                   </ul></li>
+                </ul>
+                The parameters hash is optional, and has the following optional parameters:
+                <ul>
                   <li>[<code>title</code>]: Title to show at the top of the box.  Use '' to hide a title.  Otherwise one is generated based on <Code>source</Code></li>
                   <li>[<code>items</code>]: the number of items to show in the view (default 5)</li>
                   <li>[<code>item_height</code>]: the height, in pixels, of each item (default 35)</li>

@@ -1,29 +1,103 @@
-<h1 style='line-height:24px;color:white;background-color:darkred;text-align:center;padding:20px;'>THESE EXAMPLES ARE OUT OF DATE AND ONLY APPLY TO PLATFORM VERSION 1.0.  AN UPDATE TO THIS PAGE WITH EXAMPLES FOR VERSION 2.0 IS FORTHCOMING.</h1>
-
 
 <h2>energyfolks integration examples</h2>
-<h6>Showing energyfolks content</h6>
-<ul>
-<li><a href='calendar.php'>Embedded Calendar</a>
-<li><a href='jobs.php'>Embedded Jobs Listing</a>
-<li><a href='users.php'>Embedded User Database</a>
-<li><a href='discussions.php'>Embedded Discussion Board</a>
 
-<li><a href='widgets.php'>Embedded Small Widgets (such as 'next five days of events', or 'recent jobs posts')</a>
-</ul>
-<BR><h6>Restricting information</h6>
-<p>These example build on the embedding examples above to demonstrate how the content in the embedded pages can be restricted
-to only posts from certain groups, affiliates, and more.</p>
-<ul>
-<li><a href='partner.php'>Show Users only for certain Affiliate</a>
-<li><a href='zone.php'>Show jobs from a certain region only</a>
-<li><a href='sponsor.php'>Show events highlighted by a certain group</a>
-<li><a href='multi.php'>Combination example (discussions in specific thread, from certain group, highlighted)</a>
-</ul>
-<BR><h6>External logins to energyfolks</h6>
-    <p>These examples show how to register new members on energyfolks from your site and how to authenticate members to your
-    site using their energyfolks credentials</p>
-<ul>
-<li><a href='login2.php'>Basic Client Login to your site</a></li>
-<li><a href='login.php'>Advanced Servier-side Login to your site (uses server-side functionality.  A PHP library is provided)</a></li>
-</ul>
+<h6>Loading the EF library</h6>
+The following code should be placed on all pages that load EF content (ideally in the 'head').  This code
+will automatically add the EF login bar to the top of the page.
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;link href="/assets/energyfolks.css" media="all" rel="stylesheet" type="text/css" /&gt;
+  &lt;script src="/assets/energyfolks.js" type="text/javascript"&gt;&lt;/script&gt;
+</pre>
+
+<h6>The EF Sidebar</h6>
+Some EF pages, such as the calendar and job boards, have an optional sidebar.  If the sidebar is not included, no
+functionality is lost, but the features in the sidebar are moved to the top of the calendar or job board.  If you 
+want to embed the sidebar on any page, you can use the following code snippet at the location on the page where
+you want the EF sidebar to appear:
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.Sidebar();
+  &lt;/script&gt;
+</pre>
+Note that none of the examples on this page use the sidebar.
+<h6>Embedded Content</h6>
+To embed energyfolks content, you can use code like the code below:
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.id = 0;  //This is your group's ID.  Contact us if you do not know it
+    EnergyFolks.color = '249900';  //Hex color to use during load.  This is overwritten by your group color upon load
+    EnergyFolks.showPage({ source: 'events', format: 'month'}); 
+  &lt;/script&gt;
+</pre>
+The 'showPage' command is where the embed happens.  Visit the <a href='/developers/documentation'>documentation</a> to learn about all the options for this command.  For example, 'source' can be changed to other types (such as 'jobs') to embed other EF content on the page.  Note that showPage can only be used once on a page.  The code above creates the following embed:
+<div style='border:2px solid black;padding: 8px;margin:3px 10px;background-color:#ffffee;'>
+	<script language=javascript>
+	    EnergyFolks.showPage({ source: 'events', format: 'month'}); 
+	</script>
+</div>
+
+<h6>Embedding Content with Filters</h6>
+You can also embed content, similar to the above, with pre-defined filters or search terms.  For example, the following code will
+restrict the 'job' board to content from the affiliate network only (not other networks), within 40 miles of Oakland, CA. 
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.id = 0;  //This is your group's ID.  Contact us if you do not know it
+    EnergyFolks.color = '249900';  //Hex color to use during load.  This is overwritten by your group color upon load
+    EnergyFolks.source_restrict = EnergyFolks.AFFILIATE_ONLY;
+    EnergyFolks.map_location_lat = 37.8044;
+    EnergyFolks.map_location_lng = -122.2708;
+    EnergyFolks.map_location_radius = 40;
+    EnergyFolks.showPage({ source: 'jobs', format: 'map'}); 
+  &lt;/script&gt;
+</pre> 
+View all options in the <a href='/developers/documentation'>documentation</a>.
+
+<h6>Widgets</h6>
+Small displays, or widgets, can be embedded as well.  Widgets are embedded with the following code:
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.id = 0;  //This is your group's ID.  Contact us if you do not know it
+    EnergyFolks.showWidget('jobs', {title: 'EF Widget'});
+  &lt;/script&gt;
+</pre> 
+There are many optional arguments that can be passed to 'showWidget' that will alter the widget display 
+or alter the data shown.  All these options are explained in the <a href='/developers/documentation'>documentation</a>.
+<div style='border:2px solid black;padding: 8px;margin:3px 10px;background-color:#ffffee;'>
+	<script language=javascript>
+	    EnergyFolks.id = 0;  //This is your group's ID.  Contact us if you do not know it
+    	EnergyFolks.showWidget('jobs', {title: 'EF Widget'});
+	</script>
+</div>
+<h6>EF Comments</h6>
+EnergyFolks has its own commenting system which can be used on any page.  This allows 
+you to embed a user commenting box on pages, where the user can only comment on the 
+page when they are logged in.  Comments are created with:
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.Comments('EF Comment Box');
+  &lt;/script&gt;
+</pre> 
+This code has more options, as found in the <a href='/developers/documentation'>documentation</a>.  
+The above code will produce:
+	<div style='border:2px solid black;padding: 8px;margin:3px 10px;background-color:#ffffee;'>
+	<script language=javascript>
+	  	EnergyFolks.Comments('EF Comment Box');
+	</script>
+</div>
+<h6>Profile or login boxes</h6>
+You can create a login link, profile box, or other user information screens using a variety of commands, 
+as found in the <a href='/developers/documentation'>documentation</a>.  The below is one example:
+<pre style='border:1px solid #aaaaaa;background-color:#eeeeee;margin:3px 10px;padding:6px;'>
+  &lt;script language=javascript&gt;
+    EnergyFolks.SmallLoginBox();
+  &lt;/script&gt;
+</pre> 
+<div style='border:2px solid black;padding: 8px;margin:3px 10px;background-color:#ffffee;'>
+	<script language=javascript>
+	  	EnergyFolks.SmallLoginBox();
+	</script>
+</div>
+
+
+
+
