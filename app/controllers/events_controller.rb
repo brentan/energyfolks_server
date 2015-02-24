@@ -13,7 +13,7 @@ class EventsController < ApplicationController
       lng = -122.2708
       rad_e = 50  * 1609.34
     end
-    data, more_pages = Event.find_all_visible(current_user, current_affiliate, {source: 'events', location_lat: lat, location_lng: lng, radius: rad_e, source: 0, highlight: 0, per_page: 1000, page: 0, shift: 0, entity_back: true})
+    data, more_pages = Event.find_all_visible(current_user, current_affiliate, {source: 'events', location_lat: lat, location_lng: lng, radius: rad_e, source: (params[:limit_to_affiliate].present? ? 1 : 0), highlight: 0, per_page: 1000, page: 0, shift: 0, entity_back: true})
     data.each do |ev|
       cal.event do |e|
         e.dtstart     = ev.ical_start
