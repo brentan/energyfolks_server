@@ -13,6 +13,9 @@ class EventsController < ApplicationController
       lng = -122.2708
       rad_e = 50  * 1609.34
     end
+    lat = params[:lat] if params[:lat].present?
+    lng = params[:lng] if params[:lng].present?
+    rad_e = params[:radius] * 1609.34 if params[:radius].present?
     data, more_pages = Event.find_all_visible(current_user, current_affiliate, {source: 'events', location_lat: lat, location_lng: lng, radius: rad_e, source: (params[:limit_to_affiliate].present? ? 1 : 0), highlight: 0, per_page: 1000, page: 0, shift: 0, entity_back: true})
     data.each do |ev|
       cal.event do |e|
