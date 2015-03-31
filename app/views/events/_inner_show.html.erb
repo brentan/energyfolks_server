@@ -2,7 +2,7 @@
   <%= image_tag(@item.logo.url, :class => 'ef_post_logo', :align => 'right', :width => '200px') if @item.logo.present? %>
     <h1><%= @item.name %></h1>
     <% if @user.present? %>
-    	<%= content_tag(:h3, e.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= e.end.in_time_zone(@user.timezone).strftime("%l:%M %p")) %>
+    	<%= content_tag(:h3, @item.start.in_time_zone(@user.timezone).strftime("%A, %B %-d, %l:%M %p") %> - <%= @item.end.in_time_zone(@user.timezone).strftime("%l:%M %p")) %>
     <% else %>
     	<%= content_tag(:h3, @item.date_string) %>
     <% end %>
