@@ -2,7 +2,7 @@ LINKEDIN_KEY = "key"
 LINKEDIN_SECRET = "secret"
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :linkedin, LINKEDIN_KEY, LINKEDIN_SECRET, :scope => 'r_fullprofile r_emailaddress'
+  provider :linkedin, LINKEDIN_KEY, LINKEDIN_SECRET, :scope => 'r_basicprofile r_emailaddress'
 
   OmniAuth.config.on_failure = Proc.new do |env|
     UsersController.action(:omniauth_failure).call(env)
