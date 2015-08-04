@@ -41,6 +41,9 @@ EnergyfolksServer::Application.routes.draw do
   put "emails/update"
   get "emails/open"
 
+  # expense form
+  get '/expenses' => 'energyfolks#expenses'
+
   # Google Apps SAML SSO routes
   get '/google/saml/inbound', to: 'google#inbound'
   get '/google/saml/logout', to: 'google#logout'

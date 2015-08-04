@@ -14,6 +14,10 @@ class EnergyfolksController < ApplicationController
   def add_your_group
 
   end
+  def expenses
+    redirect_to "http://goo.gl/forms/cfRKKmD4mu"
+  end
+
   def donate
     @user = current_user if user_logged_in?
     if params[:card].present?
