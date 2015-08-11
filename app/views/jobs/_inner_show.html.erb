@@ -3,7 +3,7 @@
     <h1><%= @item.name %></h1>
     <%= content_tag(:h3, @item.employer) if @item.employer.present? %>
     <%= content_tag(:h3, @item.location) if @item.location.present? %>
-    <%= content_tag(:h3, "Job Type: #{@item.job_type_string}") if @item.job_type.present? %>
+    <%= content_tag(:h3, "Type: #{@item.job_type_string}") if @item.job_type.present? %>
     <%= raw(@item.html) %>
     <h3>How to Apply</h3>
     <%= raw(@item.how_to_apply) %>

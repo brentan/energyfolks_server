@@ -7,13 +7,13 @@
         <input type=hidden name='id' value=<%= @item.id %>>
       <% end %>
       <div id='ef_carousel'>
-        <%= raw(carousel_slide_title_section(new ? 'Post a Job' : 'Edit Job Post',3, {show_vertical: false, use_slide_titles: !new, slide_titles: ['Basics', 'Tags', 'Affiliates']})) %>
+        <%= raw(carousel_slide_title_section(new ? 'Post a Job or Opportunity' : 'Edit Post',3, {show_vertical: false, use_slide_titles: !new, slide_titles: ['Basics', 'Tags', 'Affiliates']})) %>
         <div class="viewport">
           <ul class="overview">
             <li class='slide'>
               <%= raw(show_errors(@item)) %>
 
-		          <div class='form_label'>Job Title</div>
+		          <div class='form_label'>Position Title</div>
               <div class='form_entry'><%= f.text_field :name %></div>
 
               <div class='form_label'>Employer</div>
@@ -37,7 +37,7 @@
             </li>
             <li class='slide'>
 
-              <div class='form_label'>Job Description</div>
+              <div class='form_label'>Description</div>
               <div class='form_entry show_inline'>
                 <%= f.radio_button :job_type, Job::FULL_TIME, class: "toggle", checked: "checked" %>
                 <%= f.label :job_type, 'Full Time', value: Job::FULL_TIME %>
