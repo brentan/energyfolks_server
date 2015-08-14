@@ -90,7 +90,9 @@ EnergyFolks.showFilters = function() {
     if(EnergyFolks.source == 'blogs') {
         if(EnergyFolks.current_user.super_admin || (EnergyFolks.testAdmin(EnergyFolks.AUTHOR)) && !EnergyFolks.affiliates[EnergyFolks.id].plugin)
             filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
-    } else if(EnergyFolks.source != 'users')
+    } else if(EnergyFolks.source == 'jobs')
+        filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new Job/Opportunity</button></div>";
+    else if(EnergyFolks.source != 'users')
         filterbar += "<div class='ef_new_post'><button class='EnergyFolks_popup' data-command='"+EnergyFolks.source + "/new' data-iframe='true' data-params=''>Post new "+EnergyFolks.source.replace(/s([^s]*)$/,'$1')+"</button></div>";
     filterbar += "<div class='ef_filter_title'><h3>Filters:</h3></div>";
     filterbar += "<div class='ef_filters'>";

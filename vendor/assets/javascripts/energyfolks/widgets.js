@@ -54,6 +54,8 @@ EnergyFolks.showWidget = function(source, params) {
         var show_more = 'Go to Job Board';
     else if(source == 'discussions')
         var show_more = 'Go to All Discussions';
+    else if(source == 'users')
+        var show_more = 'Go to Member Directory';
     else
         var show_more = 'Go to Blog';
     var source_restrict = EnergyFolks.ANY_POST;
