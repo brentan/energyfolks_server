@@ -1,4 +1,4 @@
-version: 2.11
+version: 2.12
 date: '2015-01-15'
 author: 'EnergyFolks'
 requires: '3.0.1'
@@ -11,4 +11,4 @@ package: 'https://www.energyfolks.com/developers/wordpress_zip'
 sections:
   description: 'The energyfolks plugin provides energyfolks functionality to your wordpress site.  Embed energyfolks calendars, job boards, and other content using simple shortcodes, and allow users to login to your site with their energyfolks credentials.  Finally, link energyfolks user profiles to the wordpress user system, allowing your group admins automatic access to the wordpress backend.'
   installation: 'To install, download the current release from <a href="http://www.energyfolks.com/developers/wordpress">http://www.energyfolks.com/developers/wordpress</a> and go to your wordpress dashboard.  Under <i>plugins</i>, select <i>add new</i>.  On the screen that appears, look for the small link hidden in the text at the top that allows you to <i>upload a plugin in .zip format</i>.  Click that link and on the page that appears select the energyfolks.zip file from your computer and install.  Once installed and enabled, click on the <i>Settings</i> manu item on the left of the wordpress dashboard and select <i>energyfolks</i> to configure.'
-  changes: '2.11: Remove blocking of WP users<BR>2.10: Changle session handling to not require PHP $_SESSION<BR>2.07: Ensure Shortcodes that only show to logged in users also differentiate based on member status for each group<BR>2.06: Fix for groups with PHP warnings on.<BR>2.05: Fix fatal bug<BR>2.04: Add link to blog analytics<BR>2.03: Fix widget view on sidebar<BR>2.02: Fix auto-updater issues<BR>2.0: Integration with Energyfolks 2.0<BR>1.08: Old version'
+  changes: '2.12: Clarify need to check <i>share</i> box when adding to digest<BR>2.11: Remove blocking of WP users<BR>2.10: Changle session handling to not require PHP $_SESSION<BR>2.07: Ensure Shortcodes that only show to logged in users also differentiate based on member status for each group<BR>2.06: Fix for groups with PHP warnings on.<BR>2.05: Fix fatal bug<BR>2.04: Add link to blog analytics<BR>2.03: Fix widget view on sidebar<BR>2.02: Fix auto-updater issues<BR>2.0: Integration with Energyfolks 2.0<BR>1.08: Old version'

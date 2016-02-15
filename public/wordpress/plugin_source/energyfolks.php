@@ -3,7 +3,7 @@
 Plugin Name: Energyfolks tools
 Plugin URI: http://www.energyfolks.com/developers/wordpress
 Description: Add energyfolks tools to your wordpress site, and use energyfolks as the primary authenticator for your site.
-Version: 2.11
+Version: 2.12
 Author: Brentan Alexander
 Author URI: http://www.energyfolks.com
 
@@ -843,10 +843,10 @@ function energyfolks_post_box( $post ) {
   if(current_user_can('publish_posts')) { //ONLY AUTHORS CAN DO THIS!
     echo '<div style="clear: left;"></div><label><div style="float:left;height:50px;padding-right:5px;"><input type=checkbox value="1" id="energyfolks_announce" name="energyfolks_announce" ';
     if(get_post_meta($post->ID, '_energyfolks_announce',true) == '1') echo "checked";
-    echo "></div>Immediately send via email to your group members</label>";
+    echo "></div>Immediately send via email to your group members (above 'share' checkbox must also be checked)</label>";
     echo '<div style="clear: left;"></div><label><div style="float:left;height:50px;padding-right:5px;"><input type=checkbox value="1" id="energyfolks_digest" name="energyfolks_digest" ';
     if(get_post_meta($post->ID, '_energyfolks_digest',true) == '1') echo "checked";
-    echo "></div>Add this to the top of the next automated digest</label>";
+    echo "></div>Add this to the top of the next automated digest (above 'share' checkbox must also be checked)</label>";
   }
   echo "<h4>Post Analytics</h4>";
   echo "<a href='#' class='EnergyFolks_popup' data-command='blogs/analytics?aid=".get_option('energyfolks_affiliate_id')."&id=".($post->ID)."' data-iframe='true'>View Post Analytics</a>";
