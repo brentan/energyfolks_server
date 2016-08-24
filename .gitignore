@@ -24,3 +24,8 @@ pickle-email-*.html
 /log/development.log
 /config/database.yml
 /config/site.yml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
