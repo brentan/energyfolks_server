@@ -74,3 +74,7 @@ end
 every 1.day, :at => '2:00 am' do
   rake "nightly:stats"
 end
+
+every 10.hours do
+ command "cd $EB_CONFIG_APP_CURRENT && RAILS_ENV=production script/delayed_job --pid-dir=$EB_CONFIG_APP_SUPPORT/pids restart"
+end
