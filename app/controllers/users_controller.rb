@@ -235,6 +235,7 @@ class UsersController < ApplicationController
     else
       if current_affiliate.id.present? && (current_affiliate.programs.length > 0)
         m = Membership.where({:affiliate_id => current_affiliate.id, :user_id => @user.id}).first
+        m = Membership.create({:affiliate_id => current_affiliate.id, :user_id => @user.id}) if m.blank?
         m.update_column(:graduation_year, @user.graduation_year)
         m.update_column(:graduation_month, @user.graduation_month)
         m.update_column(:program_id, @user.program_id)
