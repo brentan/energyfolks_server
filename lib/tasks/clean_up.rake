@@ -65,6 +65,10 @@ namespace :clean_up do
   desc "Test for delayed job failure"
   task :delayed_job_test => :environment do
     res = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM delayed_jobs")
+    if res.first[0] > 20
+      ActiveRecord::Base.connection.execute("DELETE FROM delayed_jobs WHERE attempts >= 2 AND last_error IS NOT NULL")
+    end
+    res = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM delayed_jobs")
     ErrorMailer.mailerror("CHECK DELAYED_JOB...IT MAY HAVE SHUT DOWN! #{res.first[0]} ITEM IN QUEUE").deliver() if res.first[0] > 20
   end
 
