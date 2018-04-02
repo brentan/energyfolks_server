@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-#ruby=1.9.3
-gem 'rails', '3.2.12'
+#ruby=2.3
+gem 'rails', '3.2.22.5'
 gem 'jquery-rails', '3.1'
 gem 'jquery-ui-rails', '4.1.2'
 gem 'rails-asset-jqueryui'
