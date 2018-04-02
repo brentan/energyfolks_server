@@ -27,7 +27,7 @@ gem 'omniauth-linkedin-oauth2'
 
 gem 'email_reply_parser'
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.10'
 
 gem 'nokogiri'
 gem 'sanitize'

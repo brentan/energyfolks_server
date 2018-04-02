@@ -690,7 +690,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    mysql2 (0.5.0)
+    mysql2 (0.3.21)
     nested_form (0.3.2)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -868,7 +868,7 @@ DEPENDENCIES
   letter_opener
   linkedin
   mailchimp-api
-  mysql2
+  mysql2 (~> 0.3.10)
   nested_form
   nokogiri
   omniauth
