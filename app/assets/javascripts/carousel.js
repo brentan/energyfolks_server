@@ -7,7 +7,7 @@ $(function() {
     $('#ef_carousel .submit').on('click', function() {
         if($(this).hasClass('working')) return false;
         $(this).addClass('working');
-        $(this).html('Working...');
+        $(this).html('Loading...');
         $(this).closest('form').submit();
         return false;
     });
