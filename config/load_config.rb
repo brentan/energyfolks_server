@@ -1,7 +1,7 @@
 # Load configuration files from our S3 bucket.  This is done so that passwords etc aren't stored in the public repo and
 # can readily be retrieved when new EC2 isntances are spun up
 require 'rubygems'
-require 'aws-sdk'
+require 'aws-sdk-v1'
 
 s3 = AWS::S3.new()
 
