@@ -67,6 +67,7 @@ namespace :clean_up do
     res = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM delayed_jobs")
     if res.first[0] > 20
       ActiveRecord::Base.connection.execute("DELETE FROM delayed_jobs WHERE attempts >= 2 AND last_error IS NOT NULL")
+      ActiveRecord::Base.connection.execute("DELETE FROM delayed_jobs WHERE (locked_at < NOW() - INTERVAL 10 DAY) AND last_error IS NOT NULL")
     end
     res = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM delayed_jobs")
     ErrorMailer.mailerror("CHECK DELAYED_JOB...IT MAY HAVE SHUT DOWN! #{res.first[0]} ITEM IN QUEUE").deliver() if res.first[0] > 20

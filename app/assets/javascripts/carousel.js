@@ -5,6 +5,9 @@ $(function() {
     $('#ef_carousel li.slide').css('width',$('#ef_carousel').outerWidth(false) - 4 + 'px');
     $('#ef_carousel').tinycarousel();
     $('#ef_carousel .submit').on('click', function() {
+        if($(this.hasClass('working'))) return false;
+        $(this).addClass('working');
+        $(this).html('Working...');
         $(this).closest('form').submit();
         return false;
     });
