@@ -1,0 +1,6 @@
+staging:
+  access_key_id: <%= ENV['EC2_KEY'] %>
+  secret_access_key: <%= ENV['EC2_CODE'] %>
+production:
+  access_key_id: <%= ENV['EC2_KEY'] %>
+  secret_access_key: <%= ENV['EC2_CODE'] %>

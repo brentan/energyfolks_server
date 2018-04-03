@@ -5,31 +5,6 @@ require 'aws-sdk-v1'
 
 s3 = AWS::S3.new()
 
-document = s3.buckets['energyfolks-uploads'].objects['site.yml']
-
-File.open("./config/site.yml", "w") do |f|
-  f.write(document.read)
-end
-document = s3.buckets['energyfolks-uploads'].objects['database.yml']
-
-File.open("./config/database.yml", "w") do |f|
-  f.write(document.read)
-end
-document = s3.buckets['energyfolks-uploads'].objects['whenever-elasticbeanstalk.yml']
-
-File.open("./config/whenever-elasticbeanstalk.yml", "w") do |f|
-  f.write(document.read)
-end
-document = s3.buckets['energyfolks-uploads'].objects['ec2.yml']
-
-File.open("./config/ec2.yml", "w") do |f|
-  f.write(document.read)
-end
-document = s3.buckets['energyfolks-uploads'].objects['omniauth.rb']
-
-File.open("./config/initializers/omniauth.rb", "w") do |f|
-  f.write(document.read)
-end
 document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
 
 File.open("./config/google_cert.txt", "w") do |f|

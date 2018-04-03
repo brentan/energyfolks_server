@@ -14,16 +14,10 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 .elasticbeanstalk/
-*elasticbeanstalk.yml
-*ec2.yml
-*omniauth.rb
-/config/initializers/omniauth.rb
 /config/deploy.rb
 /.idea/*
 /log/*
 /log/development.log
-/config/database.yml
-/config/site.yml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

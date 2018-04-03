@@ -1,0 +1,7 @@
+:aws_access_key_id: <%= ENV['EC2_KEY'] %>
+:aws_secret_access_key: <%= ENV['EC2_CODE'] %>
+:s3_bucket: <%= ENV['EC2_BUCKET'] %>
+:cloudsearch_endpoint: <%= ENV['EC2_ENDPOINT'] %>
+:aws_params:
+  :region: 'us-west-1'
+:load_balanced: true/false

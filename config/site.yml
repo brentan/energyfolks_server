@@ -38,9 +38,9 @@ exception_notifier:
 smtp_settings:
   address: "smtp.sendgrid.net"
   port: 587
-  user_name: 'xxxxxxx'
+  user_name: <%= ENV['SMTP_USER'] %>
   domain: 'energyfolks.com'
-  password: 'xxxxxxx'
+  password: <%= ENV['SMTP_PASS'] %>
   authentication: :plain
   return_path: "energyfolks.com"
   enable_starttls_auto: true
@@ -72,18 +72,19 @@ paperclip:
 skin:
   title_prefix: ''
   edge: false
-
+  
+  
 ##########################
 ### Google access
 ##########################
 google:
-  service_email: 'XXX@developer.gserviceaccount.com'
-  admin_email: 'xxx@energyfolks.com'
-  cert_relative_path: 'relative_path_from_Rails_root_to_p12_google_private_key'
+  service_email: <%= ENV['GOOGLE_SERVICE'] %>
+  admin_email: 'energyfolks@energyfolks.com'
+  cert_relative_path: '/config/google_privatekey.p12'
 
 ##########################
 ### Stripe
 ##########################
 stripe:
-  publishable: 'XXX'
-  private: 'xxx'
+  publishable: <%= ENV['STRIPE_PUBLIC'] %>
+  private: <%= ENV['STRIPE_KEY'] %>

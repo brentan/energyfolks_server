@@ -1,5 +1,5 @@
-LINKEDIN_KEY = "key"
-LINKEDIN_SECRET = "secret"
+LINKEDIN_KEY = ENV['LINKEDIN_KEY']
+LINKEDIN_SECRET = ENV['LINKEDIN_SECRET']
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :linkedin, LINKEDIN_KEY, LINKEDIN_SECRET, :scope => 'r_basicprofile r_emailaddress'
