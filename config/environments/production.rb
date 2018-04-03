@@ -99,7 +99,7 @@ EnergyfolksServer::Application.configure do
     end
     document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
 
-    File.open("#{Rails.root}/config/google_privatekey.p12", "w") do |f|
+    File.open("#{Rails.root}/config/google_privatekey.p12", "w:ASCII-8BIT")) do |f|
       f.write(document.read)
     end
 
