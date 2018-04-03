@@ -81,6 +81,28 @@ EnergyfolksServer::Application.configure do
         :s3_permissions => 'public-read'
     }
 
+    # Load certs from S3
+    require 'rubygems'
+    require 'aws-sdk-v1'
+
+    s3 = AWS::S3.new()
+
+    document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
+
+    File.open("#{Rails.root}/config/google_cert.txt", "w") do |f|
+      f.write(document.read)
+    end
+    document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
+
+    File.open("#{Rails.root}/config/google_key.txt", "w") do |f|
+      f.write(document.read)
+    end
+    document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
+
+    File.open("#{Rails.root}/config/google_privatekey.p12", "w") do |f|
+      f.write(document.read)
+    end
+
     # load google cert and key for SAML
     file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
     SamlIdp.config.x509_certificate = file.read
