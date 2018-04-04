@@ -65,52 +65,47 @@ EnergyfolksServer::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config_file = File.join(Rails.root, "config", "ec2.yml")
-  if File.exists?(config_file)
 
-    ec2info = YAML.load_file(config_file)
-    AMAZON_CLOUDSEARCH_ENDPOINT = ec2info[:cloudsearch_endpoint]
-    AMAZON_REGION = ec2info[:aws_params][:region]
-    USE_CLOUDSEARCH = true
-    config.paperclip_defaults = {
-        :url => ':s3_domain_url',
-        :s3_protocal => 'https',
-        :storage => :s3,
-        :bucket => ec2info[:s3_bucket],
-        :s3_credentials => {:access_key_id => ec2info[:aws_access_key_id], :secret_access_key => ec2info[:aws_secret_access_key]},
-        :s3_permissions => 'public-read'
-    }
+  ec2info = YAML.load_file(config_file)
+  AMAZON_CLOUDSEARCH_ENDPOINT = ENV['EC2_ENDPOINT']
+  AMAZON_REGION = 'us-west-1'
+  USE_CLOUDSEARCH = true
+  config.paperclip_defaults = {
+      :url => ':s3_domain_url',
+      :s3_protocal => 'https',
+      :storage => :s3,
+      :bucket => ENV['EC2_BUCKET'],
+      :s3_credentials => {:access_key_id => ENV['EC2_KEY'], :secret_access_key => ENV['EC2_CODE']},
+      :s3_permissions => 'public-read'
+  }
 
-    # Load certs from S3
-    require 'rubygems'
-    require 'aws-sdk-v1'
+  # Load certs from S3
+  require 'rubygems'
+  require 'aws-sdk-v1'
 
-    s3 = AWS::S3.new()
+  s3 = AWS::S3.new()
 
-    document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
+  document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
 
-    File.open("#{Rails.root}/config/google_cert.txt", "w") do |f|
-      f.write(document.read)
-    end
-    document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
-
-    File.open("#{Rails.root}/config/google_key.txt", "w") do |f|
-      f.write(document.read)
-    end
-    document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
-
-    File.open("#{Rails.root}/config/google_privatekey.p12", "w:ASCII-8BIT") do |f|
-      f.write(document.read)
-    end
-
-    # load google cert and key for SAML
-    file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
-    SamlIdp.config.x509_certificate = file.read
-    file.close
-    file = File.open("#{Rails.root}/config/google_key.txt", "rb")
-    SamlIdp.config.secret_key = file.read
-    file.close
-  else
-    USE_CLOUDSEARCH = false
+  File.open("#{Rails.root}/config/google_cert.txt", "w") do |f|
+    f.write(document.read)
   end
+  document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
+
+  File.open("#{Rails.root}/config/google_key.txt", "w") do |f|
+    f.write(document.read)
+  end
+  document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
+
+  File.open("#{Rails.root}/config/google_privatekey.p12", "w:ASCII-8BIT") do |f|
+    f.write(document.read)
+  end
+
+  # load google cert and key for SAML
+  file = File.open("#{Rails.root}/config/google_cert.txt", "rb")
+  SamlIdp.config.x509_certificate = file.read
+  file.close
+  file = File.open("#{Rails.root}/config/google_key.txt", "rb")
+  SamlIdp.config.secret_key = file.read
+  file.close
 end
