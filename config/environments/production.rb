@@ -66,7 +66,6 @@ EnergyfolksServer::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
 
-  ec2info = YAML.load_file(config_file)
   AMAZON_CLOUDSEARCH_ENDPOINT = ENV['EC2_ENDPOINT']
   AMAZON_REGION = 'us-west-1'
   USE_CLOUDSEARCH = true
