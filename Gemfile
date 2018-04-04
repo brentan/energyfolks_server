@@ -19,7 +19,6 @@ gem 'stripe'
 gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'whenever'
-gem 'whenever-elasticbeanstalk'
 
 gem 'linkedin'   #used to do pull profile info from LinkedIn.com
 gem 'omniauth'
