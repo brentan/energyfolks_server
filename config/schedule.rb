@@ -21,10 +21,6 @@
 
 # NOTE SERVER TIME IS UTC!  THAT IS 8/9 HOURS FROM PST/PDT
 
-every 1.minute do
-  command "cd /var/app/current && bundle exec ensure_one_cron_leader"
-end
-
 every 1.day, :at => '10:00 am' do
   rake "clean_up:user_login_hash"
 end
@@ -79,6 +75,6 @@ end
 #  rake "jobs:work"
 #end
 
-#every 10.hours do
-# command "cd $EB_CONFIG_APP_CURRENT && RAILS_ENV=production script/delayed_job --pid-dir=$EB_CONFIG_APP_SUPPORT/pids restart"
-#end
+every 10.hours do
+ command "cd /var/app/current && RAILS_ENV=production script/delayed_job --pid-dir=/var/run restart"
+end
