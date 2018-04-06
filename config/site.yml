@@ -9,11 +9,9 @@
 ### SITE SPECIFIC
 ##########################
 site_settings:
-  domain: 'ef-ruby2-puma.us-west-1.elasticbeanstalk.com'
-  #'energyfolks.com'
+  domain: 'energyfolks.com'
 urls:
-  production: 'https://ef-ruby2-puma.us-west-1.elasticbeanstalk.com/'
-  #'https://www.energyfolks.com'
+  production: 'https://www.energyfolks.com'
   local: 'http://dev.energyfolks.com:3000'
 
 ##########################
