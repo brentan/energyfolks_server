@@ -76,5 +76,5 @@ end
 #end
 
 every 10.hours do
- command "cd /var/app/current && RAILS_ENV=production script/delayed_job restart"
+ command "cd /var/app/current && RAILS_ENV=production script/delayed_job --pid-dir=/var/run restart"
 end

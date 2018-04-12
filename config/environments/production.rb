@@ -84,20 +84,22 @@ EnergyfolksServer::Application.configure do
 
   s3 = AWS::S3.new()
 
-  document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
+  unless File.exist?("#{Rails.root}/config/google_cert.txt")
+    document = s3.buckets['energyfolks-uploads'].objects['google_cert.txt']
 
-  File.open("#{Rails.root}/config/google_cert.txt", "w") do |f|
-    f.write(document.read)
-  end
-  document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
+    File.open("#{Rails.root}/config/google_cert.txt", "w") do |f|
+      f.write(document.read)
+    end
+    document = s3.buckets['energyfolks-uploads'].objects['google_key.txt']
 
-  File.open("#{Rails.root}/config/google_key.txt", "w") do |f|
-    f.write(document.read)
-  end
-  document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
+    File.open("#{Rails.root}/config/google_key.txt", "w") do |f|
+      f.write(document.read)
+    end
+    document = s3.buckets['energyfolks-uploads'].objects['google_privatekey.p12']
 
-  File.open("#{Rails.root}/config/google_privatekey.p12", "w:ASCII-8BIT") do |f|
-    f.write(document.read)
+    File.open("#{Rails.root}/config/google_privatekey.p12", "w:ASCII-8BIT") do |f|
+      f.write(document.read)
+    end
   end
 
   # load google cert and key for SAML

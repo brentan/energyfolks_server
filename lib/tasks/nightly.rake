@@ -2,6 +2,11 @@
 
 namespace :nightly do
 
+  desc "Test Outbound Email" 
+  task :email_test => :environment do
+    ErrorMailer.error_back_to_sender("brentan.alexander@gmail.com","TEST","TEST","THIS IS A TEST EMAIL").deliver()
+  end
+  
   desc "Synchronize information with all wordpress affiliates"
   task :wordpress => :environment do
     operation = ScheduledOperation.start('wordpress sync')
