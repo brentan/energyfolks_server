@@ -240,7 +240,7 @@ EnergyFolks.$(function() {
         EnergyFolks.$('.ef_location_radio2').prop("checked", true);
         EnergyFolks.map_location_name = EnergyFolks.$('#ef_filter_location').val();
         var script = document.createElement('script');
-        script.src = 'http://nominatim.openstreetmap.org/search/?format=json&json_callback=EnergyFolks.geocoded&q=' + encodeURIComponent(EnergyFolks.map_location_name);
+        script.src = 'https://nominatim.openstreetmap.org/search/?format=json&json_callback=EnergyFolks.geocoded&q=' + encodeURIComponent(EnergyFolks.map_location_name);
         document.body.appendChild(script);
         EnergyFolks.$('#ef_submit_filters').hide();
         EnergyFolks.$('#ef_location_searching').show();
