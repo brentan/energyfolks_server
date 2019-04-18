@@ -1,3 +1,19 @@
+
+Geocoder.configure(
+  # street address geocoding service (default :nominatim)
+  lookup: :google,
+
+  # to use an API key:
+  api_key: SITE_SPECIFIC['geocode']['google_key'],
+
+  # geocoding service request timeout, in seconds (default 3):
+  timeout: 3,
+
+  # set default units to kilometers:
+  units: :mi,
+  distances: :spherical,
+)
+
 if defined? Geokit
 
 	# These defaults are used in Geokit::Mappable.distance_to and in acts_as_mappable
