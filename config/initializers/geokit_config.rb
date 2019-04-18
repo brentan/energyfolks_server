@@ -1,7 +1,7 @@
 
 Geocoder.configure(
   # street address geocoding service (default :nominatim)
-  lookup: :google,
+  lookup: :nominatim,
 
   # to use an API key:
   api_key: SITE_SPECIFIC['geocode']['google_key'],
@@ -12,6 +12,7 @@ Geocoder.configure(
   # set default units to kilometers:
   units: :mi,
   distances: :spherical,
+  http_headers: { "User-Agent" => "contact@energyfolks.com" }
 )
 
 if defined? Geokit

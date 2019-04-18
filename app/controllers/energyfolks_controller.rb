@@ -44,7 +44,7 @@ class EnergyfolksController < ApplicationController
     begin
       results = Geocoder.search(params[:location])
       if results.length > 0
-        name = results[0].data['formatted_address'].gsub(', USA','')
+        name = results[0].data['display_name']
         success = true
       end
     rescue
