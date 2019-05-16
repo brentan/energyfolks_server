@@ -156,6 +156,10 @@ module MixinEntity
             latlng = Asari::Geography.coordinate_box(lat: options[:location_lat], lng: options[:location_lng], meters: options[:radius])
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
+          elsif (self.name.downcase.pluralize != 'discussions')
+            latlng = Asari::Geography.coordinate_box(lat: 0, lng: 0, meters: 1000000000000)
+            filters[:and][:lat] = 0
+            filters[:and][:lng] = 0
           end
           filters[:and][:date] = 1..options[:visibility] if options[:visibility].present?  # User visibility info stored here
           filters[:and][:date] = (1.day.ago.to_i)..(1.day.ago.to_i*2) if (options[:display] != 'month') && (options[:display] != 'dates') && (self.name.downcase.pluralize == 'events')
@@ -213,6 +217,8 @@ module MixinEntity
         items = items.where("latitude > ? AND latitude < ? AND longitude > ? AND longitude < ?", bounds[0], bounds[2], bounds[1], bounds[3])
       elsif (self.name.downcase.pluralize != 'discussions') && options[:radius].present? && (options[:radius] > 0)
         items = items.near([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
+      elsif (self.name.downcase.pluralize != 'discussions')
+        items = items.near([0,0], 1000000000, :units => :km)
       end
       if options[:tags].present? && (options[:tags].length > 0)
         count = 0
