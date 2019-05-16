@@ -68,7 +68,7 @@ EnergyfolksServer::Application.configure do
 
   AMAZON_CLOUDSEARCH_ENDPOINT = ENV['EC2_ENDPOINT']
   AMAZON_REGION = 'us-west-1'
-  USE_CLOUDSEARCH = true
+  USE_CLOUDSEARCH = false # true
   config.paperclip_defaults = {
       :url => ':s3_domain_url',
       :s3_protocal => 'https',
