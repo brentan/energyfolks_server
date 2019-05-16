@@ -157,7 +157,7 @@ module MixinEntity
             filters[:and][:lat] = latlng[:lat]
             filters[:and][:lng] = latlng[:lng]
           elsif (self.name.downcase.pluralize != 'discussions')
-            latlng = Asari::Geography.coordinate_box(lat: 0, lng: 0, meters: 1000000000000)
+            latlng = Asari::Geography.coordinate_box(lat: 0, lng: 0, meters: 80000000)
             filters[:and][:lat] = 0
             filters[:and][:lng] = 0
           end
@@ -218,7 +218,7 @@ module MixinEntity
       elsif (self.name.downcase.pluralize != 'discussions') && options[:radius].present? && (options[:radius] > 0)
         items = items.near([options[:location_lat], options[:location_lng]], options[:radius]/1000, :units => :km)
       elsif (self.name.downcase.pluralize != 'discussions')
-        items = items.near([0,0], 1000000000, :units => :km)
+        items = items.near([0,0], 80000, :units => :km)
       end
       if options[:tags].present? && (options[:tags].length > 0)
         count = 0
